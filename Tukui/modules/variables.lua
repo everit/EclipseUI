@@ -5,6 +5,7 @@
 TukuiCF = { }
 TukuiDB = { }
 tukuilocal = { }
+EclipseSettings = { }
 
 TukuiDB.dummy = function() return end
 TukuiDB.myname, _ = UnitName("player")
