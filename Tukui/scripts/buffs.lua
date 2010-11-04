@@ -1,10 +1,11 @@
+local db = TukuiCF.fonts
+local font, font_size, font_style, font_shadow = db.aura_font, db.aura_font_size, db.aura_font_style, db.aura_font_shadow
+
 ConsolidatedBuffs:ClearAllPoints()
 ConsolidatedBuffs:SetPoint("LEFT", Minimap, "LEFT", TukuiDB.Scale(0), TukuiDB.Scale(0))
 ConsolidatedBuffs:SetSize(16, 16)
 ConsolidatedBuffsIcon:SetTexture(nil)
 ConsolidatedBuffs.SetPoint = TukuiDB.dummy
-
-if TukuiCF.unitframes.playerauras == true then return end
 
 local mainhand, _, _, offhand = GetWeaponEnchantInfo()
 local rowbuffs = 16
@@ -15,8 +16,8 @@ TemporaryEnchantFrame.SetPoint = TukuiDB.dummy
 
 TempEnchant1:ClearAllPoints()
 TempEnchant2:ClearAllPoints()
-TempEnchant1:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-184), TukuiDB.Scale(-22))
-TempEnchant2:SetPoint("RIGHT", TempEnchant1, "LEFT", TukuiDB.Scale(-4), 0)
+TempEnchant1:SetPoint("TOPRIGHT", TukuiMinimap, "TOPLEFT", TukuiDB.Scale(-3), 0)
+TempEnchant2:SetPoint("RIGHT", TempEnchant1, "LEFT", TukuiDB.Scale(-3), 0)
 
 WorldStateAlwaysUpFrame:SetFrameStrata("BACKGROUND")
 WorldStateAlwaysUpFrame:SetFrameLevel(0)
@@ -32,7 +33,8 @@ for i = 1, 3 do
 	_G["TempEnchant"..i]:SetWidth(TukuiDB.Scale(30))	
 	_G["TempEnchant"..i.."Duration"]:ClearAllPoints()
 	_G["TempEnchant"..i.."Duration"]:SetPoint("BOTTOM", 0, TukuiDB.Scale(-13))
-	_G["TempEnchant"..i.."Duration"]:SetFont(TukuiCF["media"].font, 12)
+	_G["TempEnchant"..i.."Duration"]:SetFont(font, font_size, font_style)
+	_G["TempEnchant"..i.."Duration"]:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 end
 
 local function StyleBuffs(buttonName, index, debuff)
@@ -48,15 +50,17 @@ local function StyleBuffs(buttonName, index, debuff)
 		
 		buff:SetHeight(TukuiDB.Scale(30))
 		buff:SetWidth(TukuiDB.Scale(30))
-				
+
 		duration:ClearAllPoints()
-		duration:SetPoint("BOTTOM", 0, TukuiDB.Scale(-13))
-		duration:SetFont(TukuiCF["media"].font, 12)
+		duration:SetPoint("BOTTOM", TukuiDB.Scale(1), TukuiDB.Scale(-12))
+		duration:SetFont(font, font_size, font_style)
+		duration:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 		
 		count:ClearAllPoints()
-		count:SetPoint("TOPLEFT", TukuiDB.Scale(1), TukuiDB.Scale(-2))
-		count:SetFont(TukuiCF["media"].font, 12, "OUTLINE")
-		
+		count:SetPoint("TOPLEFT", TukuiDB.Scale(4), TukuiDB.Scale(-1))
+		count:SetFont(font, font_size, font_style)
+		count:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
+
 		local panel = CreateFrame("Frame", buttonName..index.."Panel", buff)
 		TukuiDB.CreatePanel(panel, 30, 30, "CENTER", buff, "CENTER", 0, 0)
 		panel:SetFrameLevel(buff:GetFrameLevel() - 1)
@@ -98,24 +102,24 @@ local function UpdateBuffAnchors()
 			buff:ClearAllPoints()
 			if ( (index > 1) and (mod(index, rowbuffs) == 1) ) then
 				if ( index == rowbuffs+1 ) then
-					buff:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-184), TukuiDB.Scale(-92))
+					buff:SetPoint("TOPRIGHT", TukuiMinimap, "TOPLEFT", TukuiDB.Scale(-3), TukuiDB.Scale(-38))
 				else
-					buff:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-184), TukuiDB.Scale(-22))
+					buff:SetPoint("TOPRIGHT", TukuiMinimap, "TOPLEFT", TukuiDB.Scale(-3), TukuiDB.Scale(-76))
 				end
 				aboveBuff = buff;
 			elseif ( index == 1 ) then
 				local mainhand, _, _, offhand, _, _, hand3 = GetWeaponEnchantInfo()
-					if (mainhand and offhand and hand3) and not UnitHasVehicleUI("player") then
-						buff:SetPoint("RIGHT", TempEnchant3, "LEFT", TukuiDB.Scale(-4), 0)
-					elseif ((mainhand and offhand) or (mainhand and hand3) or (offhand and hand3)) and not UnitHasVehicleUI("player") then
-						buff:SetPoint("RIGHT", TempEnchant2, "LEFT", TukuiDB.Scale(-4), 0)
-					elseif ((mainhand and not offhand and not hand3) or (offhand and not mainhand and not hand3) or (hand3 and not mainhand and not offhand)) and not UnitHasVehicleUI("player") then
-						buff:SetPoint("RIGHT", TempEnchant1, "LEFT", TukuiDB.Scale(-4), 0)
-					else
-						buff:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-184), TukuiDB.Scale(-22))
-					end
+				if (mainhand and offhand and hand3) and not UnitHasVehicleUI("player") then
+					buff:SetPoint("RIGHT", TempEnchant3, "LEFT", TukuiDB.Scale(-3), 0)
+				elseif ((mainhand and offhand) or (mainhand and hand3) or (offhand and hand3)) and not UnitHasVehicleUI("player") then
+					buff:SetPoint("RIGHT", TempEnchant2, "LEFT", TukuiDB.Scale(-3), 0)
+				elseif ((mainhand and not offhand and not hand3) or (offhand and not mainhand and not hand3) or (hand3 and not mainhand and not offhand)) and not UnitHasVehicleUI("player") then
+					buff:SetPoint("RIGHT", TempEnchant1, "LEFT", TukuiDB.Scale(-3), 0)
+				else
+					buff:SetPoint("TOPRIGHT", TukuiMinimap, "TOPLEFT", TukuiDB.Scale(-3), 0)
+				end
 			else
-				buff:SetPoint("RIGHT", previousBuff, "LEFT", TukuiDB.Scale(-4), 0)
+				buff:SetPoint("RIGHT", previousBuff, "LEFT", TukuiDB.Scale(-3), 0)
 			end
 			previousBuff = buff
 		end		
@@ -139,6 +143,28 @@ local function UpdateDebuffAnchors(buttonName, index)
 	else
 		debuff:SetPoint("RIGHT", _G[buttonName..(index-1)], "LEFT", TukuiDB.Scale(-4), 0)
 	end
+end
+
+SecondsToTimeAbbrev = function(time)
+local hr, m, s, text
+	if time <= 0 then text = ""
+	elseif(time < 3600 and time > 60) then
+		hr = floor(time / 3600)
+		m = floor(mod(time, 3600) / 60 + 1)
+		text = format("%d" .. cStart .. " M", m)
+	elseif(time < 60 and time > 10) then
+		m = floor(time / 60)
+		s = mod(time, 60)
+		text = (m == 0 and format("%d", s))
+	elseif time < 10 then
+		s = mod(time, 60)
+		text = (format("|cffce3a19%d", s))
+	else
+		hr = floor(time / 3600 + 1)
+		text = format("%dh", hr)
+	end
+	text = format("|cffffffff".."%s", text)
+	return text
 end
 
 local f = CreateFrame("Frame")
