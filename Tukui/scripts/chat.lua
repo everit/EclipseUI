@@ -212,20 +212,20 @@ local function SetupChatPosAndFont(self)
 		-- doing resize of chat also here for users that hit "cancel" when default installation is show.
 		if i == 1 then
 			chat:ClearAllPoints()
-			chat:SetPoint("TOPLEFT", TukuiChatLeft, "TOPLEFT", TukuiDB.Scale(5), TukuiDB.Scale(-1))
-			chat:SetPoint("BOTTOMRIGHT", TukuiChatLeft, "BOTTOMRIGHT", TukuiDB.Scale(-5), TukuiDB.Scale(4))
+			chat:SetSize(TukuiDB.Scale(TukuiCF["panels"].tinfowidth - 8), TukuiCF["chat"].chatheight - 9)
+			chat:SetPoint("BOTTOMLEFT", TukuiChatLeft, "BOTTOMLEFT", TukuiDB.Scale(4), TukuiDB.Scale(5))
 		elseif i == 4 and name == LOOT then
 			if not chat.isDocked then
 				chat:ClearAllPoints()
-				chat:SetPoint("TOPLEFT", TukuiChatRight, "TOPLEFT", TukuiDB.Scale(5), TukuiDB.Scale(-1))
-				chat:SetPoint("BOTTOMRIGHT", TukuiChatRight, "BOTTOMRIGHT", TukuiDB.Scale(-5), TukuiDB.Scale(4))
+				chat:SetSize(TukuiDB.Scale(TukuiCF["panels"].tinfowidth - 8), TukuiCF["chat"].chatheight - 9)
+				chat:SetPoint("BOTTOMRIGHT", TukuiChatRight, "BOTTOMRIGHT", TukuiDB.Scale(-5), TukuiDB.Scale(5))
 				FCF_SavePositionAndDimensions(chat)
 			end
 		end
-
+		
 		-- i'm sick and fucking tired of these stupid chat tabs forcing you to change your chat height...NOT ANYMORE FUCKERS!!!
 		_G["ChatFrame"..i.."TabText"]:ClearAllPoints()
-		_G["ChatFrame"..i.."TabText"]:SetPoint("CENTER", _G["ChatFrame"..i.."Tab"], "CENTER",0,-4)
+		_G["ChatFrame"..i.."TabText"]:SetPoint("CENTER", _G["ChatFrame"..i.."Tab"], "CENTER",0,-3)
 	end
 
 	-- reposition battle.net popup over chat #1
