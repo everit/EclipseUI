@@ -79,27 +79,27 @@ local function install()
 		for i = 1, NUM_CHAT_WINDOWS do
 			local frame = _G[format("ChatFrame%s", i)]
 			local chatFrameId = frame:GetID()
-			local chatName = FCF_GetChatWindowInfo(chatFrameId)
+			local chatName, fontSize = FCF_GetChatWindowInfo(chatFrameId)
 			
-			frame:SetSize(TukuiDB.Scale(TukuiCF["panels"].tinfowidth + 1), TukuiDB.Scale(111))
+			frame:SetSize(TukuiDB.Scale(TukuiCF["panels"].tinfowidth - 8), TukuiCF["chat"].chatheight - 9)
 			
 			-- this is the default width and height of tukui chats.
-			SetChatWindowSavedDimensions(chatFrameId, TukuiDB.Scale(TukuiCF["panels"].tinfowidth + 1), TukuiDB.Scale(111))
+			SetChatWindowSavedDimensions(chatFrameId, TukuiDB.Scale(TukuiCF["panels"].tinfowidth - 8), TukuiCF["chat"].chatheight - 9)
 			
 			-- move general bottom left or Loot (if found) on right.
 			if i == 1 then
 				frame:ClearAllPoints()
-				frame:SetPoint("BOTTOMLEFT", TukuiInfoLeft, "TOPLEFT", 0, TukuiDB.Scale(6))
+				frame:SetPoint("BOTTOMLEFT", TukuiChatLeft, "BOTTOMLEFT", TukuiDB.Scale(3), TukuiDB.Scale(5))
 			elseif i == 4 and chatName == LOOT then
 				frame:ClearAllPoints()
-				frame:SetPoint("BOTTOMRIGHT", TukuiInfoRight, "TOPRIGHT", 0, TukuiDB.Scale(6))
+				frame:SetPoint("BOTTOMRIGHT", TukuiChatRight, "BOTTOMRIGHT", TukuiDB.Scale(-5), TukuiDB.Scale(5))
 			end
-					
+
 			-- save new default position and dimension
 			FCF_SavePositionAndDimensions(frame)
 			
 			-- set default tukui font size
-			FCF_SetChatWindowFontSize(nil, frame, 12)
+			FCF_SetChatWindowFontSize(nil, frame, fontSize) -- zzz, 1 fontsize to rule them all...oh wait, just select fontsize in-game, added more to the option, lol!
 			
 			-- rename windows general and combat log
 			if i == 1 then FCF_SetWindowName(frame, "G, S & W") end
@@ -107,11 +107,11 @@ local function install()
 		end
 		
 		ChatFrame_RemoveAllMessageGroups(ChatFrame1)
-		ChatFrame_RemoveChannel(ChatFrame1, tukuilocal.chat_trade) -- erf, it seem we need to localize this now
-		ChatFrame_RemoveChannel(ChatFrame1, tukuilocal.chat_general) -- erf, it seem we need to localize this now
-		ChatFrame_RemoveChannel(ChatFrame1, tukuilocal.chat_defense) -- erf, it seem we need to localize this now
-		ChatFrame_RemoveChannel(ChatFrame1, tukuilocal.chat_recrutment) -- erf, it seem we need to localize this now
-		ChatFrame_RemoveChannel(ChatFrame1, tukuilocal.chat_lfg) -- erf, it seem we need to localize this now
+		ChatFrame_AddChannel(ChatFrame1, tukuilocal.chat_trade) -- erf, it seem we need to localize this now
+		ChatFrame_AddChannel(ChatFrame1, tukuilocal.chat_general) -- erf, it seem we need to localize this now
+		ChatFrame_AddChannel(ChatFrame1, tukuilocal.chat_defense) -- erf, it seem we need to localize this now
+		ChatFrame_AddChannel(ChatFrame1, tukuilocal.chat_recrutment) -- erf, it seem we need to localize this now
+		ChatFrame_AddChannel(ChatFrame1, tukuilocal.chat_lfg) -- erf, it seem we need to localize this now
 		ChatFrame_AddMessageGroup(ChatFrame1, "SAY")
 		ChatFrame_AddMessageGroup(ChatFrame1, "EMOTE")
 		ChatFrame_AddMessageGroup(ChatFrame1, "YELL")
@@ -143,7 +143,7 @@ local function install()
 		ChatFrame_AddMessageGroup(ChatFrame1, "ACHIEVEMENT")
 		ChatFrame_AddMessageGroup(ChatFrame1, "BN_WHISPER")
 		ChatFrame_AddMessageGroup(ChatFrame1, "BN_CONVERSATION")
-					
+
 		-- Setup the spam chat frame
 		ChatFrame_RemoveAllMessageGroups(ChatFrame3)
 		ChatFrame_AddChannel(ChatFrame3, tukuilocal.chat_trade) -- erf, it seem we need to localize this now
@@ -151,7 +151,7 @@ local function install()
 		ChatFrame_AddChannel(ChatFrame3, tukuilocal.chat_defense) -- erf, it seem we need to localize this now
 		ChatFrame_AddChannel(ChatFrame3, tukuilocal.chat_recrutment) -- erf, it seem we need to localize this now
 		ChatFrame_AddChannel(ChatFrame3, tukuilocal.chat_lfg) -- erf, it seem we need to localize this now
-				
+
 		-- Setup the right chat
 		ChatFrame_RemoveAllMessageGroups(ChatFrame4)
 		ChatFrame_AddMessageGroup(ChatFrame4, "COMBAT_XP_GAIN")
@@ -159,7 +159,7 @@ local function install()
 		ChatFrame_AddMessageGroup(ChatFrame4, "COMBAT_FACTION_CHANGE")
 		ChatFrame_AddMessageGroup(ChatFrame4, "LOOT")
 		ChatFrame_AddMessageGroup(ChatFrame4, "MONEY")
-				
+
 		-- enable classcolor automatically on login and on each character without doing /configure each time.
 		ToggleChatColorNamesByClassGroup(true, "SAY")
 		ToggleChatColorNamesByClassGroup(true, "EMOTE")
@@ -182,7 +182,7 @@ local function install()
 		ToggleChatColorNamesByClassGroup(true, "CHANNEL4")
 		ToggleChatColorNamesByClassGroup(true, "CHANNEL5")
 	end
-		   
+
 	TukuiInstallv1200 = true
 	
 	-- reset unitframe position
@@ -191,7 +191,7 @@ local function install()
 	else
 		TukuiData.ufpos = {}
 	end
-			
+
 	ReloadUI()
 end
 
