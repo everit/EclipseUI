@@ -2,14 +2,12 @@
 -- I don't want to loose my time reskinning all panels/frame, because in a couple of month we need to redo it. :x
 -- thank to karudon for helping me reskinning some elements in default interface.
 
-local function SetModifiedBackdrop(self)
+function TukuiDB.SetModifiedBackdrop(self)
 	local color = RAID_CLASS_COLORS[TukuiDB.myclass]
-	self:SetBackdropColor(color.r, color.g, color.b, 0.15)
 	self:SetBackdropBorderColor(color.r, color.g, color.b)
 end
 
-local function SetOriginalBackdrop(self)
-	self:SetBackdropColor(unpack(TukuiCF["media"].backdropcolor))
+function TukuiDB.SetOriginalBackdrop(self)
 	self:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
 end
 
@@ -18,9 +16,10 @@ local function SkinButton(f)
 	f:SetHighlightTexture("")
 	f:SetPushedTexture("")
 	f:SetDisabledTexture("")
-	TukuiDB.SetTemplate(f)
-	f:HookScript("OnEnter", SetModifiedBackdrop)
-	f:HookScript("OnLeave", SetOriginalBackdrop)
+	TukuiDB.SkinPanel(f)
+	TukuiDB.Kill(f.shadow) -- overlay > shadows
+	f:HookScript("OnEnter", TukuiDB.SetModifiedBackdrop)
+	f:HookScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 end
 
 local TukuiSkin = CreateFrame("Frame")
@@ -31,13 +30,18 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 	-- stuff not in Blizzard load-on-demand
 	if addon == "Tukui" then
 		-- Blizzard frame we want to reskin
-		local skins = {
+		local bgskins = { -- for fully skinned backgrounds
 			"StaticPopup1",
 			"StaticPopup2",
+			"StaticPopup3",
 			"GameMenuFrame",
 			"InterfaceOptionsFrame",
 			"VideoOptionsFrame",
 			"AudioOptionsFrame",
+			"ReadyCheckFrame",
+		}
+		
+		local insetskins = { -- for faded skinned backgrounds		
 			"LFDDungeonReadyStatus",
 			"BNToastFrame",
 			"TicketStatusFrameButton",
@@ -46,23 +50,48 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 			"DropDownList1Backdrop",
 			"DropDownList2Backdrop",
 			"LFDSearchStatus",
-			"AutoCompleteBox", -- this is the /w *nickname* box, press tab
-			"ReadyCheckFrame",
-			"GhostFrameContentsFrame",
+			"AutoCompleteBox",
+			"ColorPickerFrame",
 		}
 
-		-- reskin popup buttons
+		local nonshadowskins = { -- why are we doing this? because overlay is far superior than SetTemplate
+			"InterfaceOptionsFramePanelContainer",
+			"InterfaceOptionsFrameCategories",
+			
+			"VideoOptionsFrameCategoryFrame",
+			"VideoOptionsFramePanelContainer",
+
+			"AudioOptionsFrameCategoryFrame",
+			"AudioOptionsSoundPanel",
+			"AudioOptionsVoicePanel",
+			"AudioOptionsVoicePanelTalking",
+			"AudioOptionsVoicePanelBinding",
+			"AudioOptionsVoicePanelListening",
+		}
+		TukuiDB.Kill(_G["AudioOptionsSoundPanelPlayback"]) -- maybe, unsure on this
+		TukuiDB.Kill(_G["AudioOptionsSoundPanelHardware"])
+		TukuiDB.Kill(_G["AudioOptionsSoundPanelVolume"])
+		
+		TukuiDB.Kill(_G["GhostFrame"]) -- fuck you
+		
+	-- reskin popup buttons
 		for i = 1, 3 do
 			for j = 1, 3 do
 				SkinButton(_G["StaticPopup"..i.."Button"..j])
 			end
 		end
 		
-		for i = 1, getn(skins) do
-			TukuiDB.SetTemplate(_G[skins[i]])
-			if _G[skins[i]] ~= _G["GhostFrameContentsFrame"] and _G[skins[i]] ~= _G["AutoCompleteBox"] and _G[skins[i]] ~= _G["BNToastFrame"] then -- frame to blacklist from create shadow function
-				TukuiDB.CreateShadow(_G[skins[i]])
-			end
+		for i = 1, getn(bgskins) do
+			TukuiDB.SkinFadedPanel(_G[bgskins[i]])
+		end
+		
+		for i = 1, getn(insetskins) do
+			TukuiDB.SkinPanel(_G[insetskins[i]])
+		end
+		
+		for i = 1, getn(nonshadowskins) do
+			TukuiDB.SkinPanel(_G[nonshadowskins[i]])
+			TukuiDB.Kill(_G[nonshadowskins[i]].shadow)
 		end
 		
 		local ChatMenus = {
@@ -168,22 +197,11 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 		
 		-- others
 		_G["ReadyCheckListenerFrame"]:SetAlpha(0)
-		_G["ReadyCheckFrame"]:HookScript("OnShow", function(self) if UnitIsUnit("player", self.initiator) then self:Hide() end end) -- bug fix, don't show it if initiator
-		_G["GhostFrameContentsFrame"]:SetWidth(TukuiDB.Scale(148))
-		_G["GhostFrameContentsFrame"]:ClearAllPoints()
-		_G["GhostFrameContentsFrame"]:SetPoint("CENTER")
-		_G["GhostFrameContentsFrame"].SetPoint = TukuiDB.dummy
-		_G["GhostFrame"]:SetFrameStrata("HIGH")
-		_G["GhostFrame"]:SetFrameLevel(10)
-		_G["GhostFrame"]:ClearAllPoints()
-		_G["GhostFrame"]:SetPoint("TOP", Minimap, "BOTTOM", 0, TukuiDB.Scale(-25))
-		_G["GhostFrameContentsFrameIcon"]:SetAlpha(0)
-		_G["GhostFrameContentsFrameText"]:ClearAllPoints()
-		_G["GhostFrameContentsFrameText"]:SetPoint("CENTER")
+		_G["ReadyCheckFrame"]:HookScript("OnShow", function(self) if UnitIsUnit("player", self.initiator) then self:Hide() end end) -- bug fix, don't show it if initiator		
 		_G["PlayerPowerBarAlt"]:HookScript("OnShow", function(self) self:ClearAllPoints() self:SetPoint("TOP", 0, -12) end)
 	end
 	
-	-- mac menu/option panel, made by affli.
+-- mac menu/option panel, made by affli.
 	if IsMacClient() then
 		-- Skin main frame and reposition the header
 		TukuiDB.SetTemplate(MacOptionsFrame)
@@ -226,7 +244,7 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
  
 		_G["MacOptionsFrameDefaults"]:SetWidth(96)
 		_G["MacOptionsFrameDefaults"]:SetHeight(22)
-		
+
 		-- why these buttons is using game menu template? oO
 		_G["MacOptionsButtonCompressLeft"]:SetAlpha(0)
 		_G["MacOptionsButtonCompressMiddle"]:SetAlpha(0)
