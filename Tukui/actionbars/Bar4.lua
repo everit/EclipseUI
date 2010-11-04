@@ -1,10 +1,8 @@
-if not TukuiCF["actionbar"].enable == true then return end
+local db = TukuiCF["actionbar"]
 
----------------------------------------------------------------------------
--- setup MultiBarRight as bar #4
----------------------------------------------------------------------------
+if not db.enable then return end
 
-local TukuiBar4 = CreateFrame("Frame","TukuiBar4",UIParent) -- bottomrightbar
+local TukuiBar4 = CreateFrame("Frame","TukuiBar4",UIParent)
 TukuiBar4:SetAllPoints(TukuiActionBarBackground)
 MultiBarRight:SetParent(TukuiBar4)
 
@@ -14,13 +12,13 @@ for i= 1, 12 do
 	b:ClearAllPoints()
 	b:SetSize(TukuiDB.buttonsize, TukuiDB.buttonsize)
 	if i == 1 then
-		if TukuiCF.actionbar.rightbars_vh then
+		if db.vertical_rightbars == true then
 			b:SetPoint("TOPRIGHT", TukuiActionBarBackgroundRight)
 		else
 			b:SetPoint("BOTTOMLEFT", TukuiActionBarBackgroundRight)
 		end
 	else
-		if TukuiCF.actionbar.rightbars_vh then
+		if db.vertical_rightbars == true then
 			b:SetPoint("TOP", b2, "BOTTOM", 0, -TukuiDB.buttonspacing)
 		else
 			b:SetPoint("LEFT", b2, "RIGHT", TukuiDB.buttonspacing, 0)
@@ -28,7 +26,6 @@ for i= 1, 12 do
 	end	
 end
 
--- hide it if needed
-if TukuiCF.actionbar.rightbars < 1 then
+if db.rightbars < 1 then
 	TukuiBar4:Hide()
 end

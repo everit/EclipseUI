@@ -1,4 +1,6 @@
-if not TukuiCF["actionbar"].enable == true then return end
+local db = TukuiCF["actionbar"]
+
+if not db.enable then return end
 
 ---------------------------------------------------------------------------
 -- Setup Main Action Bar.
@@ -76,7 +78,7 @@ bar:SetScript("OnEvent", function(self, event, ...)
 			button:ClearAllPoints()
 			button:SetParent(TukuiMainMenuBar)
 			if i == 1 then
-				if TukuiCF["actionbar"].mainbar_swap then
+				if db.mainbar_swap == true then
 					button:SetPoint("TOPLEFT", TukuiMainMenuBar)
 				else
 					button:SetPoint("BOTTOMLEFT", TukuiMainMenuBar)

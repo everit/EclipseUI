@@ -10,7 +10,7 @@ if TukuiCF["actionbar"].rightbars > 3 then
 	TukuiCF["actionbar"].rightbars = 3
 end
 
-if TukuiCF["actionbar"].bottomrows == 2 and TukuiCF["actionbar"].rightbars > 1 and not TukuiDB.lowversion then
+if TukuiCF["actionbar"].tukui_default == true and TukuiCF["actionbar"].bottomrows == 2 and TukuiCF["actionbar"].rightbars > 1 and not TukuiDB.lowversion then
 	TukuiCF["actionbar"].rightbars = 1
 end
 

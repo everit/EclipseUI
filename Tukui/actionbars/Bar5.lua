@@ -1,10 +1,8 @@
-if not TukuiCF["actionbar"].enable == true then return end
+local db = TukuiCF["actionbar"]
 
----------------------------------------------------------------------------
--- setup MultiBarBottomRight as bar #5
----------------------------------------------------------------------------
+if not db.enable == true then return end
 
-local TukuiBar5 = CreateFrame("Frame","TukuiBar5",UIParent) -- MultiBarBottomRight
+local TukuiBar5 = CreateFrame("Frame","TukuiBar5",UIParent) 
 TukuiBar5:SetAllPoints(TukuiActionBarBackground)
 MultiBarBottomRight:SetParent(TukuiBar5)
 
@@ -14,17 +12,27 @@ for i= 1, 12 do
 	b:ClearAllPoints()
 	b:SetSize(TukuiDB.buttonsize, TukuiDB.buttonsize)
 	if i == 1 then
-		if TukuiCF.actionbar.split_bar or TukuiCF.actionbar.rightbars == 2 then
-			b:SetPoint("TOPLEFT", TukuiActionBarBackgroundRight)
-		else
-			if TukuiCF.actionbar.rightbars_vh then
-				b:SetPoint("TOP", TukuiActionBarBackgroundRight)
+	
+		if db.tukui_default == true then
+			if db.rightbars > 1 and db.bottomrows == 1 then
+				b:SetPoint("TOPLEFT", TukuiActionBarBackgroundRight)
 			else
-				b:SetPoint("LEFT", TukuiActionBarBackgroundRight)
+				b:SetPoint("BOTTOM", ActionButton1, "TOP", 0, TukuiDB.buttonspacing)
+			end
+		else
+			if db.split_bar == true or db.rightbars == 2 then
+				b:SetPoint("TOPLEFT", TukuiActionBarBackgroundRight)
+			else
+				if db.vertical_rightbars == true then
+					b:SetPoint("TOP", TukuiActionBarBackgroundRight)
+				else
+					b:SetPoint("LEFT", TukuiActionBarBackgroundRight)
+				end
 			end
 		end
-	else
-		if TukuiCF.actionbar.rightbars_vh then
+		
+	else		
+		if db.vertical_rightbars == true then
 			b:SetPoint("TOP", b2, "BOTTOM", 0, -TukuiDB.buttonspacing)
 		else
 			b:SetPoint("LEFT", b2, "RIGHT", TukuiDB.buttonspacing, 0)
@@ -32,7 +40,6 @@ for i= 1, 12 do
 	end
 end
 
--- hide it if needed
-if (TukuiCF.actionbar.rightbars < 2) then
+if (db.tukui_default == true and db.bottomrows == 1 and db.rightbars < 2) or (not db.tukui_default and db.rightbars < 2) then
 	TukuiBar5:Hide()
 end

@@ -49,3 +49,8 @@ do
 	uiManagedFrames = nil
 end
 
+
+-- move this
+if TukuiCF["actionbar"].tukui_default == true then
+	TukuiCF["actionbar"].split_bar = false
+end

@@ -1,10 +1,8 @@
-if not TukuiCF["actionbar"].enable == true then return end
+local db = TukuiCF["actionbar"]
 
----------------------------------------------------------------------------
--- setup MultiBarLeft as bar #3
----------------------------------------------------------------------------
+if not db.enable then return end
 
-local TukuiBar3 = CreateFrame("Frame","TukuiBar3",UIParent) -- bottomrightbar
+local TukuiBar3 = CreateFrame("Frame","TukuiBar3",UIParent)
 TukuiBar3:SetAllPoints(TukuiActionBarBackground)
 MultiBarLeft:SetParent(TukuiBar3)
 
@@ -14,13 +12,21 @@ for i= 1, 12 do
 	b:ClearAllPoints()
 	b:SetSize(TukuiDB.buttonsize, TukuiDB.buttonsize)
 	if i == 1 then
-		if TukuiCF["actionbar"].split_bar then
-			b:SetPoint("BOTTOMLEFT", TukuiLeftSplitBarBackground)
+		if db.tukui_default == true then
+			if db.rightbars > 2 and db.bottomrows == 1 then
+				b:SetPoint("TOPLEFT", TukuiActionBarBackgroundRight)
+			else
+				b:SetPoint("LEFT", MultiBarBottomRightButton12, "RIGHT", TukuiDB.buttonspacing, 0)
+			end
 		else
-			b:SetPoint("TOPLEFT", TukuiActionBarBackgroundRight)
+			if db.split_bar == true then
+				b:SetPoint("BOTTOMLEFT", TukuiLeftSplitBarBackground)
+			else
+				b:SetPoint("TOPLEFT", TukuiActionBarBackgroundRight)
+			end
 		end
 	else
-		if TukuiCF["actionbar"].split_bar then
+		if db.split_bar == true then
 			if i == 4 then
 				b:SetPoint("BOTTOMLEFT", TukuiRightSplitBarBackground)
 			elseif i == 7 then
@@ -31,7 +37,7 @@ for i= 1, 12 do
 				b:SetPoint("LEFT", b2, "RIGHT", TukuiDB.buttonspacing, 0)
 			end
 		else
-			if TukuiCF.actionbar.rightbars_vh then
+			if db.vertical_rightbars == true then
 				b:SetPoint("TOP", b2, "BOTTOM", 0, -TukuiDB.buttonspacing)
 			else
 				b:SetPoint("LEFT", b2, "RIGHT", TukuiDB.buttonspacing, 0)
@@ -40,7 +46,7 @@ for i= 1, 12 do
 	end
 end
 
-if (TukuiCF.actionbar.split_bar and TukuiCF.actionbar.bottomrows == 1) then
+if not db.tukui_default and db.split_bar == true and db.bottomrows == 1 then
 	for i = 7, 12 do
 		local b = _G["MultiBarLeftButton"..i]
 		b:SetAlpha(0)
@@ -48,7 +54,6 @@ if (TukuiCF.actionbar.split_bar and TukuiCF.actionbar.bottomrows == 1) then
 	end
 end
 
--- hide it if needed
--- if (TukuiCF.actionbar.bottomrows == 1 and TukuiCF.actionbar.rightbars < 3) or (TukuiDB.lowversion and TukuiCF.actionbar.rightbars < 3) then
-	-- TukuiBar3:Hide()
--- end
+if db.tukui_default == true and db.bottomrows == 1 and db.rightbars < 3 then
+	TukuiBar3:Hide()
+end
