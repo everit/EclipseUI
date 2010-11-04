@@ -6,6 +6,8 @@ if not db.enable then return end
 local db2 = TukuiCF.fonts
 local font, font_size, font_style, font_shadow = db2.tooltip_font, db2.tooltip_font_size, db2.tooltip_font_style, db2.tooltip_font_shadow
 
+local db3 = TukuiCF["actionbar"]
+
 local TukuiTooltip = CreateFrame("Frame", nil, UIParent)
 
 local _G = getfenv(0)
@@ -40,7 +42,7 @@ hooksecurefunc("GameTooltip_SetDefaultAnchor", function(self, parent)
 				self:ClearAllPoints()
 				self:SetPoint("BOTTOMRIGHT", StuffingFrameBags, "TOPRIGHT", 0, TukuiDB.Scale(3))
 			elseif HasPetUI() then
-				if TukuiCF["actionbar"].rightbars_vh then
+				if db3.vertical_rightbars == true then
 					self:ClearAllPoints()
 					self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
 				else
@@ -48,10 +50,10 @@ hooksecurefunc("GameTooltip_SetDefaultAnchor", function(self, parent)
 					self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "TOPRIGHT", 0, TukuiDB.Scale(3))
 				end
 			else
-				if TukuiCF["actionbar"].rightbars_vh == true and TukuiCF["actionbar"].rightbars > 0 then
+				if db3.vertical_rightbars == true and db3.rightbars > 0 then
 					self:ClearAllPoints()
 					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
-				elseif not TukuiCF["actionbar"].rightbars_vh == true and TukuiCF["actionbar"].rightbars > 0 then
+				elseif not db3.vertical_rightbars == true and db3.rightbars > 0 then
 					self:ClearAllPoints()
 					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, TukuiDB.Scale(3))
 				else
@@ -79,7 +81,7 @@ GameTooltip:HookScript("OnUpdate",function(self, ...)
 				self:ClearAllPoints()
 				self:SetPoint("BOTTOMRIGHT", StuffingFrameBags, "TOPRIGHT", 0, TukuiDB.Scale(3))
 			elseif HasPetUI() then
-				if TukuiCF["actionbar"].rightbars_vh then
+				if db3.vertical_rightbars == true then
 					self:ClearAllPoints()
 					self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
 				else
@@ -87,10 +89,10 @@ GameTooltip:HookScript("OnUpdate",function(self, ...)
 					self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "TOPRIGHT", 0, TukuiDB.Scale(3))
 				end
 			else
-				if TukuiCF["actionbar"].rightbars_vh == true and TukuiCF["actionbar"].rightbars > 0 then
+				if db3.vertical_rightbars == true and db3.rightbars > 0 then
 					self:ClearAllPoints()
 					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
-				elseif not TukuiCF["actionbar"].rightbars_vh == true and TukuiCF["actionbar"].rightbars > 0 then
+				elseif not db3.vertical_rightbars == true and db3.rightbars > 0 then
 					self:ClearAllPoints()
 					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, TukuiDB.Scale(3))
 				else
