@@ -12,6 +12,7 @@ TukuiCF["unitframes"] = {
 	["unitcastbar"] = true,                -- enable tukui castbar
 	["cblatency"] = false,                 -- enable castbar latency
 	["cbicons"] = true,                    -- enable icons on castbar
+	["cbclasscolor"] = true,
 	["auratimer"] = true,                  -- enable timers on buffs/debuffs
 	["auratextscale"] = 11,                -- the font size of buffs/debuffs timers on unitframes
 	["playerauras"] = false,               -- enable auras
@@ -71,14 +72,16 @@ TukuiCF["actionbar"] = {
 	["enable"] = true,                     -- enable tukz action bars
 	["hotkey"] = true,                     -- enable hotkey display because it was a lot requested
 	["hideshapeshift"] = false,            -- hide shapeshift or totembar because it was a lot requested.
-	["bottomrows"] = 2,                    -- numbers of row you want to show at the bottom (select between 1 and 2 only)
-	["rightbars"] = 3,                     -- numbers of right bar you want
+	["bottomrows"] = 1,                    -- numbers of row you want to show at the bottom (select between 1 and 2 only)
+	["rightbars"] = 1,                     -- numbers of right bar you want
 	["showgrid"] = true,                   -- show grid on empty button
 	
 	["split_bar"] = true,
 	["mainbar_swap"] = false,
-	["rightbars_vh"] = false,
-	["vertical_shapeshift"] = false,
+	["vertical_rightbars"] = false,
+	["vertical_shapeshift"] = true,
+	
+	["tukui_default"] = false,
 }
 
 TukuiCF["nameplate"] = {

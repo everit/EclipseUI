@@ -351,7 +351,11 @@ do
 		if self.interrupt and UnitCanAttack("player", unit) then
 			self:SetStatusBarColor(1, 0, 0, 0.5)	
 		else
-			self:SetStatusBarColor(0.31, 0.45, 0.63, 0.5)		
+			if TukuiCF["unitframes"].cbclasscolor == true then
+				self:SetStatusBarColor(unpack(oUF.colors.class[select(2, UnitClass(unit))]))
+			else
+				self:SetStatusBarColor(0.31, 0.45, 0.63, 0.4)		
+			end
 		end
 	end
 
