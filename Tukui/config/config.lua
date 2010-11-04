@@ -25,15 +25,17 @@ TukuiCF["unitframes"] = {
 	["showtotalhpmp"] = false,             -- change the display of info text on player and target with XXXX/Total.
 	["showsmooth"] = true,                 -- enable smooth bar
 	["showthreat"] = true,                 -- enable the threat bar anchored to info left panel.
-	["charportrait"] = false,              -- do i really need to explain this?
-	["maintank"] = false,                  -- enable maintank
-	["mainassist"] = false,                -- enable mainassist
+	["charportrait"] = true,              -- do i really need to explain this?
+	["maintank"] = false,  					-- enable maintank
+	["mainassist"] = false,					-- enable mainassist
 	["unicolor"] = false,                  -- enable unicolor theme
 	["combatfeedback"] = true,             -- enable combattext on player and target.
 	["playeraggro"] = true,                -- color player border to red if you have aggro on current target.
 	["positionbychar"] = true,             -- save X, Y position with /uf (movable frame) per character instead of per account.
 	["healcomm"] = false,                  -- enable healprediction support.
 
+	["classcolor"] = false,
+	
 	-- raid layout
 	["showrange"] = true,                  -- show range opacity on raidframes
 	["raidalphaoor"] = 0.3,                -- alpha of unitframes when unit is out of range
@@ -72,6 +74,11 @@ TukuiCF["actionbar"] = {
 	["bottomrows"] = 2,                    -- numbers of row you want to show at the bottom (select between 1 and 2 only)
 	["rightbars"] = 3,                     -- numbers of right bar you want
 	["showgrid"] = true,                   -- show grid on empty button
+	
+	["split_bar"] = true,
+	["mainbar_swap"] = false,
+	["rightbars_vh"] = false,
+	["vertical_shapeshift"] = false,
 }
 
 TukuiCF["nameplate"] = {
@@ -98,32 +105,31 @@ TukuiCF["cooldown"] = {
 }
 
 TukuiCF["datatext"] = {
-	["fps_ms"] = 4,                        -- show fps and ms on panels
-	["mem"] = 5,                           -- show total memory on panels
-	["bags"] = 0,                          -- show space used in bags on panels
-	["gold"] = 6,                          -- show your current gold on panels
-	["wowtime"] = 8,                       -- show time on panels
-	["guild"] = 1,                         -- show number on guildmate connected on panels
-	["dur"] = 2,                           -- show your equipment durability on panels.
-	["friends"] = 3,                       -- show number of friends connected.
+	["bags"] = 1,                          -- show space used in bags on panels
+	["gold"] = 2,                          -- show your current gold on panels
+	["guild"] = 0,                         -- show number on guildmate connected on panels
+	["dur"] = 3,                           -- show your equipment durability on panels.
+	["friends"] = 4,                       -- show number of friends connected.
 	["dps_text"] = 0,                      -- show a dps meter on panels
 	["hps_text"] = 0,                      -- show a heal meter on panels
-	["power"] = 7,                         -- show your attackpower/spellpower/healpower/rangedattackpower whatever stat is higher gets displayed
+	["power"] = 6,                         -- show your attackpower/spellpower/healpower/rangedattackpower whatever stat is higher gets displayed
 	["haste"] = 0,                         -- show your haste rating on panels.
 	["crit"] = 0,                          -- show your crit rating on panels.
 	["avd"] = 0,                           -- show your current avoidance against the level of the mob your targeting
 	["armor"] = 0,                         -- show your armor value against the level mob you are currently targeting
-	["currency"] = 0,                      -- show your tracked currency on panels
+	["currency"] = 5,                      -- show your tracked currency on panels
 
-	["battleground"] = true,               -- enable 3 stats in battleground only that replace stat1,stat2,stat3.
-	["time24"] = true,                     -- set time to 24h format.
-	["localtime"] = false,                 -- set time to local time instead of server time.
-	["fontsize"] = 12,                     -- font size for panels.
+	["hitrating"] = 0,
+	
+	["battleground"] = false,               -- enable 3 stats in battleground only that replace stat1,stat2,stat3.
+	["fontsize"] = 10,                     -- font size for panels.
 }
 
 TukuiCF["chat"] = {
 	["enable"] = true,                     -- blah
 	["whispersound"] = true,               -- play a sound when receiving whisper
+	
+	["chatheight"] = 120,						-- Set the height of your chat here!
 }
 
 TukuiCF["tooltip"] = {
