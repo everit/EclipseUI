@@ -1,5 +1,8 @@
 if not TukuiCF["actionbar"].enable == true then return end
 
+local db = TukuiCF.fonts
+local font, font_size, font_style, font_shadow = db.actionbar_font, db.actionbar_font_size, db.actionbar_font_style, db.actionbar_font_shadow
+
 local _G = _G
 local media = TukuiCF["media"]
 local securehandler = CreateFrame("Frame", nil, nil, "SecureHandlerBaseTemplate")
@@ -28,16 +31,19 @@ function style(self)
 	Border = TukuiDB.dummy
  
 	Count:ClearAllPoints()
-	Count:SetPoint("BOTTOMRIGHT", 0, TukuiDB.Scale(2))
-	Count:SetFont(TukuiCF["media"].font, 12, "OUTLINE")
- 
-	Btname:SetText("")
-	Btname:Hide()
-	Btname.Show = TukuiDB.dummy
- 
-	if not _G[name.."Panel"] then 
+	Count:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(-1), TukuiDB.Scale(2))
+	Count:SetFont(font, font_size, font_style)
+	Count:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
+
+	Btname:ClearAllPoints()
+	Btname:SetPoint("BOTTOM", 0, TukuiDB.Scale(2))
+	Btname:SetFont(font, font_size, font_style)
+	Btname:SetWidth(TukuiDB.buttonsize)
+	Btname:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
+
+	if not _G[name.."Panel"] then
 		local panel = CreateFrame("Frame", name.."Panel", self)
-		TukuiDB.CreatePanel(panel, TukuiDB.buttonsize, TukuiDB.buttonsize, "CENTER", self, "CENTER", 0, 0)
+		TukuiDB.CreateFadedPanel(panel, TukuiDB.buttonsize, TukuiDB.buttonsize, "CENTER", self, "CENTER", 0, 0)
  
 		panel:SetFrameStrata(self:GetFrameStrata())
 		panel:SetFrameLevel(self:GetFrameLevel() - 1)
@@ -48,8 +54,9 @@ function style(self)
 	end
 
 	HotKey:ClearAllPoints()
-	HotKey:SetPoint("TOPRIGHT", 0, TukuiDB.Scale(-3))
-	HotKey:SetFont(TukuiCF["media"].font, 12, "OUTLINE")
+	HotKey:SetPoint("TOPRIGHT", TukuiDB.Scale(-1), TukuiDB.Scale(-1))
+	HotKey:SetFont(font, font_size, font_style)
+	HotKey:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	HotKey.ClearAllPoints = TukuiDB.dummy
 	HotKey.SetPoint = TukuiDB.dummy
  
@@ -76,26 +83,38 @@ local function stylesmallbutton(normal, button, icon, name, pet)
 	Flash:SetTexture(media.buttonhover)
 	
 	if not _G[name.."Panel"] then
-		button:SetWidth(TukuiDB.petbuttonsize)
-		button:SetHeight(TukuiDB.petbuttonsize)
-		
-		local panel = CreateFrame("Frame", name.."Panel", button)
-		TukuiDB.CreatePanel(panel, TukuiDB.petbuttonsize, TukuiDB.petbuttonsize, "CENTER", button, "CENTER", 0, 0)
-		panel:SetBackdropColor(unpack(media.backdropcolor))
-		panel:SetFrameStrata(button:GetFrameStrata())
-		panel:SetFrameLevel(button:GetFrameLevel() - 1)
-
-		icon:SetTexCoord(.08, .92, .08, .92)
-		icon:ClearAllPoints()
 		if pet then
+			local panel = CreateFrame("Frame", name.."Panel", button)
+			TukuiDB.CreateFadedPanel(panel, TukuiDB.petbuttonsize, TukuiDB.petbuttonsize, "CENTER", button, "CENTER", 0, 0)
+			panel:SetFrameStrata(button:GetFrameStrata())
+			panel:SetFrameLevel(button:GetFrameLevel() - 1)
+
 			local autocast = _G[name.."AutoCastable"]
 			autocast:SetWidth(TukuiDB.Scale(41))
 			autocast:SetHeight(TukuiDB.Scale(40))
 			autocast:ClearAllPoints()
 			autocast:SetPoint("CENTER", button, 0, 0)
+			
+			local shine = _G[name.."Shine"] -- Added to fix stupid auto-cast shine around pet buttons
+			shine:SetWidth(TukuiDB.Scale(TukuiDB.petbuttonsize)) -- As above
+			shine:SetHeight(TukuiDB.Scale(TukuiDB.petbuttonsize)) -- As above
+
+			local cooldown = _G[name.."Cooldown"] -- Added to fix cooldown shadow being larger than pet buttons
+			cooldown:SetWidth(TukuiDB.Scale(TukuiDB.petbuttonsize - 2)) -- As above
+			cooldown:SetHeight(TukuiDB.Scale(TukuiDB.petbuttonsize - 2)) -- As above
+			
+			icon:SetTexCoord(.08, .92, .08, .92)
+			icon:ClearAllPoints()
 			icon:SetPoint("TOPLEFT", button, TukuiDB.Scale(2), TukuiDB.Scale(-2))
 			icon:SetPoint("BOTTOMRIGHT", button, TukuiDB.Scale(-2), TukuiDB.Scale(2))
 		else
+			local panel = CreateFrame("Frame", name.."Panel", button)
+			TukuiDB.CreateFadedPanel(panel, TukuiDB.stancebuttonsize, TukuiDB.stancebuttonsize, "CENTER", button, "CENTER", 0, 0)
+			panel:SetFrameStrata(button:GetFrameStrata())
+			panel:SetFrameLevel(button:GetFrameLevel() - 1)
+
+			icon:SetTexCoord(.08, .92, .08, .92)
+			icon:ClearAllPoints()
 			icon:SetPoint("TOPLEFT", button, TukuiDB.Scale(2), TukuiDB.Scale(-2))
 			icon:SetPoint("BOTTOMRIGHT", button, TukuiDB.Scale(-2), TukuiDB.Scale(2))
 		end
@@ -113,6 +132,16 @@ function TukuiDB.StyleShift()
 		local icon  = _G[name.."Icon"]
 		local normal  = _G[name.."NormalTexture"]
 		stylesmallbutton(normal, button, icon, name)
+		
+		local _, _, isActive, _ = GetShapeshiftFormInfo(i)
+
+		-- desaturate other stances if not active? fuck yeah.			
+		if isActive then
+			SetDesaturation(icon, nil)
+		else
+			SetDesaturation(icon, 1)
+		end
+		button:SetCheckedTexture(nil)
 	end
 end
 
@@ -125,8 +154,6 @@ function TukuiDB.StylePet()
 		stylesmallbutton(normal, button, icon, name, true)
 	end
 end
-
-
 
 local function updatehotkey(self, actionButtonType)
 	local hotkey = _G[self:GetName() .. 'HotKey']
@@ -248,6 +275,157 @@ local function styleflyout(self)
 		FlyoutButtonPos(self,buttons,"UP")	
 	elseif not self:GetParent():GetParent() == "SpellBookSpellIconsFrame" then
 		FlyoutButtonPos(self,buttons,"UP")
+	end
+end
+
+function TukuiDB.TukuiShiftBarUpdate()
+	local numForms = GetNumShapeshiftForms()
+	local texture, name, isActive, isCastable
+	local button, icon, cooldown
+	local start, duration, enable
+	for i = 1, NUM_SHAPESHIFT_SLOTS do
+		button = _G["ShapeshiftButton"..i]
+		icon = _G["ShapeshiftButton"..i.."Icon"]
+		if i <= numForms then
+			texture, name, isActive, isCastable = GetShapeshiftFormInfo(i)
+			icon:SetTexture(texture)
+			
+			cooldown = _G["ShapeshiftButton"..i.."Cooldown"]
+			if texture then
+				cooldown:SetAlpha(1)
+			else
+				cooldown:SetAlpha(0)
+			end
+			
+			start, duration, enable = GetShapeshiftFormCooldown(i)
+			CooldownFrame_SetTimer(cooldown, start, duration, enable)
+			
+			-- desaturate other stances if not active? fuck yeah.			
+			if isActive then
+				ShapeshiftBarFrame.lastSelected = button:GetID()
+				button:SetChecked(1)
+				SetDesaturation(icon, nil)
+			else
+				button:SetChecked(0)
+				SetDesaturation(icon, 1)
+			end
+
+			if isCastable then
+				icon:SetVertexColor(1.0, 1.0, 1.0)
+			else
+				icon:SetVertexColor(0.4, 0.4, 0.4)
+			end
+		end
+	end
+end
+
+
+function TukuiDB.TukuiPetBarUpdate(self, event)
+	local petActionButton, petActionIcon, petAutoCastableTexture, petAutoCastShine
+	for i=1, NUM_PET_ACTION_SLOTS, 1 do
+		local buttonName = "PetActionButton" .. i
+		petActionButton = _G[buttonName]
+		petActionIcon = _G[buttonName.."Icon"]
+		petAutoCastableTexture = _G[buttonName.."AutoCastable"]
+		petAutoCastShine = _G[buttonName.."Shine"]
+		local name, subtext, texture, isToken, isActive, autoCastAllowed, autoCastEnabled = GetPetActionInfo(i)
+		
+		if not isToken then
+			petActionIcon:SetTexture(texture)
+			petActionButton.tooltipName = name
+		else
+			petActionIcon:SetTexture(_G[texture])
+			petActionButton.tooltipName = _G[name]
+		end
+		
+		petActionButton.isToken = isToken
+		petActionButton.tooltipSubtext = subtext
+
+		if isActive and name ~= "PET_ACTION_FOLLOW" then
+			petActionButton:SetChecked(1)
+			if IsPetAttackAction(i) then
+				PetActionButton_StartFlash(petActionButton)
+			end
+		else
+			petActionButton:SetChecked(0)
+			if IsPetAttackAction(i) then
+				PetActionButton_StopFlash(petActionButton)
+			end			
+		end
+		
+		if autoCastAllowed then
+			petAutoCastableTexture:Show()
+		else
+			petAutoCastableTexture:Hide()
+		end
+		
+		if autoCastEnabled then
+			AutoCastShine_AutoCastStart(petAutoCastShine)
+		else
+			AutoCastShine_AutoCastStop(petAutoCastShine)
+		end
+		
+		-- grid display
+		if name then
+			if not TukuiCF["actionbar"].showgrid then
+				petActionButton:SetAlpha(1)
+			end			
+		else
+			if not TukuiCF["actionbar"].showgrid then
+				petActionButton:SetAlpha(0)
+			end
+		end
+		
+		if texture then
+			if GetPetActionSlotUsable(i) then
+				SetDesaturation(petActionIcon, nil)
+			else
+				SetDesaturation(petActionIcon, 1)
+			end
+			petActionIcon:Show()
+		else
+			petActionIcon:Hide()
+		end
+		
+		-- between level 1 and 10 on cata, we don't have any control on Pet. (I lol'ed so hard)
+		-- Setting desaturation on button to true until you learn the control on class trainer.
+		-- you can at least control "follow" button.
+		if not PetHasActionBar() and texture and name ~= "PET_ACTION_FOLLOW" then
+			PetActionButton_StopFlash(petActionButton)
+			SetDesaturation(petActionIcon, 1)
+			petActionButton:SetChecked(0)
+		end
+	end
+end
+
+function TukuiDB.StyleButton(b, checked) 
+    local name = b:GetName() 
+    local button          = _G[name]
+
+	local hover = b:CreateTexture("frame", nil, self)
+	hover:SetTexture(1, 1, 1, 0.3)
+	hover:SetHeight(button:GetHeight())
+	hover:SetWidth(button:GetWidth())
+	hover:SetPoint("TOPLEFT", button, 2, -2)
+	hover:SetPoint("BOTTOMRIGHT", button, -2, 2)
+	button:SetHighlightTexture(hover)
+
+	local pushed = b:CreateTexture("frame", nil, self)
+	pushed:SetTexture(0.9, 0.8, 0.1, 0.3)
+	pushed:SetHeight(button:GetHeight())
+	pushed:SetWidth(button:GetWidth())
+	pushed:SetPoint("TOPLEFT", button, 2, -2)
+	pushed:SetPoint("BOTTOMRIGHT", button, -2, 2)
+	button:SetPushedTexture(pushed)
+ 
+	if checked then
+		local checked = b:CreateTexture("frame", nil, self)
+		checked:SetTexture(1, 1, 1, 0.3)
+		checked:SetHeight(button:GetHeight())
+		checked:SetWidth(button:GetWidth())
+		checked:SetPoint("TOPLEFT", button, 2, -2)
+		checked:SetPoint("BOTTOMRIGHT", button, -2, 2)
+		button:SetCheckedTexture(checked)
 	end
 end
 
