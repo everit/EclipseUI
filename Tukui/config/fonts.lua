@@ -73,7 +73,10 @@ TukuiCF["fonts"] = {
 	["unitframe_font_style"] = "MONOCHROMEOUTLINE",
 	["unitframe_font_shadow"] = false, -- this won't affect the unitframe buttons
 
+	["unitframe_aura_font_size"] = 12,
+	["unitframe_aura_font_style"] = "MONOCHROMEOUTLINE",
 
+	
 	----- [[     Tooltip Fonts     ]] -----
 	["tooltip_font"] = TukuiCF.media.custom_font_1,
 	["tooltip_font_size"] = 12,

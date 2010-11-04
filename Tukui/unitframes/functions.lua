@@ -56,7 +56,6 @@ do
 		fs:SetFont(fontName, fontHeight, fontStyle)
 		fs:SetJustifyH("LEFT")
 		fs:SetShadowColor(0, 0, 0)
-		fs:SetShadowOffset(1.25, -1.25)
 		return fs
 	end
 
@@ -91,23 +90,6 @@ do
 				health.value:SetText("|cffD7BEA5"..tukuilocal.unitframes_ouf_ghost.."|r")
 			end
 		else
-			local r, g, b
-			
-			-- overwrite healthbar color for enemy player (a tukui option if enabled), target vehicle/pet too far away returning unitreaction nil and friend unit not a player. (mostly for overwrite tapped for friendly)
-			-- I don't know if we really need to call TukuiCF["unitframes"].unicolor but anyway, it's safe this way.
-			if (TukuiCF["unitframes"].unicolor ~= true and TukuiCF["unitframes"].enemyhcolor and unit == "target" and UnitIsEnemy(unit, "player")) or (TukuiCF["unitframes"].unicolor ~= true and unit == "target" and not UnitIsPlayer(unit) and UnitIsFriend(unit, "player")) then
-				local c = TukuiDB.oUF_colors.reaction[UnitReaction(unit, "player")]
-				if c then 
-					r, g, b = c[1], c[2], c[3]
-					health:SetStatusBarColor(r, g, b)
-				else
-					-- if "c" return nil it's because it's a vehicle or pet unit too far away, we force friendly color
-					-- this should fix color not updating for vehicle/pet too far away from yourself.
-					r, g, b = 75/255,  175/255, 76/255
-					health:SetStatusBarColor(r, g, b)
-				end					
-			end
-
 			if min ~= max then
 				local r, g, b
 				r, g, b = oUF.ColorGradient(min/max, 0.69, 0.31, 0.31, 0.65, 0.63, 0.35, 0.33, 0.59, 0.33)
@@ -142,24 +124,10 @@ do
 
 	TukuiDB.PostUpdateHealthRaid = function(health, unit, min, max)
 		if not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit) then
-			if not UnitIsConnected(unit) then
-				health.value:SetText("|cffD7BEA5"..tukuilocal.unitframes_ouf_offline.."|r")
-			elseif UnitIsDead(unit) then
-				health.value:SetText("|cffD7BEA5"..tukuilocal.unitframes_ouf_dead.."|r")
-			elseif UnitIsGhost(unit) then
-				health.value:SetText("|cffD7BEA5"..tukuilocal.unitframes_ouf_ghost.."|r")
+			if not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit) then
+				health.value:SetText("")
 			end
-		else
-			local r, g, b
-			
-			-- doing this here to force friendly unit (vehicle or pet) very far away from you to update color correcly
-			-- because if vehicle or pet is too far away, unitreaction return nil and color of health bar is white.
-			if not UnitIsPlayer(unit) and UnitIsFriend(unit, "player") and TukuiCF["unitframes"].unicolor ~= true then
-				r, g, b = 75/255,  175/255, 76/255
-				health:SetStatusBarColor(r, g, b)
-				health.bg:SetTexture(.1, .1, .1)
-			end
-			
+		else			
 			if min ~= max then
 				health.value:SetText("|cff559655-"..ShortValueNegative(max-min).."|r")
 			else
@@ -181,10 +149,10 @@ do
 	TukuiDB.PostNamePosition = function(self)
 		self.Name:ClearAllPoints()
 		if (self.Power.value:GetText() and UnitIsEnemy("player", "target") and TukuiCF["unitframes"].targetpowerpvponly == true) or (self.Power.value:GetText() and TukuiCF["unitframes"].targetpowerpvponly == false) then
-			self.Name:SetPoint("CENTER", self.panel, "CENTER", 0, 0)
+			self.Name:SetPoint("CENTER", self.panel, "CENTER", 0, 1)
 		else
 			self.Power.value:SetAlpha(0)
-			self.Name:SetPoint("LEFT", self.panel, "LEFT", 4, 0)
+			self.Name:SetPoint("LEFT", self.panel, "LEFT", 4, 1)
 		end
 	end
 
@@ -272,17 +240,6 @@ do
 		return format("%.1f", s)
 	end
 
-	local function HideBuffFrame()
-		if TukuiCF["unitframes"].playerauras ~= true then return end
-		-- hide buff
-		BuffFrame:UnregisterEvent("UNIT_AURA")
-		BuffFrame:Hide()
-		TemporaryEnchantFrame:Hide()
-		InterfaceOptionsFrameCategoriesButton11:SetScale(0.00001)
-		InterfaceOptionsFrameCategoriesButton11:SetAlpha(0)
-	end
-	HideBuffFrame()
-
 	local CreateAuraTimer = function(self, elapsed)
 		if self.timeLeft then
 			self.elapsed = (self.elapsed or 0) + elapsed
@@ -318,8 +275,9 @@ do
 
 	function TukuiDB.PostCreateAura(element, button)
 		TukuiDB.SetTemplate(button)
+		TukuiDB.CreateShadow(button)
 		
-		button.remaining = TukuiDB.SetFontString(button, TukuiCF["media"].font, TukuiCF["unitframes"].auratextscale, "THINOUTLINE")
+		button.remaining = TukuiDB.SetFontString(button, TukuiCF["fonts"].unitframe_font, TukuiCF["fonts"].unitframe_aura_font_size, TukuiCF["fonts"].unitframe_aura_font_style)
 		button.remaining:SetPoint("CENTER", TukuiDB.Scale(1), 0)
 		
 		button.cd.noOCC = true		 	-- hide OmniCC CDs
@@ -345,14 +303,6 @@ do
 		button.overlay:SetParent(button.overlayFrame)
 		button.count:SetParent(button.overlayFrame)
 		button.remaining:SetParent(button.overlayFrame)
-				
-		button.Glow = CreateFrame("Frame", nil, button)
-		button.Glow:SetPoint("TOPLEFT", button, "TOPLEFT", TukuiDB.Scale(-3), TukuiDB.Scale(3))
-		button.Glow:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", TukuiDB.Scale(3), TukuiDB.Scale(-3))
-		button.Glow:SetFrameStrata("BACKGROUND")	
-		button.Glow:SetBackdrop{edgeFile = TukuiCF["media"].glowTex, edgeSize = 3, insets = {left = 0, right = 0, top = 0, bottom = 0}}
-		button.Glow:SetBackdropColor(0, 0, 0, 0)
-		button.Glow:SetBackdropBorderColor(0, 0, 0)
 	end
 
 	function TukuiDB.PostUpdateAura(icons, unit, icon, index, offset, filter, isDebuff, duration, timeLeft)
@@ -475,19 +425,13 @@ do
 		if eb:IsShown() then
 			txt:Show()
 			self.FlashInfo:Hide()
-			if TukuiDB.lowversion then
-				if self.Buffs then self.Buffs:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 34) end
-			else
-				if self.Buffs then self.Buffs:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 38) end
-			end				
+			
+			if self.Buffs then self.Buffs:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 38) end
 		else
 			txt:Hide()
 			self.FlashInfo:Show()
-			if TukuiDB.lowversion then
-				if self.Buffs then self.Buffs:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 26) end
-			else
-				if self.Buffs then self.Buffs:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 30) end
-			end
+			
+			if self.Buffs then self.Buffs:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 30) end
 		end
 	end
 
@@ -497,17 +441,6 @@ do
 		else
 			self.MasterLooter:SetPoint("TOPLEFT", 2, 8)
 		end
-	end
-
-	TukuiDB.UpdateCPoints = function(self, event, unit)
-		if unit == PlayerFrame.unit and unit ~= self.CPoints.unit then
-			self.CPoints.unit = unit
-		end
-	end
-
-	TukuiDB.UpdateReputationColor = function(self, event, unit, bar)
-		local name, id = GetWatchedFactionInfo()
-		bar:SetStatusBarColor(FACTION_BAR_COLORS[id].r, FACTION_BAR_COLORS[id].g, FACTION_BAR_COLORS[id].b)
 	end
 
 	TukuiDB.UpdatePetInfo = function(self,event)
@@ -568,19 +501,17 @@ do
 	end
 
 	function TukuiDB.UpdateThreat(self, event, unit)
-		if (self.unit ~= unit) or (unit == "target" or unit == "pet" or unit == "focus" or unit == "focustarget" or unit == "targettarget") then return end
+		if (self.unit ~= unit) or (unit == "target" or unit == "focus" or unit == "focustarget" or unit == "targettarget") then return end
 		local threat = UnitThreatSituation(self.unit)
 		if (threat == 3) then
-			if self.panel then
-				self.panel:SetBackdropBorderColor(.69,.31,.31,1)
-			else
-				self.Name:SetTextColor(1,0.1,0.1)
+			self.Health.border:SetBackdropBorderColor(.69,.31,.31,1)
+			if self.Power and unit ~= "pet" then
+				self.Power.border:SetBackdropBorderColor(.69,.31,.31,1)
 			end
 		else
-			if self.panel then
-				self.panel:SetBackdropBorderColor(unpack(TukuiCF["media"].altbordercolor))
-			else
-				self.Name:SetTextColor(1,1,1)
+			self.Health.border:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
+			if self.Power and unit ~= "pet" then
+				self.Power.border:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
 			end
 		end 
 	end
