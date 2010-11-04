@@ -212,34 +212,15 @@ local OnEvent = function(self, event)
 		HideUIPanel(WorldMapFrame)
 	elseif event == "PLAYER_REGEN_DISABLED" then
 		HideUIPanel(WorldMapFrame)
-		WatchFrame.showObjectives = nil
-		WorldMapQuestShowObjectives:SetChecked(false)
-		WorldMapQuestShowObjectives:Hide()
-		WorldMapTrackQuest:Hide()
-
 		WorldMapBlobFrame:Hide()
-		WorldMapPOIFrame:Hide()
-
-		WorldMapQuestShowObjectives.Show = TukuiDB.dummy
 		WorldMapBlobFrame.Show = TukuiDB.dummy
-		WorldMapPOIFrame.Show = TukuiDB.dummy       
 
 		WatchFrame_Update()
 		
 		mapLock:EnableMouse(false) -- even though we hide map on combat enter, this kills the button usage if the user tries to re-open and move
 	elseif event == "PLAYER_REGEN_ENABLED" then
-		WorldMapQuestShowObjectives.Show = WorldMapQuestShowObjectives:Show()
 		WorldMapBlobFrame.Show = WorldMapBlobFrame:Show()
-		WorldMapPOIFrame.Show = WorldMapPOIFrame:Show()
-
-		WorldMapQuestShowObjectives:Show()
-		WorldMapTrackQuest:Show()
-
-		WatchFrame.showObjectives = true
-		WorldMapQuestShowObjectives:SetChecked(true)
-
 		WorldMapBlobFrame:Show()
-		WorldMapPOIFrame:Show()
 
 		WatchFrame_Update()
 		
