@@ -81,7 +81,7 @@ TukuiCF["actionbar"] = {
 	["vertical_rightbars"] = false,
 	["vertical_shapeshift"] = true,
 	
-	["tukui_default"] = false,
+	["tukui_default"] = true,
 }
 
 TukuiCF["nameplate"] = {
@@ -108,10 +108,10 @@ TukuiCF["cooldown"] = {
 }
 
 TukuiCF["datatext"] = {
-	["bags"] = 1,                          -- show space used in bags on panels
+	["bags"] = 0,                          -- show space used in bags on panels
 	["gold"] = 2,                          -- show your current gold on panels
 	["guild"] = 0,                         -- show number on guildmate connected on panels
-	["dur"] = 3,                           -- show your equipment durability on panels.
+	["dur"] = 0,                           -- show your equipment durability on panels.
 	["friends"] = 4,                       -- show number of friends connected.
 	["dps_text"] = 0,                      -- show a dps meter on panels
 	["hps_text"] = 0,                      -- show a heal meter on panels
@@ -122,7 +122,11 @@ TukuiCF["datatext"] = {
 	["armor"] = 0,                         -- show your armor value against the level mob you are currently targeting
 	["currency"] = 5,                      -- show your tracked currency on panels
 
-	["hitrating"] = 0,
+	["hitrating"] = 3,
+	["wintergrasp"] = 1,
+	
+	["location"] = true,
+		["coords"] = true,
 	
 	["battleground"] = false,               -- enable 3 stats in battleground only that replace stat1,stat2,stat3.
 	["fontsize"] = 10,                     -- font size for panels.

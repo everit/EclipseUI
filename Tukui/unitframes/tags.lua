@@ -146,14 +146,42 @@ end
 
 oUF.TagEvents['Tukui:dead'] = 'UNIT_HEALTH'
 oUF.Tags['Tukui:dead'] = function(unit)
-	if UnitIsDeadOrGhost(unit) then
-		return tukuilocal.unitframes_ouf_deaddps
+	if UnitIsDead(unit) then
+
+		return "|cffff0000[D]|r"
+	elseif UnitIsGhost(unit) then
+		return "|cffff0000[G]|r"
 	end
 end
 
-oUF.TagEvents['Tukui:afk'] = 'PLAYER_FLAGS_CHANGED'
+
+oUF.TagEvents['Tukui:name_dps'] = 'UNIT_NAME_UPDATE', 'UNIT_CONNECTION', 'PLAYER_FLAGS_CHANGED', 'UNIT_HEALTH'
+oUF.Tags['Tukui:name_dps'] = function(unit)
+	local name = UnitName(unit)
+	if UnitIsAFK(unit) or not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit) then
+		return utf8sub(name, 5, false)
+	else
+		return utf8sub(name, 10, false)
+	end
+end
+
+oUF.TagEvents['Tukui:name_heal'] = 'UNIT_NAME_UPDATE', 'UNIT_CONNECTION', 'PLAYER_FLAGS_CHANGED', 'UNIT_HEALTH'
+oUF.Tags['Tukui:name_heal'] = function(unit)
+	local name = UnitName(unit)
+	if UnitIsAFK(unit) or not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit) then
+		return utf8sub(name, 5, false)
+	else
+		return utf8sub(name, 10, false)
+	end
+end
+
+
+oUF.TagEvents['Tukui:afk'] = 'PLAYER_FLAGS_CHANGED', 'UNIT_CONNECTION'
 oUF.Tags['Tukui:afk'] = function(unit)
 	if UnitIsAFK(unit) then
-		return CHAT_FLAG_AFK
+
+		return "|cffff0000[A]|r"
+	elseif not UnitIsConnected(unit) then
+		return "|cffff0000[O]|r"
 	end
 end

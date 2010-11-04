@@ -3,6 +3,9 @@
 local db = TukuiCF["tooltip"]
 if not db.enable then return end
 
+local db2 = TukuiCF.fonts
+local font, font_size, font_style, font_shadow = db2.tooltip_font, db2.tooltip_font_size, db2.tooltip_font_style, db2.tooltip_font_shadow
+
 local TukuiTooltip = CreateFrame("Frame", nil, UIParent)
 
 local _G = getfenv(0)
@@ -32,13 +35,29 @@ hooksecurefunc("GameTooltip_SetDefaultAnchor", function(self, parent)
 		if InCombatLockdown() and db.hidecombat == true then
 			self:Hide()
 		else
-			-- avoids flicker when mouseover unitframes with open bags
+			self:SetAlpha(1)
 			if TukuiCF["bags"].enable == true and StuffingFrameBags:IsShown() then
 				self:ClearAllPoints()
-				self:SetPoint("BOTTOMRIGHT", StuffingFrameBags, "TOPRIGHT", 0, TukuiDB.Scale(4))
+				self:SetPoint("BOTTOMRIGHT", StuffingFrameBags, "TOPRIGHT", 0, TukuiDB.Scale(3))
+			elseif HasPetUI() then
+				if TukuiCF["actionbar"].rightbars_vh then
+					self:ClearAllPoints()
+					self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
+				else
+					self:ClearAllPoints()
+					self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "TOPRIGHT", 0, TukuiDB.Scale(3))
+				end
 			else
-				self:ClearAllPoints()
-				self:SetPoint("BOTTOMRIGHT", TukuiInfoRight, "TOPRIGHT", 0, TukuiDB.Scale(5))
+				if TukuiCF["actionbar"].rightbars_vh == true and TukuiCF["actionbar"].rightbars > 0 then
+					self:ClearAllPoints()
+					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
+				elseif not TukuiCF["actionbar"].rightbars_vh == true and TukuiCF["actionbar"].rightbars > 0 then
+					self:ClearAllPoints()
+					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, TukuiDB.Scale(3))
+				else
+					self:ClearAllPoints()
+					self:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, TukuiDB.Scale(3))
+				end
 			end
 		end
 	end
@@ -55,13 +74,29 @@ GameTooltip:HookScript("OnUpdate",function(self, ...)
 		if InCombatLockdown() and db.hidecombat == true then
 			self:Hide()
 		else
-			-- moves tooltip when opening bags
+			self:SetAlpha(1)
 			if TukuiCF["bags"].enable == true and StuffingFrameBags:IsShown() then
 				self:ClearAllPoints()
-				self:SetPoint("BOTTOMRIGHT", StuffingFrameBags, "TOPRIGHT", 0, TukuiDB.Scale(4))
+				self:SetPoint("BOTTOMRIGHT", StuffingFrameBags, "TOPRIGHT", 0, TukuiDB.Scale(3))
+			elseif HasPetUI() then
+				if TukuiCF["actionbar"].rightbars_vh then
+					self:ClearAllPoints()
+					self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
+				else
+					self:ClearAllPoints()
+					self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "TOPRIGHT", 0, TukuiDB.Scale(3))
+				end
 			else
-				self:ClearAllPoints()
-				self:SetPoint("BOTTOMRIGHT", TukuiInfoRight, "TOPRIGHT", 0, TukuiDB.Scale(5))
+				if TukuiCF["actionbar"].rightbars_vh == true and TukuiCF["actionbar"].rightbars > 0 then
+					self:ClearAllPoints()
+					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
+				elseif not TukuiCF["actionbar"].rightbars_vh == true and TukuiCF["actionbar"].rightbars > 0 then
+					self:ClearAllPoints()
+					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, TukuiDB.Scale(3))
+				else
+					self:ClearAllPoints()
+					self:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, TukuiDB.Scale(3))
+				end
 			end
 		end
 	end
@@ -122,7 +157,8 @@ GameTooltipStatusBar:SetScript("OnValueChanged", function(self, value)
 	if not self.text then
 		self.text = self:CreateFontString(nil, "OVERLAY")
 		self.text:SetPoint("CENTER", GameTooltipStatusBar, 0, TukuiDB.Scale(6))
-		self.text:SetFont(TukuiCF["media"].font, 12, "THINOUTLINE")
+		self.text:SetFont(font, font_size, font_style)
+		self.text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 		self.text:Show()
 		if unit then
 			min, max = UnitHealth(unit), UnitHealthMax(unit)
@@ -165,6 +201,7 @@ healthBarBG:SetFrameLevel(healthBar:GetFrameLevel() - 1)
 healthBarBG:SetPoint("TOPLEFT", -TukuiDB.Scale(2), TukuiDB.Scale(2))
 healthBarBG:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), -TukuiDB.Scale(2))
 TukuiDB.SetTemplate(healthBarBG)
+TukuiDB.CreateShadow(healthBarBG)
 
 GameTooltip:HookScript("OnTooltipSetUnit", function(self)
 	local lines = self:NumLines()
@@ -255,7 +292,7 @@ end)
 local BorderColor = function(self)
 	local GMF = GetMouseFocus()
 	local unit = (select(2, self:GetUnit())) or (GMF and GMF:GetAttribute("unit"))
-		
+
 	local reaction = unit and UnitReaction(unit, "player")
 	local player = unit and UnitIsPlayer(unit)
 	local tapped = unit and UnitIsTapped(unit)
@@ -267,14 +304,10 @@ local BorderColor = function(self)
 		local class = select(2, UnitClass(unit))
 		local c = TukuiDB.oUF_colors.class[class]
 		r, g, b = c[1], c[2], c[3]
-		self:SetBackdropBorderColor(r, g, b)
-		healthBarBG:SetBackdropBorderColor(r, g, b)
 		healthBar:SetStatusBarColor(r, g, b)
 	elseif reaction then
 		local c = TukuiDB.oUF_colors.reaction[reaction]
 		r, g, b = c[1], c[2], c[3]
-		self:SetBackdropBorderColor(r, g, b)
-		healthBarBG:SetBackdropBorderColor(r, g, b)
 		healthBar:SetStatusBarColor(r, g, b)
 	else
 		local _, link = self:GetItem()
@@ -305,7 +338,11 @@ TukuiTooltip:SetScript("OnEvent", function(self)
 	end
 	
 	TukuiDB.SetTemplate(FriendsTooltip)
-		
+	TukuiDB.CreateShadow(FriendsTooltip)
+	
+	TukuiDB.CreateShadow(GameTooltip)
+	TukuiDB.CreateOverlay(GameTooltip)
+
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 	self:SetScript("OnEvent", nil)
 	

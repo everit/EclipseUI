@@ -36,7 +36,7 @@ function tCooldownTracker.CreateIcon()
 	tCooldownTracker.Icons[i]:SetWidth(TukuiDB.Scale(28))
 	tCooldownTracker.Icons[i]:SetFrameStrata("BACKGROUND")
 	tCooldownTracker.Icons[i]:SetFrameLevel(20)
-	  
+
 	tCooldownTracker.Icons[i]:Hide()
 
 	tCooldownTracker.Icons[i].Texture = tCooldownTracker.Icons[i]:CreateTexture(nil,"LOW")

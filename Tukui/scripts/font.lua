@@ -23,7 +23,7 @@ TukuiFonts:SetScript("OnEvent", function(self, event, addon)
 	local NUMBER     = TukuiCF.media.font	
 
 	UIDROPDOWNMENU_DEFAULT_TEXT_HEIGHT = 12
-	CHAT_FONT_HEIGHTS = {12, 13, 14, 15, 16, 17, 18, 19, 20}
+	CHAT_FONT_HEIGHTS = {8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
 
 	UNIT_NAME_FONT     = NORMAL
 	NAMEPLATE_FONT     = NORMAL

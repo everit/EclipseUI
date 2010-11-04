@@ -212,19 +212,18 @@ local function SetupChatPosAndFont(self)
 		-- doing resize of chat also here for users that hit "cancel" when default installation is show.
 		if i == 1 then
 			chat:ClearAllPoints()
-			chat:SetPoint("BOTTOMLEFT", TukuiChatLeft, "BOTTOMLEFT", TukuiDB.Scale(5), TukuiDB.Scale(4))
-			chat:SetPoint("TOPRIGHT", TukuiChatLeft, "TOPRIGHT", TukuiDB.Scale(-5), TukuiDB.Scale(-1))
+			chat:SetPoint("TOPLEFT", TukuiChatLeft, "TOPLEFT", TukuiDB.Scale(5), TukuiDB.Scale(-1))
+			chat:SetPoint("BOTTOMRIGHT", TukuiChatLeft, "BOTTOMRIGHT", TukuiDB.Scale(-5), TukuiDB.Scale(4))
 		elseif i == 4 and name == LOOT then
 			if not chat.isDocked then
 				chat:ClearAllPoints()
-				chat:SetPoint("BOTTOMLEFT", TukuiChatRight, "BOTTOMLEFT", TukuiDB.Scale(5), TukuiDB.Scale(4))
-				chat:SetPoint("TOPRIGHT", TukuiChatRight, "TOPRIGHT", TukuiDB.Scale(-5), TukuiDB.Scale(-1))
+				chat:SetPoint("TOPLEFT", TukuiChatRight, "TOPLEFT", TukuiDB.Scale(5), TukuiDB.Scale(-1))
+				chat:SetPoint("BOTTOMRIGHT", TukuiChatRight, "BOTTOMRIGHT", TukuiDB.Scale(-5), TukuiDB.Scale(4))
 				FCF_SavePositionAndDimensions(chat)
 			end
 		end
 
 		-- i'm sick and fucking tired of these stupid chat tabs forcing you to change your chat height...NOT ANYMORE FUCKERS!!!
-		-- move this later
 		_G["ChatFrame"..i.."TabText"]:ClearAllPoints()
 		_G["ChatFrame"..i.."TabText"]:SetPoint("CENTER", _G["ChatFrame"..i.."Tab"], "CENTER",0,-4)
 	end

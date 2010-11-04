@@ -37,7 +37,13 @@ local function Shared(self, unit)
 	RaidIcon:SetTexture("Interface\\AddOns\\Tukui\\media\\textures\\raidicons.blp") -- thx hankthetank for texture
 	RaidIcon:SetHeight(20)
 	RaidIcon:SetWidth(20)
-	RaidIcon:SetPoint("TOP", 0, 8)
+	if unit == "targettarget" then
+		RaidIcon:SetPoint("RIGHT", 10, 6)
+	elseif unit == "pet" then
+		RaidIcon:SetPoint("LEFT", 10, 6)
+	else
+		RaidIcon:SetPoint("TOP", 0, 10)
+	end
 	self.RaidIcon = RaidIcon
 	
 
@@ -137,11 +143,11 @@ local function Shared(self, unit)
 		----- [[     Health and Power Values     ]] -----
 
 		health.value = TukuiDB.SetFontString(panel, font, font_size, font_style)
-		health.value:SetPoint("RIGHT", panel, "RIGHT", TukuiDB.Scale(-4), 0)
+		health.value:SetPoint("RIGHT", panel, "RIGHT", TukuiDB.Scale(-4), 1)
 		health.PostUpdate = TukuiDB.PostUpdateHealth
 
 		power.value = TukuiDB.SetFontString(panel, font, font_size, font_style)
-		power.value:SetPoint("LEFT", panel, "LEFT", TukuiDB.Scale(4), 0)
+		power.value:SetPoint("LEFT", panel, "LEFT", TukuiDB.Scale(4), 1)
 		power.PreUpdate = TukuiDB.PreUpdatePower
 		power.PostUpdate = TukuiDB.PostUpdatePower
 		
@@ -202,14 +208,14 @@ local function Shared(self, unit)
 			FlashInfo:SetToplevel(true)
 			FlashInfo:SetAllPoints(panel)
 			FlashInfo.ManaLevel = TukuiDB.SetFontString(FlashInfo, font, font_size, font_style)
-			FlashInfo.ManaLevel:SetPoint("CENTER", panel, "CENTER", 0, 0)
+			FlashInfo.ManaLevel:SetPoint("CENTER", panel, "CENTER", 0, 1)
 			self.FlashInfo = FlashInfo
 			
 			
 			----- [[     PvP Status Text     ]] -----
 			
 			local status = TukuiDB.SetFontString(panel, font, font_size, font_style)
-			status:SetPoint("CENTER", panel, "CENTER", 0, 0)
+			status:SetPoint("CENTER", panel, "CENTER", 0, 1)
 			status:SetTextColor(0.69, 0.31, 0.31, 0)
 			self.Status = status
 			self:Tag(status, "[pvp]")
@@ -299,7 +305,7 @@ local function Shared(self, unit)
 
 				local eclipseBarText = eclipseBar:CreateFontString(nil, 'OVERLAY')
 				eclipseBarText:SetPoint('TOP', panel)
-				eclipseBarText:SetPoint('BOTTOM', panel)
+				eclipseBarText:SetPoint('BOTTOM', panel, 0, 1)
 				eclipseBarText:SetFont(font, font_size, font_style)
 				eclipseBar.PostUpdatePower = TukuiDB.EclipseDirection
 
@@ -451,7 +457,7 @@ local function Shared(self, unit)
 		if (unit == "target") then			
 			-- Unit name on target
 			local Name = health:CreateFontString(nil, "OVERLAY")
-			Name:SetPoint("LEFT", panel, "LEFT", TukuiDB.Scale(4), 0)
+			Name:SetPoint("LEFT", panel, "LEFT", TukuiDB.Scale(4), 1)
 			Name:SetJustifyH("LEFT")
 			Name:SetFont(font, font_size, font_style)
 
@@ -470,6 +476,7 @@ local function Shared(self, unit)
 		if (unit == "target" and db.targetauras) or (unit == "player" and db.playerauras) then
 			local buffs = CreateFrame("Frame", nil, self)
 			local debuffs = CreateFrame("Frame", nil, self)
+			
 			
 			if ((TukuiDB.myclass == "SHAMAN" and db.totemtimer) or (TukuiDB.myclass == "DEATHKNIGHT" and db.runebar) or TukuiDB.myclass == "PALADIN" or TukuiDB.myclass == "WARLOCK") and (db.playerauras) and (unit == "player") then
 				buffs:SetPoint("TOPLEFT", self, "TOPLEFT", TukuiDB.Scale(-1), TukuiDB.Scale(37))
@@ -512,12 +519,21 @@ local function Shared(self, unit)
 			
 			if unit == "player" then
 				castbar:SetHeight(TukuiDB.Scale(23))
-				if db.cbicons then
-					castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiDB.buttonsize + 5, TukuiDB.Scale(5))
+				if TukuiCF["actionbar"].tukui_default == true then
+					if db.cbicons then
+						castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiDB.buttonsize + 185, TukuiDB.Scale(5))
+					else
+						castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiDB.Scale(182), TukuiDB.Scale(5))
+					end
+					castbar:SetPoint("BOTTOMRIGHT", TukuiActionBarBackground, "TOPRIGHT", TukuiDB.Scale(-182), TukuiDB.Scale(5))
 				else
-					castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(5))
+					if db.cbicons then
+						castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiDB.buttonsize + 5, TukuiDB.Scale(5))
+					else
+						castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(5))
+					end
+					castbar:SetPoint("BOTTOMRIGHT", TukuiActionBarBackground, "TOPRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(5))
 				end
-				castbar:SetPoint("BOTTOMRIGHT", TukuiActionBarBackground, "TOPRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(5))
 			else
 				castbar:SetHeight(TukuiDB.Scale(21))
 				castbar:SetWidth(TukuiDB.Scale(141))
