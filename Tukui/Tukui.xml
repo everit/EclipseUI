@@ -12,6 +12,7 @@
 	
 	<Script file="config\config.lua"/>
 	<Script file="config\media.lua"/>
+	<Script file="config\fonts.lua"/>
 	
 	<Script file="modules\configui.lua"/>
 
@@ -29,7 +30,7 @@
 	<Script file="libs\oUF_RaidDebuffs\oUF_RaidDebuffs.lua"/>	
 	
 	<Script file="config\watch.lua"/>
-		
+
 	<Script file="modules\colors.lua"/>	
 	<Script file="modules\functions.lua"/>
 	<Script file="modules\launch.lua"/>
@@ -58,7 +59,10 @@
 	<Script file="scripts\buffs.lua"/>
 	<Script file="scripts\minimap.lua"/>
 	<Script file="scripts\panels.lua"/>
-	
+	<Script file="scripts\skin.lua"/>
+
+	<Script file="datatext\setup.lua"/>
+	<Script file="datatext\statblock.lua"/>
 	<Script file="datatext\armor.lua"/>
 	<Script file="datatext\avoidance.lua"/>
 	<Script file="datatext\bags.lua"/>
@@ -76,6 +80,9 @@
 	<Script file="datatext\power.lua"/>
 	<Script file="datatext\time.lua"/>
 	<Script file="datatext\currency.lua"/>
+	<Script file="datatext\experience.lua"/>
+	<Script file="datatext\reputation.lua"/>
+	<Script file="datatext\hitrating.lua"/>
 	
 	<Script file="actionbars\Hide.lua"/>
 	<Script file="actionbars\Bar1.lua"/>
@@ -101,14 +108,16 @@
 	<Script file="scripts\map.lua"/>
 	<Script file="scripts\mirror.lua"/>
 	<Script file="scripts\reminder.lua"/>
-	<Script file="scripts\skin.lua"/>
 	<Script file="scripts\totemskin.lua"/>
 	<Script file="scripts\bubbles.lua"/>
 	
 	<Include file="unitframes\templates.xml"/>
+	<Script file="unitframes\functions.lua"/>
 	<Script file="unitframes\tags.lua"/>
 	<Script file="unitframes\layout.lua"/>
-			
+
 	<Script file="class\priest.lua"/>
 	<Script file="class\hunter.lua"/>
+	
+	<Script file="scripts\ghostframe.lua"/>
 </Ui>
