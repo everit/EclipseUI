@@ -2,6 +2,9 @@
 
 if not TukuiCF["nameplate"].enable == true then return end
 
+local db = TukuiCF.fonts
+local font, font_size, font_style, font_shadow = db.nameplate_font, db.nameplate_font_size, db.nameplate_font_style, db.nameplate_font_shadow
+
 local tNamePlates = CreateFrame("Frame", nil, UIParent)
 tNamePlates:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
 
@@ -9,15 +12,9 @@ tNamePlates:SetScript("OnEvent", function(self, event, ...) self[event](self, ..
 SetCVar("bloatthreat", 0)
 SetCVar("bloattest", 0)
 
-local barTexture = TukuiCF["media"].normTex
+local barTexture = TukuiCF["media"].blank
 local overlayTexture = [=[Interface\Tooltips\Nameplate-Border]=]
-local font, fontSize, fontOutline = TukuiCF["media"].font, 10, "OUTLINE"
 local glowTexture = TukuiCF["media"].glowTex
-
-local backdrop = {
-	edgeFile = glowTexture, edgeSize = TukuiDB.Scale(3),
-	insets = {left = TukuiDB.Scale(3), right = TukuiDB.Scale(3), top = TukuiDB.Scale(3), bottom = TukuiDB.Scale(3)}
-}
 
 local select = select
 
@@ -44,7 +41,7 @@ local threatUpdate = function(self, elapsed)
 	self.elapsed = self.elapsed + elapsed
 	if self.elapsed >= 0.2 then
 		if not self.oldglow:IsShown() then
-			self.healthBar.hpGlow:SetBackdropBorderColor(0, 0, 0)
+			self.healthBar.hpGlow:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
 		else
 			local r, g, b = self.oldglow:GetVertexColor()
 			if g + b == 0 then
@@ -87,16 +84,16 @@ local updatePlate = function(self)
 	self.r, self.g, self.b = newr, newg, newb
 
 	self.healthBar:ClearAllPoints()
-	self.healthBar:SetPoint("CENTER", self.healthBar:GetParent())
-	self.healthBar:SetHeight(TukuiDB.Scale(7))
-	self.healthBar:SetWidth(TukuiDB.Scale(110))
+	self.healthBar:SetPoint("CENTER", self.healthBar:GetParent(), 0, 5)
+	self.healthBar:SetHeight(TukuiDB.Scale(7) * UIParent:GetEffectiveScale())
+	self.healthBar:SetWidth(TukuiDB.Scale(110) * UIParent:GetEffectiveScale())
 
 	self.healthBar.hpBackground:SetVertexColor(self.r * 0.20, self.g * 0.20, self.b * 0.20)
 
 	self.castBar:ClearAllPoints()
 	self.castBar:SetPoint("TOP", self.healthBar, "BOTTOM", 0, TukuiDB.Scale(-4))
-	self.castBar:SetHeight(TukuiDB.Scale(5))
-	self.castBar:SetWidth(TukuiDB.Scale(110))
+	self.castBar:SetHeight(TukuiDB.Scale(5) * UIParent:GetEffectiveScale())
+	self.castBar:SetWidth(TukuiDB.Scale(110) * UIParent:GetEffectiveScale())
 
 	self.highlight:ClearAllPoints()
 	self.highlight:SetAllPoints(self.healthBar)
@@ -110,7 +107,7 @@ local updatePlate = function(self)
 
 	local level, elite, mylevel = tonumber(self.level:GetText()), self.elite:IsShown(), UnitLevel("player")
 	self.level:ClearAllPoints()
-	self.level:SetPoint("RIGHT", self.healthBar, "LEFT", TukuiDB.Scale(-2), 0)
+	self.level:SetPoint("RIGHT", self.healthBar, "LEFT", TukuiDB.Scale(-2) * UIParent:GetEffectiveScale() , TukuiDB.Scale(1) * UIParent:GetEffectiveScale())
 	if self.boss:IsShown() then
 		self.level:SetText("B")
 		self.level:SetTextColor(0.8, 0.05, 0)
@@ -127,7 +124,7 @@ local fixCastbar = function(self)
 
 	self:SetHeight(TukuiDB.Scale(5))
 	self:ClearAllPoints()
-	self:SetPoint("TOP", self.healthBar, "BOTTOM", 0, TukuiDB.Scale(-4))
+	self:SetPoint("TOP", self.healthBar, "BOTTOM", 0, TukuiDB.Scale(-6))
 end
 
 local colorCastBar = function(self, shielded)
@@ -136,8 +133,8 @@ local colorCastBar = function(self, shielded)
 		self.cbGlow:SetBackdropBorderColor(0.75, 0.75, 0.75)
 		self.icGlow:SetBackdropBorderColor(0.75, 0.75, 0.75)
 	else
-		self.cbGlow:SetBackdropBorderColor(0, 0, 0)
-		self.icGlow:SetBackdropBorderColor(0, 0, 0)
+		self.cbGlow:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
+		self.icGlow:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
 	end
 end
 
@@ -173,9 +170,7 @@ local onEvent = function(self, event, unit)
 end
 
 local createPlate = function(frame)
-	if frame.done then
-		return
-	end
+	if frame.done then return end
 
 	frame.nameplate = true
 
@@ -185,18 +180,18 @@ local createPlate = function(frame)
 
 	frame.oldname = nameTextRegion
 	nameTextRegion:Hide()
+	local offset = UIParent:GetEffectiveScale()
 
 	local newNameRegion = frame:CreateFontString()
 	newNameRegion:SetPoint("BOTTOM", healthBar, "TOP", 0, TukuiDB.Scale(3))
-	newNameRegion:SetFont(font, fontSize, fontOutline)
+	newNameRegion:SetFont(font, font_size, font_style)
 	newNameRegion:SetTextColor(0.84, 0.75, 0.65)
-	newNameRegion:SetShadowOffset(TukuiDB.mult, -TukuiDB.mult)
+	newNameRegion:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	frame.name = newNameRegion
 
 	frame.level = levelTextRegion
-	levelTextRegion:SetFont(font, fontSize, fontOutline)
-	levelTextRegion:SetShadowOffset(TukuiDB.mult, -TukuiDB.mult)
-
+	levelTextRegion:SetFont(font, font_size, font_style)
+	levelTextRegion:SetShadowColor(0,0,0,0)
 	healthBar:SetStatusBarTexture(barTexture)
 
 	healthBar.hpBackground = healthBar:CreateTexture(nil, "BORDER")
@@ -205,12 +200,17 @@ local createPlate = function(frame)
 	healthBar.hpBackground:SetVertexColor(0.15, 0.15, 0.15)
 
 	healthBar.hpGlow = CreateFrame("Frame", nil, healthBar)
+	healthBar.hpGlow:SetBackdrop({
+		bgFile = TukuiCF["media"].blank, 
+		edgeFile = TukuiCF["media"].blank, 
+		tile = false, tileSize = 0, edgeSize = 1 * offset, 
+		insets = { left = -1 * offset, right = -1 * offset, top = -1 * offset, bottom = -1 * offset}
+	})
+	healthBar.hpGlow:SetBackdropColor(unpack(TukuiCF["media"].backdropcolor))
+	healthBar.hpGlow:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
+	healthBar.hpGlow:SetPoint("TOPLEFT", healthBar, "TOPLEFT", -2 * offset, 2 * offset)
+	healthBar.hpGlow:SetPoint("BOTTOMRIGHT", healthBar, "BOTTOMRIGHT", 2 * offset, -2 * offset)
 	healthBar.hpGlow:SetFrameLevel(healthBar:GetFrameLevel() -1 > 0 and healthBar:GetFrameLevel() -1 or 0)
-	healthBar.hpGlow:SetPoint("TOPLEFT", healthBar, "TOPLEFT", TukuiDB.Scale(-3), TukuiDB.Scale(3))
-	healthBar.hpGlow:SetPoint("BOTTOMRIGHT", healthBar, "BOTTOMRIGHT", TukuiDB.Scale(3), TukuiDB.Scale(-3))
-	healthBar.hpGlow:SetBackdrop(backdrop)
-	healthBar.hpGlow:SetBackdropColor(0, 0, 0)
-	healthBar.hpGlow:SetBackdropBorderColor(0, 0, 0)
 
 	castBar.castbarOverlay = castbarOverlay
 	castBar.healthBar = healthBar
@@ -225,10 +225,10 @@ local createPlate = function(frame)
 	castBar:RegisterEvent("UNIT_SPELLCAST_NOT_INTERRUPTIBLE")
 
 	castBar.time = castBar:CreateFontString(nil, "ARTWORK")
-	castBar.time:SetPoint("RIGHT", castBar, "LEFT", TukuiDB.Scale(-2), 0)
-	castBar.time:SetFont(font, fontSize, fontOutline)
-	castBar.time:SetTextColor(0.84, 0.75, 0.65)
-	castBar.time:SetShadowOffset(TukuiDB.mult, -TukuiDB.mult)
+	castBar.time:SetPoint("RIGHT", castBar, "LEFT", TukuiDB.Scale(-2), TukuiDB.Scale(1))
+	castBar.time:SetFont(font, font_size, font_style)
+	castBar.time:SetTextColor(1, 1, 1)
+	castBar.time:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 
 	castBar.cbBackground = castBar:CreateTexture(nil, "BACKGROUND")
 	castBar.cbBackground:SetAllPoints(castBar)
@@ -236,12 +236,17 @@ local createPlate = function(frame)
 	castBar.cbBackground:SetVertexColor(0.15, 0.15, 0.15)
 
 	castBar.cbGlow = CreateFrame("Frame", nil, castBar)
+	castBar.cbGlow:SetBackdrop({
+		bgFile = TukuiCF["media"].blank, 
+		edgeFile = TukuiCF["media"].blank, 
+		tile = false, tileSize = 0, edgeSize = 1 * offset, 
+		insets = { left = -1 * offset, right = -1 * offset, top = -1 * offset, bottom = -1 * offset}
+	})
+	castBar.cbGlow:SetBackdropColor(unpack(TukuiCF["media"].backdropcolor))
+	castBar.cbGlow:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
+	castBar.cbGlow:SetPoint("TOPLEFT", castBar, "TOPLEFT", -2 * offset, 2 * offset)
+	castBar.cbGlow:SetPoint("BOTTOMRIGHT", castBar, "BOTTOMRIGHT", 2 * offset, -2 * offset)
 	castBar.cbGlow:SetFrameLevel(castBar:GetFrameLevel() -1 > 0 and castBar:GetFrameLevel() -1 or 0)
-	castBar.cbGlow:SetPoint("TOPLEFT", castBar, "TOPLEFT", TukuiDB.Scale(-3), TukuiDB.Scale(3))
-	castBar.cbGlow:SetPoint("BOTTOMRIGHT", castBar, "BOTTOMRIGHT", TukuiDB.Scale(3), TukuiDB.Scale(-3))
-	castBar.cbGlow:SetBackdrop(backdrop)
-	castBar.cbGlow:SetBackdropColor(0.25, 0.25, 0.25, 0)
-	castBar.cbGlow:SetBackdropBorderColor(0, 0, 0)
 
 	castBar.Holder = CreateFrame("Frame", nil, castBar)
 	castBar.Holder:SetFrameLevel(castBar.Holder:GetFrameLevel() + 1)
@@ -250,15 +255,21 @@ local createPlate = function(frame)
 	spellIconRegion:ClearAllPoints()
 	spellIconRegion:SetParent(castBar)
 	spellIconRegion:SetTexCoord(.08, .92, .08, .92)
-	spellIconRegion:SetPoint("BOTTOMLEFT", castBar, "BOTTOMRIGHT", 5, 0.25)
-	spellIconRegion:SetSize(TukuiDB.Scale(15), TukuiDB.Scale(15))
+	spellIconRegion:SetPoint("BOTTOMLEFT", castBar, "BOTTOMRIGHT", 6, 0)
+	spellIconRegion:SetSize(TukuiDB.Scale(17), TukuiDB.Scale(17))
 
 	spellIconRegion.IconBackdrop = CreateFrame("Frame", nil, castBar)
-	spellIconRegion.IconBackdrop:SetPoint("TOPLEFT", spellIconRegion, "TOPLEFT", TukuiDB.Scale(-3), TukuiDB.Scale(3))
-	spellIconRegion.IconBackdrop:SetPoint("BOTTOMRIGHT", spellIconRegion, "BOTTOMRIGHT", TukuiDB.Scale(3), TukuiDB.Scale(-3))
-	spellIconRegion.IconBackdrop:SetBackdrop(backdrop)
-	spellIconRegion.IconBackdrop:SetBackdropColor(0, 0, 0)
-	spellIconRegion.IconBackdrop:SetBackdropBorderColor(0, 0, 0)
+	spellIconRegion.IconBackdrop:SetBackdrop({
+		bgFile = TukuiCF["media"].blank, 
+		edgeFile = TukuiCF["media"].blank, 
+		tile = false, tileSize = 0, edgeSize = 1 * offset, 
+		insets = { left = -1 * offset, right = -1 * offset, top = -1 * offset, bottom = -1 * offset}
+	})
+	spellIconRegion.IconBackdrop:SetBackdropColor(unpack(TukuiCF["media"].backdropcolor))
+	spellIconRegion.IconBackdrop:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
+	spellIconRegion.IconBackdrop:SetPoint("TOPLEFT", spellIconRegion, "TOPLEFT", -2 * offset, 2 * offset)
+	spellIconRegion.IconBackdrop:SetPoint("BOTTOMRIGHT", spellIconRegion, "BOTTOMRIGHT", 2 * offset, -2 * offset)
+	spellIconRegion.IconBackdrop:SetFrameLevel(castBar:GetFrameLevel() -1 > 0 and castBar:GetFrameLevel() -1 or 0)
 
 	highlightRegion:SetTexture(barTexture)
 	highlightRegion:SetVertexColor(0.25, 0.25, 0.25)
