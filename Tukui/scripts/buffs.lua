@@ -80,16 +80,14 @@ local function UpdateBuffAnchors()
 		
 		-- Leaving this here just in case someone want to use it
 		-- This enable buff border coloring according to Type
-		--[[
-		local dtype = select(5, UnitBuff("player",index))		
-		local color
-		if (dtype ~= nil) then
-			color = DebuffTypeColor[dtype]
-		else
-			color = DebuffTypeColor["none"]
-		end
-		_G[buttonName..index.."Panel"]:SetBackdropBorderColor(color.r * 0.6, color.g * 0.6, color.b * 0.6)
-		--]]
+		-- local dtype = select(5, UnitBuff("player",index))		
+		-- local color
+		-- if (dtype ~= nil) then
+			-- color = DebuffTypeColor[dtype]
+		-- else
+			-- color = DebuffTypeColor["none"]
+		-- end
+		-- _G[buttonName..index.."Panel"]:SetBackdropBorderColor(color.r * 0.6, color.g * 0.6, color.b * 0.6)
 		
 		if ( buff.consolidated ) then
 			if ( buff.parent == BuffFrame ) then
@@ -139,7 +137,7 @@ local function UpdateDebuffAnchors(buttonName, index)
 	_G[buttonName..index.."Panel"]:SetBackdropBorderColor(color.r * 0.6, color.g * 0.6, color.b * 0.6)
 	debuff:ClearAllPoints()
 	if index == 1 then
-		debuff:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-184), TukuiDB.Scale(-161))
+		debuff:SetPoint("BOTTOMRIGHT", TukuiMinimap, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
 	else
 		debuff:SetPoint("RIGHT", _G[buttonName..(index-1)], "LEFT", TukuiDB.Scale(-4), 0)
 	end
@@ -161,7 +159,7 @@ local hr, m, s, text
 		text = (format("|cffce3a19%d", s))
 	else
 		hr = floor(time / 3600 + 1)
-		text = format("%dh", hr)
+		text = format("%d" .. cStart .. " H", hr)
 	end
 	text = format("|cffffffff".."%s", text)
 	return text
