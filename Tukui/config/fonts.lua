@@ -38,7 +38,9 @@ TukuiCF["fonts"] = {
 	["actionbar_font_style"] = "MONOCHROMEOUTLINE",
 	["actionbar_font_shadow"] = false,
 
+	["actionbar_cooldown_font_size"] = 20, -- set this seperately because of font scaling
 
+	
 	----- [[     Auras Fonts     ]] -----
 	["aura_font"] = TukuiCF.media.custom_font_1,
 	["aura_font_size"] = 12,

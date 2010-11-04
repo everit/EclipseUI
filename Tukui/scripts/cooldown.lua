@@ -9,8 +9,9 @@ if IsAddOnLoaded("OmniCC") or IsAddOnLoaded("ncCooldown") or db.enable ~= true t
 
 OmniCC = true --hack to work around detection from other addons for OmniCC
 local ICON_SIZE = 36 --the normal size for an icon (don't change this)
-local FONT_FACE = TukuiCF["media"].font --what font to use
-local FONT_SIZE = 20 --the base font size to use at a scale of 1
+local FONT_FACE = TukuiCF["fonts"].actionbar_font --what font to use
+local FONT_SIZE = TukuiCF["fonts"].actionbar_cooldown_font_size  --the base font size to use at a scale of 1
+local FONT_STYLE = TukuiCF["fonts"].actionbar_font_style
 local FONT_COLOR = {1, 1, 1}
 local MIN_SCALE = 0.5 --the minimum scale we want to show cooldown counts at, anything below this will be hidden
 local MIN_DURATION = 3 --the minimum duration to show cooldown text for
@@ -73,7 +74,7 @@ local function Timer_OnSizeChanged(self, width, height)
 	if fontScale < MIN_SCALE then
 		self:Hide()
 	else
-		self.text:SetFont(FONT_FACE, fontScale * FONT_SIZE, 'OUTLINE')
+		self.text:SetFont(FONT_FACE, fontScale * FONT_SIZE, FONT_STYLE)
 		self.text:SetShadowColor(0, 0, 0, 0.5)
 		self.text:SetShadowOffset(2, -2)
 		if self.enabled then
