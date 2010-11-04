@@ -184,7 +184,7 @@ local function SetupChat(self)
 		FCFTab_UpdateColors(_G["ChatFrame"..i.."Tab"], false)
 		_G["ChatFrame"..i.."TabText"]:SetFont(TukuiCF.fonts.chat_tab_font, TukuiCF.fonts.chat_tab_font_size, TukuiCF.fonts.chat_tab_font_style)
 		_G["ChatFrame"..i.."TabText"]:SetShadowOffset(TukuiCF.fonts.chat_tab_font_shadow and 1 or 0, TukuiCF.fonts.chat_tab_font_shadow and -1 or 0)
-		_G["ChatFrame"..i]:SetFont(TukuiCF.fonts.chat_font, 10, TukuiCF.fonts.chat_font_style)
+		_G["ChatFrame"..i]:SetFont(TukuiCF.fonts.chat_font, 11, TukuiCF.fonts.chat_font_style)
 		_G["ChatFrame"..i]:SetShadowOffset(TukuiCF.fonts.chat_font_shadow and 1 or 0, TukuiCF.fonts.chat_font_shadow and -1 or 0)
 	end
 
@@ -212,13 +212,13 @@ local function SetupChatPosAndFont(self)
 		-- doing resize of chat also here for users that hit "cancel" when default installation is show.
 		if i == 1 then
 			chat:ClearAllPoints()
-			chat:SetSize(TukuiDB.Scale(TukuiCF["panels"].tinfowidth - 8), TukuiCF["chat"].chatheight - 9)
-			chat:SetPoint("BOTTOMLEFT", TukuiChatLeft, "BOTTOMLEFT", TukuiDB.Scale(3), TukuiDB.Scale(5))
+			chat:SetPoint("BOTTOMLEFT", TukuiChatLeft, "BOTTOMLEFT", TukuiDB.Scale(5), TukuiDB.Scale(4))
+			chat:SetPoint("TOPRIGHT", TukuiChatLeft, "TOPRIGHT", TukuiDB.Scale(-5), TukuiDB.Scale(-1))
 		elseif i == 4 and name == LOOT then
 			if not chat.isDocked then
-				chat:SetSize(TukuiDB.Scale(TukuiCF["panels"].tinfowidth - 8), TukuiCF["chat"].chatheight - 9)
 				chat:ClearAllPoints()
-				chat:SetPoint("BOTTOMRIGHT", TukuiChatRight, "BOTTOMRIGHT", TukuiDB.Scale(-5), TukuiDB.Scale(5))
+				chat:SetPoint("BOTTOMLEFT", TukuiChatRight, "BOTTOMLEFT", TukuiDB.Scale(5), TukuiDB.Scale(4))
+				chat:SetPoint("TOPRIGHT", TukuiChatRight, "TOPRIGHT", TukuiDB.Scale(-5), TukuiDB.Scale(-1))
 				FCF_SavePositionAndDimensions(chat)
 			end
 		end
@@ -226,7 +226,7 @@ local function SetupChatPosAndFont(self)
 		-- i'm sick and fucking tired of these stupid chat tabs forcing you to change your chat height...NOT ANYMORE FUCKERS!!!
 		-- move this later
 		_G["ChatFrame"..i.."TabText"]:ClearAllPoints()
-		_G["ChatFrame"..i.."TabText"]:SetPoint("CENTER", _G["ChatFrame"..i.."Tab"], "CENTER",0,-3)
+		_G["ChatFrame"..i.."TabText"]:SetPoint("CENTER", _G["ChatFrame"..i.."Tab"], "CENTER",0,-4)
 	end
 
 	-- reposition battle.net popup over chat #1

@@ -89,10 +89,12 @@ local function install()
 			-- move general bottom left or Loot (if found) on right.
 			if i == 1 then
 				frame:ClearAllPoints()
-				frame:SetPoint("BOTTOMLEFT", TukuiChatLeft, "BOTTOMLEFT", TukuiDB.Scale(3), TukuiDB.Scale(5))
+				frame:SetPoint("BOTTOMLEFT", TukuiChatLeft, "BOTTOMLEFT", TukuiDB.Scale(5), TukuiDB.Scale(4))
+				frame:SetPoint("TOPRIGHT", TukuiChatLeft, "TOPRIGHT", TukuiDB.Scale(-5), TukuiDB.Scale(-1))
 			elseif i == 4 and chatName == LOOT then
 				frame:ClearAllPoints()
-				frame:SetPoint("BOTTOMRIGHT", TukuiChatRight, "BOTTOMRIGHT", TukuiDB.Scale(-5), TukuiDB.Scale(5))
+				frame:SetPoint("BOTTOMLEFT", TukuiChatRight, "BOTTOMLEFT", TukuiDB.Scale(5), TukuiDB.Scale(4))
+				frame:SetPoint("TOPRIGHT", TukuiChatRight, "TOPRIGHT", TukuiDB.Scale(-5), TukuiDB.Scale(-1))
 			end
 
 			-- save new default position and dimension
@@ -102,7 +104,7 @@ local function install()
 			FCF_SetChatWindowFontSize(nil, frame, fontSize) -- zzz, 1 fontsize to rule them all...oh wait, just select fontsize in-game, added more to the option, lol!
 			
 			-- rename windows general and combat log
-			if i == 1 then FCF_SetWindowName(frame, "G, S & W") end
+			if i == 1 then FCF_SetWindowName(frame, "G, S, W") end
 			if i == 2 then FCF_SetWindowName(frame, "Log") end
 		end
 		
