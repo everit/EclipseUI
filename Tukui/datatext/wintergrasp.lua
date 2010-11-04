@@ -1,11 +1,15 @@
 if TukuiCF["datatext"].wintergrasp and TukuiCF["datatext"].wintergrasp > 0 then
+	local db = TukuiCF.fonts
+	local font, font_size, font_style, font_shadow = db.datatext_font, db.datatext_font_size, db.datatext_font_style, db.datatext_font_shadow
+
 	local Stat = CreateFrame("Frame")
 	Stat:EnableMouse(true)
 	Stat:SetFrameStrata("BACKGROUND")
  	Stat:SetFrameLevel(3)
 
 	local Text  = TukuiDataLeft:CreateFontString(nil, "OVERLAY")
-	Text:SetFont(TukuiCF.theme.DATA_Font, TukuiCF.theme.DATA_FSize, TukuiCF.theme.DATA_FFlag)
+	Text:SetFont(font, font_size, font_style)
+	Text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	TukuiDB.PP(TukuiCF["datatext"].wintergrasp, Text)
 
 	local function Update(self)
