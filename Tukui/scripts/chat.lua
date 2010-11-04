@@ -6,7 +6,7 @@ if TukuiCF["chat"].enable ~= true then return end
 
 local TukuiChat = CreateFrame("Frame")
 local tabalpha = 1
-local tabnoalpha = 0
+local tabnoalpha = 1
 local _G = _G
 local origs = {}
 local type = type
@@ -58,26 +58,19 @@ local function SetChatStyle(frame)
 	tab:SetAlpha(1)
 	tab.SetAlpha = UIFrameFadeRemoveFrame
 	
-	-- hide text when setting chat
-	_G[chat.."TabText"]:Hide()
-	
-	-- now show text if mouse is found over tab.
-	tab:HookScript("OnEnter", function() _G[chat.."TabText"]:Show() end)
-	tab:HookScript("OnLeave", function() _G[chat.."TabText"]:Hide() end)
-	
 	-- yeah baby
 	_G[chat]:SetClampRectInsets(0,0,0,0)
 	
 	-- Removes crap from the bottom of the chatbox so it can go to the bottom of the screen.
 	_G[chat]:SetClampedToScreen(false)
-			
+
 	-- Stop the chat chat from fading out
 	_G[chat]:SetFading(false)
 	
 	-- move the chat edit box
 	_G[chat.."EditBox"]:ClearAllPoints();
-	_G[chat.."EditBox"]:SetPoint("TOPLEFT", TukuiInfoLeft, TukuiDB.Scale(2), TukuiDB.Scale(-2))
-	_G[chat.."EditBox"]:SetPoint("BOTTOMRIGHT", TukuiInfoLeft, TukuiDB.Scale(-2), TukuiDB.Scale(2))
+	_G[chat.."EditBox"]:SetPoint("TOPLEFT", TukuiDataLeft, TukuiDB.Scale(2), TukuiDB.Scale(-2))
+	_G[chat.."EditBox"]:SetPoint("BOTTOMRIGHT", TukuiDataLeft, TukuiDB.Scale(-2), TukuiDB.Scale(2))
 	
 	-- Hide textures
 	for j = 1, #CHAT_FRAME_TEXTURES do
@@ -117,7 +110,7 @@ local function SetChatStyle(frame)
 
 	-- Kill off editbox artwork
 	local a, b, c = select(6, _G[chat.."EditBox"]:GetRegions()); TukuiDB.Kill (a); TukuiDB.Kill (b); TukuiDB.Kill (c)
-				
+
 	-- Disable alt key usage
 	_G[chat.."EditBox"]:SetAltArrowKeyMode(false)
 	
@@ -129,19 +122,21 @@ local function SetChatStyle(frame)
 	
 	-- hide edit box every time we click on a tab
 	_G[chat.."Tab"]:HookScript("OnClick", function() _G[chat.."EditBox"]:Hide() end)
-			
+
 	-- rename combag log to log
 	if _G[chat] == _G["ChatFrame2"] then
 		FCF_SetWindowName(_G[chat], "Log")
 	end
-			
+
 	-- create our own texture for edit box
 	local EditBoxBackground = CreateFrame("frame", "TukuiChatchatEditBoxBackground", _G[chat.."EditBox"])
-	TukuiDB.CreatePanel(EditBoxBackground, 1, 1, "LEFT", _G[chat.."EditBox"], "LEFT", 0, 0)
+	EditBoxBackground:SetHeight(1)
+	EditBoxBackground:SetWidth(1)
 	EditBoxBackground:ClearAllPoints()
-	EditBoxBackground:SetAllPoints(TukuiInfoLeft)
+	EditBoxBackground:SetAllPoints(TukuiDataLeft)
 	EditBoxBackground:SetFrameStrata("LOW")
 	EditBoxBackground:SetFrameLevel(1)
+	TukuiDB.SetTemplate(EditBoxBackground)
 	
 	local function colorize(r,g,b)
 		EditBoxBackground:SetBackdropBorderColor(r, g, b)
@@ -166,6 +161,19 @@ local function SetChatStyle(frame)
 		origs[_G[chat]] = _G[chat].AddMessage
 		_G[chat].AddMessage = AddMessage
 	end
+	
+	-- change chat tab color
+	hooksecurefunc("FCFTab_UpdateColors", function(chatTab, isSelected) 
+		-- chatTab:GetFontString():SetTextColor(1, 1, 1)
+		chatTab:GetFontString():SetTextColor(unpack(TukuiCF["media"].datatext_color))
+		if ( chatTab.conversationIcon ) then
+			-- chatTab.conversationIcon:SetVertexColor(1, 1, 1) -- changes color of the b.net whisper window icon.
+			chatTab.conversationIcon:SetVertexColor(unpack(TukuiCF["media"].datatext_color))
+		end
+		if isSelected then 
+			FCFTab_UpdateColors(chatTab, false) 
+		end 
+	end)
 end
 
 -- Setup chatframes 1 to 10 on login.
@@ -173,9 +181,13 @@ local function SetupChat(self)
 	for i = 1, NUM_CHAT_WINDOWS do
 		local frame = _G[format("ChatFrame%s", i)]
 		SetChatStyle(frame)
-		FCFTab_UpdateAlpha(frame)
+		FCFTab_UpdateColors(_G["ChatFrame"..i.."Tab"], false)
+		_G["ChatFrame"..i.."TabText"]:SetFont(TukuiCF.fonts.chat_tab_font, TukuiCF.fonts.chat_tab_font_size, TukuiCF.fonts.chat_tab_font_style)
+		_G["ChatFrame"..i.."TabText"]:SetShadowOffset(TukuiCF.fonts.chat_tab_font_shadow and 1 or 0, TukuiCF.fonts.chat_tab_font_shadow and -1 or 0)
+		_G["ChatFrame"..i]:SetFont(TukuiCF.fonts.chat_font, 10, TukuiCF.fonts.chat_font_style)
+		_G["ChatFrame"..i]:SetShadowOffset(TukuiCF.fonts.chat_font_shadow and 1 or 0, TukuiCF.fonts.chat_font_shadow and -1 or 0)
 	end
-				
+
 	-- Remember last channel
 	ChatTypeInfo.WHISPER.sticky = 1
 	ChatTypeInfo.BN_WHISPER.sticky = 1
@@ -193,30 +205,30 @@ local function SetupChatPosAndFont(self)
 		local point = GetChatWindowSavedPosition(id)
 		local _, fontSize = FCF_GetChatWindowInfo(id)
 		
-		-- well... tukui font under fontsize 12 is unreadable.
-		if fontSize < 12 then		
-			FCF_SetChatWindowFontSize(nil, chat, 12)
-		else
-			FCF_SetChatWindowFontSize(nil, chat, fontSize)
-		end
+		FCF_SetChatWindowFontSize(nil, chat, fontSize) -- zzz, 1 fontsize to rule them all...oh wait, just select fontsize in-game, added more to the option, lol!
 		
 		-- force chat position on #1 and #4, needed if we change ui scale or resolution
 		-- also set original width and height of chatframes 1 and 4 if first time we run tukui.
 		-- doing resize of chat also here for users that hit "cancel" when default installation is show.
 		if i == 1 then
 			chat:ClearAllPoints()
-			chat:SetPoint("BOTTOMLEFT", TukuiInfoLeft, "TOPLEFT", 0, TukuiDB.Scale(6))
-			FCF_SavePositionAndDimensions(chat)
+			chat:SetSize(TukuiDB.Scale(TukuiCF["panels"].tinfowidth - 8), TukuiCF["chat"].chatheight - 9)
+			chat:SetPoint("BOTTOMLEFT", TukuiChatLeft, "BOTTOMLEFT", TukuiDB.Scale(3), TukuiDB.Scale(5))
 		elseif i == 4 and name == LOOT then
 			if not chat.isDocked then
+				chat:SetSize(TukuiDB.Scale(TukuiCF["panels"].tinfowidth - 8), TukuiCF["chat"].chatheight - 9)
 				chat:ClearAllPoints()
-				chat:SetPoint("BOTTOMRIGHT", TukuiInfoRight, "TOPRIGHT", 0, TukuiDB.Scale(6))
-				chat:SetJustifyH("RIGHT") 
+				chat:SetPoint("BOTTOMRIGHT", TukuiChatRight, "BOTTOMRIGHT", TukuiDB.Scale(-5), TukuiDB.Scale(5))
 				FCF_SavePositionAndDimensions(chat)
 			end
 		end
+
+		-- i'm sick and fucking tired of these stupid chat tabs forcing you to change your chat height...NOT ANYMORE FUCKERS!!!
+		-- move this later
+		_G["ChatFrame"..i.."TabText"]:ClearAllPoints()
+		_G["ChatFrame"..i.."TabText"]:SetPoint("CENTER", _G["ChatFrame"..i.."Tab"], "CENTER",0,-3)
 	end
-			
+
 	-- reposition battle.net popup over chat #1
 	BNToastFrame:HookScript("OnShow", function(self)
 		self:ClearAllPoints()
@@ -351,19 +363,19 @@ function TukuiDB.ChatCopyButtons()
 	for i = 1, NUM_CHAT_WINDOWS do
 		local cf = _G[format("ChatFrame%d",  i)]
 		local button = CreateFrame("Button", format("ButtonCF%d", i), cf)
-		button:SetPoint("TOPRIGHT", 0, 0)
+		button:SetPoint("BOTTOMRIGHT", 0, 0)
 		button:SetHeight(TukuiDB.Scale(20))
 		button:SetWidth(TukuiDB.Scale(20))
 		button:SetAlpha(0)
 		TukuiDB.SetTemplate(button)
 		
 		local buttontext = button:CreateFontString(nil,"OVERLAY",nil)
-		buttontext:SetFont(TukuiCF.media.font,12,"OUTLINE")
+		buttontext:SetFont(TukuiCF.media.font, 10, "MONOCHROMEOUTLINE")
 		buttontext:SetText("C")
 		buttontext:SetPoint("CENTER", TukuiDB.Scale(1), 0)
 		buttontext:SetJustifyH("CENTER")
 		buttontext:SetJustifyV("CENTER")
-				
+
 		button:SetScript("OnMouseUp", function(self)
 			Copy(cf)
 		end)
