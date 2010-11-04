@@ -29,15 +29,19 @@ bar:SetScript("OnEvent", function(self, event, ...)
 		for i = 1, 10 do
 			button = _G["PetActionButton"..i]
 			button:ClearAllPoints()
+			button:SetSize(TukuiDB.petbuttonsize, TukuiDB.petbuttonsize)
 			button:SetParent(TukuiPetBar)
 			TukuiPetActionBarBackground:SetParent(TukuiPetBar)
 			TukuiPetActionBarBackground:SetFrameStrata("BACKGROUND")
 			TukuiPetActionBarBackground:SetFrameLevel(1)
-			button:SetSize(TukuiDB.petbuttonsize, TukuiDB.petbuttonsize)
 			if i == 1 then
-				button:SetPoint("TOPLEFT", TukuiDB.Scale(4),TukuiDB.Scale(-4))
+				button:SetPoint("TOPLEFT")
 			else
-				button:SetPoint("TOP", _G["PetActionButton"..(i - 1)], "BOTTOM", 0, TukuiDB.Scale(-4))
+				if TukuiCF.actionbar.rightbars_vh then
+					button:SetPoint("TOP", _G["PetActionButton"..(i - 1)], "BOTTOM", 0, -TukuiDB.buttonspacing)
+				else
+					button:SetPoint("LEFT", _G["PetActionButton"..(i - 1)], "RIGHT", TukuiDB.buttonspacing, 0)
+				end
 			end
 			button:Show()
 			self:SetAttribute("addchild", button)

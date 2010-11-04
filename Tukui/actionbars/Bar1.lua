@@ -76,7 +76,11 @@ bar:SetScript("OnEvent", function(self, event, ...)
 			button:ClearAllPoints()
 			button:SetParent(TukuiMainMenuBar)
 			if i == 1 then
-				button:SetPoint("BOTTOMLEFT", TukuiMainMenuBar, TukuiDB.Scale(4), TukuiDB.Scale(4))
+				if TukuiCF["actionbar"].mainbar_swap then
+					button:SetPoint("TOPLEFT", TukuiMainMenuBar)
+				else
+					button:SetPoint("BOTTOMLEFT", TukuiMainMenuBar)
+				end
 			else
 				local previous = _G["ActionButton"..i-1]
 				button:SetPoint("LEFT", previous, "RIGHT", TukuiDB.buttonspacing, 0)

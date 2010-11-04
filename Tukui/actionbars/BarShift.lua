@@ -4,34 +4,34 @@ if not TukuiCF["actionbar"].enable == true then return end
 -- Setup Shapeshift Bar
 ---------------------------------------------------------------------------
 
--- used for anchor totembar or shapeshiftbar
+local DummyShift = CreateFrame("Frame","DummyShiftBar",UIParent)
 local TukuiShift = CreateFrame("Frame","TukuiShiftBar",UIParent)
-TukuiShift:SetPoint("TOPLEFT", 2, -2)
-TukuiShift:SetWidth(29)
-TukuiShift:SetHeight(58)
+if TukuiCF["actionbar"].vertical_shapeshift then
+	TukuiDB.CreatePanel(TukuiShift, TukuiDB.stancebuttonsize, TukuiDB.stancebuttonsize / 2, "TOPLEFT", 8, -40)
+else
+	TukuiDB.CreatePanel(TukuiShift, TukuiDB.stancebuttonsize / 2, TukuiDB.stancebuttonsize, "TOPLEFT", 8, -40)
+end
+TukuiShift:SetScript("OnEnter", TukuiDB.SetModifiedBackdrop)
+TukuiShift:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 
--- shapeshift command to move totem or shapeshift in-game
-local ssmover = CreateFrame("Frame", "ssmoverholder", UIParent)
-ssmover:SetAllPoints(TukuiShift)
-TukuiDB.SetTemplate(ssmover)
-ssmover:SetAlpha(0)
+TukuiShift:SetAlpha(0)
 TukuiShift:SetMovable(true)
 TukuiShift:SetUserPlaced(true)
 local ssmove = false
 local function showmovebutton()
 	-- don't allow moving while in combat
 	if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
-	
+
 	if ssmove == false then
 		ssmove = true
-		ssmover:SetAlpha(1)
+		TukuiShift:SetAlpha(1)
 		TukuiShift:EnableMouse(true)
 		TukuiShift:RegisterForDrag("LeftButton", "RightButton")
 		TukuiShift:SetScript("OnDragStart", function(self) self:StartMoving() end)
 		TukuiShift:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
 	elseif ssmove == true then
 		ssmove = false
-		ssmover:SetAlpha(0)
+		TukuiShift:SetAlpha(0)
 		TukuiShift:EnableMouse(false)
 	end
 end
@@ -70,12 +70,21 @@ bar:SetScript("OnEvent", function(self, event, ...)
 		for i = 1, NUM_SHAPESHIFT_SLOTS do
 			button = _G["ShapeshiftButton"..i]
 			button:ClearAllPoints()
-			button:SetParent(self)
+			button:SetSize(TukuiDB.stancebuttonsize, TukuiDB.stancebuttonsize)
+			button:SetParent(DummyShift)
 			if i == 1 then
-				button:SetPoint("BOTTOMLEFT", TukuiShift, 0, TukuiDB.Scale(29))
+				if TukuiCF["actionbar"].vertical_shapeshift then
+					button:SetPoint("TOPLEFT", TukuiShiftBar, "BOTTOMLEFT", 0, -3)
+				else
+					button:SetPoint("TOPLEFT", TukuiShiftBar, "TOPRIGHT", 3, 0)
+				end
 			else
 				local previous = _G["ShapeshiftButton"..i-1]
-				button:SetPoint("LEFT", previous, "RIGHT", TukuiDB.Scale(4), 0)
+				if TukuiCF["actionbar"].vertical_shapeshift then
+					button:SetPoint("TOP", previous, "BOTTOM", 0, -TukuiDB.buttonspacing)
+				else
+					button:SetPoint("LEFT", previous, "RIGHT", TukuiDB.buttonspacing, 0)
+				end
 			end
 			local _, name = GetShapeshiftFormInfo(i)
 			if name then

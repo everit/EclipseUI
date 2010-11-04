@@ -9,7 +9,7 @@ if TukuiDB.myclass == "SHAMAN" then
 		MultiCastActionBarFrame:SetScript("OnUpdate", nil)
 		MultiCastActionBarFrame:SetScript("OnShow", nil)
 		MultiCastActionBarFrame:SetScript("OnHide", nil)
-		MultiCastActionBarFrame:SetParent(TukuiShiftBar)
+		MultiCastActionBarFrame:SetParent(DummyShiftBar)
 		MultiCastActionBarFrame:ClearAllPoints()
 		MultiCastActionBarFrame:SetPoint("BOTTOMLEFT", TukuiShiftBar, 0, TukuiDB.Scale(23))
  
