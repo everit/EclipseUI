@@ -26,10 +26,10 @@ if TukuiDB.client == "esES" then
 	
 	tukuilocal.disband = "Desacer grupo."
  
-	tukuilocal.datatext_guild = "Hermandad"
+	tukuilocal.datatext_guild = "Hermandad: "
 	tukuilocal.datatext_noguild = "Sin Hermandad"
 	tukuilocal.datatext_bags = "Bolsas: "
-	tukuilocal.datatext_friends = "Amigos"
+	tukuilocal.datatext_friends = "Amigos: "
 	tukuilocal.datatext_online = "Conectados: "
 	tukuilocal.datatext_armor = "Armadura"
 	tukuilocal.datatext_earned = "Ganado:"
@@ -50,11 +50,11 @@ if TukuiDB.client == "esES" then
 	tukuilocal.datatext_totalgold = "Total: "
 	tukuilocal.datatext_savedraid = "Mazmorras Registradas"
 	tukuilocal.datatext_currency = "Moneda:"
-	tukuilocal.datatext_fps = " fps & "
-	tukuilocal.datatext_ms = " ms"
+	tukuilocal.datatext_fps = "FPS: "
+	tukuilocal.datatext_ms = "MS: "
 	tukuilocal.datatext_playercrit = " crit"
 	tukuilocal.datatext_playerheal = " heal"
-	tukuilocal.datatext_avoidancebreakdown = "Breakdown de Evitación"
+	tukuilocal.datatext_avoidancebreakdown = "Breakdown de Evitación: "
 	tukuilocal.datatext_lvl = "nivel"
 	tukuilocal.datatext_boss = "boss"
 	tukuilocal.datatext_miss = "Fallo"
@@ -95,7 +95,7 @@ if TukuiDB.client == "esES" then
 	tukuilocal.bg_alterac = "Valle de Alterac"
 	tukuilocal.bg_strand = "Playa de los Ancestros"
 	tukuilocal.bg_isle = "Isla de la Conquista"
- 
+	
 	tukuilocal.Slots = {
 		[1] = {1, "Cabeza", 1000},
 		[2] = {3, "Hombro", 1000},

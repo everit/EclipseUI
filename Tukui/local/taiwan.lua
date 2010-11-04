@@ -26,10 +26,10 @@ if TukuiDB.client == "zhTW" then
 	
 	tukuilocal.disband = "正在解散隊伍."
  
-	tukuilocal.datatext_guild = "公會"
+	tukuilocal.datatext_guild = "公會: "
 	tukuilocal.datatext_noguild = "沒有公會"
 	tukuilocal.datatext_bags = "背包: "
-	tukuilocal.datatext_friends = "好友"
+	tukuilocal.datatext_friends = "好友: "
 	tukuilocal.datatext_online = "線上: "
 	tukuilocal.datatext_armor = "耐久度"
 	tukuilocal.datatext_earned = "賺取:"
@@ -50,11 +50,11 @@ if TukuiDB.client == "zhTW" then
 	tukuilocal.datatext_totalgold = "總額: "
 	tukuilocal.datatext_savedraid = "已有進度的團隊副本"
 	tukuilocal.datatext_currency = "兌換通貨:"
-	tukuilocal.datatext_fps = " fps & "
-	tukuilocal.datatext_ms = " ms"
+	tukuilocal.datatext_fps = "FPS: "
+	tukuilocal.datatext_ms = "MS: "
 	tukuilocal.datatext_playercrit = "% 致命"
 	tukuilocal.datatext_playerheal = " 治療"
-	tukuilocal.datatext_avoidancebreakdown = "免傷分析"
+	tukuilocal.datatext_avoidancebreakdown = "免傷分析: "
 	tukuilocal.datatext_lvl = "等級"
 	tukuilocal.datatext_boss = "首領"
 	tukuilocal.datatext_miss = "未擊中"
@@ -88,14 +88,14 @@ if TukuiDB.client == "zhTW" then
 	tukuilocal.datatext_gatesdestroyed = "大門摧毀:"
 	tukuilocal.datatext_totalmemusage = "總共記憶體使用:"
 	tukuilocal.datatext_control = "Controlled by:"
-	
-	tukuilocal.bg_warsong = "戰歌峽谷"
+ 
+ 	tukuilocal.bg_warsong = "戰歌峽谷"
 	tukuilocal.bg_arathi = "阿拉希盆地"
 	tukuilocal.bg_eye = "暴風之眼"
 	tukuilocal.bg_alterac = "奧特蘭克山谷"
 	tukuilocal.bg_strand = "遠祖灘頭"
 	tukuilocal.bg_isle = "征服之島"
- 
+	
 	tukuilocal.Slots = {
 		[1] = {1, "頭部", 1000},
 		[2] = {3, "肩部", 1000},

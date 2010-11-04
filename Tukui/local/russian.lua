@@ -17,19 +17,19 @@ if TukuiDB.client == "ruRU" then
 	tukuilocal.chat_FLAG_GM = "[ГМ]"
 	tukuilocal.chat_ERR_FRIEND_ONLINE_SS = "|cff298F00входит|r"
 	tukuilocal.chat_ERR_FRIEND_OFFLINE_S = "|cffff0000выходит|r"
-	
+ 
 	tukuilocal.chat_general = "Общий"
 	tukuilocal.chat_trade = "Торговля"
 	tukuilocal.chat_defense = "ОборонаЛокальный"
 	tukuilocal.chat_recrutment = "Гильдии"
 	tukuilocal.chat_lfg = "ПоискСпутников"
- 
+	
 	tukuilocal.disband = "Роспуск группы."
  
-	tukuilocal.datatext_guild = "Гильдия"
+	tukuilocal.datatext_guild = "Гильдия: "
 	tukuilocal.datatext_noguild = "Не в Гильдии"
 	tukuilocal.datatext_bags = "Сумки: "
-	tukuilocal.datatext_friends = "Друзья"
+	tukuilocal.datatext_friends = "Друзья: "
 	tukuilocal.datatext_online = "В игре: "
 	tukuilocal.datatext_armor = "Броня"
 	tukuilocal.datatext_earned = "Получено:"
@@ -50,11 +50,11 @@ if TukuiDB.client == "ruRU" then
 	tukuilocal.datatext_totalgold = "Всего: "
 	tukuilocal.datatext_savedraid = "Сохранения:"
 	tukuilocal.datatext_currency = "Валюта:"
-	tukuilocal.datatext_fps = " к/с & "
-	tukuilocal.datatext_ms = " мс"
+	tukuilocal.datatext_fps = "к/с: "
+	tukuilocal.datatext_ms = "мс: "
 	tukuilocal.datatext_playercrit = " crit"
 	tukuilocal.datatext_playerheal = " heal"
-	tukuilocal.datatext_avoidancebreakdown = "Распределение"
+	tukuilocal.datatext_avoidancebreakdown = "Распределение: "
 	tukuilocal.datatext_lvl = "ур"
 	tukuilocal.datatext_boss = "босс"
 	tukuilocal.datatext_miss = "Промах"
@@ -88,14 +88,14 @@ if TukuiDB.client == "ruRU" then
 	tukuilocal.datatext_gatesdestroyed = "Врат разрушено:"
 	tukuilocal.datatext_totalmemusage = "Общее использование памяти:"
 	tukuilocal.datatext_control = "Под контролем:"
-	
-	tukuilocal.bg_warsong = "Ущелье Песни Войны"
+ 
+ 	tukuilocal.bg_warsong = "Ущелье Песни Войны"
 	tukuilocal.bg_arathi = "Низина Арати"
 	tukuilocal.bg_eye = "Око Бури"
 	tukuilocal.bg_alterac = "Альтеракская долина"
 	tukuilocal.bg_strand = "Берег Древних"
 	tukuilocal.bg_isle = "Остров Завоеваний"
- 
+	
 	tukuilocal.Slots = {
 	  [1] = {1, "Голова", 1000},
 	  [2] = {3, "Плечо", 1000},

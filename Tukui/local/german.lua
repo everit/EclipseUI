@@ -26,10 +26,10 @@ if TukuiDB.client == "deDE" then
 	
 	tukuilocal.disband = "Gruppe wird aufgelöst."  
  
-	tukuilocal.datatext_guild = "Gilde"
+	tukuilocal.datatext_guild = "Gilde: "
 	tukuilocal.datatext_noguild = "Keine Gilde"
 	tukuilocal.datatext_bags = "Tasche: "
-	tukuilocal.datatext_friends = "Freunde"
+	tukuilocal.datatext_friends = "Freunde: "
 	tukuilocal.datatext_online = "Online: "
 	tukuilocal.datatext_armor = "Rüstung"
 	tukuilocal.datatext_earned = "Erhalten:"
@@ -50,11 +50,11 @@ if TukuiDB.client == "deDE" then
 	tukuilocal.datatext_totalgold = "Gesamt: "
 	tukuilocal.datatext_savedraid = "Instanz ID(s)"
 	tukuilocal.datatext_currency = "Währung:"
-	tukuilocal.datatext_fps = " fps & "
-	tukuilocal.datatext_ms = " ms"
+	tukuilocal.datatext_fps = "FPS: "
+	tukuilocal.datatext_ms = "MS: "
 	tukuilocal.datatext_playercrit = " crit"
 	tukuilocal.datatext_playerheal = " heal"
-	tukuilocal.datatext_avoidancebreakdown = "Vermeidungsübersicht" 
+	tukuilocal.datatext_avoidancebreakdown = "Vermeidungsübersicht: " 
 	tukuilocal.datatext_lvl = "lvl"
 	tukuilocal.datatext_boss = "boss"
 	tukuilocal.datatext_miss = "Verfehlen" 
@@ -88,14 +88,14 @@ if TukuiDB.client == "deDE" then
 	tukuilocal.datatext_gatesdestroyed = "Tore zerstört:"
 	tukuilocal.datatext_totalmemusage = "Gesamte Speichernutzung:"
 	tukuilocal.datatext_control = "Kontrolliert von:"
-	
-	tukuilocal.bg_warsong = "Kriegshymnenschlucht"
+ 
+ 	tukuilocal.bg_warsong = "Kriegshymnenschlucht"
 	tukuilocal.bg_arathi = "Arathibecken"
 	tukuilocal.bg_eye = "Auge des Sturms"
 	tukuilocal.bg_alterac = "Alteractal"
 	tukuilocal.bg_strand = "Strand der Uralten"
 	tukuilocal.bg_isle = "Insel der Eroberung"
- 
+	
 	tukuilocal.Slots = {
 		[1] = {1, "Kopf", 1000},
 		[2] = {3, "Schulter", 1000},
