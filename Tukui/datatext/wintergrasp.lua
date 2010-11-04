@@ -11,6 +11,30 @@ if TukuiCF["datatext"].wintergrasp and TukuiCF["datatext"].wintergrasp > 0 then
 	Text:SetFont(font, font_size, font_style)
 	Text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	TukuiDB.PP(TukuiCF["datatext"].wintergrasp, Text)
+	
+	FormatTime = function(time)
+		local hr, m, s, text
+		if time <= 0 then
+			text = ""
+		elseif(time < 3600 and time > 60) then
+			hr = floor(time / 3600)
+			m = floor(mod(time, 3600) / 60 + 1)
+			text = format("%d" .. cStart .. " M", m)
+		elseif(time < 60 and time > 10) then
+			m = floor(time / 60)
+			s = mod(time, 60)
+			text = (m == 0 and format("%d", s))
+		elseif time < 10 then
+			s = mod(time, 60)
+			text = (format("|cffce3a19%d", s))
+		else
+			hr = floor(time / 3600)
+			m = floor(mod(time, 3600) / 60 + 1)
+			text = format("%d" .. cStart .. " Hr " .. cEnd .. "%d" .. cStart .. " M", hr, m)
+		end
+		text = format("|cffffffff".."%s", text)
+		return text
+	end
 
 	local function Update(self)
 		local wgtime = GetWintergraspWaitTime() or nil
@@ -20,7 +44,7 @@ if TukuiCF["datatext"].wintergrasp and TukuiCF["datatext"].wintergrasp > 0 then
 			elseif wgtime == nil then
 				Text:SetText(cStart .. "WG: " .. cEnd .. WINTERGRASP_IN_PROGRESS)
 			else
-				Text:SetText(cStart .. "WG: " .. cEnd .. SecondsToTime(wgtime))
+				Text:SetText(cStart .. "WG: " .. cEnd .. FormatTime(wgtime))
 			end
 		self:SetAllPoints(Text)
 	end
