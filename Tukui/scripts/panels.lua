@@ -13,8 +13,10 @@ TukuiCF["panels"] = {["tinfowidth"] = 370}
 local panels = TukuiCF["panels"]
 local chat = TukuiCF["chat"]
 
+local db = TukuiCF["actionbar"]
+
 -- fucking move this shit later
-if TukuiCF["actionbar"].rightbars_vh then
+if db.vertical_rightbars then
 	TukuiCF["panels"].tinfowidth = 350
 else
 	TukuiCF["panels"].tinfowidth = (TukuiDB.buttonsize * 12) + (TukuiDB.buttonspacing * 11) -- force this if vertical rightbars are disabled so people don't go "OMG ACTION BUTTONS DON'T FIT SIDE/CHAT PANELS"
@@ -73,25 +75,25 @@ TukuiDB.CreatePanel(crtabs, TukuiCF["panels"].tinfowidth, TukuiDB.infoheight, "B
 ----- [[     Dummy Frames     ]] -----
 
 local barbg = CreateFrame("Frame", "TukuiActionBarBackground", UIParent)
-barbg:SetWidth((TukuiDB.buttonsize * 12) + (TukuiDB.buttonspacing * 11))
-if TukuiCF["panels"].bottom_panels then
-	barbg:SetPoint("BOTTOM", TukuiDataBottom, "TOP", 0, 3)
+if db.tukui_default == true and not TukuiDB.lowversion then
+	barbg:SetWidth((TukuiDB.buttonsize * 24) + (TukuiDB.buttonspacing * 23))
 else
-	barbg:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 8)
+	barbg:SetWidth((TukuiDB.buttonsize * 12) + (TukuiDB.buttonspacing * 11))
 end
-if TukuiCF["actionbar"].bottomrows == 2 then
+barbg:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 8)
+if db.bottomrows == 2 then
 	barbg:SetHeight((TukuiDB.buttonsize * 2) + (TukuiDB.buttonspacing * 1))
 else
 	barbg:SetHeight(TukuiDB.buttonsize)
 end
 
 
-if TukuiCF["actionbar"].split_bar then
+if db.split_bar then
 	local leftsbg = CreateFrame("Frame", "TukuiLeftSplitBarBackground", UIParent)
 	leftsbg:SetWidth((TukuiDB.buttonsize * 3) + (TukuiDB.buttonspacing * 2))
 	leftsbg:SetPoint("RIGHT", barbg, "LEFT", -10, 0)
 
-	if TukuiCF["actionbar"].bottomrows == 2 then
+	if db.bottomrows == 2 then
 		leftsbg:SetHeight((TukuiDB.buttonsize * 2) + (TukuiDB.buttonspacing * 1))
 	else
 		leftsbg:SetHeight(TukuiDB.buttonsize)
@@ -101,7 +103,7 @@ if TukuiCF["actionbar"].split_bar then
 	rightsbg:SetWidth((TukuiDB.buttonsize * 3) + (TukuiDB.buttonspacing * 2))
 	rightsbg:SetPoint("LEFT", barbg, "RIGHT", 10, 0)
 
-	if TukuiCF["actionbar"].bottomrows == 2 then
+	if db.bottomrows == 2 then
 		rightsbg:SetHeight((TukuiDB.buttonsize * 2) + (TukuiDB.buttonspacing * 1))
 	else
 		rightsbg:SetHeight(TukuiDB.buttonsize)
@@ -111,24 +113,24 @@ end
 
 local rightbbg = CreateFrame("Frame", "TukuiActionBarBackgroundRight", UIParent)
 rightbbg:SetPoint("BOTTOMRIGHT", crtabs, "TOPRIGHT", 0, 3)
-if TukuiCF["actionbar"].rightbars_vh then
+if db.vertical_rightbars == true then
 	rightbbg:SetHeight((TukuiDB.buttonsize * 12) + (TukuiDB.buttonspacing * 11))
-	if TukuiCF["actionbar"].rightbars == 1 then
+	if db.rightbars == 1 then
 		rightbbg:SetWidth(TukuiDB.buttonsize)
-	elseif TukuiCF["actionbar"].split_bar and TukuiCF["actionbar"].rightbars == 2 then
+	elseif db.split_bar == true and db.rightbars > 2 then
 		rightbbg:SetWidth((TukuiDB.buttonsize * 2) + (TukuiDB.buttonspacing * 1))
-	elseif not TukuiCF["actionbar"].split_bar and TukuiCF["actionbar"].rightbars == 3 then
+	elseif not db.split_bar and db.rightbars == 3 then
 		rightbbg:SetWidth((TukuiDB.buttonsize * 3) + (TukuiDB.buttonspacing * 2))
 	else
 		rightbbg:Hide()
 	end
 else
 	rightbbg:SetWidth((TukuiDB.buttonsize * 12) + (TukuiDB.buttonspacing * 11))
-	if TukuiCF["actionbar"].rightbars == 1 then
+	if db.rightbars == 1 then
 		rightbbg:SetHeight(TukuiDB.buttonsize)
-	elseif TukuiCF["actionbar"].split_bar and TukuiCF["actionbar"].rightbars == 2 then
+	elseif db.split_bar == true and db.rightbars > 2 then
 		rightbbg:SetHeight((TukuiDB.buttonsize * 2) + (TukuiDB.buttonspacing * 1))
-	elseif not TukuiCF["actionbar"].split_bar and TukuiCF["actionbar"].rightbars == 3 then
+	elseif not db.split_bar and db.rightbars == 3 then
 		rightbbg:SetHeight((TukuiDB.buttonsize * 3) + (TukuiDB.buttonspacing * 2))
 	else
 		rightbbg:Hide()
@@ -137,11 +139,11 @@ end
 
 
 local petbg = CreateFrame("Frame", "TukuiPetActionBarBackground", UIParent)
-if TukuiCF["actionbar"].rightbars_vh then
+if db.vertical_rightbars == true then
 	petbg:SetWidth(TukuiDB.petbuttonsize)
 	petbg:SetHeight((TukuiDB.petbuttonsize * NUM_PET_ACTION_SLOTS) + (TukuiDB.buttonspacing * 9))
 
-	if TukuiCF["actionbar"].rightbars > 0 then
+	if db.rightbars > 0 then
 		petbg:SetPoint("BOTTOMRIGHT", rightbbg, "BOTTOMLEFT", -3, 0)
 	else
 		petbg:SetPoint("BOTTOMRIGHT", crtabs, "TOPRIGHT", 0, 3)
@@ -150,7 +152,7 @@ else
 	petbg:SetWidth((TukuiDB.petbuttonsize * NUM_PET_ACTION_SLOTS) + (TukuiDB.buttonspacing * 9))
 	petbg:SetHeight(TukuiDB.petbuttonsize)
 
-	if TukuiCF["actionbar"].rightbars > 0 then
+	if db.rightbars > 0 then
 		petbg:SetPoint("BOTTOMRIGHT", rightbbg, "TOPRIGHT", 0, 3)
 	else
 		petbg:SetPoint("BOTTOMRIGHT", crtabs, "TOPRIGHT", 0, 3)
