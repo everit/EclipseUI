@@ -32,28 +32,29 @@ if (buffs and buffs[1]) then
 				self:RegisterEvent("PLAYER_REGEN_DISABLED")
 			end
 		end
-				
+
 		if (UnitAffectingCombat("player") and not UnitInVehicle("player")) then
 			for i, buff in pairs(buffs) do
 				local name = GetSpellInfo(buff)
 				if (name and UnitBuff("player", name)) then
-					self:Hide()
+					self:FadeOut()
 					sound = true
 					return
 				end
 			end
-			self:Show()
+			self:FadeIn()
 			if TukuiCF["buffreminder"].sound == true and sound == true then
 				PlaySoundFile(TukuiCF["media"].warning)
 				sound = false
 			end
 		else
-			self:Hide()
+			self:FadeOut()
 			sound = true
 		end
 	end
 	
 	local frame = CreateFrame("Frame", _, UIParent)
+	frame:SetAlpha(0)
 	
 	frame.icon = frame:CreateTexture(nil, "OVERLAY")
 	frame.icon:SetPoint("CENTER")
@@ -63,14 +64,23 @@ if (buffs and buffs[1]) then
 		frame.icon:SetWidth(TukuiDB.Scale(36))
 		frame.icon:SetHeight(TukuiDB.Scale(36))
 	else
-		TukuiDB.CreatePanel(frame, TukuiDB.Scale(96), TukuiDB.Scale(192), "CENTER", UIParent, "CENTER", 0, TukuiDB.Scale(200))
-		frame.icon:SetWidth(TukuiDB.Scale(96))
-		frame.icon:SetHeight(TukuiDB.Scale(192))
-		frame:SetBackdropColor(0, 0, 0, 0)
-		frame:SetBackdropBorderColor(0, 0, 0, 0)
+		frame:SetPoint("CENTER", UIParent, "CENTER", 0, TukuiDB.Scale(200))
+		frame:SetWidth(TukuiDB.Scale(96))
+		frame:SetHeight(TukuiDB.Scale(192))
+		frame.icon:SetWidth(frame:GetWidth())
+		frame.icon:SetHeight(frame:GetHeight())
+		-- frame:SetBackdropColor(0, 0, 0, 0)
+		-- frame:SetBackdropBorderColor(0, 0, 0, 0)
 	end
-	frame:Hide()
 	
+	function frame:FadeIn()
+		UIFrameFadeIn(self, (0.3 * (1-self:GetAlpha())), self:GetAlpha(), 1)
+	end
+	
+	function frame:FadeOut()
+		UIFrameFadeOut(self, (0.3 * (0+self:GetAlpha())), self:GetAlpha(), 0)
+	end
+
 	frame:RegisterEvent("UNIT_AURA")
 	frame:RegisterEvent("PLAYER_LOGIN")
 	frame:RegisterEvent("PLAYER_REGEN_ENABLED")
