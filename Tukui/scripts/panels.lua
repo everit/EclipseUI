@@ -37,22 +37,18 @@ local bbar = CreateFrame("Frame", "TukuiBottomBar", UIParent)
 TukuiDB.CreatePanel(bbar, (GetScreenWidth() * UIParent:GetEffectiveScale()) * 2, 22, "BOTTOM", UIParent, "BOTTOM", 0, -5)
 bbar:SetFrameLevel(0)
 
------ [[     Bottom Data Panel     ]] -----
-
-if TukuiCF["panels"].bottom_panels then
-	local dbottom = CreateFrame("Frame", "TukuiDataBottom", UIParent)
-	TukuiDB.CreatePanel(dbottom, (TukuiDB.buttonsize * 12 + TukuiDB.buttonspacing * 11), TukuiDB.infoheight, "BOTTOM", UIParent, "BOTTOM", 0, 8)
-end
 
 ----- [[     Left Data Panel     ]] -----
 
 local dleft = CreateFrame("Frame", "TukuiDataLeft", UIParent)
 TukuiDB.CreatePanel(dleft, TukuiCF["panels"].tinfowidth, TukuiDB.infoheight, "BOTTOMLEFT", UIParent, "BOTTOMLEFT", 8, 8)
 
+
 ----- [[     Right Data Panel     ]] -----
 
 local dright = CreateFrame("Frame", "TukuiDataRight", UIParent)
 TukuiDB.CreatePanel(dright, TukuiCF["panels"].tinfowidth, TukuiDB.infoheight, "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -8, 8)
+
 
 ----- [[     Left Chat Background and Tabs     ]] -----
 
@@ -88,7 +84,7 @@ else
 end
 
 
-if db.split_bar then
+if db.split_bar == true then
 	local leftsbg = CreateFrame("Frame", "TukuiLeftSplitBarBackground", UIParent)
 	leftsbg:SetWidth((TukuiDB.buttonsize * 3) + (TukuiDB.buttonspacing * 2))
 	leftsbg:SetPoint("RIGHT", barbg, "LEFT", -10, 0)
@@ -159,11 +155,9 @@ else
 	end
 end
 	
------ [[     S     ]] -----
------ [[     S     ]] -----
-
 
 ----- [[     Battleground Statistics Frame     ]] -----
+
 if TukuiCF["datatext"].battleground == true then
 	local bgframe = CreateFrame("Frame", "TukuiInfoLeftBattleGround", UIParent)
 	TukuiDB.CreatePanel(bgframe, 1, 1, "TOPLEFT", UIParent, "BOTTOMLEFT", 0, 0)
