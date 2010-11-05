@@ -135,148 +135,17 @@ function TukuiDB.StyleShift()
 		
 		local _, _, isActive, _ = GetShapeshiftFormInfo(i)
 
-		-- desaturate other stances if not active? fuck yeah.			
 		if isActive then
 			SetDesaturation(icon, nil)
 		else
-			SetDesaturation(icon, 1)
+			if GetNumShapeshiftForms() > 1 then
+				SetDesaturation(icon, 1)
+			end
 		end
 		button:SetCheckedTexture(nil)
 	end
 end
 
-function TukuiDB.StylePet()
-	for i=1, NUM_PET_ACTION_SLOTS do
-		local name = "PetActionButton"..i
-		local button  = _G[name]
-		local icon  = _G[name.."Icon"]
-		local normal  = _G[name.."NormalTexture2"]
-		stylesmallbutton(normal, button, icon, name, true)
-	end
-end
-
-local function updatehotkey(self, actionButtonType)
-	local hotkey = _G[self:GetName() .. 'HotKey']
-	local text = hotkey:GetText()
-	
-	text = replace(text, '(s%-)', 'S')
-	text = replace(text, '(a%-)', 'A')
-	text = replace(text, '(c%-)', 'C')
-	text = replace(text, '(Mouse Button )', 'M')
-	text = replace(text, '(Middle Mouse)', 'M3')
-	text = replace(text, '(Num Pad )', 'N')
-	text = replace(text, '(Page Up)', 'PU')
-	text = replace(text, '(Page Down)', 'PD')
-	text = replace(text, '(Spacebar)', 'SpB')
-	text = replace(text, '(Insert)', 'Ins')
-	text = replace(text, '(Home)', 'Hm')
-	text = replace(text, '(Delete)', 'Del')
-	
-	if hotkey:GetText() == _G['RANGE_INDICATOR'] then
-		hotkey:SetText('')
-	else
-		hotkey:SetText(text)
-	end
-end
-
--- rescale cooldown spiral to fix texture.
-local buttonNames = { "ActionButton",  "MultiBarBottomLeftButton", "MultiBarBottomRightButton", "MultiBarLeftButton", "MultiBarRightButton", "ShapeshiftButton", "PetActionButton"}
-for _, name in ipairs( buttonNames ) do
-	for index = 1, 12 do
-		local buttonName = name .. tostring(index)
-		local button = _G[buttonName]
-		local cooldown = _G[buttonName .. "Cooldown"]
- 
-		if ( button == nil or cooldown == nil ) then
-			break
-		end
-		
-		cooldown:ClearAllPoints()
-		cooldown:SetPoint("TOPLEFT", button, "TOPLEFT", 2, -2)
-		cooldown:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -2, 2)
-	end
-end
-
-local buttons = 0
-local function SetupFlyoutButton()
-	for i=1, buttons do
-		--prevent error if you don't have max ammount of buttons
-		if _G["SpellFlyoutButton"..i] then
-			style(_G["SpellFlyoutButton"..i])
-			TukuiDB.StyleButton(_G["SpellFlyoutButton"..i], true)
-		end
-	end
-end
-SpellFlyout:HookScript("OnShow", SetupFlyoutButton)
-
--- Reposition flyout buttons depending on what tukui bar the button is parented to
-local function FlyoutButtonPos(self, buttons, direction)
-	for i=1, buttons do
-		local parent = SpellFlyout:GetParent()
-		if not _G["SpellFlyoutButton"..i] then return end
-		
-		if InCombatLockdown() then return end
- 
-		if direction == "LEFT" then
-			if i == 1 then
-				_G["SpellFlyoutButton"..i]:ClearAllPoints()
-				_G["SpellFlyoutButton"..i]:SetPoint("RIGHT", parent, "LEFT", -4, 0)
-			else
-				_G["SpellFlyoutButton"..i]:ClearAllPoints()
-				_G["SpellFlyoutButton"..i]:SetPoint("RIGHT", _G["SpellFlyoutButton"..i-1], "LEFT", -4, 0)
-			end
-		else
-			if i == 1 then
-				_G["SpellFlyoutButton"..i]:ClearAllPoints()
-				_G["SpellFlyoutButton"..i]:SetPoint("BOTTOM", parent, "TOP", 0, 4)
-			else
-				_G["SpellFlyoutButton"..i]:ClearAllPoints()
-				_G["SpellFlyoutButton"..i]:SetPoint("BOTTOM", _G["SpellFlyoutButton"..i-1], "TOP", 0, 4)
-			end
-		end
-	end
-end
- 
---Hide the Mouseover texture and attempt to find the ammount of buttons to be skinned
-local function styleflyout(self)
-	self.FlyoutBorder:SetAlpha(0)
-	self.FlyoutBorderShadow:SetAlpha(0)
-	
-	SpellFlyoutHorizontalBackground:SetAlpha(0)
-	SpellFlyoutVerticalBackground:SetAlpha(0)
-	SpellFlyoutBackgroundEnd:SetAlpha(0)
-	
-	for i=1, GetNumFlyouts() do
-		local x = GetFlyoutID(i)
-		local _, _, numSlots, isKnown = GetFlyoutInfo(x)
-		if isKnown then
-			buttons = numSlots
-			break
-		end
-	end
-	
-	--Change arrow direction depending on what bar the button is on
-	local arrowDistance
-	if ((SpellFlyout and SpellFlyout:IsShown() and SpellFlyout:GetParent() == self) or GetMouseFocus() == self) then
-			arrowDistance = 5
-	else
-			arrowDistance = 2
-	end
-	
-	if (self:GetParent() == MultiBarBottomRight and TukuiCF.actionbar.rightbars > 1) then
-		self.FlyoutArrow:ClearAllPoints()
-		self.FlyoutArrow:SetPoint("LEFT", self, "LEFT", -arrowDistance, 0)
-		SetClampedTextureRotation(self.FlyoutArrow, 270)
-		FlyoutButtonPos(self,buttons,"LEFT")
-	elseif (self:GetParent() == MultiBarLeft and not TukuiDB.lowversion and TukuiCF.actionbar.bottomrows == 2) then
-		self.FlyoutArrow:ClearAllPoints()
-		self.FlyoutArrow:SetPoint("TOP", self, "TOP", 0, arrowDistance)
-		SetClampedTextureRotation(self.FlyoutArrow, 0)
-		FlyoutButtonPos(self,buttons,"UP")	
-	elseif not self:GetParent():GetParent() == "SpellBookSpellIconsFrame" then
-		FlyoutButtonPos(self,buttons,"UP")
-	end
-end
 
 function TukuiDB.TukuiShiftBarUpdate()
 	local numForms = GetNumShapeshiftForms()
@@ -300,14 +169,15 @@ function TukuiDB.TukuiShiftBarUpdate()
 			start, duration, enable = GetShapeshiftFormCooldown(i)
 			CooldownFrame_SetTimer(cooldown, start, duration, enable)
 			
-			-- desaturate other stances if not active? fuck yeah.			
 			if isActive then
 				ShapeshiftBarFrame.lastSelected = button:GetID()
 				button:SetChecked(1)
 				SetDesaturation(icon, nil)
 			else
 				button:SetChecked(0)
-				SetDesaturation(icon, 1)
+				if GetNumShapeshiftForms() > 1 then
+					SetDesaturation(icon, 1)
+				end
 			end
 
 			if isCastable then
@@ -316,6 +186,17 @@ function TukuiDB.TukuiShiftBarUpdate()
 				icon:SetVertexColor(0.4, 0.4, 0.4)
 			end
 		end
+	end
+end
+
+
+function TukuiDB.StylePet()
+	for i=1, NUM_PET_ACTION_SLOTS do
+		local name = "PetActionButton"..i
+		local button  = _G[name]
+		local icon  = _G[name.."Icon"]
+		local normal  = _G[name.."NormalTexture2"]
+		stylesmallbutton(normal, button, icon, name, true)
 	end
 end
 
@@ -397,6 +278,135 @@ function TukuiDB.TukuiPetBarUpdate(self, event)
 		end
 	end
 end
+
+
+local function updatehotkey(self, actionButtonType)
+	local hotkey = _G[self:GetName() .. 'HotKey']
+	local text = hotkey:GetText()
+	
+	text = replace(text, '(s%-)', 'S')
+	text = replace(text, '(a%-)', 'A')
+	text = replace(text, '(c%-)', 'C')
+	text = replace(text, '(Mouse Button )', 'M')
+	text = replace(text, '(Middle Mouse)', 'M3')
+	text = replace(text, '(Num Pad )', 'N')
+	text = replace(text, '(Page Up)', 'PU')
+	text = replace(text, '(Page Down)', 'PD')
+	text = replace(text, '(Spacebar)', 'SpB')
+	text = replace(text, '(Insert)', 'Ins')
+	text = replace(text, '(Home)', 'Hm')
+	text = replace(text, '(Delete)', 'Del')
+	
+	if hotkey:GetText() == _G['RANGE_INDICATOR'] then
+		hotkey:SetText('')
+	else
+		hotkey:SetText(text)
+	end
+end
+
+
+-- rescale cooldown spiral to fix texture.
+local buttonNames = { "ActionButton",  "MultiBarBottomLeftButton", "MultiBarBottomRightButton", "MultiBarLeftButton", "MultiBarRightButton", "ShapeshiftButton", "PetActionButton"}
+for _, name in ipairs( buttonNames ) do
+	for index = 1, 12 do
+		local buttonName = name .. tostring(index)
+		local button = _G[buttonName]
+		local cooldown = _G[buttonName .. "Cooldown"]
+ 
+		if ( button == nil or cooldown == nil ) then
+			break
+		end
+		
+		cooldown:ClearAllPoints()
+		cooldown:SetPoint("TOPLEFT", button, "TOPLEFT", 2, -2)
+		cooldown:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -2, 2)
+	end
+end
+
+
+local buttons = 0
+local function SetupFlyoutButton()
+	for i=1, buttons do
+		--prevent error if you don't have max ammount of buttons
+		if _G["SpellFlyoutButton"..i] then
+			style(_G["SpellFlyoutButton"..i])
+			TukuiDB.StyleButton(_G["SpellFlyoutButton"..i], true)
+		end
+	end
+end
+SpellFlyout:HookScript("OnShow", SetupFlyoutButton)
+
+
+-- Reposition flyout buttons depending on what tukui bar the button is parented to
+local function FlyoutButtonPos(self, buttons, direction)
+	for i=1, buttons do
+		local parent = SpellFlyout:GetParent()
+		if not _G["SpellFlyoutButton"..i] then return end
+		
+		if InCombatLockdown() then return end
+ 
+		if direction == "LEFT" then
+			if i == 1 then
+				_G["SpellFlyoutButton"..i]:ClearAllPoints()
+				_G["SpellFlyoutButton"..i]:SetPoint("RIGHT", parent, "LEFT", -4, 0)
+			else
+				_G["SpellFlyoutButton"..i]:ClearAllPoints()
+				_G["SpellFlyoutButton"..i]:SetPoint("RIGHT", _G["SpellFlyoutButton"..i-1], "LEFT", -4, 0)
+			end
+		else
+			if i == 1 then
+				_G["SpellFlyoutButton"..i]:ClearAllPoints()
+				_G["SpellFlyoutButton"..i]:SetPoint("BOTTOM", parent, "TOP", 0, 4)
+			else
+				_G["SpellFlyoutButton"..i]:ClearAllPoints()
+				_G["SpellFlyoutButton"..i]:SetPoint("BOTTOM", _G["SpellFlyoutButton"..i-1], "TOP", 0, 4)
+			end
+		end
+	end
+end
+ 
+ 
+--Hide the Mouseover texture and attempt to find the ammount of buttons to be skinned
+local function styleflyout(self)
+	self.FlyoutBorder:SetAlpha(0)
+	self.FlyoutBorderShadow:SetAlpha(0)
+	
+	SpellFlyoutHorizontalBackground:SetAlpha(0)
+	SpellFlyoutVerticalBackground:SetAlpha(0)
+	SpellFlyoutBackgroundEnd:SetAlpha(0)
+	
+	for i=1, GetNumFlyouts() do
+		local x = GetFlyoutID(i)
+		local _, _, numSlots, isKnown = GetFlyoutInfo(x)
+		if isKnown then
+			buttons = numSlots
+			break
+		end
+	end
+	
+	--Change arrow direction depending on what bar the button is on
+	local arrowDistance
+	if ((SpellFlyout and SpellFlyout:IsShown() and SpellFlyout:GetParent() == self) or GetMouseFocus() == self) then
+			arrowDistance = 5
+	else
+			arrowDistance = 2
+	end
+	
+	if (self:GetParent() == MultiBarBottomRight and TukuiCF.actionbar.rightbars > 1) then
+		self.FlyoutArrow:ClearAllPoints()
+		self.FlyoutArrow:SetPoint("LEFT", self, "LEFT", -arrowDistance, 0)
+		SetClampedTextureRotation(self.FlyoutArrow, 270)
+		FlyoutButtonPos(self,buttons,"LEFT")
+	elseif (self:GetParent() == MultiBarLeft and not TukuiDB.lowversion and TukuiCF.actionbar.bottomrows == 2) then
+		self.FlyoutArrow:ClearAllPoints()
+		self.FlyoutArrow:SetPoint("TOP", self, "TOP", 0, arrowDistance)
+		SetClampedTextureRotation(self.FlyoutArrow, 0)
+		FlyoutButtonPos(self,buttons,"UP")	
+	elseif not self:GetParent():GetParent() == "SpellBookSpellIconsFrame" then
+		FlyoutButtonPos(self,buttons,"UP")
+	end
+end
+
 
 function TukuiDB.StyleButton(b, checked) 
     local name = b:GetName() 
