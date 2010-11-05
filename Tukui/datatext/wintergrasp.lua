@@ -16,17 +16,14 @@ if TukuiCF["datatext"].wintergrasp and TukuiCF["datatext"].wintergrasp > 0 then
 		local hr, m, s, text
 		if time <= 0 then
 			text = ""
-		elseif(time < 3600 and time > 60) then
+		elseif(time < 3600 and time >= 60) then
 			hr = floor(time / 3600)
 			m = floor(mod(time, 3600) / 60 + 1)
 			text = format("%d" .. cStart .. " M", m)
-		elseif(time < 60 and time > 10) then
+		elseif time <= 59 then
 			m = floor(time / 60)
 			s = mod(time, 60)
-			text = (m == 0 and format("%d", s))
-		elseif time < 10 then
-			s = mod(time, 60)
-			text = (format("|cffce3a19%d", s))
+			text = (m == 0 and format("%d" .. cStart .. " S", s))
 		else
 			hr = floor(time / 3600)
 			m = floor(mod(time, 3600) / 60 + 1)
