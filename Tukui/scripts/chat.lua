@@ -162,13 +162,18 @@ local function SetChatStyle(frame)
 		_G[chat].AddMessage = AddMessage
 	end
 	
-	-- change chat tab color
+	local tabcolor
+	if TukuiCF["datatext"].classcolor == true then
+		local _,class = UnitClass("player")
+		tabcolor = oUF.colors.class[class]
+	else
+		tabcolor = TukuiCF["datatext"].color
+	end
+
 	hooksecurefunc("FCFTab_UpdateColors", function(chatTab, isSelected) 
-		-- chatTab:GetFontString():SetTextColor(1, 1, 1)
-		chatTab:GetFontString():SetTextColor(unpack(TukuiCF["media"].datatext_color))
+		chatTab:GetFontString():SetTextColor(unpack(tabcolor))
 		if ( chatTab.conversationIcon ) then
-			-- chatTab.conversationIcon:SetVertexColor(1, 1, 1) -- changes color of the b.net whisper window icon.
-			chatTab.conversationIcon:SetVertexColor(unpack(TukuiCF["media"].datatext_color))
+			chatTab.conversationIcon:SetVertexColor(unpack(tabcolor))
 		end
 		if isSelected then 
 			FCFTab_UpdateColors(chatTab, false) 
