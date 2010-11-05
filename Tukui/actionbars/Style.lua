@@ -492,28 +492,6 @@ hooksecurefunc("ActionButton_UpdateHotkeys", updatehotkey)
 hooksecurefunc("ActionButton_UpdateFlyout", styleflyout)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 SLOT_EMPTY_TCOORDS = {
 	[EARTH_TOTEM_SLOT] = {
 		left	= 66 / 128,
@@ -541,14 +519,14 @@ SLOT_EMPTY_TCOORDS = {
 	},
 }
 
-
-local bordercolors = {
-	{ .23, .45, .13 },    -- Earth
-	{ .58, .23, .10 },    -- Fire
-	{ .19, .48, .60 },   -- Water
-	{ .42, .18, .74 },   -- Air
-	{ .39, .39, .12 }    -- Summon / Recall
-}
+-- leaving these here if someone wants to use element border colors
+-- local bordercolors = {
+	-- { .23, .45, .13 },    -- Earth
+	-- { .58, .23, .10 },    -- Fire
+	-- { .19, .48, .60 },   -- Water
+	-- { .42, .18, .74 },   -- Air
+	-- { .39, .39, .12 }    -- Summon / Recall
+-- }
 
 
 ----- [[     Totem Fly Out     ]] -----
@@ -649,12 +627,13 @@ hooksecurefunc("MultiCastFlyoutFrameOpenButton_Show",function(button,_, parent) 
 function TotemBarSlotButton(button, index)
 	TukuiDB.SetTemplate(button)
 	TukuiDB.StyleButton(button, false)
-	
+
 	if _G[button:GetName().."Panel"] then 
 		_G[button:GetName().."Panel"]:Hide() 
 	end
 
 	button.overlayTex:SetTexture(nil)
+	button.overlayTex:Hide()
 	button:SetNormalTexture("")
 
 	button.background:SetDrawLayer("ARTWORK")
@@ -740,35 +719,3 @@ function TotemBarSpellButton(button, index)
 end
 hooksecurefunc("MultiCastSummonSpellButton_Update", function(self) TotemBarSpellButton(self, 0) end)
 hooksecurefunc("MultiCastRecallSpellButton_Update", function(self) TotemBarSpellButton(self, 5) end)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
