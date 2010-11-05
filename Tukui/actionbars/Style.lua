@@ -1,7 +1,8 @@
-if not TukuiCF["actionbar"].enable == true then return end
+local db = TukuiCF["actionbar"]
 
-local db = TukuiCF.fonts
-local font, font_size, font_style, font_shadow = db.actionbar_font, db.actionbar_font_size, db.actionbar_font_style, db.actionbar_font_shadow
+if not db.enable then return end
+
+local font, font_size, font_style, font_shadow = TukuiCF["fonts"].actionbar_font, TukuiCF["fonts"].actionbar_font_size, TukuiCF["fonts"].actionbar_font_style, TukuiCF["fonts"].actionbar_font_shadow
 
 local _G = _G
 local media = TukuiCF["media"]
@@ -38,12 +39,12 @@ function style(self)
 	Btname:ClearAllPoints()
 	Btname:SetPoint("BOTTOM", 0, TukuiDB.Scale(2))
 	Btname:SetFont(font, font_size, font_style)
-	Btname:SetWidth(TukuiDB.buttonsize)
+	Btname:SetWidth(db.buttonsize)
 	Btname:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 
 	if not _G[name.."Panel"] then
 		local panel = CreateFrame("Frame", name.."Panel", self)
-		TukuiDB.CreateFadedPanel(panel, TukuiDB.buttonsize, TukuiDB.buttonsize, "CENTER", self, "CENTER", 0, 0)
+		TukuiDB.CreateFadedPanel(panel, db.buttonsize, db.buttonsize, "CENTER", self, "CENTER", 0, 0)
  
 		panel:SetFrameStrata(self:GetFrameStrata())
 		panel:SetFrameLevel(self:GetFrameLevel() - 1)
@@ -60,7 +61,7 @@ function style(self)
 	HotKey.ClearAllPoints = TukuiDB.dummy
 	HotKey.SetPoint = TukuiDB.dummy
  
-	if not TukuiCF["actionbar"].hotkey == true then
+	if not db.hotkey then
 		HotKey:SetText("")
 		HotKey:Hide()
 		HotKey.Show = TukuiDB.dummy
@@ -85,7 +86,7 @@ local function stylesmallbutton(normal, button, icon, name, pet)
 	if not _G[name.."Panel"] then
 		if pet then
 			local panel = CreateFrame("Frame", name.."Panel", button)
-			TukuiDB.CreateFadedPanel(panel, TukuiDB.petbuttonsize, TukuiDB.petbuttonsize, "CENTER", button, "CENTER", 0, 0)
+			TukuiDB.CreateFadedPanel(panel, db.petbuttonsize, db.petbuttonsize, "CENTER", button, "CENTER", 0, 0)
 			panel:SetFrameStrata(button:GetFrameStrata())
 			panel:SetFrameLevel(button:GetFrameLevel() - 1)
 
@@ -96,12 +97,12 @@ local function stylesmallbutton(normal, button, icon, name, pet)
 			autocast:SetPoint("CENTER", button, 0, 0)
 			
 			local shine = _G[name.."Shine"] -- Added to fix stupid auto-cast shine around pet buttons
-			shine:SetWidth(TukuiDB.Scale(TukuiDB.petbuttonsize)) -- As above
-			shine:SetHeight(TukuiDB.Scale(TukuiDB.petbuttonsize)) -- As above
+			shine:SetWidth(TukuiDB.Scale(db.petbuttonsize)) -- As above
+			shine:SetHeight(TukuiDB.Scale(db.petbuttonsize)) -- As above
 
 			local cooldown = _G[name.."Cooldown"] -- Added to fix cooldown shadow being larger than pet buttons
-			cooldown:SetWidth(TukuiDB.Scale(TukuiDB.petbuttonsize - 2)) -- As above
-			cooldown:SetHeight(TukuiDB.Scale(TukuiDB.petbuttonsize - 2)) -- As above
+			cooldown:SetWidth(TukuiDB.Scale(db.petbuttonsize - 2)) -- As above
+			cooldown:SetHeight(TukuiDB.Scale(db.petbuttonsize - 2)) -- As above
 			
 			icon:SetTexCoord(.08, .92, .08, .92)
 			icon:ClearAllPoints()
@@ -109,7 +110,7 @@ local function stylesmallbutton(normal, button, icon, name, pet)
 			icon:SetPoint("BOTTOMRIGHT", button, TukuiDB.Scale(-2), TukuiDB.Scale(2))
 		else
 			local panel = CreateFrame("Frame", name.."Panel", button)
-			TukuiDB.CreateFadedPanel(panel, TukuiDB.stancebuttonsize, TukuiDB.stancebuttonsize, "CENTER", button, "CENTER", 0, 0)
+			TukuiDB.CreateFadedPanel(panel, db.stancebuttonsize, db.stancebuttonsize, "CENTER", button, "CENTER", 0, 0)
 			panel:SetFrameStrata(button:GetFrameStrata())
 			panel:SetFrameLevel(button:GetFrameLevel() - 1)
 
@@ -253,11 +254,11 @@ function TukuiDB.TukuiPetBarUpdate(self, event)
 		
 		-- grid display
 		if name then
-			if not TukuiCF["actionbar"].showgrid then
+			if not db.showgrid then
 				petActionButton:SetAlpha(1)
 			end			
 		else
-			if not TukuiCF["actionbar"].showgrid then
+			if not db.showgrid then
 				petActionButton:SetAlpha(0)
 			end
 		end
@@ -309,13 +310,13 @@ local function updatehotkey(self, actionButtonType)
 	end
 	
 	hotkey:ClearAllPoints()
-	hotkey:SetPoint("TOPRIGHT", TukuiDB.Scale(-1), TukuiDB.Scale(-1))
+	hotkey:SetPoint("TOPRIGHT", TukuiDB.Scale(-1), 0)
 	hotkey:SetFont(font, font_size, font_style)
 	hotkey:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	hotkey.ClearAllPoints = TukuiDB.dummy
 	hotkey.SetPoint = TukuiDB.dummy
  
-	if not TukuiCF["actionbar"].hotkey == true then
+	if not db.hotkey then
 		hotkey:SetText("")
 		hotkey:Hide()
 		hotkey.Show = TukuiDB.dummy
@@ -554,7 +555,7 @@ function TotemBarFlyoutFrame(flyout)
 		TukuiDB.StyleButton(button, false)
 
 		if not InCombatLockdown() then
-			button:SetSize(TukuiDB.stancebuttonsize, TukuiDB.stancebuttonsize)
+			button:SetSize(db.stancebuttonsize, db.stancebuttonsize)
 			button:ClearAllPoints()
 			button:SetPoint("BOTTOM", last, "TOP", 0, TukuiDB.Scale(3))
 		end			
@@ -587,12 +588,12 @@ function TotemBarFlyoutFrame(flyout)
     close:GetHighlightTexture():SetPoint("BOTTOMRIGHT", close, "BOTTOMRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
     close:GetNormalTexture():SetTexture(nil)
 	close:ClearAllPoints()
-	close:SetPoint("BOTTOMLEFT", last, "TOPLEFT", 0, TukuiDB.buttonspacing)
-	close:SetPoint("BOTTOMRIGHT", last, "TOPRIGHT", 0, TukuiDB.buttonspacing)
-	close:SetHeight(TukuiDB.buttonspacing * 4)
+	close:SetPoint("BOTTOMLEFT", last, "TOPLEFT", 0, db.buttonspacing)
+	close:SetPoint("BOTTOMRIGHT", last, "TOPRIGHT", 0, db.buttonspacing)
+	close:SetHeight(db.buttonspacing * 4)
 
 	flyout:ClearAllPoints()
-	flyout:SetPoint("BOTTOM", flyout.parent, "TOP", 0, TukuiDB.buttonspacing)
+	flyout:SetPoint("BOTTOM", flyout.parent, "TOP", 0, db.buttonspacing)
 end
 hooksecurefunc("MultiCastFlyoutFrame_ToggleFlyout",function(self) TotemBarFlyoutFrame(self) end)
 
@@ -617,7 +618,7 @@ function TotemBarFlyoutOpenButton(button, parent)
 	button:SetPoint("BOTTOMLEFT", parent, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-1))
 	button:SetPoint("BOTTOMRIGHT", parent, "TOPRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(-1))
 
-	button:SetHeight(TukuiDB.buttonspacing * 4)
+	button:SetHeight(db.buttonspacing * 4)
 end
 hooksecurefunc("MultiCastFlyoutFrameOpenButton_Show",function(button,_, parent) TotemBarFlyoutOpenButton(button, parent) end)
 
@@ -640,7 +641,7 @@ function TotemBarSlotButton(button, index)
 	button.background:ClearAllPoints()
 	button.background:SetPoint("TOPLEFT",button,"TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
 	button.background:SetPoint("BOTTOMRIGHT",button,"BOTTOMRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
-	button:SetSize(TukuiDB.stancebuttonsize, TukuiDB.stancebuttonsize)
+	button:SetSize(db.stancebuttonsize, db.stancebuttonsize)
 	-- button:SetBackdropBorderColor(unpack(bordercolors[((index-1) % 4) + 1]))
 end
 hooksecurefunc("MultiCastSlotButton_Update",function(self, slot) TotemBarSlotButton(self, slot) end)
@@ -711,7 +712,7 @@ function TotemBarSpellButton(button, index)
 	-- button:SetBackdropBorderColor(unpack(bordercolors[((index-1) % 5)+1]))
 	
 	if not InCombatLockdown() then
-		button:SetSize(TukuiDB.stancebuttonsize, TukuiDB.stancebuttonsize) 
+		button:SetSize(db.stancebuttonsize, db.stancebuttonsize) 
 	end
 	
 	_G[button:GetName().."Highlight"]:SetTexture(nil)

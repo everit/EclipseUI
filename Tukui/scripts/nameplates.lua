@@ -2,8 +2,7 @@
 
 if not TukuiCF["nameplate"].enable == true then return end
 
-local db = TukuiCF.fonts
-local font, font_size, font_style, font_shadow = db.nameplate_font, db.nameplate_font_size, db.nameplate_font_style, db.nameplate_font_shadow
+local font, font_size, font_style, font_shadow =  TukuiCF["fonts"].nameplate_font, TukuiCF["fonts"].nameplate_font_size, TukuiCF["fonts"].nameplate_font_style, TukuiCF["fonts"].nameplate_font_shadow
 
 local tNamePlates = CreateFrame("Frame", nil, UIParent)
 tNamePlates:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)

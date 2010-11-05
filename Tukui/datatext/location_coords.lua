@@ -1,12 +1,11 @@
 if not TukuiCF["datatext"].location then return end
 
-local db = TukuiCF.fonts
-local font, font_size, font_style, font_shadow = db.datatext_font, db.datatext_font_size, db.datatext_font_style, db.datatext_font_shadow
+local font, font_size, font_style, font_shadow = TukuiCF["fonts"].datatext_font, TukuiCF["fonts"].datatext_font_size, TukuiCF["fonts"].datatext_font_style, TukuiCF["fonts"].datatext_font_shadow
 
 ----- [[    Location    ]] -----
 
 local location = CreateFrame("Frame", "TukuiLocation", UIParent)
-TukuiDB.CreatePanel(location, 60, TukuiDB.infoheight, "TOP", UIParent, "TOP", 0, -8)
+TukuiDB.CreatePanel(location, 60, TukuiCF["panels"].infoheight, "TOP", UIParent, "TOP", 0, -8)
 
 local locationtext  = location:CreateFontString(nil, "LOW")
 locationtext:SetFont(font, font_size, font_style)
@@ -45,10 +44,10 @@ location:HookScript("OnEvent", OnEvent)
 
 if TukuiCF["datatext"].coords then 
 	local xcoords = CreateFrame("Frame", "TukuiXCoordsPanel", UIParent)
-	TukuiDB.CreatePanel(xcoords, 35, TukuiDB.infoheight, "RIGHT", location, "LEFT", -3, 0)
+	TukuiDB.CreatePanel(xcoords, 35, TukuiCF["panels"].infoheight, "RIGHT", location, "LEFT", -3, 0)
 
 	local ycoords = CreateFrame("Frame", "TukuiYCoordsPanel", UIParent)
-	TukuiDB.CreatePanel(ycoords, 35, TukuiDB.infoheight, "LEFT", location, "RIGHT", 3, 0)
+	TukuiDB.CreatePanel(ycoords, 35, TukuiCF["panels"].infoheight, "LEFT", location, "RIGHT", 3, 0)
 
 	local xcoordstext = xcoords:CreateFontString(nil, "OVERLAY")
 	xcoordstext:SetFont(font, font_size, font_style)

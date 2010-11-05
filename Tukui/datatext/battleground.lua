@@ -1,7 +1,3 @@
---------------------------------------------------------------------
--- BGScore (original feature by elv22, edited by Tukz)
---------------------------------------------------------------------
-
 if TukuiCF["datatext"].battleground == true then
 	local bgframe = TukuiInfoLeftBattleGround
 	bgframe:SetScript("OnEnter", function(self)

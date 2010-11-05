@@ -205,4 +205,8 @@ if TukuiDB.client == "deDE" then
 	tukuilocal.hunter_unhappy = "Dein Begleiter ist unzufrieden!"
 	tukuilocal.hunter_content = "Dein Begleiter ist zufrieden!"
 	tukuilocal.hunter_happy = "Dein Begleiter ist glücklich!" 
+	
+	tukuilocal.map_close = "Close"
+	tukuilocal.map_move = "Move"
+	tukuilocal.map_expand = "Expand"
 end

@@ -1,16 +1,9 @@
 if UnitLevel("player") == MAX_PLAYER_LEVEL then return end
 
-local db = TukuiCF.fonts
-local font, font_size, font_style, font_shadow = db.datatext_font, db.datatext_font_size, db.datatext_font_style, db.datatext_font_shadow
-
+local font, font_size, font_style, font_shadow = TukuiCF["fonts"].datatext_font, TukuiCF["fonts"].datatext_font_size, TukuiCF["fonts"].datatext_font_style, TukuiCF["fonts"].datatext_font_shadow
 
 local xp = CreateFrame("Frame", "TukuiExperience", UIParent)
--- if TukuiCF["datatext"].stat_block then
-	TukuiDB.CreatePanel(xp, 150, TukuiDB.infoheight, "TOPLEFT", TukuiTimeStats, "TOPLEFT", TukuiTimeStats:GetWidth() + 3, 0)
-	-- xp:HookScript("OnUpdate", function(self) xp:SetPoint("TOPLEFT", TukuiTimeStats, "TOPLEFT", TukuiTimeStats:GetWidth() + 3, 0) end)
--- else
-	-- TukuiDB.CreatePanel(xp, 150, TukuiDB.infoheight, "TOPLEFT", UIParent, "TOPLEFT", 8, -8)
--- end
+TukuiDB.CreatePanel(xp, 150, TukuiCF["panels"].infoheight, "TOPLEFT", TukuiTimeStats, "TOPLEFT", TukuiTimeStats:GetWidth() + 3, 0)
 xp:EnableMouse(true)
 
 local bar = CreateFrame("StatusBar", "TukuiExperienceBar", xp)

@@ -15,20 +15,22 @@
 
 ----- [[     Overall Custom Config     ]] -----
 
-TukuiCF["unitframes"].classcolor = true
+-- TukuiCF["general"].game_texture = TukuiCF["media"].custom_texture_1
 
-TukuiCF["actionbar"].split_bar = true
-TukuiCF["actionbar"].rightbars = 1
-TukuiCF["actionbar"].vertical_rightbars = false
-TukuiCF["actionbar"].tukui_default = false
+-- TukuiCF["unitframes"].classcolor = false
 
-TukuiCF["datatext"].location = false
-TukuiCF["datatext"].classcolor = false
-TukuiCF["datatext"].color = { 0, .6, 1 }
+-- TukuiCF["actionbar"].split_bar = true
+-- TukuiCF["actionbar"].rightbars = 1
+-- TukuiCF["actionbar"].vertical_rightbars = false
+-- TukuiCF["actionbar"].tukui_default = false
 
-TukuiCF["media"].bordercolor = { .125, .125, .125, 1 }
-TukuiCF["media"].backdropcolor = { 0, 0, 0, 1 }
-TukuiCF["media"].fadedbackdropcolor = { 0, 0, 0, .7 }
+-- TukuiCF["datatext"].location = false
+-- TukuiCF["datatext"].classcolor = true
+-- TukuiCF["datatext"].color = { 0, .6, 1 }
+
+-- TukuiCF["media"].bordercolor = { .125, .125, .125, 1 }
+-- TukuiCF["media"].backdropcolor = { 0, 0, 0, 1 }
+-- TukuiCF["media"].fadedbackdropcolor = { 0, 0, 0, .7 }
 
 
 ----- [[     Character Custom Config     ]] -----

@@ -14,6 +14,21 @@ if TukuiCF["actionbar"].tukui_default == true and TukuiCF["actionbar"].bottomrow
 	TukuiCF["actionbar"].rightbars = 1
 end
 
+if TukuiCF["actionbar"].tukui_default == true then
+	TukuiCF["actionbar"].split_bar = false
+end
+
+------------------------------------------------------------------------
+-- force this if vertical rightbars are disabled so people don't go "OMG ACTION BUTTONS DON'T FIT SIDE/CHAT PANELS"
+------------------------------------------------------------------------
+
+if TukuiCF["actionbar"].vertical_rightbars == true then
+	TukuiCF["panels"].tinfowidth = 350
+else
+	TukuiCF["panels"].tinfowidth = (TukuiCF["actionbar"].buttonsize * 12) + (TukuiCF["actionbar"].buttonspacing * 11)
+end
+
+
 ------------------------------------------------------------------------
 -- overwrite font for some language
 ------------------------------------------------------------------------

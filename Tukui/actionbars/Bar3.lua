@@ -10,13 +10,13 @@ for i= 1, 12 do
 	local b = _G["MultiBarLeftButton"..i]
 	local b2 = _G["MultiBarLeftButton"..i-1]
 	b:ClearAllPoints()
-	b:SetSize(TukuiDB.buttonsize, TukuiDB.buttonsize)
+	b:SetSize(db.buttonsize, db.buttonsize)
 	if i == 1 then
 		if db.tukui_default == true then
 			if db.rightbars > 2 and db.bottomrows == 1 then
 				b:SetPoint("TOPLEFT", TukuiActionBarBackgroundRight)
 			else
-				b:SetPoint("LEFT", MultiBarBottomRightButton12, "RIGHT", TukuiDB.buttonspacing, 0)
+				b:SetPoint("LEFT", MultiBarBottomRightButton12, "RIGHT", db.buttonspacing, 0)
 			end
 		else
 			if db.split_bar == true then
@@ -30,17 +30,17 @@ for i= 1, 12 do
 			if i == 4 then
 				b:SetPoint("BOTTOMLEFT", TukuiRightSplitBarBackground)
 			elseif i == 7 then
-				b:SetPoint("BOTTOMLEFT", MultiBarLeftButton1, "TOPLEFT", 0, TukuiDB.buttonspacing)
+				b:SetPoint("BOTTOMLEFT", MultiBarLeftButton1, "TOPLEFT", 0, db.buttonspacing)
 			elseif i == 10 then
-				b:SetPoint("BOTTOMLEFT", MultiBarLeftButton4, "TOPLEFT", 0, TukuiDB.buttonspacing)
+				b:SetPoint("BOTTOMLEFT", MultiBarLeftButton4, "TOPLEFT", 0, db.buttonspacing)
 			else
-				b:SetPoint("LEFT", b2, "RIGHT", TukuiDB.buttonspacing, 0)
+				b:SetPoint("LEFT", b2, "RIGHT", db.buttonspacing, 0)
 			end
 		else
 			if db.vertical_rightbars == true then
-				b:SetPoint("TOP", b2, "BOTTOM", 0, -TukuiDB.buttonspacing)
+				b:SetPoint("TOP", b2, "BOTTOM", 0, -db.buttonspacing)
 			else
-				b:SetPoint("LEFT", b2, "RIGHT", TukuiDB.buttonspacing, 0)
+				b:SetPoint("LEFT", b2, "RIGHT", db.buttonspacing, 0)
 			end
 		end
 	end

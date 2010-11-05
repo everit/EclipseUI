@@ -1,10 +1,5 @@
---------------------------------------------------------------------
- -- BAGS
---------------------------------------------------------------------
-
 if TukuiCF["datatext"].bags and TukuiCF["datatext"].bags > 0 then
-	local db = TukuiCF.fonts
-	local font, font_size, font_style, font_shadow = db.datatext_font, db.datatext_font_size, db.datatext_font_style, db.datatext_font_shadow
+	local font, font_size, font_style, font_shadow = TukuiCF["fonts"].datatext_font, TukuiCF["fonts"].datatext_font_size, TukuiCF["fonts"].datatext_font_style, TukuiCF["fonts"].datatext_font_shadow
 
 	local Stat = CreateFrame("Frame")
 	Stat:EnableMouse(true)

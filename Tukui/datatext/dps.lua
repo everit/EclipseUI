@@ -1,10 +1,5 @@
---------------------------------------------------------------------
--- SUPPORT FOR DPS Feed... 
---------------------------------------------------------------------
-
 if TukuiCF["datatext"].dps_text and TukuiCF["datatext"].dps_text > 0 then
-	local db = TukuiCF.fonts
-	local font, font_size, font_style, font_shadow = db.datatext_font, db.datatext_font_size, db.datatext_font_style, db.datatext_font_shadow
+	local font, font_size, font_style, font_shadow = TukuiCF["fonts"].datatext_font, TukuiCF["fonts"].datatext_font_size, TukuiCF["fonts"].datatext_font_style, TukuiCF["fonts"].datatext_font_shadow
 
 	local events = {SWING_DAMAGE = true, RANGE_DAMAGE = true, SPELL_DAMAGE = true, SPELL_PERIODIC_DAMAGE = true, DAMAGE_SHIELD = true, DAMAGE_SPLIT = true, SPELL_EXTRA_ATTACKS = true}
 	local DPS_FEED = CreateFrame("Frame")

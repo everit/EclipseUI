@@ -42,8 +42,8 @@ end)
 
 -- vehicle button under minimap
 local vehicle = CreateFrame("BUTTON", nil, UIParent, "SecureActionButtonTemplate")
-vehicle:SetWidth(TukuiDB.Scale(26))
-vehicle:SetHeight(TukuiDB.Scale(26))
+vehicle:SetWidth(TukuiCF["actionbar"].buttonsize)
+vehicle:SetHeight(TukuiCF["actionbar"].buttonsize)
 vehicle:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-26))
 
 vehicle:RegisterForClicks("AnyUp")

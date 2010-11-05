@@ -14,7 +14,14 @@
 ]] --
 
 TukuiCF["fonts"] = {
+	----- [[     General Fonts     ]] -----
+	
+	["general_font"] = TukuiCF.media.custom_font_3,	
+	["damage_font"] = TukuiCF.media.dmgfont,
+	
+	
 	----- [[     Datatext Fonts     ]] -----
+	
 	["datatext_font"] = TukuiCF.media.custom_font_1,
 	["datatext_font_size"] = 12,
 	["datatext_font_style"] = "MONOCHROMEOUTLINE",
@@ -22,6 +29,7 @@ TukuiCF["fonts"] = {
 
 
 	----- [[     Chat & Chat Tab Fonts     ]] -----
+	
 	["chat_font"] = TukuiCF.media.custom_font_3,
 	["chat_font_style"] = "",
 	["chat_font_shadow"] = false,
@@ -33,6 +41,7 @@ TukuiCF["fonts"] = {
 
 
 	----- [[     Actionbar Fonts     ]] -----
+	
 	["actionbar_font"] = TukuiCF.media.custom_font_1,
 	["actionbar_font_size"] = 12,
 	["actionbar_font_style"] = "MONOCHROMEOUTLINE",
@@ -42,6 +51,7 @@ TukuiCF["fonts"] = {
 
 	
 	----- [[     Auras Fonts     ]] -----
+	
 	["aura_font"] = TukuiCF.media.custom_font_1,
 	["aura_font_size"] = 12,
 	["aura_font_style"] = "MONOCHROMEOUTLINE",
@@ -49,6 +59,7 @@ TukuiCF["fonts"] = {
 
 
 	----- [[     Bag Fonts     ]] -----
+	
 	["bag_font"] = TukuiCF.media.custom_font_1,
 	["bag_font_size"] = 12,
 	["bag_font_style"] = "MONOCHROMEOUTLINE",
@@ -56,6 +67,7 @@ TukuiCF["fonts"] = {
 
 
 	----- [[     Nameplate Fonts     ]] -----
+	
 	["nameplate_font"] = TukuiCF.media.custom_font_1,
 	["nameplate_font_size"] = 10,
 	["nameplate_font_style"] = "MONOCHROMEOUTLINE",
@@ -63,6 +75,7 @@ TukuiCF["fonts"] = {
 
 
 	----- [[     Map Fonts     ]] -----
+	
 	["map_font"] = TukuiCF.media.custom_font_1,
 	["map_font_size"] = 12,
 	["map_font_style"] = "MONOCHROMEOUTLINE",
@@ -70,6 +83,7 @@ TukuiCF["fonts"] = {
 
 
 	----- [[     Unitframe Fonts     ]] -----
+	
 	["unitframe_font"] = TukuiCF.media.custom_font_1,
 	["unitframe_font_size"] = 12,
 	["unitframe_font_style"] = "MONOCHROMEOUTLINE",
@@ -80,9 +94,10 @@ TukuiCF["fonts"] = {
 
 	
 	----- [[     Tooltip Fonts     ]] -----
-	["tooltip_font"] = TukuiCF.media.custom_font_1,
-	["tooltip_font_size"] = 12,
-	["tooltip_font_style"] = "MONOCHROMEOUTLINE",
+	
+	["tooltip_font"] = TukuiCF.media.custom_font_3,
+	["tooltip_font_size"] = 11,
+	["tooltip_font_style"] = "OUTLINE",
 	["tooltip_font_shadow"] = true, -- only affects tooltip health bar text
 
 

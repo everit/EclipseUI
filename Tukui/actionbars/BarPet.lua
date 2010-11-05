@@ -1,8 +1,6 @@
-if not TukuiCF["actionbar"].enable == true then return end
+local db = TukuiCF["actionbar"]
 
----------------------------------------------------------------------------
--- setup PetActionBar
----------------------------------------------------------------------------
+if not db.enable then return end
 
 local bar = CreateFrame("Frame", "TukuiPetBar", UIParent, "SecureHandlerStateTemplate")
 bar:ClearAllPoints()
@@ -29,7 +27,7 @@ bar:SetScript("OnEvent", function(self, event, ...)
 		for i = 1, 10 do
 			button = _G["PetActionButton"..i]
 			button:ClearAllPoints()
-			button:SetSize(TukuiDB.petbuttonsize, TukuiDB.petbuttonsize)
+			button:SetSize(db.petbuttonsize, db.petbuttonsize)
 			button:SetParent(TukuiPetBar)
 			TukuiPetActionBarBackground:SetParent(TukuiPetBar)
 			TukuiPetActionBarBackground:SetFrameStrata("BACKGROUND")
@@ -37,10 +35,10 @@ bar:SetScript("OnEvent", function(self, event, ...)
 			if i == 1 then
 				button:SetPoint("TOPLEFT")
 			else
-				if TukuiCF.actionbar.rightbars_vh then
-					button:SetPoint("TOP", _G["PetActionButton"..(i - 1)], "BOTTOM", 0, -TukuiDB.buttonspacing)
+				if db.vertical_rightbars then
+					button:SetPoint("TOP", _G["PetActionButton"..(i - 1)], "BOTTOM", 0, -db.buttonspacing)
 				else
-					button:SetPoint("LEFT", _G["PetActionButton"..(i - 1)], "RIGHT", TukuiDB.buttonspacing, 0)
+					button:SetPoint("LEFT", _G["PetActionButton"..(i - 1)], "RIGHT", db.buttonspacing, 0)
 				end
 			end
 			button:Show()

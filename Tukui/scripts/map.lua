@@ -1,11 +1,11 @@
 if not TukuiCF["map"].enable == true then return end
 
+
 ----- [[     Local Variables     ]] -----
 
 local mapscale = WORLDMAP_WINDOWED_SIZE
-local db = TukuiCF.fonts
-local font, font_size, font_style, font_shadow = db.map_font, db.map_font_size, db.map_font_style, db.map_font_shadow
-local infoheight = TukuiDB.infoheight
+local font, font_size, font_style, font_shadow = TukuiCF["fonts"].map_font, TukuiCF["fonts"].map_font_size, TukuiCF["fonts"].map_font_style, TukuiCF["fonts"].map_font_shadow
+local infoheight = TukuiCF["panels"].infoheight
 
 
 ----- [[     Map Background     ]] -----

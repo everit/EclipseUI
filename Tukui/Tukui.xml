@@ -110,7 +110,6 @@
 	<Script file="scripts\map.lua"/>
 	<Script file="scripts\mirror.lua"/>
 	<Script file="scripts\reminder.lua"/>
-	<Script file="scripts\totemskin.lua"/>
 	<Script file="scripts\bubbles.lua"/>
 	
 	<Include file="unitframes\templates.xml"/>

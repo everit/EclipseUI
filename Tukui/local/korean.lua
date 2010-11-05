@@ -206,4 +206,8 @@ if TukuiDB.client == "koKR" then
 	tukuilocal.hunter_unhappy = "소환수의 만족도: 불만족"
 	tukuilocal.hunter_content = "소환수의 만족도: 만족"
 	tukuilocal.hunter_happy = "소환수의 만족도: 매우 만족"
+	
+	tukuilocal.map_close = "Close"
+	tukuilocal.map_move = "Move"
+	tukuilocal.map_expand = "Expand"
 end

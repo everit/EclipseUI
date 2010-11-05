@@ -74,7 +74,7 @@ bar:SetScript("OnEvent", function(self, event, ...)
 		local button
 		for i = 1, 12 do
 			button = _G["ActionButton"..i]
-			button:SetSize(TukuiDB.buttonsize, TukuiDB.buttonsize)
+			button:SetSize(db.buttonsize, db.buttonsize)
 			button:ClearAllPoints()
 			button:SetParent(TukuiMainMenuBar)
 			if i == 1 then
@@ -85,7 +85,7 @@ bar:SetScript("OnEvent", function(self, event, ...)
 				end
 			else
 				local previous = _G["ActionButton"..i-1]
-				button:SetPoint("LEFT", previous, "RIGHT", TukuiDB.buttonspacing, 0)
+				button:SetPoint("LEFT", previous, "RIGHT", db.buttonspacing, 0)
 			end
 		end
 	else

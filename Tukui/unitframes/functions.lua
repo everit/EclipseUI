@@ -525,12 +525,12 @@ do
 	--------------------------------------------------------------------------------------------
 
 	TukuiDB.countOffsets = {
-		TOPLEFT = {6*TukuiCF["unitframes"].gridscale, 1},
-		TOPRIGHT = {-6*TukuiCF["unitframes"].gridscale, 1},
-		BOTTOMLEFT = {6*TukuiCF["unitframes"].gridscale, 1},
-		BOTTOMRIGHT = {-6*TukuiCF["unitframes"].gridscale, 1},
-		LEFT = {6*TukuiCF["unitframes"].gridscale, 1},
-		RIGHT = {-6*TukuiCF["unitframes"].gridscale, 1},
+		TOPLEFT = {6, 1},
+		TOPRIGHT = {-6, 1},
+		BOTTOMLEFT = {6, 1},
+		BOTTOMRIGHT = {-6, 1},
+		LEFT = {6, 1},
+		RIGHT = {-6, 1},
 		TOP = {0, 0},
 		BOTTOM = {0, 0},
 	}
@@ -580,8 +580,8 @@ do
 				local icon = CreateFrame("Frame", nil, auras)
 				icon.spellID = spell[1]
 				icon.anyUnit = spell[4]
-				icon:SetWidth(TukuiDB.Scale(6*TukuiCF["unitframes"].gridscale))
-				icon:SetHeight(TukuiDB.Scale(6*TukuiCF["unitframes"].gridscale))
+				icon:SetWidth(TukuiDB.Scale(6))
+				icon:SetHeight(TukuiDB.Scale(6))
 				icon:SetPoint(spell[2], 0, 0)
 
 				local tex = icon:CreateTexture(nil, "OVERLAY")
@@ -594,7 +594,7 @@ do
 				end
 
 				local count = icon:CreateFontString(nil, "OVERLAY")
-				count:SetFont(TukuiCF["media"].uffont, 8*TukuiCF["unitframes"].gridscale, "THINOUTLINE")
+				count:SetFont(TukuiCF["media"].uffont, 8, "THINOUTLINE")
 				count:SetPoint("CENTER", unpack(TukuiDB.countOffsets[spell[2]]))
 				icon.count = count
 

@@ -182,6 +182,7 @@ function TukuiDB.SetTemplate(f)
 	f:SetBackdropBorderColor(unpack(media.bordercolor))
 end
 
+
 ----- [[     Kill Function     ]] -----
 
 function TukuiDB.Kill(object)

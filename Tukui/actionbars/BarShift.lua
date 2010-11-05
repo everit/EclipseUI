@@ -1,4 +1,6 @@
-if not TukuiCF["actionbar"].enable == true then return end
+local db = TukuiCF["actionbar"]
+
+if not db.enable then return end
 
 ---------------------------------------------------------------------------
 -- Setup Shapeshift Bar
@@ -6,10 +8,10 @@ if not TukuiCF["actionbar"].enable == true then return end
 
 local DummyShift = CreateFrame("Frame","DummyShiftBar",UIParent)
 local TukuiShift = CreateFrame("Frame","TukuiShiftBar",UIParent)
-if TukuiCF["actionbar"].vertical_shapeshift then
-	TukuiDB.CreatePanel(TukuiShift, TukuiDB.stancebuttonsize, TukuiDB.stancebuttonsize / 2, "TOPLEFT", 8, -40)
+if db.vertical_shapeshift then
+	TukuiDB.CreatePanel(TukuiShift, db.stancebuttonsize, db.stancebuttonsize / 2, "TOPLEFT", 8, -40)
 else
-	TukuiDB.CreatePanel(TukuiShift, TukuiDB.stancebuttonsize / 2, TukuiDB.stancebuttonsize, "TOPLEFT", 8, -40)
+	TukuiDB.CreatePanel(TukuiShift, db.stancebuttonsize / 2, db.stancebuttonsize, "TOPLEFT", 8, -40)
 end
 TukuiShift:SetScript("OnEnter", TukuiDB.SetModifiedBackdrop)
 TukuiShift:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
@@ -70,20 +72,20 @@ bar:SetScript("OnEvent", function(self, event, ...)
 		for i = 1, NUM_SHAPESHIFT_SLOTS do
 			button = _G["ShapeshiftButton"..i]
 			button:ClearAllPoints()
-			button:SetSize(TukuiDB.stancebuttonsize, TukuiDB.stancebuttonsize)
+			button:SetSize(db.stancebuttonsize, db.stancebuttonsize)
 			button:SetParent(DummyShift)
 			if i == 1 then
-				if TukuiCF["actionbar"].vertical_shapeshift then
+				if db.vertical_shapeshift then
 					button:SetPoint("TOPLEFT", TukuiShiftBar, "BOTTOMLEFT", 0, -3)
 				else
 					button:SetPoint("TOPLEFT", TukuiShiftBar, "TOPRIGHT", 3, 0)
 				end
 			else
 				local previous = _G["ShapeshiftButton"..i-1]
-				if TukuiCF["actionbar"].vertical_shapeshift then
-					button:SetPoint("TOP", previous, "BOTTOM", 0, -TukuiDB.buttonspacing)
+				if db.vertical_shapeshift then
+					button:SetPoint("TOP", previous, "BOTTOM", 0, -db.buttonspacing)
 				else
-					button:SetPoint("LEFT", previous, "RIGHT", TukuiDB.buttonspacing, 0)
+					button:SetPoint("LEFT", previous, "RIGHT", db.buttonspacing, 0)
 				end
 			end
 			local _, name = GetShapeshiftFormInfo(i)

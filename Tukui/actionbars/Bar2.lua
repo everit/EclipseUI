@@ -10,19 +10,19 @@ for i=1, 12 do
 	local b = _G["MultiBarBottomLeftButton"..i]
 	local b2 = _G["MultiBarBottomLeftButton"..i-1]
 	b:ClearAllPoints()
-	b:SetSize(TukuiDB.buttonsize, TukuiDB.buttonsize)
+	b:SetSize(db.buttonsize, db.buttonsize)
 	if i == 1 then
 		if db.tukui_default == true then
-			b:SetPoint("LEFT", ActionButton12, "RIGHT", TukuiDB.buttonspacing, 0)
+			b:SetPoint("LEFT", ActionButton12, "RIGHT", db.buttonspacing, 0)
 		else
 			if db.mainbar_swap == true then
-				b:SetPoint("TOPLEFT", ActionButton1, "BOTTOMLEFT", 0, -TukuiDB.buttonspacing)
+				b:SetPoint("TOPLEFT", ActionButton1, "BOTTOMLEFT", 0, -db.buttonspacing)
 			else
-				b:SetPoint("BOTTOMLEFT", ActionButton1, "TOPLEFT", 0, TukuiDB.buttonspacing)
+				b:SetPoint("BOTTOMLEFT", ActionButton1, "TOPLEFT", 0, db.buttonspacing)
 			end
 		end
 	else
-		b:SetPoint("LEFT", b2, "RIGHT", TukuiDB.buttonspacing, 0)
+		b:SetPoint("LEFT", b2, "RIGHT", db.buttonspacing, 0)
 	end
 end
 

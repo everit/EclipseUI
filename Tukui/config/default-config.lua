@@ -1,41 +1,54 @@
-﻿TukuiCF["general"] = {
+﻿----- [[     General Settings     ]] -----
+
+TukuiCF["general"] = {
 	["autoscale"] = true,                  -- mainly enabled for users that don't want to mess with the config file
 	["uiscale"] = 0.71,                    -- set your value (between 0.64 and 1) of your uiscale if autoscale is off
 	["overridelowtohigh"] = false,         -- EXPERIMENTAL ONLY! override lower version to higher version on a lower reso.
 	["multisampleprotect"] = true,         -- i don't recommend this because of shitty border but, voila!
 	
-	
 	["game_texture"] = TukuiCF["media"].custom_texture_1,
 }
+
+
+----- [[     Unitframe Settings     ]] -----
 
 TukuiCF["unitframes"] = {
 	-- general options
 	["enable"] = true,                     -- do i really need to explain this?
-	["enemyhcolor"] = false,               -- enemy target (players) color by hostility, very useful for healer.
+
 	["unitcastbar"] = true,                -- enable tukui castbar
 	["cblatency"] = false,                 -- enable castbar latency
 	["cbicons"] = true,                    -- enable icons on castbar
 	["cbclasscolor"] = true,
+
 	["auratimer"] = true,                  -- enable timers on buffs/debuffs
 	["auratextscale"] = 11,                -- the font size of buffs/debuffs timers on unitframes
 	["playerauras"] = false,               -- enable auras
 	["targetauras"] = true,                -- enable auras on target unit frame
+
 	["highThreshold"] = 80,                -- hunter high threshold
 	["lowThreshold"] = 20,                 -- global low threshold, for low mana warning.
+
 	["targetpowerpvponly"] = true,         -- enable power text on pvp target only
+
 	["totdebuffs"] = false,                -- enable tot debuffs (high reso only)
 	["focusdebuffs"] = false,              -- enable focus debuffs 
+
 	["showfocustarget"] = false,           -- show focus target
 	["showtotalhpmp"] = false,             -- change the display of info text on player and target with XXXX/Total.
 	["showsmooth"] = true,                 -- enable smooth bar
 	["showthreat"] = true,                 -- enable the threat bar anchored to info left panel.
+
 	["charportrait"] = true,              -- do i really need to explain this?
 	["maintank"] = false,  					-- enable maintank
 	["mainassist"] = false,					-- enable mainassist
-	["unicolor"] = false,                  -- enable unicolor theme
+
 	["combatfeedback"] = true,             -- enable combattext on player and target.
+
 	["playeraggro"] = true,                -- color player border to red if you have aggro on current target.
+	
 	["positionbychar"] = true,             -- save X, Y position with /uf (movable frame) per character instead of per account.
+	
 	["healcomm"] = false,                  -- enable healprediction support.
 
 	["classcolor"] = false,
@@ -45,19 +58,16 @@ TukuiCF["unitframes"] = {
 	-- raid layout
 	["showrange"] = true,                  -- show range opacity on raidframes
 	["raidalphaoor"] = 0.3,                -- alpha of unitframes when unit is out of range
-	["gridonly"] = false,                  -- enable grid only mode for all healer mode raid layout.
 	["showsymbols"] = true,	               -- show symbol.
 	["aggro"] = true,                      -- show aggro on all raids layouts
 	["raidunitdebuffwatch"] = true,        -- track important spell to watch in pve for grid mode.
 	["gridhealthvertical"] = true,         -- enable vertical grow on health bar for grid mode.
 	["showplayerinparty"] = false,         -- show my player frame in party
-	["gridscale"] = 1,                     -- set the healing grid scaling
 	
 	-- boss frames
 	["showboss"] = true,                   -- enable boss unit frames for PVELOL encounters.
 
 	-- priest only plugin
-	["ws_show_time"] = false,              -- show time on weakened soul bar
 	["ws_show_player"] = true,             -- show weakened soul bar on player unit
 	["ws_show_target"] = true,             -- show weakened soul bar on target unit
 	
@@ -68,10 +78,16 @@ TukuiCF["unitframes"] = {
 	["totemtimer"] = true,                 -- enable tukui totem timer plugin
 }
 
+
+----- [[     Arena Settings     ]] -----
+
 TukuiCF["arena"] = {
 	["unitframes"] = true,                 -- enable tukz arena unitframes (requirement : tukui unitframes enabled)
 	["spelltracker"] = true,               -- enable tukz enemy spell tracker (an afflicted3 or interruptbar alternative)
 }
+
+
+----- [[     Actionbar Settings     ]] -----
 
 TukuiCF["actionbar"] = {
 	["enable"] = true,                     -- enable tukz action bars
@@ -84,22 +100,47 @@ TukuiCF["actionbar"] = {
 	["split_bar"] = true,
 	["mainbar_swap"] = false,
 	["vertical_rightbars"] = false,
-	["vertical_shapeshift"] = true,
+	["vertical_shapeshift"] = false,
 	
 	["tukui_default"] = true,
+	
+	["buttonsize"] = 27,
+	["petbuttonsize"] = 27,
+	["stancebuttonsize"] = 27,
+	["buttonspacing"] = 3,
 }
+
+
+----- [[     Panel Settings     ]] -----
+
+TukuiCF["panels"] = {
+	["tinfowidth"] = 370,
+	["infoheight"] = 21, -- controls the height of datatext panels
+}
+
+
+----- [[     Nameplate Settings     ]] -----
 
 TukuiCF["nameplate"] = {
 	["enable"] = true,                     -- enable nice skinned nameplates that fit into tukui
 }
 
+
+----- [[     Bag Settings     ]] -----
+
 TukuiCF["bags"] = {
 	["enable"] = true,                     -- enable an all in one bag mod that fit tukui perfectly
 }
 
+
+----- [[     Map Settings     ]] -----
+
 TukuiCF["map"] = {
 	["enable"] = true,                     -- reskin the map to fit tukui
 }
+
+
+----- [[     Loot Settings     ]] -----
 
 TukuiCF["loot"] = {
 	["lootframe"] = true,                  -- reskin the loot frame to fit tukui
@@ -107,10 +148,16 @@ TukuiCF["loot"] = {
 	["autogreed"] = true,                  -- auto-dez or auto-greed item at max level, auto-greed Frozen orb
 }
 
+
+----- [[     Cooldown Settings     ]] -----
+
 TukuiCF["cooldown"] = {
 	["enable"] = true,                     -- do i really need to explain this?
 	["treshold"] = 8,                      -- show decimal under X seconds and text turn red
 }
+
+
+----- [[     Datatext Settings     ]] -----
 
 TukuiCF["datatext"] = {
 	["bags"] = 0,                          -- show space used in bags on panels
@@ -139,12 +186,18 @@ TukuiCF["datatext"] = {
 		["color"] = { .9, .3, .3 },
 }
 
+
+----- [[     Chat Settings     ]] -----
+
 TukuiCF["chat"] = {
 	["enable"] = true,                     -- blah
 	["whispersound"] = true,               -- play a sound when receiving whisper
 	
 	["chatheight"] = 120,						-- Set the height of your chat here!
 }
+
+
+----- [[     Tooltip Settings     ]] -----
 
 TukuiCF["tooltip"] = {
 	["enable"] = true,                     -- true to enable this mod, false to disable
@@ -154,10 +207,16 @@ TukuiCF["tooltip"] = {
 	["cursor"] = false,                    -- tooltip via cursor only
 }
 
+
+----- [[     Merchant Settings     ]] -----
+
 TukuiCF["merchant"] = {
 	["sellgrays"] = true,                  -- automaticly sell grays?
 	["autorepair"] = true,                 -- automaticly repair?
 }
+
+
+----- [[     Error Settings     ]] -----
 
 TukuiCF["error"] = {
 	["enable"] = true,                     -- true to enable this mod, false to disable
@@ -166,39 +225,24 @@ TukuiCF["error"] = {
 	},
 }
 
+
+----- [[     Invite Settings     ]] -----
+
 TukuiCF["invite"] = { 
 	["autoaccept"] = true,                 -- auto-accept invite from guildmate and friends.
 }
+
+
+----- [[     Buff Reminder Settings     ]] -----
 
 TukuiCF["buffreminder"] = {
 	["enable"] = true,                     -- this is now the new innerfire warning script for all armor/aspect class.
 	["sound"] = true,                      -- enable warning sound notification for reminder.
 }
 
+
+----- [[     Other Settings     ]] -----
+
 TukuiCF["others"] = {
 	["pvpautorelease"] = true,             -- enable auto-release in bg or wintergrasp. (not working for shaman, sorry)
 }
-
-----------------------------------------------------------------------------
--- Per Class Config (overwrite general)
--- Class need to be UPPERCASE
-----------------------------------------------------------------------------
-
-if TukuiDB.myclass == "PRIEST" then
-	-- do some config!
-end
-
-----------------------------------------------------------------------------
--- Per Character Name Config (overwrite general and class)
--- Name need to be case sensitive
-----------------------------------------------------------------------------
-
-if TukuiDB.myname == "Tukz" then
-	-- yeah my default config is not really like default tukui.
-	TukuiCF.actionbar.rightbars = 0
-	TukuiCF.actionbar.bottomrows = 1
-	TukuiCF.actionbar.hotkey = false
-	TukuiCF.actionbar.hideshapeshift = true
-	TukuiCF.others.pvpautorelease = true
-	TukuiCF.unitframes.enemyhcolor = true
-end

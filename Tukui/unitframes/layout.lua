@@ -519,14 +519,14 @@ local function Shared(self, unit)
 				castbar:SetHeight(TukuiDB.Scale(23))
 				if TukuiCF["actionbar"].tukui_default == true then
 					if db.cbicons then
-						castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiDB.buttonsize + 185, TukuiDB.Scale(5))
+						castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiCF["actionbar"].buttonsize + 185, TukuiDB.Scale(5))
 					else
 						castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiDB.Scale(182), TukuiDB.Scale(5))
 					end
 					castbar:SetPoint("BOTTOMRIGHT", TukuiActionBarBackground, "TOPRIGHT", TukuiDB.Scale(-182), TukuiDB.Scale(5))
 				else
 					if db.cbicons then
-						castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiDB.buttonsize + 5, TukuiDB.Scale(5))
+						castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiCF["actionbar"].buttonsize + 5, TukuiDB.Scale(5))
 					else
 						castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(5))
 					end
@@ -567,8 +567,8 @@ local function Shared(self, unit)
 
 			if db.cbicons == true then
 				castbar.button = CreateFrame("Frame", nil, castbar)
-				castbar.button:SetHeight(TukuiDB.buttonsize)
-				castbar.button:SetWidth(TukuiDB.buttonsize)
+				castbar.button:SetHeight(TukuiCF["actionbar"].buttonsize)
+				castbar.button:SetWidth(TukuiCF["actionbar"].buttonsize)
 				TukuiDB.SetTemplate(castbar.button)
 				TukuiDB.CreateShadow(castbar.button)
 

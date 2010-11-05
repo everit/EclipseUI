@@ -1,11 +1,10 @@
-local db = TukuiCF.fonts
-local font, font_size, font_style, font_shadow = db.datatext_font, db.datatext_font_size, db.datatext_font_style, db.datatext_font_shadow
+local font, font_size, font_style, font_shadow = TukuiCF["fonts"].datatext_font, TukuiCF["fonts"].datatext_font_size, TukuiCF["fonts"].datatext_font_style, TukuiCF["fonts"].datatext_font_shadow
 
 local rep = CreateFrame("Frame", "TukuiReputation", UIParent)
 if UnitLevel("player") ~= MAX_PLAYER_LEVEL then
-	TukuiDB.CreatePanel(rep, 150, TukuiDB.infoheight, "TOPLEFT", TukuiExperience, "TOPRIGHT", 3, 0)
+	TukuiDB.CreatePanel(rep, 150, TukuiCF["panels"].infoheight, "TOPLEFT", TukuiExperience, "TOPRIGHT", 3, 0)
 else
-	TukuiDB.CreatePanel(rep, 150, TukuiDB.infoheight, "TOPLEFT", TukuiTimeStats, "TOPRIGHT", 3, 0)
+	TukuiDB.CreatePanel(rep, 150, TukuiCF["panels"].infoheight, "TOPLEFT", TukuiTimeStats, "TOPRIGHT", 3, 0)
 end
 rep:EnableMouse(true)
 

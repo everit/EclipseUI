@@ -1,5 +1,4 @@
-local db = TukuiCF.fonts
-local font, font_size, font_style, font_shadow = db.aura_font, db.aura_font_size, db.aura_font_style, db.aura_font_shadow
+local font, font_size, font_style, font_shadow = TukuiCF["fonts"].aura_font, TukuiCF["fonts"].aura_font_size, TukuiCF["fonts"].aura_font_style, TukuiCF["fonts"].aura_font_shadow
 
 ConsolidatedBuffs:ClearAllPoints()
 ConsolidatedBuffs:SetPoint("LEFT", Minimap, "LEFT", TukuiDB.Scale(0), TukuiDB.Scale(0))
@@ -16,8 +15,10 @@ TemporaryEnchantFrame.SetPoint = TukuiDB.dummy
 
 TempEnchant1:ClearAllPoints()
 TempEnchant2:ClearAllPoints()
+
 TempEnchant1:SetPoint("TOPRIGHT", TukuiMinimap, "TOPLEFT", TukuiDB.Scale(-3), 0)
 TempEnchant2:SetPoint("RIGHT", TempEnchant1, "LEFT", TukuiDB.Scale(-3), 0)
+
 
 WorldStateAlwaysUpFrame:SetFrameStrata("BACKGROUND")
 WorldStateAlwaysUpFrame:SetFrameLevel(0)
@@ -139,7 +140,7 @@ local function UpdateDebuffAnchors(buttonName, index)
 	if index == 1 then
 		debuff:SetPoint("BOTTOMRIGHT", TukuiMinimap, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
 	else
-		debuff:SetPoint("RIGHT", _G[buttonName..(index-1)], "LEFT", TukuiDB.Scale(-4), 0)
+		debuff:SetPoint("RIGHT", _G[buttonName..(index-1)], "LEFT", TukuiDB.Scale(-3), 0)
 	end
 end
 

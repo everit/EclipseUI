@@ -206,4 +206,8 @@ if TukuiDB.client == "frFR" then
 	tukuilocal.hunter_unhappy = "Votre familier n'est pas heureux!"
 	tukuilocal.hunter_content = "Votre familier est heureux!"
 	tukuilocal.hunter_happy = "Votre familier est très heureux!"
+	
+	tukuilocal.map_close = "Close"
+	tukuilocal.map_move = "Move"
+	tukuilocal.map_expand = "Expand"
 end

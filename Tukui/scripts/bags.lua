@@ -9,8 +9,7 @@
 
 if not TukuiCF["bags"].enable == true then return end
 
-local db = TukuiCF.fonts
-local font, font_size, font_style, font_shadow = db.bag_font, db.bag_font_size, db.bag_font_style, db.bag_font_shadow
+local font, font_size, font_style, font_shadow = TukuiCF["fonts"].bag_font, TukuiCF["fonts"].bag_font_size, TukuiCF["fonts"].bag_font_style, TukuiCF["fonts"].bag_font_shadow
 
 local bags_BACKPACK = {0, 1, 2, 3, 4}
 local bags_BANK = {-1, 5, 6, 7, 8, 9, 10, 11}
