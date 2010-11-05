@@ -687,7 +687,6 @@ function TotemBarActionButton(button, index)
 	end
 
 	TukuiDB.SetTemplate(button)
-	TukuiDB.CreateShadow(button)
 	TukuiDB.StyleButton(button, true)
 	
 	button.overlayTex:SetTexture(nil)
