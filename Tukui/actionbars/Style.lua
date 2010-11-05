@@ -648,7 +648,6 @@ hooksecurefunc("MultiCastFlyoutFrameOpenButton_Show",function(button,_, parent) 
 
 function TotemBarSlotButton(button, index)
 	TukuiDB.SetTemplate(button)
-	TukuiDB.CreateShadow(button)
 	TukuiDB.StyleButton(button, false)
 	
 	if _G[button:GetName().."Panel"] then 
@@ -687,6 +686,7 @@ function TotemBarActionButton(button, index)
 	end
 
 	TukuiDB.SetTemplate(button)
+	TukuiDB.CreateShadow(button)
 	TukuiDB.StyleButton(button, true)
 	
 	button.overlayTex:SetTexture(nil)
