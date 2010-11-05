@@ -12,7 +12,7 @@ rep:EnableMouse(true)
 local bar = CreateFrame("StatusBar", "TukuiReputationBar", rep)
 bar:SetPoint("TOPLEFT", rep, TukuiDB.Scale(2), TukuiDB.Scale(-2))
 bar:SetPoint("BOTTOMRIGHT", rep, TukuiDB.Scale(-2), TukuiDB.Scale(2))
-bar:SetStatusBarTexture(TukuiCF["media"].blank)
+bar:SetStatusBarTexture(TukuiCF["general"].game_texture)
 rep.bar = bar
 
 local text = bar:CreateFontString(nil, "LOW")

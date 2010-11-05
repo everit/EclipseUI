@@ -1,18 +1,12 @@
-if not TukuiCF["unitframes"].enable == true then return end
+local db = TukuiCF["unitframes"]
 
+if not db.enable then return end
 
 ----- [[     Local Variables     ]] -----
 
-local db2 = TukuiCF.fonts
-local font, font_size, font_style, font_shadow = db2.unitframe_font, db2.unitframe_font_size, db2.unitframe_font_style, db2.unitframe_font_shadow
+local font, font_size, font_style, font_shadow = TukuiCF["fonts"].unitframe_font, TukuiCF["fonts"].unitframe_font_size, TukuiCF["fonts"].unitframe_font_style, TukuiCF["fonts"].unitframe_font_shadow
 
-local db = TukuiCF["unitframes"]
-local font1 = TukuiCF["media"].uffont
-local font2 = TukuiCF["media"].font
-local normTex = TukuiCF["media"].normTex
-local glowTex = TukuiCF["media"].glowTex
-local bubbleTex = TukuiCF["media"].bubbleTex
-local blank = TukuiCF["media"].blank
+local texture = TukuiCF["general"].game_texture
 
 
 ----- [[     Layout     ]] -----
@@ -25,6 +19,7 @@ local function Shared(self, unit)
 	self:SetScript('OnLeave', UnitFrame_OnLeave)
 	
 	self.menu = TukuiDB.SpawnMenu
+	
 	
 	----- [[     Features For All Units     ]] -----
 
@@ -57,7 +52,7 @@ local function Shared(self, unit)
 		health:SetHeight(TukuiDB.Scale(26))
 		health:SetPoint("TOPLEFT", TukuiDB.mult, -TukuiDB.mult)
 		health:SetPoint("TOPRIGHT", -TukuiDB.mult, TukuiDB.mult)
-		health:SetStatusBarTexture(blank)
+		health:SetStatusBarTexture(texture)
 		self.Health = health
 
 		local hBg = health:CreateTexture(nil, "BORDER")
@@ -77,12 +72,12 @@ local function Shared(self, unit)
 		power:SetHeight(TukuiDB.Scale(3))
 		power:SetPoint("TOPLEFT", health, "BOTTOMLEFT", 0, TukuiDB.Scale(-7))
 		power:SetPoint("TOPRIGHT", health, "BOTTOMRIGHT", 0, TukuiDB.Scale(-7))
-		power:SetStatusBarTexture(blank)
+		power:SetStatusBarTexture(texture)
 		self.Power = power
 		
 		local pBg = power:CreateTexture(nil, "BORDER")
 		pBg:SetAllPoints()
-		pBg:SetTexture(blank)
+		pBg:SetTexture(texture)
 		pBg.multiplier = 0.3
 		self.Power.bg = pBg
 		
@@ -130,8 +125,8 @@ local function Shared(self, unit)
 			health.colorDisconnected = false
 			health.colorClass = false
 			health.colorReaction = false
-			health:SetStatusBarColor(.15, .15, .15)
-			-- hBg:SetVertexColor(1, .1, .1)		
+			health:SetStatusBarColor(unpack(db.health_color))
+			hBg:SetVertexColor(unpack(db.health_bg_color))
 
 			power.colorTapping = true
 			power.colorDisconnected = true
@@ -174,7 +169,10 @@ local function Shared(self, unit)
 			local poBg = CreateFrame("Frame", nil, portrait)
 			poBg:SetFrameLevel(portrait:GetFrameLevel()-1)
 			poBg:SetAllPoints()
-			poBg:SetBackdrop({ bgFile = blank, insets = { top = -TukuiDB.mult, left = -TukuiDB.mult, bottom = -TukuiDB.mult, right = -TukuiDB.mult } })
+			poBg:SetBackdrop({ 
+				bgFile = TukuiCF["media"].blank,
+				insets = { top = -TukuiDB.mult, left = -TukuiDB.mult, bottom = -TukuiDB.mult, right = -TukuiDB.mult } 
+			})
 			poBg:SetBackdropColor(unpack(TukuiCF["media"].fadedbackdropcolor))
 			portrait.bg = poBg
 			
@@ -292,14 +290,14 @@ local function Shared(self, unit)
 				local lunarBar = CreateFrame('StatusBar', nil, eclipseBar)
 				lunarBar:SetPoint('LEFT', eclipseBar, 'LEFT', 0, 0)
 				lunarBar:SetSize(eclipseBar:GetWidth(), eclipseBar:GetHeight())
-				lunarBar:SetStatusBarTexture(blank)
+				lunarBar:SetStatusBarTexture(texture)
 				lunarBar:SetStatusBarColor(.30, .52, .90)
 				eclipseBar.LunarBar = lunarBar
 
 				local solarBar = CreateFrame('StatusBar', nil, eclipseBar)
 				solarBar:SetPoint('LEFT', lunarBar:GetStatusBarTexture(), 'RIGHT', 0, 0)
 				solarBar:SetSize(eclipseBar:GetWidth(), eclipseBar:GetHeight())
-				solarBar:SetStatusBarTexture(blank)
+				solarBar:SetStatusBarTexture(texture)
 				solarBar:SetStatusBarColor(.80, .82,  .60)
 				eclipseBar.SolarBar = solarBar
 
@@ -340,7 +338,7 @@ local function Shared(self, unit)
 					bars[i]:SetPoint("TOPLEFT", barFrame[i], "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
 					bars[i]:SetPoint("BOTTOMRIGHT", barFrame[i], "BOTTOMRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
 					bars[i]:SetFrameLevel(barFrame:GetFrameLevel() + 1)
-					bars[i]:SetStatusBarTexture(blank)			
+					bars[i]:SetStatusBarTexture(texture)			
 
 					bars[i].bg = bars[i]:CreateTexture(nil, 'BORDER')			
 					bars[i].bg:SetTexture(bars[i]:GetStatusBarTexture())					
@@ -386,7 +384,7 @@ local function Shared(self, unit)
 					Runes[i]:SetPoint("TOPLEFT", rB[i], "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
 					Runes[i]:SetPoint("BOTTOMRIGHT", rB[i], "BOTTOMRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
 					Runes[i]:SetFrameLevel(rB:GetFrameLevel() + 1)
-					Runes[i]:SetStatusBarTexture(blank)			
+					Runes[i]:SetStatusBarTexture(texture)			
 				end
 
 				self.Runes = Runes
@@ -418,12 +416,12 @@ local function Shared(self, unit)
 					TotemBar[i]:SetPoint("TOPLEFT", totemFrame[i], "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
 					TotemBar[i]:SetPoint("BOTTOMRIGHT", totemFrame[i], "BOTTOMRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
 					TotemBar[i]:SetFrameLevel(totemFrame:GetFrameLevel() + 2)
-					TotemBar[i]:SetStatusBarTexture(blank)
+					TotemBar[i]:SetStatusBarTexture(texture)
 					TotemBar[i]:SetMinMaxValues(0, 1)
 
 					TotemBar[i].bg = TotemBar[i]:CreateTexture(nil, "BORDER")
 					TotemBar[i].bg:SetAllPoints(TotemBar[i])
-					TotemBar[i].bg:SetTexture(normTex) -- sorry this needs to be this texture
+					TotemBar[i].bg:SetTexture(texture)
 					TotemBar[i].bg.multiplier = 0.3
 				end
 				
@@ -515,7 +513,7 @@ local function Shared(self, unit)
 		
 		if (db.unitcastbar == true) then
 			local castbar = CreateFrame("StatusBar", self:GetName().."_Castbar", self)
-			castbar:SetStatusBarTexture(blank)
+			castbar:SetStatusBarTexture(texture)
 			
 			if unit == "player" then
 				castbar:SetHeight(TukuiDB.Scale(23))
@@ -588,7 +586,7 @@ local function Shared(self, unit)
 			
 			if unit == "player" and db.cblatency == true then
 				castbar.safezone = castbar:CreateTexture(nil, "ARTWORK")
-				castbar.safezone:SetTexture(blank)
+				castbar.safezone:SetTexture(texture)
 				castbar.safezone:SetVertexColor(0.69, 0.31, 0.31, 0.75)
 				castbar.SafeZone = castbar.safezone
 			end
@@ -627,7 +625,7 @@ local function Shared(self, unit)
 		
 		----- [[     Heal Comm     ]] -----
 
-		if db.healcomm then
+		if db.healcomm == true then
 			local mhpb = CreateFrame('StatusBar', nil, self.Health)
 			mhpb:SetPoint('TOPLEFT', self.Health:GetStatusBarTexture(), 'TOPRIGHT', 0, 0)
 			mhpb:SetPoint('BOTTOMLEFT', self.Health:GetStatusBarTexture(), 'BOTTOMRIGHT', 0, 0)
@@ -636,7 +634,7 @@ local function Shared(self, unit)
 			else
 				mhpb:SetWidth(250)
 			end
-			mhpb:SetStatusBarTexture(normTex)
+			mhpb:SetStatusBarTexture(texture)
 			mhpb:SetStatusBarColor(0, 1, 0.5, 0.25)
 			mhpb:SetMinMaxValues(0,1)
 
@@ -644,7 +642,7 @@ local function Shared(self, unit)
 			ohpb:SetPoint('TOPLEFT', mhpb:GetStatusBarTexture(), 'TOPRIGHT', 0, 0)
 			ohpb:SetPoint('BOTTOMLEFT', mhpb:GetStatusBarTexture(), 'BOTTOMRIGHT', 0, 0)
 			ohpb:SetWidth(250)
-			ohpb:SetStatusBarTexture(normTex)
+			ohpb:SetStatusBarTexture(texture)
 			ohpb:SetStatusBarColor(0, 1, 0, 0.25)
 
 			self.HealPrediction = {
@@ -656,6 +654,7 @@ local function Shared(self, unit)
 		
 		
 		----- [[     Player Aggro     ]] -----
+		
 		if db.playeraggro == true then
 			table.insert(self.__elements, TukuiDB.UpdateThreat)
 			self:RegisterEvent('PLAYER_TARGET_CHANGED', TukuiDB.UpdateThreat)
@@ -663,6 +662,7 @@ local function Shared(self, unit)
 			self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', TukuiDB.UpdateThreat)
 		end
 	end
+	
 	
 	------------------------------------------------------------------------
 	--	Target of Target unit layout
@@ -676,7 +676,7 @@ local function Shared(self, unit)
 		health:SetHeight(TukuiDB.Scale(23))
 		health:SetPoint("TOPLEFT", TukuiDB.mult, -TukuiDB.mult)
 		health:SetPoint("TOPRIGHT", -TukuiDB.mult, TukuiDB.mult)
-		health:SetStatusBarTexture(blank)
+		health:SetStatusBarTexture(texture)
 		self.Health = health
 
 		local hBg = health:CreateTexture(nil, "BORDER")
@@ -696,12 +696,12 @@ local function Shared(self, unit)
 		power:SetHeight(TukuiDB.Scale(3))
 		power:SetPoint("TOPLEFT", health, "BOTTOMLEFT", 0, TukuiDB.Scale(-7))
 		power:SetPoint("TOPRIGHT", health, "BOTTOMRIGHT", 0, TukuiDB.Scale(-7))
-		power:SetStatusBarTexture(blank)
+		power:SetStatusBarTexture(texture)
 		self.Power = power
 		
 		local pBg = power:CreateTexture(nil, "BORDER")
 		pBg:SetAllPoints()
-		pBg:SetTexture(blank)
+		pBg:SetTexture(texture)
 		pBg.multiplier = 0.3
 		self.Power.bg = pBg
 		
@@ -713,6 +713,7 @@ local function Shared(self, unit)
 		TukuiDB.Kill(pBorder.bg)
 		self.Power.border = pBorder
 		
+		
 		----- [[     Health and Power Colors / Settings     ]] -----
 
 		health.frequentUpdates = true
@@ -723,7 +724,7 @@ local function Shared(self, unit)
 			power.Smooth = true
 		end
 		
-		if db.classcolor then
+		if db.classcolor == true then
 			health.colorTapping = true
 			health.colorDisconnected = true
 			health.colorReaction = true
@@ -736,8 +737,8 @@ local function Shared(self, unit)
 			health.colorDisconnected = false
 			health.colorClass = false
 			health.colorReaction = false
-			health:SetStatusBarColor(.15, .15, .15)
-			-- hBg:SetVertexColor(1, .1, .1)		
+			health:SetStatusBarColor(unpack(db.health_color))
+			hBg:SetVertexColor(unpack(db.health_bg_color))
 
 			power.colorTapping = true
 			power.colorDisconnected = true
@@ -752,7 +753,7 @@ local function Shared(self, unit)
 		Name:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 		Name:SetJustifyH("CENTER")
 
-		if db.classcolor then
+		if db.classcolor == true then
 			self:Tag(Name, '[Tukui:namemedium]')
 		else
 			self:Tag(Name, '[Tukui:getnamecolor][Tukui:namemedium]')
@@ -781,6 +782,7 @@ local function Shared(self, unit)
 		end
 	end
 	
+	
 	------------------------------------------------------------------------
 	--	Pet unit layout
 	------------------------------------------------------------------------
@@ -793,7 +795,7 @@ local function Shared(self, unit)
 		health:SetHeight(TukuiDB.Scale(23))
 		health:SetPoint("TOPLEFT", TukuiDB.mult, -TukuiDB.mult)
 		health:SetPoint("TOPRIGHT", -TukuiDB.mult, TukuiDB.mult)
-		health:SetStatusBarTexture(blank)
+		health:SetStatusBarTexture(texture)
 		self.Health = health
 
 		local hBg = health:CreateTexture(nil, "BORDER")
@@ -813,12 +815,12 @@ local function Shared(self, unit)
 		power:SetHeight(TukuiDB.Scale(3))
 		power:SetPoint("TOPLEFT", health, "BOTTOMLEFT", 0, TukuiDB.Scale(-7))
 		power:SetPoint("TOPRIGHT", health, "BOTTOMRIGHT", 0, TukuiDB.Scale(-7))
-		power:SetStatusBarTexture(blank)
+		power:SetStatusBarTexture(texture)
 		self.Power = power
 		
 		local pBg = power:CreateTexture(nil, "BORDER")
 		pBg:SetAllPoints()
-		pBg:SetTexture(blank)
+		pBg:SetTexture(texture)
 		pBg.multiplier = 0.3
 		self.Power.bg = pBg
 		
@@ -830,6 +832,7 @@ local function Shared(self, unit)
 		TukuiDB.Kill(pBorder.bg)
 		self.Power.border = pBorder
 		
+		
 		----- [[     Health and Power Colors / Settings     ]] -----
 
 		health.frequentUpdates = true
@@ -840,7 +843,7 @@ local function Shared(self, unit)
 			power.Smooth = true
 		end
 		
-		if db.classcolor then
+		if db.classcolor == true then
 			health.colorTapping = true
 			health.colorDisconnected = true
 			health.colorReaction = true
@@ -856,14 +859,15 @@ local function Shared(self, unit)
 			health.colorDisconnected = false
 			health.colorClass = false
 			health.colorReaction = false
-			health:SetStatusBarColor(.15, .15, .15)
-			-- hBg:SetVertexColor(1, .1, .1)		
+			health:SetStatusBarColor(unpack(db.health_color))
+			hBg:SetVertexColor(unpack(db.health_bg_color))
 
 			power.colorTapping = true
 			power.colorDisconnected = true
 			power.colorClass = true
 			power.colorReaction = true
 		end
+		
 		
 		-- Unit name
 		local Name = health:CreateFontString(nil, "OVERLAY")
@@ -884,13 +888,13 @@ local function Shared(self, unit)
 		self:SetAttribute('initial-height', ((health:GetHeight() + 4) + (power:GetHeight() + 4) + 3))
 		self:SetAttribute('initial-width', TukuiDB.Scale(130))
 		
-		if (db.unitcastbar == true) then
+		if db.unitcastbar == true then
 			local castbar = CreateFrame("StatusBar", self:GetName().."_Castbar", self)
-			castbar:SetStatusBarTexture(blank)
+			castbar:SetStatusBarTexture(texture)
 			
 			castbar.bg = castbar:CreateTexture(nil, "BORDER")
 			castbar.bg:SetAllPoints(castbar)
-			castbar.bg:SetTexture(blank)
+			castbar.bg:SetTexture(texture)
 			castbar.bg:SetVertexColor(0.15, 0.15, 0.15)
 			castbar:SetFrameLevel(6)
 			castbar:SetPoint("TOPLEFT", health)
@@ -936,116 +940,7 @@ local function Shared(self, unit)
 	------------------------------------------------------------------------
 	
 	if (unit == "focus") then
-		-- create health bar
-		local health = CreateFrame('StatusBar', nil, self)
-		health:SetPoint("TOPLEFT")
-		health:SetPoint("BOTTOMRIGHT")
-		health:SetStatusBarTexture(normTex)
-		health:GetStatusBarTexture():SetHorizTile(false)
-		
-		local healthBG = health:CreateTexture(nil, 'BORDER')
-		healthBG:SetAllPoints()
-		healthBG:SetTexture(.1, .1, .1)
-		
-		health.value = TukuiDB.SetFontString(health, font1, 12, "OUTLINE")
-		health.value:SetPoint("RIGHT", health, "RIGHT", TukuiDB.Scale(-4), 0)
-		health.PostUpdate = TukuiDB.PostUpdateHealth
-		
-		self.Health = health
-		self.Health.bg = healthBG
-		
-		health.frequentUpdates = true
-		if db.showsmooth == true then
-			health.Smooth = true
-		end
-		
-		if db.unicolor == true then
-			health.colorDisconnected = false
-			health.colorClass = false
-			health:SetStatusBarColor(.3, .3, .3, 1)
-			healthBG:SetVertexColor(.1, .1, .1, 1)		
-		else
-			health.colorDisconnected = true
-			health.colorClass = true
-			health.colorReaction = true	
-		end
-		
-		-- Unit name
-		local Name = health:CreateFontString(nil, "OVERLAY")
-		Name:SetPoint("LEFT", health, "LEFT", TukuiDB.Scale(4), 0)
-		Name:SetJustifyH("LEFT")
-		Name:SetFont(font1, 12, "OUTLINE")
-		Name:SetShadowColor(0, 0, 0)
-		Name:SetShadowOffset(1.25, -1.25)
-
-		self:Tag(Name, '[Tukui:getnamecolor][Tukui:namelong] [Tukui:diffcolor][level] [shortclassification]')
-		self.Name = Name
-
-		-- create focus debuff feature
-		if db.focusdebuffs == true then
-			local debuffs = CreateFrame("Frame", nil, self)
-			debuffs:SetHeight(26)
-			debuffs:SetWidth(TukuiCF["panels"].tinfowidth - 10)
-			debuffs.size = 26
-			debuffs.spacing = 2
-			debuffs.num = 40
-						
-			debuffs:SetPoint("TOPRIGHT", self, "TOPRIGHT", 2, 38)
-			debuffs.initialAnchor = "TOPRIGHT"
-			debuffs["growth-y"] = "UP"
-			debuffs["growth-x"] = "LEFT"
-			
-			debuffs.PostCreateIcon = TukuiDB.PostCreateAura
-			debuffs.PostUpdateIcon = TukuiDB.PostUpdateAura
-			self.Debuffs = debuffs
-		end
-		
-		-- focus cast bar in the center of the screen
-		if db.unitcastbar == true then
-			local castbar = CreateFrame("StatusBar", self:GetName().."_Castbar", self)
-			castbar:SetHeight(TukuiDB.Scale(20))
-			castbar:SetWidth(TukuiDB.Scale(240))
-			castbar:SetStatusBarTexture(normTex)
-			castbar:SetFrameLevel(6)
-			castbar:SetPoint("CENTER", UIParent, "CENTER", 0, 250)		
-			
-			castbar.bg = CreateFrame("Frame", nil, castbar)
-			TukuiDB.SetTemplate(castbar.bg)
-			castbar.bg:SetPoint("TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
-			castbar.bg:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
-			castbar.bg:SetFrameLevel(5)
-			
-			castbar.time = TukuiDB.SetFontString(castbar, font1, 12)
-			castbar.time:SetPoint("RIGHT", castbar, "RIGHT", TukuiDB.Scale(-4), 0)
-			castbar.time:SetTextColor(0.84, 0.75, 0.65)
-			castbar.time:SetJustifyH("RIGHT")
-			castbar.CustomTimeText = CustomCastTimeText
-
-			castbar.Text = TukuiDB.SetFontString(castbar, font1, 12)
-			castbar.Text:SetPoint("LEFT", castbar, "LEFT", TukuiDB.Scale(4), 0)
-			castbar.Text:SetTextColor(0.84, 0.75, 0.65)
-			
-			castbar.CustomDelayText = TukuiDB.CustomCastDelayText
-			castbar.PostCastStart = TukuiDB.CheckCast
-			castbar.PostChannelStart = TukuiDB.CheckChannel
-			
-			if db.cbicons == true then
-				castbar.button = CreateFrame("Frame", nil, castbar)
-				castbar.button:SetHeight(TukuiDB.Scale(40))
-				castbar.button:SetWidth(TukuiDB.Scale(40))
-				castbar.button:SetPoint("CENTER", 0, TukuiDB.Scale(50))
-				TukuiDB.SetTemplate(castbar.button)
-
-				castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
-				castbar.icon:SetPoint("TOPLEFT", castbar.button, TukuiDB.Scale(2), TukuiDB.Scale(-2))
-				castbar.icon:SetPoint("BOTTOMRIGHT", castbar.button, TukuiDB.Scale(-2), TukuiDB.Scale(2))
-				castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
-			end
-
-			self.Castbar = castbar
-			self.Castbar.Time = castbar.time
-			self.Castbar.Icon = castbar.icon
-		end
+		--
 	end
 	
 	------------------------------------------------------------------------
@@ -1053,52 +948,7 @@ local function Shared(self, unit)
 	------------------------------------------------------------------------
 
 	if (unit == "focustarget") then
-		-- create panel if higher version
-		local panel = CreateFrame("Frame", nil, self)
-		TukuiDB.CreatePanel(panel, 129, 17, "BOTTOM", self, "BOTTOM", 0, 0)
-		panel:SetFrameLevel(2)
-		panel:SetFrameStrata("MEDIUM")
-		panel:SetBackdropBorderColor(unpack(TukuiCF["media"].altbordercolor))
-		self.panel = panel
-		
-		-- health bar
-		local health = CreateFrame('StatusBar', nil, self)
-		health:SetHeight(TukuiDB.Scale(18))
-		health:SetPoint("TOPLEFT")
-		health:SetPoint("TOPRIGHT")
-		health:SetStatusBarTexture(normTex)
-		
-		local healthBG = health:CreateTexture(nil, 'BORDER')
-		healthBG:SetAllPoints()
-		healthBG:SetTexture(.1, .1, .1)
-		
-		self.Health = health
-		self.Health.bg = healthBG
-		
-		health.frequentUpdates = true
-		if db.showsmooth == true then
-			health.Smooth = true
-		end
-		
-		if db.unicolor == true then
-			health.colorDisconnected = false
-			health.colorClass = false
-			health:SetStatusBarColor(.3, .3, .3, 1)
-			healthBG:SetVertexColor(.1, .1, .1, 1)		
-		else
-			health.colorDisconnected = true
-			health.colorClass = true
-			health.colorReaction = true			
-		end
-		
-		-- Unit name
-		local Name = health:CreateFontString(nil, "OVERLAY")
-		Name:SetPoint("CENTER", panel, "CENTER", 0, 0)
-		Name:SetFont(font1, 12)
-		Name:SetJustifyH("CENTER")
-
-		self:Tag(Name, '[Tukui:getnamecolor][Tukui:namemedium] [Tukui:diffcolor][level]')
-		self.Name = Name
+		--
 	end
 
 	------------------------------------------------------------------------
@@ -1106,135 +956,7 @@ local function Shared(self, unit)
 	------------------------------------------------------------------------
 	
 	if (unit and unit:find("arena%d") and TukuiCF["arena"].unitframes == true) or (unit and unit:find("boss%d") and db.showboss == true) then
-		-- Right-click focus on arena or boss units
-		self:SetAttribute("type2", "focus")
-		
-		-- health 
-		local health = CreateFrame('StatusBar', nil, self)
-		health:SetHeight(TukuiDB.Scale(22))
-		health:SetPoint("TOPLEFT")
-		health:SetPoint("TOPRIGHT")
-		health:SetStatusBarTexture(normTex)
-
-		health.frequentUpdates = true
-		health.colorDisconnected = true
-		if db.showsmooth == true then
-			health.Smooth = true
-		end
-		health.colorClass = true
-		
-		local healthBG = health:CreateTexture(nil, 'BORDER')
-		healthBG:SetAllPoints()
-		healthBG:SetTexture(.1, .1, .1)
-
-		health.value = TukuiDB.SetFontString(health, font1,12, "OUTLINE")
-		health.value:SetPoint("LEFT", TukuiDB.Scale(2), 0)
-		health.PostUpdate = TukuiDB.PostUpdateHealth
-				
-		self.Health = health
-		self.Health.bg = healthBG
-		
-		health.frequentUpdates = true
-		if db.showsmooth == true then
-			health.Smooth = true
-		end
-		
-		if db.unicolor == true then
-			health.colorDisconnected = false
-			health.colorClass = false
-			health:SetStatusBarColor(.3, .3, .3, 1)
-			healthBG:SetVertexColor(.1, .1, .1, 1)		
-		else
-			health.colorDisconnected = true
-			health.colorClass = true
-			health.colorReaction = true	
-		end
-	
-		-- power
-		local power = CreateFrame('StatusBar', nil, self)
-		power:SetHeight(TukuiDB.Scale(6))
-		power:SetPoint("TOPLEFT", health, "BOTTOMLEFT", 0, -TukuiDB.mult)
-		power:SetPoint("TOPRIGHT", health, "BOTTOMRIGHT", 0, -TukuiDB.mult)
-		power:SetStatusBarTexture(normTex)
-		
-		power.frequentUpdates = true
-		power.colorPower = true
-		if db.showsmooth == true then
-			power.Smooth = true
-		end
-
-		local powerBG = power:CreateTexture(nil, 'BORDER')
-		powerBG:SetAllPoints(power)
-		powerBG:SetTexture(normTex)
-		powerBG.multiplier = 0.3
-		
-		power.value = TukuiDB.SetFontString(health, font1, 12, "OUTLINE")
-		power.value:SetPoint("RIGHT", TukuiDB.Scale(-2), 0)
-		power.PreUpdate = TukuiDB.PreUpdatePower
-		power.PostUpdate = TukuiDB.PostUpdatePower
-				
-		self.Power = power
-		self.Power.bg = powerBG
-		
-		-- names
-		local Name = health:CreateFontString(nil, "OVERLAY")
-		Name:SetPoint("CENTER", health, "CENTER", 0, 0)
-		Name:SetJustifyH("CENTER")
-		Name:SetFont(font1, 12, "OUTLINE")
-		Name:SetShadowColor(0, 0, 0)
-		Name:SetShadowOffset(1.25, -1.25)
-		
-		self:Tag(Name, '[Tukui:getnamecolor][Tukui:namelong]')
-		self.Name = Name
-		
-		-- create buff at left of unit if they are boss units
-		if (unit and unit:find("boss%d")) then
-			local buffs = CreateFrame("Frame", nil, self)
-			buffs:SetHeight(26)
-			buffs:SetWidth(252)
-			buffs:SetPoint("RIGHT", self, "LEFT", TukuiDB.Scale(-4), 0)
-			buffs.size = 26
-			buffs.num = 3
-			buffs.spacing = 2
-			buffs.initialAnchor = 'RIGHT'
-			buffs["growth-x"] = "LEFT"
-			buffs.PostCreateIcon = TukuiDB.PostCreateAura
-			buffs.PostUpdateIcon = TukuiDB.PostUpdateAura
-			self.Buffs = buffs
-		end
-
-		-- create debuff for both arena and boss units
-		local debuffs = CreateFrame("Frame", nil, self)
-		debuffs:SetHeight(26)
-		debuffs:SetWidth(200)
-		debuffs:SetPoint('LEFT', self, 'RIGHT', TukuiDB.Scale(4), 0)
-		debuffs.size = 26
-		debuffs.num = 5
-		debuffs.spacing = 2
-		debuffs.initialAnchor = 'LEFT'
-		debuffs["growth-x"] = "RIGHT"
-		debuffs.PostCreateIcon = TukuiDB.PostCreateAura
-		debuffs.PostUpdateIcon = TukuiDB.PostUpdateAura
-		self.Debuffs = debuffs	
-				
-		-- trinket feature via trinket plugin
-		if (TukuiCF.arena.unitframes) and (unit and unit:find('arena%d')) then
-			local Trinketbg = CreateFrame("Frame", nil, self)
-			Trinketbg:SetHeight(26)
-			Trinketbg:SetWidth(26)
-			Trinketbg:SetPoint("RIGHT", self, "LEFT", -6, 0)				
-			TukuiDB.SetTemplate(Trinketbg)
-			Trinketbg:SetFrameLevel(0)
-			self.Trinketbg = Trinketbg
-			
-			local Trinket = CreateFrame("Frame", nil, Trinketbg)
-			Trinket:SetAllPoints(Trinketbg)
-			Trinket:SetPoint("TOPLEFT", Trinketbg, TukuiDB.Scale(2), TukuiDB.Scale(-2))
-			Trinket:SetPoint("BOTTOMRIGHT", Trinketbg, TukuiDB.Scale(-2), TukuiDB.Scale(2))
-			Trinket:SetFrameLevel(1)
-			Trinket.trinketUseAnnounce = true
-			self.Trinket = Trinket
-		end
+		--
 	end
 
 	------------------------------------------------------------------------
@@ -1242,49 +964,7 @@ local function Shared(self, unit)
 	------------------------------------------------------------------------
 	
 	if(self:GetParent():GetName():match"oUF_MainTank" or self:GetParent():GetName():match"oUF_MainAssist") then
-		-- Right-click focus on maintank or mainassist units
-		self:SetAttribute("type2", "focus")
-		
-		-- health 
-		local health = CreateFrame('StatusBar', nil, self)
-		health:SetHeight(TukuiDB.Scale(20))
-		health:SetPoint("TOPLEFT")
-		health:SetPoint("TOPRIGHT")
-		health:SetStatusBarTexture(normTex)
-		
-		local healthBG = health:CreateTexture(nil, 'BORDER')
-		healthBG:SetAllPoints()
-		healthBG:SetTexture(.1, .1, .1)
-				
-		self.Health = health
-		self.Health.bg = healthBG
-		
-		health.frequentUpdates = true
-		if db.showsmooth == true then
-			health.Smooth = true
-		end
-		
-		if db.unicolor == true then
-			health.colorDisconnected = false
-			health.colorClass = false
-			health:SetStatusBarColor(.3, .3, .3, 1)
-			healthBG:SetVertexColor(.1, .1, .1, 1)
-		else
-			health.colorDisconnected = true
-			health.colorClass = true
-			health.colorReaction = true	
-		end
-		
-		-- names
-		local Name = health:CreateFontString(nil, "OVERLAY")
-		Name:SetPoint("CENTER", health, "CENTER", 0, 0)
-		Name:SetJustifyH("CENTER")
-		Name:SetFont(font1, 12, "OUTLINE")
-		Name:SetShadowColor(0, 0, 0)
-		Name:SetShadowOffset(1.25, -1.25)
-		
-		self:Tag(Name, '[Tukui:getnamecolor][Tukui:nameshort]')
-		self.Name = Name
+		--
 	end
 	
 	return self

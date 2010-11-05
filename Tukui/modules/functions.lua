@@ -43,7 +43,7 @@ local media = TukuiCF["media"]
 
 local textures = {
 	normbg = {
-		bgFile = media.normTex,
+		bgFile = TukuiCF["general"].game_texture,
 		edgeFile = media.blank,
 		tile = false,
 		tileSize = 0,
@@ -72,7 +72,7 @@ local textures = {
 		insets = { left = mult, right = mult, top = mult, bottom = mult }
 	},
 	
-	overlay = media.normTex		
+	overlay = TukuiCF["general"].game_texture,		
 }
 
 

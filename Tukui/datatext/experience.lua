@@ -16,13 +16,13 @@ xp:EnableMouse(true)
 local bar = CreateFrame("StatusBar", "TukuiExperienceBar", xp)
 bar:SetPoint("TOPLEFT", xp, TukuiDB.Scale(2), TukuiDB.Scale(-2))
 bar:SetPoint("BOTTOMRIGHT", xp, TukuiDB.Scale(-2), TukuiDB.Scale(2))
-bar:SetStatusBarTexture(TukuiCF["media"].blank)
+bar:SetStatusBarTexture(TukuiCF["general"].game_texture)
 xp.bar = bar
 
 local rbar = CreateFrame("StatusBar", "TukuiExperienceRestedBar", xp)
 rbar:SetPoint("TOPLEFT", xp, TukuiDB.Scale(2), TukuiDB.Scale(-2))
 rbar:SetPoint("BOTTOMRIGHT", xp, TukuiDB.Scale(-2), TukuiDB.Scale(2))
-rbar:SetStatusBarTexture(TukuiCF["media"].blank)
+rbar:SetStatusBarTexture(TukuiCF["general"].game_texture)
 rbar:SetFrameLevel(bar:GetFrameLevel() - 1)
 xp.rbar = rbar
 

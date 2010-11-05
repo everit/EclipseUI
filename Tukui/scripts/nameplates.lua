@@ -12,7 +12,7 @@ tNamePlates:SetScript("OnEvent", function(self, event, ...) self[event](self, ..
 SetCVar("bloatthreat", 0)
 SetCVar("bloattest", 0)
 
-local barTexture = TukuiCF["media"].blank
+local barTexture = TukuiCF["general"].game_texture
 local overlayTexture = [=[Interface\Tooltips\Nameplate-Border]=]
 local glowTexture = TukuiCF["media"].glowTex
 
