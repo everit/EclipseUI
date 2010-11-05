@@ -16,9 +16,9 @@ if TukuiCF["datatext"].armor and TukuiCF["datatext"].armor > 0 then
 	Text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	TukuiDB.PP(TukuiCF["datatext"].armor, Text)
 
+	local baseArmor , effectiveArmor, armor, posBuff, negBuff = UnitArmor("player")
+
 	local function Update(self)
-		baseArmor , effectiveArmor, armor, posBuff, negBuff = UnitArmor("player")
-		
 		Text:SetText((effectiveArmor) .. " " .. cStart .. ARMOR) -- use wow locale
 		
 		self:SetAllPoints(Text)
