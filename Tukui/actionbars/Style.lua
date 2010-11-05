@@ -307,6 +307,19 @@ local function updatehotkey(self, actionButtonType)
 	else
 		hotkey:SetText(text)
 	end
+	
+	hotkey:ClearAllPoints()
+	hotkey:SetPoint("TOPRIGHT", TukuiDB.Scale(-1), TukuiDB.Scale(-1))
+	hotkey:SetFont(font, font_size, font_style)
+	hotkey:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
+	hotkey.ClearAllPoints = TukuiDB.dummy
+	hotkey.SetPoint = TukuiDB.dummy
+ 
+	if not TukuiCF["actionbar"].hotkey == true then
+		hotkey:SetText("")
+		hotkey:Hide()
+		hotkey.Show = TukuiDB.dummy
+	end
 end
 
 
@@ -477,3 +490,286 @@ end
 hooksecurefunc("ActionButton_Update", style)
 hooksecurefunc("ActionButton_UpdateHotkeys", updatehotkey)
 hooksecurefunc("ActionButton_UpdateFlyout", styleflyout)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SLOT_EMPTY_TCOORDS = {
+	[EARTH_TOTEM_SLOT] = {
+		left	= 66 / 128,
+		right	= 96 / 128,
+		top		= 3 / 256,
+		bottom	= 33 / 256,
+	},
+	[FIRE_TOTEM_SLOT] = {
+		left	= 67 / 128,
+		right	= 97 / 128,
+		top		= 100 / 256,
+		bottom	= 130 / 256,
+	},
+	[WATER_TOTEM_SLOT] = {
+		left	= 39 / 128,
+		right	= 69 / 128,
+		top		= 209 / 256,
+		bottom	= 239 / 256,
+	},
+	[AIR_TOTEM_SLOT] = {
+		left	= 66 / 128,
+		right	= 96 / 128,
+		top		= 36 / 256,
+		bottom	= 66 / 256,
+	},
+}
+
+
+local bordercolors = {
+	{ .23, .45, .13 },    -- Earth
+	{ .58, .23, .10 },    -- Fire
+	{ .19, .48, .60 },   -- Water
+	{ .42, .18, .74 },   -- Air
+	{ .39, .39, .12 }    -- Summon / Recall
+}
+
+
+----- [[     Totem Fly Out     ]] -----
+
+function TotemBarFlyoutFrame(flyout)
+	flyout.top:SetTexture(nil)
+	flyout.middle:SetTexture(nil)
+
+	----- [[     Buttons     ]] -----
+	
+	local last = nil
+	for _,button in ipairs(flyout.buttons) do
+		local name = button:GetName()
+		local icon = _G[name.."Icon"]
+		if icon then
+			icon:SetTexCoord(.08, .92, .08, .92)
+			icon:SetDrawLayer("ARTWORK")
+			icon:ClearAllPoints()
+			icon:SetPoint("TOPLEFT", button, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
+			icon:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
+		end
+		
+		TukuiDB.SetTemplate(button)
+		TukuiDB.CreateShadow(button)
+		TukuiDB.StyleButton(button, false)
+
+		if not InCombatLockdown() then
+			button:SetSize(TukuiDB.stancebuttonsize, TukuiDB.stancebuttonsize)
+			button:ClearAllPoints()
+			button:SetPoint("BOTTOM", last, "TOP", 0, TukuiDB.Scale(3))
+		end			
+
+		if button:IsVisible() then 
+			last = button 
+		end
+	end
+
+	flyout.buttons[1]:SetPoint("BOTTOM", flyout, "BOTTOM", 0, 0)
+
+	if flyout.type == "slot" then
+		local tcoords = SLOT_EMPTY_TCOORDS[flyout.parent:GetID()]
+		flyout.buttons[1].icon:SetTexCoord(tcoords.left, tcoords.right, tcoords.top, tcoords.bottom)
+	end
+
+	
+	----- [[     Close Button     ]] -----
+	
+	local close = MultiCastFlyoutFrameCloseButton
+	TukuiDB.SetTemplate(close)
+	TukuiDB.CreateShadow(close)
+	TukuiDB.StyleButton(close, false)
+
+	if TukuiDB.CreateOverlay then
+		TukuiDB.CreateOverlay(close)
+	end
+	
+    close:GetHighlightTexture():SetPoint("TOPLEFT", close, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
+    close:GetHighlightTexture():SetPoint("BOTTOMRIGHT", close, "BOTTOMRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
+    close:GetNormalTexture():SetTexture(nil)
+	close:ClearAllPoints()
+	close:SetPoint("BOTTOMLEFT", last, "TOPLEFT", 0, TukuiDB.buttonspacing)
+	close:SetPoint("BOTTOMRIGHT", last, "TOPRIGHT", 0, TukuiDB.buttonspacing)
+	close:SetHeight(TukuiDB.buttonspacing * 4)
+
+	flyout:ClearAllPoints()
+	flyout:SetPoint("BOTTOM", flyout.parent, "TOP", 0, TukuiDB.buttonspacing)
+end
+hooksecurefunc("MultiCastFlyoutFrame_ToggleFlyout",function(self) TotemBarFlyoutFrame(self) end)
+
+
+----- [[     Totem Fly Out Buttons     ]] -----
+
+function TotemBarFlyoutOpenButton(button, parent)
+	TukuiDB.SetTemplate(button)
+	TukuiDB.CreateShadow(button)
+	TukuiDB.StyleButton(button, false)
+
+	if TukuiDB.CreateOverlay then
+		TukuiDB.CreateOverlay(button)
+	end
+	
+    button:GetNormalTexture():SetTexture(nil)
+	button:GetHighlightTexture():SetPoint("TOPLEFT", button, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
+	button:GetHighlightTexture():SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
+
+	button:ClearAllPoints()
+	button:SetFrameLevel(parent:GetFrameLevel())
+	button:SetPoint("BOTTOMLEFT", parent, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-1))
+	button:SetPoint("BOTTOMRIGHT", parent, "TOPRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(-1))
+
+	button:SetHeight(TukuiDB.buttonspacing * 4)
+end
+hooksecurefunc("MultiCastFlyoutFrameOpenButton_Show",function(button,_, parent) TotemBarFlyoutOpenButton(button, parent) end)
+
+
+----- [[     Totem Slot Buttons     ]] -----
+
+function TotemBarSlotButton(button, index)
+	TukuiDB.SetTemplate(button)
+	TukuiDB.CreateShadow(button)
+	TukuiDB.StyleButton(button, false)
+	
+	if _G[button:GetName().."Panel"] then 
+		_G[button:GetName().."Panel"]:Hide() 
+	end
+
+	button.overlayTex:SetTexture(nil)
+	button:SetNormalTexture("")
+
+	button.background:SetDrawLayer("ARTWORK")
+	button.background:ClearAllPoints()
+	button.background:SetPoint("TOPLEFT",button,"TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
+	button.background:SetPoint("BOTTOMRIGHT",button,"BOTTOMRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
+	button:SetSize(TukuiDB.stancebuttonsize, TukuiDB.stancebuttonsize)
+	-- button:SetBackdropBorderColor(unpack(bordercolors[((index-1) % 4) + 1]))
+end
+hooksecurefunc("MultiCastSlotButton_Update",function(self, slot) TotemBarSlotButton(self, slot) end)
+
+function TotemBarActionButton(button, index)
+	local name = button:GetName()
+	local icon = _G[name.."Icon"]
+	local normal  = _G[name.."NormalTexture"]
+
+	if icon then
+		icon:SetTexCoord(.08, .92, .08, .92)
+		icon:SetDrawLayer("ARTWORK")
+		icon:ClearAllPoints()
+		icon:SetPoint("TOPLEFT", button, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
+		icon:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
+	end
+	
+	if normal then
+		normal:ClearAllPoints()
+		normal:SetPoint("TOPLEFT")
+		normal:SetPoint("BOTTOMRIGHT")
+	end
+
+	TukuiDB.SetTemplate(button)
+	TukuiDB.CreateShadow(button)
+	TukuiDB.StyleButton(button, true)
+	
+	button.overlayTex:SetTexture(nil)
+	button.overlayTex:Hide()
+	button:SetNormalTexture("")
+	
+	if _G[button:GetName().."Panel"] then 
+		_G[button:GetName().."Panel"]:Hide() 
+	end
+
+	if not InCombatLockdown() then 
+		button:SetAllPoints(button.slotButton) 
+	end
+
+	-- button:SetBackdropBorderColor(unpack(bordercolors[((index-1) % 4) + 1]))
+	button:SetBackdropColor(0, 0, 0, 0)
+end
+hooksecurefunc("MultiCastActionButton_Update",function(actionButton, actionId, actionIndex, slot) TotemBarActionButton(actionButton, actionIndex) end)
+
+
+----- [[     Summon and Recall Buttons     ]] -----
+
+function TotemBarSpellButton(button, index)
+	if not button then return end
+
+	local name = button:GetName()
+	local icon = _G[name.."Icon"]
+	if icon then
+		icon:SetTexCoord(.08, .92, .08, .92)
+		icon:SetDrawLayer("ARTWORK")
+		icon:ClearAllPoints()
+		icon:SetPoint("TOPLEFT", button, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
+		icon:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
+	end
+	
+	TukuiDB.SetTemplate(button)
+	TukuiDB.CreateShadow(button)
+
+	TukuiDB.StyleButton(button, false)
+
+	button:GetNormalTexture():SetTexture(nil)
+
+	-- button:SetBackdropBorderColor(unpack(bordercolors[((index-1) % 5)+1]))
+	
+	if not InCombatLockdown() then
+		button:SetSize(TukuiDB.stancebuttonsize, TukuiDB.stancebuttonsize) 
+	end
+	
+	_G[button:GetName().."Highlight"]:SetTexture(nil)
+	_G[button:GetName().."NormalTexture"]:SetTexture(nil)
+end
+hooksecurefunc("MultiCastSummonSpellButton_Update", function(self) TotemBarSpellButton(self, 0) end)
+hooksecurefunc("MultiCastRecallSpellButton_Update", function(self) TotemBarSpellButton(self, 5) end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
