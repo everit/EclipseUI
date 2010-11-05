@@ -15,13 +15,12 @@ TukuiCF["media"] = {
 	["bubbleTex"] = [[Interface\AddOns\Tukui\media\textures\bubbleTex]], -- unitframes combo points
 	["blank"] = [[Interface\AddOns\Tukui\media\textures\blank]], -- the main texture for all borders/panels
 	
+	["custom_texture_1"] = [[Interface\AddOns\Tukui\media\textures\empath]],
 	
 	["bordercolor"] = { .125, .125, .125, 1 }, -- border color of tukui panels
 	["altbordercolor"] = { 0, 0, 0, 1 }, -- alternative border color, mainly for unitframes text panels.
 	["backdropcolor"] = { 0, 0, 0, 1 }, -- background color of tukui panels
 	["fadedbackdropcolor"] = { 0, 0, 0, .7 },	
-	
-	["datatext_color"] = { .9, .3, .3 }, -- 0, .6, 1
 	
 	["buttonhover"] = [[Interface\AddOns\Tukui\media\textures\button_hover]],
 	
