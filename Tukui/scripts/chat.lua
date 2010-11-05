@@ -137,6 +137,7 @@ local function SetChatStyle(frame)
 	EditBoxBackground:SetFrameStrata("LOW")
 	EditBoxBackground:SetFrameLevel(1)
 	TukuiDB.SetTemplate(EditBoxBackground)
+	TukuiDB.CreateOverlay(EditBoxBackground)
 	
 	local function colorize(r,g,b)
 		EditBoxBackground:SetBackdropBorderColor(r, g, b)

@@ -465,7 +465,8 @@ function Stuffing:CreateBagFrame(w)
     f.b_close:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 
 	TukuiDB.SetTemplate(f.b_close)
-
+	TukuiDB.CreateOverlay(f.b_close)
+	
 	f.b_text = f.b_close:CreateFontString(nil, "OVERLAY")
 	f.b_text:SetFont(font, font_size, font_style)
 	f.b_text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
@@ -487,6 +488,7 @@ function Stuffing:CreateBagFrame(w)
 		f.b_key:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 
 		TukuiDB.SetTemplate(f.b_key)
+		TukuiDB.CreateOverlay(f.b_key)
 
 		f.b_ktext = f.b_key:CreateFontString(nil, "OVERLAY")
 		f.b_ktext:SetFont(font, font_size, font_style)
