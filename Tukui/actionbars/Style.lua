@@ -132,16 +132,17 @@ function TukuiDB.StyleShift()
 		local icon  = _G[name.."Icon"]
 		local normal  = _G[name.."NormalTexture"]
 		stylesmallbutton(normal, button, icon, name)
-		
-		local _, _, isActive, _ = GetShapeshiftFormInfo(i)
 
-		if isActive then
-			SetDesaturation(icon, nil)
-		else
-			if GetNumShapeshiftForms() > 1 then
+		if GetNumShapeshiftForms() > 1 then
+			local _, _, isActive, _ = GetShapeshiftFormInfo(i)
+
+			if isActive then
+				SetDesaturation(icon, nil)
+			else
 				SetDesaturation(icon, 1)
 			end
 		end
+		
 		button:SetCheckedTexture(nil)
 	end
 end
@@ -169,15 +170,19 @@ function TukuiDB.TukuiShiftBarUpdate()
 			start, duration, enable = GetShapeshiftFormCooldown(i)
 			CooldownFrame_SetTimer(cooldown, start, duration, enable)
 			
+			if GetNumShapeshiftForms() > 1 then
+				if isActive then
+					SetDesaturation(icon, nil)
+				else
+					SetDesaturation(icon, 1)
+				end
+			end
+
 			if isActive then
 				ShapeshiftBarFrame.lastSelected = button:GetID()
 				button:SetChecked(1)
-				SetDesaturation(icon, nil)
 			else
 				button:SetChecked(0)
-				if GetNumShapeshiftForms() > 1 then
-					SetDesaturation(icon, 1)
-				end
 			end
 
 			if isCastable then
