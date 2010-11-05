@@ -18,17 +18,17 @@ if TukuiCF["datatext"].hitrating and TukuiCF["datatext"].hitrating > 0 then
 	local int = 1
  
 	local function Update(self, t)
-	int = int - t
-	local base, posBuff, negBuff = UnitAttackPower("player");
-	local effective = base + posBuff + negBuff;
-	local Rbase, RposBuff, RnegBuff = UnitRangedAttackPower("player");
-	local Reffective = Rbase + RposBuff + RnegBuff;
- 
-	Rattackpwr = Reffective
-	spellpwr = GetSpellBonusDamage(7)
-	attackpwr = effective
- 
-	if int < 0 then
+		int = int - t
+		local base, posBuff, negBuff = UnitAttackPower("player")
+		local effective = base + posBuff + negBuff
+		local Rbase, RposBuff, RnegBuff = UnitRangedAttackPower("player")
+		local Reffective = Rbase + RposBuff + RnegBuff
+	 
+		Rattackpwr = Reffective
+		spellpwr = GetSpellBonusDamage(7)
+		attackpwr = effective
+	 
+		if int < 0 then
 			if attackpwr > spellpwr and select(2, UnitClass("Player")) ~= "HUNTER" then
 				rating = format("%.2f", GetCombatRatingBonus(6))
 			elseif select(2, UnitClass("Player")) == "HUNTER" then
@@ -42,7 +42,6 @@ if TukuiCF["datatext"].hitrating and TukuiCF["datatext"].hitrating > 0 then
 			int = 1
 		end
 	end
- 
 	Stat:SetScript("OnUpdate", Update)
 	Update(Stat, 10)
 end
