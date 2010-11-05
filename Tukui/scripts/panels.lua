@@ -94,7 +94,7 @@ if db.vertical_rightbars == true then
 	rightbbg:SetHeight((db.buttonsize * 12) + (db.buttonspacing * 11))
 	if db.rightbars == 1 then
 		rightbbg:SetWidth(db.buttonsize)
-	elseif db.split_bar == true and db.rightbars > 2 then
+	elseif db.split_bar == true and db.rightbars >= 2 then
 		rightbbg:SetWidth((db.buttonsize * 2) + (db.buttonspacing * 1))
 	elseif not db.split_bar and db.rightbars == 3 then
 		rightbbg:SetWidth((db.buttonsize * 3) + (db.buttonspacing * 2))
@@ -105,7 +105,7 @@ else
 	rightbbg:SetWidth((db.buttonsize * 12) + (db.buttonspacing * 11))
 	if db.rightbars == 1 then
 		rightbbg:SetHeight(db.buttonsize)
-	elseif db.split_bar == true and db.rightbars > 2 then
+	elseif db.split_bar == true and db.rightbars >= 2 then
 		rightbbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 1))
 	elseif not db.split_bar and db.rightbars == 3 then
 		rightbbg:SetHeight((db.buttonsize * 3) + (db.buttonspacing * 2))
