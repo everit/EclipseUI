@@ -10,19 +10,19 @@
 	<Script file="local\spanish.lua"/>
 	<Script file="local\korean.lua"/>
 	
-	<Script file="config\config.lua"/>
-	<Script file="config\media.lua"/>
-	<Script file="config\fonts.lua"/>
 	
+	<Script file="config\media.lua"/>
+	<Script file="config\default-config.lua"/>
+	<Script file="config\custom-config.lua"/>
+	<Script file="config\fonts.lua"/>
+
 	<Script file="modules\configui.lua"/>
 
 	<Include file="libs\oUF\oUF.xml"/>
 	<Script file="libs\oUF_AuraWatch\oUF_AuraWatch.lua"/>
 	<Script file="libs\oUF_CombatFeedback\oUF_CombatFeedback.lua"/>
 	<Script file="libs\oUF_DebuffHighlight\oUF_DebuffHighlight.lua"/>
-	<Script file="libs\oUF_Experience\oUF_Experience.lua"/>
 	<Script file="libs\oUF_MovableFrames\movable.lua"/>
-	<Script file="libs\oUF_Reputation\oUF_Reputation.lua"/>
 	<Script file="libs\oUF_Smooth\oUF_Smooth.lua"/>
 	<Script file="libs\oUF_ThreatBar\oUF_ThreatBar.lua"/>
 	<Script file="libs\oUF_TotemBar\oUF_TotemBar.lua"/>
