@@ -28,6 +28,13 @@ else
 	TukuiCF["panels"].tinfowidth = (TukuiCF["actionbar"].buttonsize * 12) + (TukuiCF["actionbar"].buttonspacing * 11)
 end
 
+------------------------------------------------------------------------
+-- force this if vertical rightbars are disabled so people don't go "OMG ACTION BUTTONS DON'T FIT SIDE/CHAT PANELS"
+------------------------------------------------------------------------
+
+if TukuiCF["unitframes"].aurarows > 2 then
+	TukuiCF["unitframes"].aurarows = 2
+end
 
 ------------------------------------------------------------------------
 -- overwrite font for some language
