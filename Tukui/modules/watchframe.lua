@@ -19,12 +19,16 @@ end
 
 local function setup()
 	TukuiWatchFrame:ClearAllPoints()
-	if TukuiCF.actionbar.rightbars == 3 then
-		TukuiWatchFrame:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", TukuiDB.Scale(-180), TukuiDB.Scale(-68))
-	elseif TukuiCF.actionbar.rightbars == 2 then
-		TukuiWatchFrame:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", TukuiDB.Scale(-140), TukuiDB.Scale(-68))
-	elseif TukuiCF.actionbar.rightbars == 1 then
-		TukuiWatchFrame:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", TukuiDB.Scale(-100), TukuiDB.Scale(-68))
+	if TukuiCF.actionbar.vertical_rightbars == true then
+		if TukuiCF.actionbar.rightbars == 3 then
+			TukuiWatchFrame:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", TukuiDB.Scale(-180), TukuiDB.Scale(-68))
+		elseif TukuiCF.actionbar.rightbars == 2 then
+			TukuiWatchFrame:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", TukuiDB.Scale(-140), TukuiDB.Scale(-68))
+		elseif TukuiCF.actionbar.rightbars == 1 then
+			TukuiWatchFrame:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", TukuiDB.Scale(-100), TukuiDB.Scale(-68))
+		else
+			TukuiWatchFrame:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", TukuiDB.Scale(-30), TukuiDB.Scale(-68))
+		end
 	else
 		TukuiWatchFrame:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", TukuiDB.Scale(-30), TukuiDB.Scale(-68))
 	end
