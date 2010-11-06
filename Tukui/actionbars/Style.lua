@@ -313,8 +313,6 @@ local function updatehotkey(self, actionButtonType)
 	hotkey:SetPoint("TOPRIGHT", TukuiDB.Scale(-1), 0)
 	hotkey:SetFont(font, font_size, font_style)
 	hotkey:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-	hotkey.ClearAllPoints = TukuiDB.dummy
-	hotkey.SetPoint = TukuiDB.dummy
  
 	if not db.hotkey then
 		hotkey:SetText("")
@@ -520,6 +518,7 @@ SLOT_EMPTY_TCOORDS = {
 	},
 }
 
+
 -- leaving these here if someone wants to use element border colors
 -- local bordercolors = {
 	-- { .23, .45, .13 },    -- Earth
@@ -584,9 +583,9 @@ function TotemBarFlyoutFrame(flyout)
 		TukuiDB.CreateOverlay(close)
 	end
 	
-    close:GetHighlightTexture():SetPoint("TOPLEFT", close, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
-    close:GetHighlightTexture():SetPoint("BOTTOMRIGHT", close, "BOTTOMRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
-    close:GetNormalTexture():SetTexture(nil)
+	close:GetHighlightTexture():SetPoint("TOPLEFT", close, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
+	close:GetHighlightTexture():SetPoint("BOTTOMRIGHT", close, "BOTTOMRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
+	close:GetNormalTexture():SetTexture(nil)
 	close:ClearAllPoints()
 	close:SetPoint("BOTTOMLEFT", last, "TOPLEFT", 0, db.buttonspacing)
 	close:SetPoint("BOTTOMRIGHT", last, "TOPRIGHT", 0, db.buttonspacing)
@@ -609,7 +608,7 @@ function TotemBarFlyoutOpenButton(button, parent)
 		TukuiDB.CreateOverlay(button)
 	end
 	
-    button:GetNormalTexture():SetTexture(nil)
+	button:GetNormalTexture():SetTexture(nil)
 	button:GetHighlightTexture():SetPoint("TOPLEFT", button, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
 	button:GetHighlightTexture():SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
 
@@ -639,9 +638,10 @@ function TotemBarSlotButton(button, index)
 
 	button.background:SetDrawLayer("ARTWORK")
 	button.background:ClearAllPoints()
-	button.background:SetPoint("TOPLEFT",button,"TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
-	button.background:SetPoint("BOTTOMRIGHT",button,"BOTTOMRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
+	button.background:SetPoint("TOPLEFT", button, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
+	button.background:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
 	button:SetSize(db.stancebuttonsize, db.stancebuttonsize)
+	
 	-- button:SetBackdropBorderColor(unpack(bordercolors[((index-1) % 4) + 1]))
 end
 hooksecurefunc("MultiCastSlotButton_Update",function(self, slot) TotemBarSlotButton(self, slot) end)
@@ -672,7 +672,7 @@ function TotemBarActionButton(button, index)
 	button.overlayTex:SetTexture(nil)
 	button.overlayTex:Hide()
 	button:SetNormalTexture("")
-	
+
 	if _G[button:GetName().."Panel"] then 
 		_G[button:GetName().."Panel"]:Hide() 
 	end
@@ -715,8 +715,8 @@ function TotemBarSpellButton(button, index)
 		button:SetSize(db.stancebuttonsize, db.stancebuttonsize) 
 	end
 	
-	_G[button:GetName().."Highlight"]:SetTexture(nil)
-	_G[button:GetName().."NormalTexture"]:SetTexture(nil)
+	_G[name .. "Highlight"]:SetTexture(nil)
+	_G[name .. "NormalTexture"]:SetTexture(nil)
 end
 hooksecurefunc("MultiCastSummonSpellButton_Update", function(self) TotemBarSpellButton(self, 0) end)
 hooksecurefunc("MultiCastRecallSpellButton_Update", function(self) TotemBarSpellButton(self, 5) end)
