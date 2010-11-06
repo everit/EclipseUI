@@ -111,10 +111,10 @@ TukuiCF["actionbar"] = {
 	["stancebuttonsize"] = 27,
 	["buttonspacing"] = 3,
 	
-	
-	["split_bar_mouseover"] = true,
+	["split_bar_mouseover"] = false,
 	["rightbar_mouseover"] = false,
-	["petbar_mouseover"] = true,
+	["petbar_mouseover"] = false,
+	["shapeshift_mouseover"] = false,
 }
 
 
