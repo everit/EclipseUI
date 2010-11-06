@@ -414,10 +414,10 @@ function Stuffing:CreateBagFrame(w)
 			f:SetPoint("BOTTOMLEFT", TukuiChatLeftTabs, "TOPLEFT", 0, 3)
 		else
 			if HasPetUI() then
-				if TukuiCF["actionbar"].rightbars_vh == true then
+				if TukuiCF["actionbar"].vertical_rightbars == true then
 					f:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, 3)
 				else
-					f:SetPoint("BOTTOMRIGHT", PetActionButton10, "TOPRIGHT", 0, 3)
+					f:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "TOPRIGHT", 0, 3)
 				end
 			elseif UnitHasVehicleUI("player") then
 				f:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, 3)
@@ -425,14 +425,10 @@ function Stuffing:CreateBagFrame(w)
 				if TukuiCF["actionbar"].vertical_rightbars == true then
 					f:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, 3)
 				else
-					if TukuiCF["actionbar"].rightbars == 0 then
+					if TukuiCF["actionbar"].rightbars > 0 then
+						f:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, 3)
+					else
 						f:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, 3)
-					elseif TukuiCF["actionbar"].rightbars == 1 then
-						f:SetPoint("BOTTOMRIGHT", MultiBarRightButton12, "TOPRIGHT", 0, 3)
-					elseif TukuiCF["actionbar"].split_bar or TukuiCF["actionbar"].rightbars == 2 then	
-						f:SetPoint("BOTTOMRIGHT", MultiBarBottomRightButton12, "TOPRIGHT", 0, 3)
-					elseif (not TukuiCF["actionbar"].split_bar == true) and TukuiCF["actionbar"].rightbars == 3 then	
-						f:SetPoint("BOTTOMRIGHT", MultiBarLeftButton12, "TOPRIGHT", 0, 3)
 					end
 				end
 			end
