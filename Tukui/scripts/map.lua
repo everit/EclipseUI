@@ -4,7 +4,7 @@ if not TukuiCF["map"].enable == true then return end
 ----- [[     Local Variables     ]] -----
 
 local mapscale = WORLDMAP_WINDOWED_SIZE
-local font, font_size, font_style, font_shadow = TukuiCF["fonts"].map_font, TukuiCF["fonts"].map_font_size, TukuiCF["fonts"].map_font_style, TukuiCF["fonts"].map_font_shadow
+local font, font_size, font_style, font_shadow, font_position = TukuiCF["fonts"].map_font, TukuiCF["fonts"].map_font_size, TukuiCF["fonts"].map_font_style, TukuiCF["fonts"].map_font_shadow, TukuiCF["fonts"].map_button_xy_position
 local infoheight = TukuiCF["panels"].infoheight
 
 
@@ -32,8 +32,7 @@ mapLock:Hide()
 
 local lockText = mapLock:CreateFontString(nil, "OVERLAY")
 lockText:SetFont(font, font_size, font_style)
-lockText:SetPoint("TOP")
-lockText:SetPoint("BOTTOM")
+lockText:SetPoint("CENTER", font_position[1], font_position[2])
 lockText:SetText(tukuilocal.map_move)
 mapLock:SetWidth(lockText:GetWidth() + 20)
 
@@ -74,8 +73,7 @@ mapClose:Hide()
 
 local closeText = mapClose:CreateFontString(nil, "OVERLAY")
 closeText:SetFont(font, font_size, font_style)
-closeText:SetPoint("TOP")
-closeText:SetPoint("BOTTOM")
+closeText:SetPoint("CENTER", font_position[1], font_position[2])
 closeText:SetText(tukuilocal.map_close)
 mapClose:SetWidth(closeText:GetWidth() + 20)
 
@@ -96,8 +94,7 @@ mapExpand:Hide()
 
 local expandText = mapExpand:CreateFontString(nil, "OVERLAY", mapExpand)
 expandText:SetFont(font, font_size, font_style)
-expandText:SetPoint("TOP")
-expandText:SetPoint("BOTTOM")
+expandText:SetPoint("CENTER", font_position[1], font_position[2])
 expandText:SetText(tukuilocal.map_expand)
 mapExpand:SetWidth(expandText:GetWidth() + 20)
 
@@ -169,7 +166,7 @@ local SmallerMapSkin = function()
 
 	WorldMapFrameTitle:ClearAllPoints()
 	WorldMapFrameTitle:SetParent(mapTitle)
-	WorldMapFrameTitle:SetPoint("CENTER")
+	WorldMapFrameTitle:SetPoint("CENTER", TukuiCF["fonts"].datatext_xy_position[1], TukuiCF["fonts"].datatext_xy_position[2])
 	WorldMapFrameTitle:SetJustifyH("CENTER")
 	WorldMapFrameTitle:SetJustifyV("MIDDLE")
 	WorldMapFrameTitle:SetFont(font, font_size, font_style)

@@ -149,10 +149,10 @@ do
 	TukuiDB.PostNamePosition = function(self)
 		self.Name:ClearAllPoints()
 		if (self.Power.value:GetText() and UnitIsEnemy("player", "target") and TukuiCF["unitframes"].targetpowerpvponly == true) or (self.Power.value:GetText() and TukuiCF["unitframes"].targetpowerpvponly == false) then
-			self.Name:SetPoint("CENTER", self.panel, "CENTER", 0, 1)
+			self.Name:SetPoint("CENTER", self.panel, "CENTER", 0, TukuiCF["fonts"].unitframe_y_position[1])
 		else
 			self.Power.value:SetAlpha(0)
-			self.Name:SetPoint("LEFT", self.panel, "LEFT", 4, 1)
+			self.Name:SetPoint("LEFT", self.panel, "LEFT", 4, TukuiCF["fonts"].unitframe_y_position[1])
 		end
 	end
 
@@ -229,11 +229,11 @@ do
 	local FormatTime = function(s)
 		local day, hour, minute = 86400, 3600, 60
 		if s >= day then
-			return format("%dd", ceil(s / hour))
+			return format("%d" .. cStart .. "d", ceil(s / hour))
 		elseif s >= hour then
-			return format("%dh", ceil(s / hour))
+			return format("%d" .. cStart .. "h", ceil(s / hour))
 		elseif s >= minute then
-			return format("%dm", ceil(s / minute))
+			return format("%d" .. cStart .. "m", ceil(s / minute))
 		elseif s >= minute / 12 then
 			return floor(s)
 		end
@@ -253,8 +253,8 @@ do
 				if self.timeLeft > 0 then
 					local time = FormatTime(self.timeLeft)
 					self.remaining:SetText(time)
-					if self.timeLeft <= 5 then
-						self.remaining:SetTextColor(0.99, 0.31, 0.31)
+					if self.timeLeft <= 10 then
+						self.remaining:SetTextColor(.9, .2, .2)
 					else
 						self.remaining:SetTextColor(1, 1, 1)
 					end
@@ -277,8 +277,8 @@ do
 		TukuiDB.SetTemplate(button)
 		TukuiDB.CreateShadow(button)
 		
-		button.remaining = TukuiDB.SetFontString(button, TukuiCF["fonts"].unitframe_font, TukuiCF["fonts"].unitframe_aura_font_size, TukuiCF["fonts"].unitframe_aura_font_style)
-		button.remaining:SetPoint("CENTER", TukuiDB.Scale(1), 0)
+		button.remaining = TukuiDB.SetFontString(button, TukuiCF["fonts"].unitframe_aura_font, TukuiCF["fonts"].unitframe_aura_font_size, TukuiCF["fonts"].unitframe_aura_font_style)
+		button.remaining:SetPoint("CENTER", TukuiCF["fonts"].unitframe_aura_xy_position[1], TukuiCF["fonts"].unitframe_aura_xy_position[2])
 		
 		button.cd.noOCC = true		 	-- hide OmniCC CDs
 		button.cd.noCooldownCount = true	-- hide CDC CDs
@@ -289,9 +289,9 @@ do
 		button.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
 		button.icon:SetDrawLayer('ARTWORK')
 		
-		button.count:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(3), TukuiDB.Scale(1.5))
+		button.count:SetPoint("BOTTOMRIGHT", TukuiCF["fonts"].unitframe_auracount_position[1], TukuiCF["fonts"].unitframe_auracount_position[2])
 		button.count:SetJustifyH("RIGHT")
-		button.count:SetFont(TukuiCF["media"].font, 9, "THICKOUTLINE")
+		button.count:SetFont(TukuiCF["fonts"].unitframe_font, TukuiCF["fonts"].unitframe_auracount_font_size, TukuiCF["fonts"].unitframe_font_style)
 		button.count:SetTextColor(0.84, 0.75, 0.65)
 		
 		button.overlayFrame = CreateFrame("frame", nil, button, nil)
@@ -491,7 +491,7 @@ do
 					self.DruidMana:SetPoint("LEFT", self.Power.value, "RIGHT", 1, 0)
 					self.DruidMana:SetFormattedText("|cffD7BEA5-|r  %d%%|r", floor(min / max * 100))
 				else
-					self.DruidMana:SetPoint("LEFT", self.panel, "LEFT", 4, 1)
+					self.DruidMana:SetPoint("LEFT", self.panel, "LEFT", 4, TukuiCF["fonts"].unitframe_y_position[1])
 					self.DruidMana:SetFormattedText("%d%%", floor(min / max * 100))
 				end
 			else

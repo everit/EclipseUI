@@ -1,6 +1,6 @@
 if not TukuiCF["datatext"].location then return end
 
-local font, font_size, font_style, font_shadow = TukuiCF["fonts"].datatext_font, TukuiCF["fonts"].datatext_font_size, TukuiCF["fonts"].datatext_font_style, TukuiCF["fonts"].datatext_font_shadow
+local font, font_size, font_style, font_shadow, font_position = TukuiCF["fonts"].datatext_font, TukuiCF["fonts"].datatext_font_size, TukuiCF["fonts"].datatext_font_style, TukuiCF["fonts"].datatext_font_shadow, TukuiCF["fonts"].datatext_xy_position
 
 ----- [[    Location    ]] -----
 
@@ -10,8 +10,7 @@ TukuiDB.CreatePanel(location, 60, TukuiCF["panels"].infoheight, "TOP", UIParent,
 local locationtext  = location:CreateFontString(nil, "LOW")
 locationtext:SetFont(font, font_size, font_style)
 locationtext:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-locationtext:SetPoint("TOP")
-locationtext:SetPoint("BOTTOM", 0, 1)
+locationtext:SetPoint("CENTER", font_position[1], font_position[2])
  
 local function OnEvent(self, event)
 	local loc = GetMinimapZoneText()
@@ -52,14 +51,12 @@ if TukuiCF["datatext"].coords then
 	local xcoordstext = xcoords:CreateFontString(nil, "OVERLAY")
 	xcoordstext:SetFont(font, font_size, font_style)
 	xcoordstext:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-	xcoordstext:SetPoint("TOP", 1, 0)
-	xcoordstext:SetPoint("BOTTOM", 0, 1)
+	xcoordstext:SetPoint("CENTER", font_position[1], font_position[2])
 	
 	local ycoordstext  = ycoords:CreateFontString(nil, "OVERLAY")
 	ycoordstext:SetFont(font, font_size, font_style)
 	ycoordstext:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-	ycoordstext:SetPoint("TOP", 1, 0)
-	ycoordstext:SetPoint("BOTTOM", 0, 1)
+	ycoordstext:SetPoint("CENTER", font_position[1], font_position[2])
 
 	local ela,go = 0,false
 

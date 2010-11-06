@@ -1,4 +1,4 @@
-local font, font_size, font_style, font_shadow = TukuiCF["fonts"].aura_font, TukuiCF["fonts"].aura_font_size, TukuiCF["fonts"].aura_font_style, TukuiCF["fonts"].aura_font_shadow
+local font, font_size, font_style, font_shadow, font_count_pos, font_duration_pos = TukuiCF["fonts"].aura_font, TukuiCF["fonts"].aura_font_size, TukuiCF["fonts"].aura_font_style, TukuiCF["fonts"].aura_font_shadow, TukuiCF["fonts"].aura_count_xy_position, TukuiCF["fonts"].aura_duration_xy_position
 
 ConsolidatedBuffs:ClearAllPoints()
 ConsolidatedBuffs:SetPoint("LEFT", Minimap, "LEFT", TukuiDB.Scale(0), TukuiDB.Scale(0))
@@ -33,7 +33,7 @@ for i = 1, 3 do
 	_G["TempEnchant"..i]:SetHeight(TukuiDB.Scale(30))
 	_G["TempEnchant"..i]:SetWidth(TukuiDB.Scale(30))	
 	_G["TempEnchant"..i.."Duration"]:ClearAllPoints()
-	_G["TempEnchant"..i.."Duration"]:SetPoint("BOTTOM", 0, TukuiDB.Scale(-13))
+	_G["TempEnchant"..i.."Duration"]:SetPoint("BOTTOM", font_duration_pos[1], font_duration_pos[2])
 	_G["TempEnchant"..i.."Duration"]:SetFont(font, font_size, font_style)
 	_G["TempEnchant"..i.."Duration"]:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 end
@@ -53,12 +53,12 @@ local function StyleBuffs(buttonName, index, debuff)
 		buff:SetWidth(TukuiDB.Scale(30))
 
 		duration:ClearAllPoints()
-		duration:SetPoint("BOTTOM", TukuiDB.Scale(1), TukuiDB.Scale(-12))
+		duration:SetPoint("BOTTOM", font_duration_pos[1], font_duration_pos[2])
 		duration:SetFont(font, font_size, font_style)
 		duration:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 		
 		count:ClearAllPoints()
-		count:SetPoint("TOPLEFT", TukuiDB.Scale(4), TukuiDB.Scale(-1))
+		count:SetPoint("TOPLEFT", font_count_pos[1], font_count_pos[2])
 		count:SetFont(font, font_size, font_style)
 		count:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 

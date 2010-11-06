@@ -3,6 +3,7 @@ local db = TukuiCF["actionbar"]
 if not db.enable then return end
 
 local font, font_size, font_style, font_shadow = TukuiCF["fonts"].actionbar_font, TukuiCF["fonts"].actionbar_font_size, TukuiCF["fonts"].actionbar_font_style, TukuiCF["fonts"].actionbar_font_shadow
+local font_count_pos, font_hotkey_pos, font_macro_pos = TukuiCF["fonts"].actionbar_count_xy_position, TukuiCF["fonts"].actionbar_hotkey_xy_position, TukuiCF["fonts"].actionbar_macro_xy_position
 
 local _G = _G
 local media = TukuiCF["media"]
@@ -32,12 +33,12 @@ function style(self)
 	Border = TukuiDB.dummy
  
 	Count:ClearAllPoints()
-	Count:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(-1), TukuiDB.Scale(2))
+	Count:SetPoint("BOTTOMRIGHT", font_count_pos[1], font_count_pos[2])
 	Count:SetFont(font, font_size, font_style)
 	Count:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 
 	Btname:ClearAllPoints()
-	Btname:SetPoint("BOTTOM", 0, TukuiDB.Scale(2))
+	Btname:SetPoint("BOTTOM", font_macro_pos[1], font_macro_pos[2])
 	Btname:SetFont(font, font_size, font_style)
 	Btname:SetWidth(db.buttonsize)
 	Btname:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
@@ -55,7 +56,7 @@ function style(self)
 	end
 
 	HotKey:ClearAllPoints()
-	HotKey:SetPoint("TOPRIGHT", TukuiDB.Scale(-1), TukuiDB.Scale(-1))
+	HotKey:SetPoint("TOPRIGHT", font_hotkey_pos[1], font_hotkey_pos[2])
 	HotKey:SetFont(font, font_size, font_style)
 	HotKey:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	HotKey.ClearAllPoints = TukuiDB.dummy

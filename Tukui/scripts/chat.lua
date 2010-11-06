@@ -231,7 +231,7 @@ local function SetupChatPosAndFont(self)
 		
 		-- i'm sick and fucking tired of these stupid chat tabs forcing you to change your chat height...NOT ANYMORE FUCKERS!!!
 		_G["ChatFrame"..i.."TabText"]:ClearAllPoints()
-		_G["ChatFrame"..i.."TabText"]:SetPoint("CENTER", _G["ChatFrame"..i.."Tab"], "CENTER",0,-3)
+		_G["ChatFrame"..i.."TabText"]:SetPoint("CENTER", _G["ChatFrame"..i.."Tab"], "CENTER", TukuiCF["fonts"].chat_tab_xy_position[1], TukuiCF["fonts"].chat_tab_xy_position[2])
 	end
 
 	-- reposition battle.net popup over chat #1

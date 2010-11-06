@@ -188,7 +188,7 @@ function Stuffing:SlotUpdate(b)
 	local scount = _G[b.frame:GetName() .. "Count"]
 	scount:SetFont (font, font_size, font_style)
 	scount:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-	scount:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(-1), TukuiDB.Scale(1))
+	scount:SetPoint("BOTTOMRIGHT", TukuiCF["fonts"].bag_count_xy_position[1], TukuiCF["fonts"].bag_count_xy_position[2])
 	b.scount = scount
 
 	b.frame:Show()
@@ -469,7 +469,7 @@ function Stuffing:CreateBagFrame(w)
 	f.b_text = f.b_close:CreateFontString(nil, "OVERLAY")
 	f.b_text:SetFont(font, font_size, font_style)
 	f.b_text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-	f.b_text:SetPoint("CENTER", 0, 1)
+	f.b_text:SetPoint("CENTER", TukuiCF["fonts"].bag_button_xy_position[1], TukuiCF["fonts"].bag_button_xy_position[2])
 	f.b_text:SetText("Close")
 
 	f.b_close:SetWidth(f.b_text:GetWidth() + 20)
@@ -492,7 +492,7 @@ function Stuffing:CreateBagFrame(w)
 		f.b_ktext = f.b_key:CreateFontString(nil, "OVERLAY")
 		f.b_ktext:SetFont(font, font_size, font_style)
 		f.b_ktext:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-		f.b_ktext:SetPoint("CENTER", 0, 1)
+		f.b_ktext:SetPoint("CENTER", TukuiCF["fonts"].bag_button_xy_position[1], TukuiCF["fonts"].bag_button_xy_position[2])
 		f.b_ktext:SetText("Keyring")
 
 		f.b_key:SetWidth(f.b_ktext:GetWidth() + 20)
@@ -943,57 +943,41 @@ end
 function Stuffing:PLAYER_ENTERING_WORLD()
 	-- please don't do anything after 1 player_entering_world event.
 	Stuffing:UnregisterEvent("PLAYER_ENTERING_WORLD")
-
-	-- hooking and setting key ring bag
-	-- this is just a reskin of Blizzard key bag to fit Tukui
-	-- hooking OnShow because sometime key max slot changes.
+	
 	ContainerFrame1:HookScript("OnShow", function(self)
 		local keybackdrop = CreateFrame("Frame", "KeyringFrame", self)
-		keybackdrop:SetPoint("BOTTOMRIGHT", -4, 0)
+		keybackdrop:SetPoint("TOPLEFT", TukuiDB.Scale(9), TukuiDB.Scale(-40))
+		keybackdrop:SetPoint("BOTTOMLEFT", 0, 0)
+		keybackdrop:SetSize(TukuiDB.Scale(179),TukuiDB.Scale(215))
+		TukuiDB.SkinFadedPanel(KeyringFrame)
+
 		ContainerFrame1CloseButton:Hide()
 		ContainerFrame1Portrait:Hide()
+		ContainerFrame1PortraitButton:Hide() -- hide this or you get a tooltip when hovering over portrait texture
 		ContainerFrame1Name:Hide()
 		ContainerFrame1BackgroundTop:SetAlpha(0)
 		ContainerFrame1BackgroundMiddle1:SetAlpha(0)
 		ContainerFrame1BackgroundMiddle2:SetAlpha(0)
 		ContainerFrame1BackgroundBottom:SetAlpha(0)
-		for i=1, GetKeyRingSize() do
+
+		for i = 1, GetKeyRingSize() do
 			local slot = _G["ContainerFrame1Item"..i]
 			local t = _G["ContainerFrame1Item"..i.."IconTexture"]
-			local q = _G["ContainerFrame1Item"..i.."IconQuestTexture"]
+			TukuiDB.Kill(_G["ContainerFrame1Item"..i.."IconQuestTexture"]) -- kill the blizzard defautlt texture now
+
 			slot:SetPushedTexture("")
 			slot:SetNormalTexture("")
-			slot:SetSize(34, 34) -- set keys to be slightly larger than bag slots instead
-			
+
 			t:SetTexCoord(.08, .92, .08, .92)
 			t:SetPoint("TOPLEFT", slot, TukuiDB.Scale(2), TukuiDB.Scale(-2))
 			t:SetPoint("BOTTOMRIGHT", slot, TukuiDB.Scale(-2), TukuiDB.Scale(2))
-			
-			q:SetTexCoord(.08, .92, .08, .92)
-			q:SetPoint("TOPLEFT", slot, TukuiDB.Scale(2), TukuiDB.Scale(-2))
-			q:SetPoint("BOTTOMRIGHT", slot, TukuiDB.Scale(-2), TukuiDB.Scale(2))
-			q:SetVertexColor(1, .3, .3)
-			
+
 			TukuiDB.SetTemplate(slot)
-			TukuiDB.StyleButton(slot, false)
-
-			-- gay
-			local rows = GetKeyRingSize()
-			local kheight = 0
-			if rows == 32 then kheight = (slot:GetSize() * 9.2) + 6
-			elseif rows == 28 then kheight = (slot:GetSize() * 8.1) + 6
-			elseif rows == 24 then kheight = (slot:GetSize() * 7) + 5
-			elseif rows == 20 then kheight = (slot:GetSize() * 5.9) + 4
-			elseif rows == 16 then kheight = (slot:GetSize() * 4.8) + 4
-			elseif rows == 12 then kheight = (slot:GetSize() * 3.7) + 3
-			elseif rows == 8 then kheight = (slot:GetSize() * 2.6) + 2
-			elseif rows == 4 then kheight = (slot:GetSize() * 1.5) + 1 end
-
-			keybackdrop:SetSize((slot:GetSize() * 5) - 3, kheight)
-		end
-		TukuiDB.SkinFadedPanel(KeyringFrame)
+			TukuiDB.StyleButton(slot, false)			
+		end	
+	
 		self:ClearAllPoints()
-		self:SetPoint("BOTTOMRIGHT", StuffingFrameBags, "BOTTOMLEFT", TukuiDB.Scale(1), TukuiDB.Scale(0))
+		self:SetPoint("TOPRIGHT", StuffingFrameBags, "TOPLEFT", TukuiDB.Scale(1), TukuiDB.Scale(40))
 	end)
 end
 

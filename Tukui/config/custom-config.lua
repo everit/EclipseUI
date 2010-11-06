@@ -18,14 +18,17 @@
 TukuiCF["general"].game_texture = TukuiCF["media"].custom_texture_1
 
 TukuiCF["unitframes"].classcolor = false
+TukuiCF["unitframes"].auratimer = false
 
 TukuiCF["actionbar"].split_bar = true
-TukuiCF["actionbar"].rightbars = 1
+TukuiCF["actionbar"].rightbars = 0
+TukuiCF["actionbar"].bottomrows = 1
 TukuiCF["actionbar"].vertical_rightbars = false
-TukuiCF["actionbar"].tukui_default = false
+TukuiCF["actionbar"].vertical_shapeshift = true
+TukuiCF["actionbar"].tukui_default = true
 
 TukuiCF["datatext"].location = false
-TukuiCF["datatext"].classcolor = true
+TukuiCF["datatext"].classcolor = false
 TukuiCF["datatext"].color = { 0, .6, 1 }
 
 TukuiCF["media"].bordercolor = { .125, .125, .125, 1 }
@@ -45,7 +48,6 @@ end
 if TukuiDB.myclass == "PRIEST" then
 	-- Config here
 end
-
 
 
 ----- [[     Support for TelUI_AddonSkins     ]] -----

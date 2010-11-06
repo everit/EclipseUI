@@ -1,6 +1,6 @@
 if UnitLevel("player") == MAX_PLAYER_LEVEL then return end
 
-local font, font_size, font_style, font_shadow = TukuiCF["fonts"].datatext_font, TukuiCF["fonts"].datatext_font_size, TukuiCF["fonts"].datatext_font_style, TukuiCF["fonts"].datatext_font_shadow
+local font, font_size, font_style, font_shadow, font_position = TukuiCF["fonts"].datatext_font, TukuiCF["fonts"].datatext_font_size, TukuiCF["fonts"].datatext_font_style, TukuiCF["fonts"].datatext_font_shadow, TukuiCF["fonts"].datatext_xy_position
 
 local xp = CreateFrame("Frame", "TukuiExperience", UIParent)
 TukuiDB.CreatePanel(xp, 150, TukuiCF["panels"].infoheight, "TOPLEFT", TukuiTimeStats, "TOPLEFT", TukuiTimeStats:GetWidth() + 3, 0)
@@ -22,13 +22,13 @@ xp.rbar = rbar
 local text = bar:CreateFontString(nil, "LOW")
 text:SetFont(font, font_size, font_style)
 text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-text:SetPoint("CENTER", xp, 0, 1)
+text:SetPoint("CENTER", font_position[1], font_position[2])
 xp.text = text
 
 local rtext = bar:CreateFontString(nil, "LOW")
 rtext:SetFont(font, font_size, font_style)
 rtext:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-rtext:SetPoint("CENTER", xp, 0, 1)
+rtext:SetPoint("CENTER", font_position[1], font_position[2])
 xp.rtext = rtext
 
 local xpcolors = {

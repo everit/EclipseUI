@@ -1,4 +1,4 @@
-local font, font_size, font_style, font_shadow = TukuiCF["fonts"].datatext_font, TukuiCF["fonts"].datatext_font_size, TukuiCF["fonts"].datatext_font_style, TukuiCF["fonts"].datatext_font_shadow
+local font, font_size, font_style, font_shadow, font_position = TukuiCF["fonts"].datatext_font, TukuiCF["fonts"].datatext_font_size, TukuiCF["fonts"].datatext_font_style, TukuiCF["fonts"].datatext_font_shadow, TukuiCF["fonts"].datatext_xy_position
 	
 ----- [[     Panels     ]] -----
 
@@ -9,7 +9,7 @@ memorystat:EnableMouse(true)
 local mtext  = memorystat:CreateFontString(nil, "OVERLAY")
 mtext:SetFont(font, font_size, font_style)
 mtext:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-mtext:SetPoint("CENTER", 0, TukuiDB.Scale(1))
+mtext:SetPoint("CENTER", font_position[1], font_position[2])
 
 	
 local fpsstat = CreateFrame("Frame", "TukuiFpsStats", UIParent)
@@ -18,7 +18,7 @@ TukuiDB.CreatePanel(fpsstat, 70, TukuiCF["panels"].infoheight, "TOPLEFT", memory
 local ftext  = fpsstat:CreateFontString(nil, "OVERLAY")
 ftext:SetFont(font, font_size, font_style)
 ftext:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-ftext:SetPoint("CENTER", 0, TukuiDB.Scale(1))
+ftext:SetPoint("CENTER", font_position[1], font_position[2])
 
 
 local latencystat = CreateFrame("Frame", "TukuiLatencyStats", UIParent)
@@ -27,7 +27,7 @@ TukuiDB.CreatePanel(latencystat, 70, TukuiCF["panels"].infoheight, "TOPLEFT", fp
 local ltext  = latencystat:CreateFontString(nil, "OVERLAY")
 ltext:SetFont(font, font_size, font_style)
 ltext:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-ltext:SetPoint("CENTER", 0, TukuiDB.Scale(1))
+ltext:SetPoint("CENTER", font_position[1], font_position[2])
 
 
 local timestat = CreateFrame("Button", "TukuiTimeStats", UIParent)
@@ -36,7 +36,7 @@ TukuiDB.CreatePanel(timestat, 70, TukuiCF["panels"].infoheight, "TOPLEFT", laten
 local ttext  = timestat:CreateFontString(nil, "OVERLAY")
 ttext:SetFont(font, font_size, font_style)
 ttext:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-ttext:SetPoint("CENTER", 0, TukuiDB.Scale(1))
+ttext:SetPoint("CENTER", font_position[1], font_position[2])
 
 
 ----- [[     Memory     ]] -----

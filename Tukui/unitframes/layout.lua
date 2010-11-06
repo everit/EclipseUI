@@ -4,7 +4,8 @@ if not db.enable then return end
 
 ----- [[     Local Variables     ]] -----
 
-local font, font_size, font_style, font_shadow = TukuiCF["fonts"].unitframe_font, TukuiCF["fonts"].unitframe_font_size, TukuiCF["fonts"].unitframe_font_style, TukuiCF["fonts"].unitframe_font_shadow
+local font, font_size, font_style, font_shadow, font_position = TukuiCF["fonts"].unitframe_font, TukuiCF["fonts"].unitframe_font_size, TukuiCF["fonts"].unitframe_font_style, TukuiCF["fonts"].unitframe_font_shadow, TukuiCF["fonts"].unitframe_y_position
+
 
 local texture = TukuiCF["general"].game_texture
 
@@ -138,11 +139,11 @@ local function Shared(self, unit)
 		----- [[     Health and Power Values     ]] -----
 
 		health.value = TukuiDB.SetFontString(panel, font, font_size, font_style)
-		health.value:SetPoint("RIGHT", panel, "RIGHT", TukuiDB.Scale(-4), 1)
+		health.value:SetPoint("RIGHT", panel, "RIGHT", TukuiDB.Scale(-4), font_position[1])
 		health.PostUpdate = TukuiDB.PostUpdateHealth
 
 		power.value = TukuiDB.SetFontString(panel, font, font_size, font_style)
-		power.value:SetPoint("LEFT", panel, "LEFT", TukuiDB.Scale(4), 1)
+		power.value:SetPoint("LEFT", panel, "LEFT", TukuiDB.Scale(4), font_position[1])
 		power.PreUpdate = TukuiDB.PreUpdatePower
 		power.PostUpdate = TukuiDB.PostUpdatePower
 		
@@ -206,14 +207,14 @@ local function Shared(self, unit)
 			FlashInfo:SetToplevel(true)
 			FlashInfo:SetAllPoints(panel)
 			FlashInfo.ManaLevel = TukuiDB.SetFontString(FlashInfo, font, font_size, font_style)
-			FlashInfo.ManaLevel:SetPoint("CENTER", panel, "CENTER", 0, 1)
+			FlashInfo.ManaLevel:SetPoint("CENTER", panel, "CENTER", 0, font_position[1])
 			self.FlashInfo = FlashInfo
 			
 			
 			----- [[     PvP Status Text     ]] -----
 			
 			local status = TukuiDB.SetFontString(panel, font, font_size, font_style)
-			status:SetPoint("CENTER", panel, "CENTER", 0, 1)
+			status:SetPoint("CENTER", panel, "CENTER", 0, font_position[1])
 			status:SetTextColor(0.69, 0.31, 0.31, 0)
 			self.Status = status
 			self:Tag(status, "[pvp]")
@@ -302,8 +303,7 @@ local function Shared(self, unit)
 				eclipseBar.SolarBar = solarBar
 
 				local eclipseBarText = eclipseBar:CreateFontString(nil, 'OVERLAY')
-				eclipseBarText:SetPoint('TOP', panel)
-				eclipseBarText:SetPoint('BOTTOM', panel, 0, 1)
+				eclipseBarText:SetPoint('CENTER', panel, 0, font_position[1])
 				eclipseBarText:SetFont(font, font_size, font_style)
 				eclipseBar.PostUpdatePower = TukuiDB.EclipseDirection
 
@@ -455,7 +455,7 @@ local function Shared(self, unit)
 		if (unit == "target") then			
 			-- Unit name on target
 			local Name = health:CreateFontString(nil, "OVERLAY")
-			Name:SetPoint("LEFT", panel, "LEFT", TukuiDB.Scale(4), 1)
+			Name:SetPoint("LEFT", panel, "LEFT", TukuiDB.Scale(4), font_position[1])
 			Name:SetJustifyH("LEFT")
 			Name:SetFont(font, font_size, font_style)
 
@@ -551,13 +551,13 @@ local function Shared(self, unit)
 
 			castbar.time = TukuiDB.SetFontString(castbar, font, font_size, font_style)
 			castbar.time:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-			castbar.time:SetPoint("RIGHT", castbar, "RIGHT", TukuiDB.Scale(-4), 1)
+			castbar.time:SetPoint("RIGHT", castbar, "RIGHT", TukuiDB.Scale(-4), font_position[1])
 			castbar.time:SetTextColor(1, 1, 1)
 			castbar.time:SetJustifyH("RIGHT")
 
 			castbar.Text = TukuiDB.SetFontString(castbar, font, font_size, font_style)
 			castbar.Text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-			castbar.Text:SetPoint("LEFT", castbar, "LEFT", TukuiDB.Scale(4), 1)
+			castbar.Text:SetPoint("LEFT", castbar, "LEFT", TukuiDB.Scale(4), font_position[1])
 			castbar.Text:SetTextColor(1, 1, 1)
 			
 			if unit == "target" then
@@ -748,7 +748,7 @@ local function Shared(self, unit)
 		
 		-- Unit name
 		local Name = health:CreateFontString(nil, "OVERLAY")
-		Name:SetPoint("CENTER", health, "CENTER", 0, 1)
+		Name:SetPoint("CENTER", health, "CENTER", 0, font_position[1])
 		Name:SetFont(font, font_size, font_style)
 		Name:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 		Name:SetJustifyH("CENTER")
@@ -871,7 +871,7 @@ local function Shared(self, unit)
 		
 		-- Unit name
 		local Name = health:CreateFontString(nil, "OVERLAY")
-		Name:SetPoint("CENTER", health, "CENTER", 0, 1)
+		Name:SetPoint("CENTER", health, "CENTER", 0, font_position[1])
 		Name:SetFont(font, font_size, font_style)
 		Name:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 		Name:SetJustifyH("CENTER")
@@ -907,13 +907,13 @@ local function Shared(self, unit)
 
 			castbar.time = TukuiDB.SetFontString(castbar, font, font_size, font_style)
 			castbar.time:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-			castbar.time:SetPoint("RIGHT", health, "RIGHT", TukuiDB.Scale(-4), 1)
+			castbar.time:SetPoint("RIGHT", health, "RIGHT", TukuiDB.Scale(-4), font_position[1])
 			castbar.time:SetTextColor(0.84, 0.75, 0.65)
 			castbar.time:SetJustifyH("RIGHT")
 
 			castbar.Text = TukuiDB.SetFontString(castbar, font, font_size, font_style)
 			castbar.Text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-			castbar.Text:SetPoint("LEFT", health, "LEFT", TukuiDB.Scale(4), 1)
+			castbar.Text:SetPoint("LEFT", health, "LEFT", TukuiDB.Scale(4), font_position[1])
 			castbar.Text:SetTextColor(0.84, 0.75, 0.65)
 			
 			self.Castbar = castbar

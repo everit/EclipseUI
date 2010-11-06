@@ -157,7 +157,7 @@ GameTooltipStatusBar:SetScript("OnValueChanged", function(self, value)
 
 	if not self.text then
 		self.text = self:CreateFontString(nil, "OVERLAY")
-		self.text:SetPoint("CENTER", GameTooltipStatusBar, 0, TukuiDB.Scale(6))
+		self.text:SetPoint("CENTER", GameTooltipStatusBar, TukuiCF["fonts"].tooltip_health_xy_position[1], TukuiCF["fonts"].tooltip_health_xy_position[2])
 		self.text:SetFont(font, font_size, font_style)
 		self.text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 		self.text:Show()
@@ -195,7 +195,7 @@ healthBar:ClearAllPoints()
 healthBar:SetHeight(TukuiDB.Scale(6))
 healthBar:SetPoint("BOTTOMLEFT", healthBar:GetParent(), "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(5))
 healthBar:SetPoint("BOTTOMRIGHT", healthBar:GetParent(), "TOPRIGHT", -TukuiDB.Scale(2), TukuiDB.Scale(5))
-healthBar:SetStatusBarTexture(TukuiCF.media.normTex)
+healthBar:SetStatusBarTexture(TukuiCF["general"].game_texture)
 
 local healthBarBG = CreateFrame("Frame", "StatusBarBG", healthBar)
 healthBarBG:SetFrameLevel(healthBar:GetFrameLevel() - 1)
