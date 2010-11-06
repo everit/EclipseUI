@@ -213,4 +213,7 @@ if TukuiDB.client == "esES" then
 	tukuilocal.map_close = "Close"
 	tukuilocal.map_move = "Move"
 	tukuilocal.map_expand = "Expand"
+	
+	tukuilocal.bags_close = "Close"
+	tukuilocal.bags_keyring = "Keyring"
 end

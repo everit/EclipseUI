@@ -213,4 +213,7 @@ if TukuiDB.client == "ruRU" then
 	tukuilocal.map_close = "Закрыть"
 	tukuilocal.map_move = "Переместить"
 	tukuilocal.map_expand = "Развернуть"
+	
+	tukuilocal.bags_close = "Закрыть"
+	tukuilocal.bags_keyring = "Keyring"
 end
