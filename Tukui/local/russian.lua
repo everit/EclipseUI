@@ -25,15 +25,11 @@ if TukuiDB.client == "ruRU" then
 	tukuilocal.chat_lfg = "ПоискСпутников"
 	
 	tukuilocal.disband = "Роспуск группы."
-<<<<<<< HEAD
- 
-	tukuilocal.datatext_guild = "Гильдия: "
-=======
 
 	tukuilocal.datatext_download = "Загрузка: "
 	tukuilocal.datatext_bandwidth = "Скорость: "
-	tukuilocal.datatext_guild = "Гильдия"
->>>>>>> upstream/master
+	
+	tukuilocal.datatext_guild = "Гильдия: "
 	tukuilocal.datatext_noguild = "Не в Гильдии"
 	tukuilocal.datatext_bags = "Сумки: "
 	tukuilocal.datatext_friends = "Друзья: "

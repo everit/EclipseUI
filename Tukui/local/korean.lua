@@ -28,7 +28,8 @@ if TukuiDB.client == "koKR" then
  
 	tukuilocal.datatext_download = "Download: "
 	tukuilocal.datatext_bandwidth = "Bandwidth: "
-	tukuilocal.datatext_guild = "길드"
+	
+	tukuilocal.datatext_guild = "길드: "
 	tukuilocal.datatext_noguild = "길드 없음"
 	tukuilocal.datatext_bags = "소지품: "
 	tukuilocal.datatext_friends = "친구"

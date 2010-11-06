@@ -25,14 +25,11 @@ if TukuiDB.client == "deDE" then
 	tukuilocal.chat_lfg = "SucheNachGruppe"
 	
 	tukuilocal.disband = "Gruppe wird aufgelöst."  
- 
-<<<<<<< HEAD
-	tukuilocal.datatext_guild = "Gilde: "
-=======
+
 	tukuilocal.datatext_download = "Download: "
 	tukuilocal.datatext_bandwidth = "Bandwidth: "
-	tukuilocal.datatext_guild = "Gilde"
->>>>>>> upstream/master
+	
+	tukuilocal.datatext_guild = "Gilde: "
 	tukuilocal.datatext_noguild = "Keine Gilde"
 	tukuilocal.datatext_bags = "Tasche: "
 	tukuilocal.datatext_friends = "Freunde: "

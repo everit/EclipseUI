@@ -25,14 +25,11 @@ if TukuiDB.client == "esES" then
 	tukuilocal.chat_lfg = "LookingForGroup"
 	
 	tukuilocal.disband = "Desacer grupo."
- 
-<<<<<<< HEAD
-	tukuilocal.datatext_guild = "Hermandad: "
-=======
+
 	tukuilocal.datatext_download = "Descarga: "
 	tukuilocal.datatext_bandwidth = "Ancho de banda: "
-	tukuilocal.datatext_guild = "Hermandad"
->>>>>>> upstream/master
+	
+	tukuilocal.datatext_guild = "Hermandad: "
 	tukuilocal.datatext_noguild = "Sin Hermandad"
 	tukuilocal.datatext_bags = "Bolsas: "
 	tukuilocal.datatext_friends = "Amigos: "

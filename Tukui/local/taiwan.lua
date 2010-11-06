@@ -25,15 +25,11 @@ if TukuiDB.client == "zhTW" then
 	tukuilocal.chat_lfg = "尋求組隊"
 	
 	tukuilocal.disband = "正在解散隊伍."
-<<<<<<< HEAD
- 
-	tukuilocal.datatext_guild = "公會: "
-=======
 
 	tukuilocal.datatext_download = "下載: "
 	tukuilocal.datatext_bandwidth = "寬頻: "
-	tukuilocal.datatext_guild = "公會"
->>>>>>> upstream/master
+	
+	tukuilocal.datatext_guild = "公會: "
 	tukuilocal.datatext_noguild = "沒有公會"
 	tukuilocal.datatext_bags = "背包: "
 	tukuilocal.datatext_friends = "好友: "

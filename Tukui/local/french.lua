@@ -26,13 +26,10 @@ if TukuiDB.client == "frFR" then
 	
 	tukuilocal.disband = "Dissoudre le groupe"
 
-<<<<<<< HEAD
-	tukuilocal.datatext_guild = "Guilde: "
-=======
 	tukuilocal.datatext_download = "Téléchargement: "
 	tukuilocal.datatext_bandwidth = "Bande passante: "
-	tukuilocal.datatext_guild = "Guilde"
->>>>>>> upstream/master
+	
+	tukuilocal.datatext_guild = "Guilde: "
 	tukuilocal.datatext_noguild = "Pas de Guilde"
 	tukuilocal.datatext_bags = "Sacs: "
 	tukuilocal.datatext_friends = "Amis: "
