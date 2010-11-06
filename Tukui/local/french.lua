@@ -26,7 +26,13 @@ if TukuiDB.client == "frFR" then
 	
 	tukuilocal.disband = "Dissoudre le groupe"
 
+<<<<<<< HEAD
 	tukuilocal.datatext_guild = "Guilde: "
+=======
+	tukuilocal.datatext_download = "Téléchargement: "
+	tukuilocal.datatext_bandwidth = "Bande passante: "
+	tukuilocal.datatext_guild = "Guilde"
+>>>>>>> upstream/master
 	tukuilocal.datatext_noguild = "Pas de Guilde"
 	tukuilocal.datatext_bags = "Sacs: "
 	tukuilocal.datatext_friends = "Amis: "
@@ -206,8 +212,12 @@ if TukuiDB.client == "frFR" then
 	tukuilocal.hunter_unhappy = "Votre familier n'est pas heureux!"
 	tukuilocal.hunter_content = "Votre familier est heureux!"
 	tukuilocal.hunter_happy = "Votre familier est très heureux!"
+<<<<<<< HEAD
 	
 	tukuilocal.map_close = "Close"
 	tukuilocal.map_move = "Move"
 	tukuilocal.map_expand = "Expand"
 end
+=======
+end
+>>>>>>> upstream/master

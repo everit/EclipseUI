@@ -25,8 +25,15 @@ if TukuiDB.client == "ruRU" then
 	tukuilocal.chat_lfg = "ПоискСпутников"
 	
 	tukuilocal.disband = "Роспуск группы."
+<<<<<<< HEAD
  
 	tukuilocal.datatext_guild = "Гильдия: "
+=======
+
+	tukuilocal.datatext_download = "Загрузка: "
+	tukuilocal.datatext_bandwidth = "Скорость: "
+	tukuilocal.datatext_guild = "Гильдия"
+>>>>>>> upstream/master
 	tukuilocal.datatext_noguild = "Не в Гильдии"
 	tukuilocal.datatext_bags = "Сумки: "
 	tukuilocal.datatext_friends = "Друзья: "
@@ -206,8 +213,12 @@ if TukuiDB.client == "ruRU" then
 	tukuilocal.hunter_unhappy = "Ваш питомец несчастлив!"
 	tukuilocal.hunter_content = "Ваш питомец доволен!"
 	tukuilocal.hunter_happy = "Ваш питомец счастлив!"
+<<<<<<< HEAD
 	
 	tukuilocal.map_close = "Закрыть"
 	tukuilocal.map_move = "Переместить"
 	tukuilocal.map_expand = "Развернуть"
 end
+=======
+end
+>>>>>>> upstream/master

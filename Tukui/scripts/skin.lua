@@ -1,6 +1,4 @@
--- NOTE: i'm not reskinning everything, too much thing to do and anyway, 80% of all frames are redone for Cataclysm
--- I don't want to loose my time reskinning all panels/frame, because in a couple of month we need to redo it. :x
--- thank to karudon for helping me reskinning some elements in default interface.
+-- just some random skin, not everything is skinned atm.
 
 function TukuiDB.SetModifiedBackdrop(self)
 	local color = RAID_CLASS_COLORS[TukuiDB.myclass]
@@ -25,7 +23,7 @@ end
 local TukuiSkin = CreateFrame("Frame")
 TukuiSkin:RegisterEvent("ADDON_LOADED")
 TukuiSkin:SetScript("OnEvent", function(self, event, addon)
-	if IsAddOnLoaded("Skinner") then return end
+	if IsAddOnLoaded("Skinner") or IsAddOnLoaded("Aurora") then return end
 	
 	-- stuff not in Blizzard load-on-demand
 	if addon == "Tukui" then

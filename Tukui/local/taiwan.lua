@@ -25,8 +25,15 @@ if TukuiDB.client == "zhTW" then
 	tukuilocal.chat_lfg = "尋求組隊"
 	
 	tukuilocal.disband = "正在解散隊伍."
+<<<<<<< HEAD
  
 	tukuilocal.datatext_guild = "公會: "
+=======
+
+	tukuilocal.datatext_download = "下載: "
+	tukuilocal.datatext_bandwidth = "寬頻: "
+	tukuilocal.datatext_guild = "公會"
+>>>>>>> upstream/master
 	tukuilocal.datatext_noguild = "沒有公會"
 	tukuilocal.datatext_bags = "背包: "
 	tukuilocal.datatext_friends = "好友: "
@@ -205,8 +212,12 @@ if TukuiDB.client == "zhTW" then
 	tukuilocal.hunter_unhappy = "你的寵物感到不高興!"
 	tukuilocal.hunter_content = "你的寵物感到滿足!"
 	tukuilocal.hunter_happy = "你的寵物感到高興!"
+<<<<<<< HEAD
 	
 	tukuilocal.map_close = "Close"
 	tukuilocal.map_move = "Move"
 	tukuilocal.map_expand = "Expand"
 end
+=======
+end
+>>>>>>> upstream/master
