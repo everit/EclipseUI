@@ -960,12 +960,16 @@ function Stuffing:PLAYER_ENTERING_WORLD()
 		for i=1, GetKeyRingSize() do
 			local slot = _G["ContainerFrame1Item"..i]
 			local t = _G["ContainerFrame1Item"..i.."IconTexture"]
+			local q = _G["ContainerFrame1Item"..i.."IconQuestTexture"]
 			slot:SetPushedTexture("")
 			slot:SetNormalTexture("")
 			slot:SetSize(34, 34) -- set keys to be slightly larger than bag slots instead
 			t:SetTexCoord(.08, .92, .08, .92)
 			t:SetPoint("TOPLEFT", slot, TukuiDB.Scale(2), TukuiDB.Scale(-2))
 			t:SetPoint("BOTTOMRIGHT", slot, TukuiDB.Scale(-2), TukuiDB.Scale(2))
+			q:SetTexCoord(.08, .92, .08, .92)
+			q:SetPoint("TOPLEFT", slot, TukuiDB.Scale(2), TukuiDB.Scale(-2))
+			q:SetPoint("BOTTOMRIGHT", slot, TukuiDB.Scale(-2), TukuiDB.Scale(2))
 			TukuiDB.SetTemplate(slot)
 			TukuiDB.StyleButton(slot, false)
 
