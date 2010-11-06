@@ -117,10 +117,16 @@ memorystat:HookScript("OnUpdate", MemUpdate)
 
 memorystat:HookScript("OnEnter", function()
 	if not InCombatLockdown() then
+		local bandwidth = GetAvailableBandwidth()
 		GameTooltip:SetOwner(memorystat, "ANCHOR_BOTTOMRIGHT", -memorystat:GetWidth(), TukuiDB.Scale(-3))
 		GameTooltip:ClearLines()
-		GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_totalmemusage .. cEnd,formatMem(Total), _, _, _, 1, 1, 1)
-		GameTooltip:AddLine(" ")
+		if bandwidth ~= 0 then
+			GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_bandwidth,format("%s ".. cStart .. "Mbps",bandwidth), _, _, _, 1, 1, 1)
+			GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_download,format("%s%%", floor(GetDownloadedPercentage()*100+0.5)), _, _, _, 1, 1, 1)
+			GameTooltip:AddLine' ' 
+		end
+		GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_totalmemusage, formatMem(Total), _, _, _, 1, 1, 1)
+		GameTooltip:AddLine' '
 		for i = 1, #Memory do
 			if Memory[i][3] then 
 				local red = Memory[i][2]/Total*2

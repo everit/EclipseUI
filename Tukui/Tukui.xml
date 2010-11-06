@@ -28,7 +28,7 @@
 	<Script file="libs\oUF_TotemBar\oUF_TotemBar.lua"/>
 	<Script file="libs\oUF_Trinkets\oUF_Trinkets.lua"/>
 	<Script file="libs\oUF_RaidDebuffs\oUF_RaidDebuffs.lua"/>	
-	
+
 	<Script file="config\watch.lua"/>
 
 	<Script file="modules\colors.lua"/>	
@@ -70,15 +70,12 @@
 	<Script file="datatext\crit.lua"/>
 	<Script file="datatext\dps.lua"/>
 	<Script file="datatext\durability.lua"/>
-	<Script file="datatext\fps.lua"/>
 	<Script file="datatext\friend.lua"/>
 	<Script file="datatext\gold.lua"/>
 	<Script file="datatext\guild.lua"/>
 	<Script file="datatext\haste.lua"/>
 	<Script file="datatext\hps.lua"/>
-	<Script file="datatext\mem.lua"/>
 	<Script file="datatext\power.lua"/>
-	<Script file="datatext\time.lua"/>
 	<Script file="datatext\currency.lua"/>
 	<Script file="datatext\experience.lua"/>
 	<Script file="datatext\reputation.lua"/>
