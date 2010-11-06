@@ -29,7 +29,7 @@ else
 end
 
 ------------------------------------------------------------------------
--- force this if vertical rightbars are disabled so people don't go "OMG ACTION BUTTONS DON'T FIT SIDE/CHAT PANELS"
+-- prevent people from being HURR DURR DERP DERP DERP
 ------------------------------------------------------------------------
 
 if TukuiCF["unitframes"].aurarows > 2 then
