@@ -1,8 +1,6 @@
 -- some shit plugins i need for priest, it require tukz unitframes.
 if TukuiCF["unitframes"].enable ~= true or TukuiDB.myclass ~= "PRIEST" then return end
 
-local font = TukuiCF["media"].font
-
 local function BarPanel(height, width, x, y, anchorPoint, anchorPointRel, anchor, level, parent, strata)
 	local Panel = CreateFrame("Frame", _, parent)
 	Panel:SetFrameLevel(level)
