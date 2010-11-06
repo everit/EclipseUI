@@ -64,6 +64,7 @@ if not db.hideshapeshift then
 			TukuiShapeShiftBarBackground:SetScript("OnLeave", function(self) shapeshift_mouseover(0) end)
 			TukuiShiftBar:HookScript("OnEnter", function(self) shapeshift_mouseover(1) end)
 			TukuiShiftBar:HookScript("OnLeave", function(self) shapeshift_mouseover(0) end)
+			
 			for i = 1, 10 do
 				local pb = _G["ShapeshiftButton"..i]
 				pb:SetAlpha(0)
@@ -109,8 +110,8 @@ end
 
 ----- [[     Pet Bar Mouseover     ]] -----
 
-if db.petbar_mouseover == true then
-	local function petbar_mouseover(alpha)
+if (db.petbar_mouseover == true) or (db.rightbar_mouseover == true and db.rightbars > 0) then
+	function petbar_mouseover(alpha)
 		TukuiPetActionBarBackground:SetAlpha(alpha)
 		
 		for i=1, NUM_PET_ACTION_SLOTS do
@@ -119,15 +120,17 @@ if db.petbar_mouseover == true then
 		end
 	end
 
-	TukuiPetActionBarBackground:SetAlpha(0)
-	TukuiPetActionBarBackground:SetScript("OnEnter", function(self) petbar_mouseover(1) end)
-	TukuiPetActionBarBackground:SetScript("OnLeave", function(self) petbar_mouseover(0) end)
+	if db.petbar_mouseover == true and db.rightbars == 0 then
+		TukuiPetActionBarBackground:SetAlpha(0)
+		TukuiPetActionBarBackground:SetScript("OnEnter", function(self) petbar_mouseover(1) end)
+		TukuiPetActionBarBackground:SetScript("OnLeave", function(self) petbar_mouseover(0) end)
 
-	for i=1, NUM_PET_ACTION_SLOTS do
-		local pb = _G["PetActionButton"..i]
-		pb:SetAlpha(0)
-		pb:HookScript("OnEnter", function(self) petbar_mouseover(1) end)
-		pb:HookScript("OnLeave", function(self) petbar_mouseover(0) end)
+		for i=1, NUM_PET_ACTION_SLOTS do
+			local pb = _G["PetActionButton"..i]
+			pb:SetAlpha(0)
+			pb:HookScript("OnEnter", function(self) petbar_mouseover(1) end)
+			pb:HookScript("OnLeave", function(self) petbar_mouseover(0) end)
+		end
 	end
 end
 
@@ -135,7 +138,6 @@ end
 ----- [[     Right Bar Mouseover     ]] -----
 
 if db.rightbar_mouseover == true and db.rightbars > 0 then
-
 	local function rightbar_alpha(alpha)
 		TukuiActionBarBackgroundRight:SetAlpha(alpha)
 		
@@ -194,6 +196,7 @@ if db.rightbar_mouseover == true and db.rightbars > 0 then
 	TukuiPetActionBarBackground:SetAlpha(0)
 	TukuiPetActionBarBackground:SetScript("OnEnter", function(self) petbar_mouseover(1) rightbar_alpha(1) end)
 	TukuiPetActionBarBackground:SetScript("OnLeave", function(self) petbar_mouseover(0) rightbar_alpha(0) end)
+	
 	for i=1, NUM_PET_ACTION_SLOTS do
 		local pb = _G["PetActionButton"..i]
 		pb:SetAlpha(0)
