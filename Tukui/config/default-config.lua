@@ -23,6 +23,8 @@ TukuiCF["unitframes"] = {
 
 	["auratimer"] = true,                  -- enable timers on buffs/debuffs
 	["auratextscale"] = 11,                -- the font size of buffs/debuffs timers on unitframes
+	["aurarows"] = 2, 
+	
 	["playerauras"] = false,               -- enable auras
 	["targetauras"] = true,                -- enable auras on target unit frame
 

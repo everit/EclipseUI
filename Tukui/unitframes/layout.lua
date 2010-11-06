@@ -482,12 +482,22 @@ local function Shared(self, unit)
 				buffs:SetPoint("TOPLEFT", self, "TOPLEFT", TukuiDB.Scale(-1), TukuiDB.Scale(26))
 			end
 			
-			buffs:SetHeight(22)
+			local buffheight = 0
+			local buffnum = 0
+			if db.aurarows == 1 then
+				buffheight = 22
+				buffnum = 8
+			else
+				buffheight = 47
+				buffnum = 16
+			end
+			
+			buffs:SetHeight(buffheight)
 			buffs:SetWidth(self:GetAttribute('initial-width'))
 			buffs.size = 22
-			buffs.num = 8
+			buffs.num = buffnum
 
-			debuffs:SetHeight(22)
+			debuffs:SetHeight(buffheight)
 			debuffs:SetWidth(self:GetAttribute('initial-width'))
 			debuffs:SetPoint("BOTTOMLEFT", buffs, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(3))
 			debuffs.size = 22
