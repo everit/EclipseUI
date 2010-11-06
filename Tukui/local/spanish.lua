@@ -209,12 +209,8 @@ if TukuiDB.client == "esES" then
 	tukuilocal.hunter_unhappy = "Tu mascota está descontenta!"
 	tukuilocal.hunter_content = "Tu mascota está contenta!"
 	tukuilocal.hunter_happy = "Tu mascota está feliz!"
-<<<<<<< HEAD
 	
 	tukuilocal.map_close = "Close"
 	tukuilocal.map_move = "Move"
 	tukuilocal.map_expand = "Expand"
 end
-=======
-end
->>>>>>> upstream/master

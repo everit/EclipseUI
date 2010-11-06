@@ -208,12 +208,8 @@ if TukuiDB.client == "zhTW" then
 	tukuilocal.hunter_unhappy = "你的寵物感到不高興!"
 	tukuilocal.hunter_content = "你的寵物感到滿足!"
 	tukuilocal.hunter_happy = "你的寵物感到高興!"
-<<<<<<< HEAD
 	
 	tukuilocal.map_close = "Close"
 	tukuilocal.map_move = "Move"
 	tukuilocal.map_expand = "Expand"
 end
-=======
-end
->>>>>>> upstream/master

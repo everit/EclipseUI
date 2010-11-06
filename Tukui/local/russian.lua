@@ -209,12 +209,8 @@ if TukuiDB.client == "ruRU" then
 	tukuilocal.hunter_unhappy = "Ваш питомец несчастлив!"
 	tukuilocal.hunter_content = "Ваш питомец доволен!"
 	tukuilocal.hunter_happy = "Ваш питомец счастлив!"
-<<<<<<< HEAD
 	
 	tukuilocal.map_close = "Закрыть"
 	tukuilocal.map_move = "Переместить"
 	tukuilocal.map_expand = "Развернуть"
 end
-=======
-end
->>>>>>> upstream/master
