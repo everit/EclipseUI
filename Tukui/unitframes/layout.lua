@@ -24,10 +24,15 @@ local function Shared(self, unit)
 	
 	----- [[     Features For All Units     ]] -----
 
+	----- [[     Dummy Frame     ]] -----
+
 	local InvFrame = CreateFrame("Frame", nil, self)
 	InvFrame:SetFrameStrata("HIGH")
 	InvFrame:SetFrameLevel(5)
 	InvFrame:SetAllPoints()
+
+	
+	----- [[     Raid Icons     ]] -----
 
 	local RaidIcon = InvFrame:CreateTexture(nil, "OVERLAY")
 	RaidIcon:SetTexture("Interface\\AddOns\\Tukui\\media\\textures\\raidicons.blp") -- thx hankthetank for texture
@@ -42,53 +47,143 @@ local function Shared(self, unit)
 	end
 	self.RaidIcon = RaidIcon
 	
+	
+	----- [[     Health / Power Bars + Backgrounds / Borders     ]] -----
 
-	----- [[     Player and Target     ]] -----
+	local health = CreateFrame("StatusBar", nil, self)
+	health:SetPoint("TOPLEFT", TukuiDB.mult, -TukuiDB.mult)
+	health:SetPoint("TOPRIGHT", -TukuiDB.mult, TukuiDB.mult)
+	health:SetStatusBarTexture(texture)
+	self.Health = health
+
+	local hBg = health:CreateTexture(nil, "BORDER")
+	hBg:SetAllPoints()
+	hBg:SetTexture(.05, .05, .05)
+	self.Health.bg = hBg
+
+	local hBorder = CreateFrame("Frame", nil, health)
+	hBorder:SetFrameLevel(health:GetFrameLevel() - 1)
+	hBorder:SetPoint("TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
+	hBorder:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
+	TukuiDB.SkinPanel(hBorder)
+	TukuiDB.Kill(hBorder.bg)
+	self.Health.border = hBorder		
+
+	local power = CreateFrame("StatusBar", nil, self)
+	power:SetPoint("TOPLEFT", health, "BOTTOMLEFT", 0, TukuiDB.Scale(-7))
+	power:SetPoint("TOPRIGHT", health, "BOTTOMRIGHT", 0, TukuiDB.Scale(-7))
+	power:SetStatusBarTexture(texture)
+	self.Power = power
+
+	local pBg = power:CreateTexture(nil, "BORDER")
+	pBg:SetAllPoints()
+	pBg:SetTexture(texture)
+	pBg.multiplier = 0.3
+	self.Power.bg = pBg
+
+	local pBorder = CreateFrame("Frame", nil, power)
+	pBorder:SetFrameLevel(power:GetFrameLevel() - 1)
+	pBorder:SetPoint("TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
+	pBorder:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
+	TukuiDB.SkinPanel(pBorder)
+	TukuiDB.Kill(pBorder.bg)
+	self.Power.border = pBorder
+
 	
-	if (unit == "player" or unit == "target") then
+	----- [[     Health and Power Colors / Settings     ]] -----
 	
-		----- [[     Health / Power Bars + Backgrounds / Borders     ]] -----
+	health.frequentUpdates = true
+	power.frequentUpdates = true
+
+	if db.showsmooth == true then
+		health.Smooth = true
+		power.Smooth = true
+	end
 		
-		local health = CreateFrame("StatusBar", nil, self)
+	if db.classcolor == true then
+		health.colorTapping = true
+		health.colorDisconnected = true
+		health.colorReaction = true
+		health.colorClass = true
+		if TukuiDB.myclass == "HUNTER" then
+			health.colorHappiness = true
+		end
+		hBg.multiplier = 0.3
+		
+		power.colorPower = true
+	else
+		health.colorTapping = false
+		health.colorDisconnected = false
+		health.colorClass = false
+		health.colorReaction = false
+		health:SetStatusBarColor(unpack(db.health_color))
+		hBg:SetVertexColor(unpack(db.health_bg_color))
+
+		power.colorTapping = true
+		power.colorDisconnected = true
+		power.colorClass = true
+		power.colorReaction = true
+	end
+	
+	
+	----- [[     Unit Name     ]] -----
+
+	local Name = health:CreateFontString(nil, "OVERLAY")
+	Name:SetFont(font, font_size, font_style)
+	Name:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
+	self.Name = Name
+
+	
+	----- [[     Cast Bar     ]] -----
+	
+	local castbar = CreateFrame("StatusBar", self:GetName().."_Castbar", self)
+	castbar:SetStatusBarTexture(texture)
+
+	local castbarBg = CreateFrame("Frame", nil, castbar)
+	castbarBg:SetPoint("TOPLEFT", -TukuiDB.Scale(2), TukuiDB.Scale(2))
+	castbarBg:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), -TukuiDB.Scale(2))
+	castbarBg:SetFrameLevel(castbar:GetFrameLevel() - 1)
+	TukuiDB.SkinPanel(castbarBg)
+
+	castbar.time = TukuiDB.SetFontString(castbar, font, font_size, font_style)
+	castbar.time:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
+	castbar.time:SetTextColor(1, 1, 1)
+
+	castbar.Text = TukuiDB.SetFontString(castbar, font, font_size, font_style)
+	castbar.Text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
+	castbar.Text:SetTextColor(1, 1, 1)
+	
+	castbar.CustomTimeText = TukuiDB.CustomCastTimeText
+	castbar.CustomDelayText = TukuiDB.CustomCastDelayText
+	castbar.PostCastStart = TukuiDB.CheckCast
+	castbar.PostChannelStart = TukuiDB.CheckChannel
+
+	if db.cbicons == true then
+		castbar.button = CreateFrame("Frame", nil, castbar)
+		castbar.button:SetHeight(TukuiCF["actionbar"].buttonsize)
+		castbar.button:SetWidth(TukuiCF["actionbar"].buttonsize)
+		TukuiDB.SetTemplate(castbar.button)
+		TukuiDB.CreateShadow(castbar.button)
+
+		castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
+		castbar.icon:SetPoint("TOPLEFT", castbar.button, TukuiDB.Scale(2), TukuiDB.Scale(-2))
+		castbar.icon:SetPoint("BOTTOMRIGHT", castbar.button, TukuiDB.Scale(-2), TukuiDB.Scale(2))
+		castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
+	end
+
+	self.Castbar = castbar
+	self.Castbar.Time = castbar.time
+	self.Castbar.Icon = castbar.icon
+
+	
+	----- [[     Player and Target Unit Settings     ]] -----
+	
+	if (unit == "player") or (unit == "target") then
+	
+		----- [[     Set Health / Power Bar Height     ]] -----
+		
 		health:SetHeight(TukuiDB.Scale(26))
-		health:SetPoint("TOPLEFT", TukuiDB.mult, -TukuiDB.mult)
-		health:SetPoint("TOPRIGHT", -TukuiDB.mult, TukuiDB.mult)
-		health:SetStatusBarTexture(texture)
-		self.Health = health
-
-		local hBg = health:CreateTexture(nil, "BORDER")
-		hBg:SetAllPoints()
-		hBg:SetTexture(.05, .05, .05)
-		self.Health.bg = hBg
-
-		local hBorder = CreateFrame("Frame", nil, health)
-		hBorder:SetFrameLevel(health:GetFrameLevel() - 1)
-		hBorder:SetPoint("TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
-		hBorder:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
-		TukuiDB.SkinPanel(hBorder)
-		TukuiDB.Kill(hBorder.bg)
-		self.Health.border = hBorder		
-
-		local power = CreateFrame("StatusBar", nil, self)
 		power:SetHeight(TukuiDB.Scale(3))
-		power:SetPoint("TOPLEFT", health, "BOTTOMLEFT", 0, TukuiDB.Scale(-7))
-		power:SetPoint("TOPRIGHT", health, "BOTTOMRIGHT", 0, TukuiDB.Scale(-7))
-		power:SetStatusBarTexture(texture)
-		self.Power = power
-		
-		local pBg = power:CreateTexture(nil, "BORDER")
-		pBg:SetAllPoints()
-		pBg:SetTexture(texture)
-		pBg.multiplier = 0.3
-		self.Power.bg = pBg
-		
-		local pBorder = CreateFrame("Frame", nil, power)
-		pBorder:SetFrameLevel(power:GetFrameLevel() - 1)
-		pBorder:SetPoint("TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
-		pBorder:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
-		TukuiDB.SkinPanel(pBorder)
-		TukuiDB.Kill(pBorder.bg)
-		self.Power.border = pBorder
 		
 		
 		----- [[     Unit Information Panel     ]] -----
@@ -103,39 +198,6 @@ local function Shared(self, unit)
 		self.panel = panel
 		
 		
-		----- [[     Health and Power Colors / Settings     ]] -----
-
-		health.frequentUpdates = true
-		power.frequentUpdates = true
-
-		if db.showsmooth == true then
-			health.Smooth = true
-			power.Smooth = true
-		end
-		
-		if db.classcolor then
-			health.colorTapping = true
-			health.colorDisconnected = true
-			health.colorReaction = true
-			health.colorClass = true
-			hBg.multiplier = 0.3
-			
-			power.colorPower = true
-		else
-			health.colorTapping = false
-			health.colorDisconnected = false
-			health.colorClass = false
-			health.colorReaction = false
-			health:SetStatusBarColor(unpack(db.health_color))
-			hBg:SetVertexColor(unpack(db.health_bg_color))
-
-			power.colorTapping = true
-			power.colorDisconnected = true
-			power.colorClass = true
-			power.colorReaction = true
-		end
-
-		
 		----- [[     Health and Power Values     ]] -----
 
 		health.value = TukuiDB.SetFontString(panel, font, font_size, font_style)
@@ -147,16 +209,12 @@ local function Shared(self, unit)
 		power.PreUpdate = TukuiDB.PreUpdatePower
 		power.PostUpdate = TukuiDB.PostUpdatePower
 		
-		-- temp
-		self:SetAttribute('initial-height', ((health:GetHeight() + 4) + (power:GetHeight() + 4) + (self.panel:GetHeight()) + 6))
-		self:SetAttribute('initial-width', TukuiDB.Scale(195))
-
 		
 		----- [[     Portraits     ]] -----
 		
 		if (db.charportrait == true) then
 			local portrait = CreateFrame("PlayerModel", nil, self)
-			portrait:SetHeight(self:GetAttribute('initial-height'))
+			portrait:SetHeight( ((health:GetHeight() + 4) + (power:GetHeight() + 4) + (panel:GetHeight()) + 6))
 			portrait:SetWidth(TukuiDB.Scale(60))
 			portrait:SetAlpha(1)
 			if unit == "player" then
@@ -276,7 +334,7 @@ local function Shared(self, unit)
 
 				local eclipseBar = CreateFrame('Frame', nil, self)
 				eclipseBar:SetPoint("BOTTOMLEFT", hBorder, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(5))
-				eclipseBar:SetSize((self:GetAttribute("initial-width") - 2), TukuiDB.Scale(4))
+				eclipseBar:SetSize(TukuiDB.Scale(195 - 2), TukuiDB.Scale(4))
 				eclipseBar:SetFrameStrata("MEDIUM")
 				eclipseBar:SetFrameLevel(8)
 				eclipseBar:SetScript("OnShow", function() TukuiDB.EclipseDisplay(self, false) end)
@@ -325,7 +383,7 @@ local function Shared(self, unit)
 					barFrame[i] = CreateFrame("Frame", nil, self)
 					barFrame[i]:SetFrameLevel(health:GetFrameLevel() + 1)
 					barFrame[i]:SetHeight(TukuiDB.Scale(8))
-					barFrame[i]:SetWidth((self:GetAttribute("initial-width") - 4) / 3)
+					barFrame[i]:SetWidth(TukuiDB.Scale(195 - 4) / 3)
 					TukuiDB.SkinPanel(barFrame[i])
 					
 					if i == 1 then
@@ -372,7 +430,7 @@ local function Shared(self, unit)
 					rB[i] = CreateFrame("Frame", nil, self)
 					rB[i]:SetFrameLevel(health:GetFrameLevel() + 1)
 					rB[i]:SetHeight(TukuiDB.Scale(8))
-					rB[i]:SetWidth((self:GetAttribute("initial-width") - 13) / 6)
+					rB[i]:SetWidth(TukuiDB.Scale(195 - 13) / 6)
 					if (i == 1) then
 						rB[i]:SetPoint("BOTTOMLEFT", hBorder, "TOPLEFT", 0, TukuiDB.Scale(3))
 					else
@@ -403,7 +461,7 @@ local function Shared(self, unit)
 					totemFrame[i] = CreateFrame("Frame", nil, self)
 					totemFrame[i]:SetFrameLevel(health:GetFrameLevel() + 1)
 					totemFrame[i]:SetHeight(TukuiDB.Scale(8))
-					totemFrame[i]:SetWidth((self:GetAttribute("initial-width") - 7) / 4)
+					totemFrame[i]:SetWidth(TukuiDB.Scale(195 - 7) / 4)
 					TukuiDB.SkinPanel(totemFrame[i])
 
 					if i == 1 then
@@ -453,19 +511,14 @@ local function Shared(self, unit)
 		----- [[     Target Only Settings     ]] -----
 
 		if (unit == "target") then			
-			-- Unit name on target
-			local Name = health:CreateFontString(nil, "OVERLAY")
 			Name:SetPoint("LEFT", panel, "LEFT", TukuiDB.Scale(4), font_position[1])
 			Name:SetJustifyH("LEFT")
-			Name:SetFont(font, font_size, font_style)
 
 			if db.classcolor then
 				self:Tag(Name, '[Tukui:namelong] [Tukui:diffcolor][level] [shortclassification]')
 			else
 				self:Tag(Name, '[Tukui:getnamecolor][Tukui:namelong] [Tukui:diffcolor][level] [shortclassification]')
 			end
-			
-			self.Name = Name
 		end
 
 	
@@ -493,12 +546,12 @@ local function Shared(self, unit)
 			end
 			
 			buffs:SetHeight(buffheight)
-			buffs:SetWidth(self:GetAttribute('initial-width'))
+			buffs:SetWidth(195)
 			buffs.size = 22
 			buffs.num = buffnum
 
 			debuffs:SetHeight(buffheight)
-			debuffs:SetWidth(self:GetAttribute('initial-width'))
+			debuffs:SetWidth(195)
 			debuffs:SetPoint("BOTTOMLEFT", buffs, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(3))
 			debuffs.size = 22
 			debuffs.num = 24
@@ -519,12 +572,9 @@ local function Shared(self, unit)
 		end
 		
 		
-		----- [[     Castbar     ]] -----
+		----- [[     Cast Bar     ]] -----
 		
-		if (db.unitcastbar == true) then
-			local castbar = CreateFrame("StatusBar", self:GetName().."_Castbar", self)
-			castbar:SetStatusBarTexture(texture)
-			
+		if db.unitcastbar == true then
 			if unit == "player" then
 				castbar:SetHeight(TukuiDB.Scale(23))
 				if TukuiCF["actionbar"].tukui_default == true then
@@ -547,63 +597,31 @@ local function Shared(self, unit)
 				castbar:SetWidth(TukuiDB.Scale(141))
 				castbar:SetPoint("BOTTOM", TukuiActionBarBackground, "TOP", 0, TukuiDB.Scale(180))
 			end
-			
-			local castbarBg = CreateFrame("Frame", nil, castbar)
-			castbarBg:SetPoint("TOPLEFT", -TukuiDB.Scale(2), TukuiDB.Scale(2))
-			castbarBg:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), -TukuiDB.Scale(2))
-			castbarBg:SetFrameLevel(castbar:GetFrameLevel() - 1)
-			TukuiDB.SkinPanel(castbarBg)
-			
-			castbar.CustomTimeText = TukuiDB.CustomCastTimeText
-			castbar.CustomDelayText = TukuiDB.CustomCastDelayText
-			castbar.PostCastStart = TukuiDB.CheckCast
-			castbar.PostChannelStart = TukuiDB.CheckChannel
 
-			castbar.time = TukuiDB.SetFontString(castbar, font, font_size, font_style)
-			castbar.time:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 			castbar.time:SetPoint("RIGHT", castbar, "RIGHT", TukuiDB.Scale(-4), font_position[1])
-			castbar.time:SetTextColor(1, 1, 1)
 			castbar.time:SetJustifyH("RIGHT")
 
-			castbar.Text = TukuiDB.SetFontString(castbar, font, font_size, font_style)
-			castbar.Text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 			castbar.Text:SetPoint("LEFT", castbar, "LEFT", TukuiDB.Scale(4), font_position[1])
-			castbar.Text:SetTextColor(1, 1, 1)
-			
+
 			if unit == "target" then
 				castbar.Text:SetWidth(90)
 				castbar.Text:SetHeight(20)
 			end			
 
 			if db.cbicons == true then
-				castbar.button = CreateFrame("Frame", nil, castbar)
-				castbar.button:SetHeight(TukuiCF["actionbar"].buttonsize)
-				castbar.button:SetWidth(TukuiCF["actionbar"].buttonsize)
-				TukuiDB.SetTemplate(castbar.button)
-				TukuiDB.CreateShadow(castbar.button)
-
-				castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
-				castbar.icon:SetPoint("TOPLEFT", castbar.button, TukuiDB.Scale(2), TukuiDB.Scale(-2))
-				castbar.icon:SetPoint("BOTTOMRIGHT", castbar.button, TukuiDB.Scale(-2), TukuiDB.Scale(2))
-				castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
-			
 				if unit == "player" then
 					castbar.button:SetPoint("RIGHT", castbarBg, "LEFT", TukuiDB.Scale(-3), 0)
 				elseif unit == "target" then
 					castbar.button:SetPoint("BOTTOM", castbarBg, "TOP", 0, TukuiDB.Scale(3))
 				end
 			end
-			
+
 			if unit == "player" and db.cblatency == true then
 				castbar.safezone = castbar:CreateTexture(nil, "ARTWORK")
 				castbar.safezone:SetTexture(texture)
 				castbar.safezone:SetVertexColor(0.69, 0.31, 0.31, 0.75)
 				castbar.SafeZone = castbar.safezone
 			end
-			
-			self.Castbar = castbar
-			self.Castbar.Time = castbar.time
-			self.Castbar.Icon = castbar.icon
 		end
 		
 
@@ -663,7 +681,7 @@ local function Shared(self, unit)
 		end
 		
 		
-		----- [[     Player Aggro     ]] -----
+		----- [[     Aggro     ]] -----
 		
 		if db.playeraggro == true then
 			table.insert(self.__elements, TukuiDB.UpdateThreat)
@@ -674,93 +692,19 @@ local function Shared(self, unit)
 	end
 	
 	
-	------------------------------------------------------------------------
-	--	Target of Target unit layout
-	------------------------------------------------------------------------
+	----- [[     Target of Target Unit Settings     ]] -----
 	
-	if (unit == "targettarget") then
+	if unit == "targettarget" then
 	
-		----- [[     Health / Power Bars + Backgrounds / Borders     ]] -----
+		----- [[     Set Health / Power Bar Height     ]] -----
 		
-		local health = CreateFrame("StatusBar", nil, self)
 		health:SetHeight(TukuiDB.Scale(23))
-		health:SetPoint("TOPLEFT", TukuiDB.mult, -TukuiDB.mult)
-		health:SetPoint("TOPRIGHT", -TukuiDB.mult, TukuiDB.mult)
-		health:SetStatusBarTexture(texture)
-		self.Health = health
-
-		local hBg = health:CreateTexture(nil, "BORDER")
-		hBg:SetAllPoints()
-		hBg:SetTexture(.05, .05, .05)
-		self.Health.bg = hBg
-
-		local hBorder = CreateFrame("Frame", nil, health)
-		hBorder:SetFrameLevel(health:GetFrameLevel() - 1)
-		hBorder:SetPoint("TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
-		hBorder:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
-		TukuiDB.SkinPanel(hBorder)
-		TukuiDB.Kill(hBorder.bg)
-		self.Health.border = hBorder		
-
-		local power = CreateFrame("StatusBar", nil, self)
 		power:SetHeight(TukuiDB.Scale(3))
-		power:SetPoint("TOPLEFT", health, "BOTTOMLEFT", 0, TukuiDB.Scale(-7))
-		power:SetPoint("TOPRIGHT", health, "BOTTOMRIGHT", 0, TukuiDB.Scale(-7))
-		power:SetStatusBarTexture(texture)
-		self.Power = power
-		
-		local pBg = power:CreateTexture(nil, "BORDER")
-		pBg:SetAllPoints()
-		pBg:SetTexture(texture)
-		pBg.multiplier = 0.3
-		self.Power.bg = pBg
-		
-		local pBorder = CreateFrame("Frame", nil, power)
-		pBorder:SetFrameLevel(power:GetFrameLevel() - 1)
-		pBorder:SetPoint("TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
-		pBorder:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
-		TukuiDB.SkinPanel(pBorder)
-		TukuiDB.Kill(pBorder.bg)
-		self.Power.border = pBorder
 		
 		
-		----- [[     Health and Power Colors / Settings     ]] -----
-
-		health.frequentUpdates = true
-		power.frequentUpdates = true
-
-		if db.showsmooth == true then
-			health.Smooth = true
-			power.Smooth = true
-		end
+		----- [[     Unit Name     ]] -----
 		
-		if db.classcolor == true then
-			health.colorTapping = true
-			health.colorDisconnected = true
-			health.colorReaction = true
-			health.colorClass = true
-			hBg.multiplier = 0.3
-			
-			power.colorPower = true
-		else
-			health.colorTapping = false
-			health.colorDisconnected = false
-			health.colorClass = false
-			health.colorReaction = false
-			health:SetStatusBarColor(unpack(db.health_color))
-			hBg:SetVertexColor(unpack(db.health_bg_color))
-
-			power.colorTapping = true
-			power.colorDisconnected = true
-			power.colorClass = true
-			power.colorReaction = true
-		end
-		
-		-- Unit name
-		local Name = health:CreateFontString(nil, "OVERLAY")
 		Name:SetPoint("CENTER", health, "CENTER", 0, font_position[1])
-		Name:SetFont(font, font_size, font_style)
-		Name:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 		Name:SetJustifyH("CENTER")
 
 		if db.classcolor == true then
@@ -768,13 +712,10 @@ local function Shared(self, unit)
 		else
 			self:Tag(Name, '[Tukui:getnamecolor][Tukui:namemedium]')
 		end
-		
-		self.Name = Name
-		
-		--
-		self:SetAttribute('initial-height', ((health:GetHeight() + 4) + (power:GetHeight() + 4) + 3))
-		self:SetAttribute('initial-width', TukuiDB.Scale(130))
 
+		
+		----- [[     Debuffs     ]] -----
+		
 		if db.totdebuffs == true then
 			local debuffs = CreateFrame("Frame", nil, health)
 			debuffs:SetHeight(20)
@@ -793,97 +734,19 @@ local function Shared(self, unit)
 	end
 	
 	
-	------------------------------------------------------------------------
-	--	Pet unit layout
-	------------------------------------------------------------------------
+	----- [[     Pet Unit Settings     ]] -----
 	
-	if (unit == "pet") then
+	if unit == "pet" then
 	
 		----- [[     Health / Power Bars + Backgrounds / Borders     ]] -----
 		
-		local health = CreateFrame("StatusBar", nil, self)
 		health:SetHeight(TukuiDB.Scale(23))
-		health:SetPoint("TOPLEFT", TukuiDB.mult, -TukuiDB.mult)
-		health:SetPoint("TOPRIGHT", -TukuiDB.mult, TukuiDB.mult)
-		health:SetStatusBarTexture(texture)
-		self.Health = health
-
-		local hBg = health:CreateTexture(nil, "BORDER")
-		hBg:SetAllPoints()
-		hBg:SetTexture(.05, .05, .05)
-		self.Health.bg = hBg
-
-		local hBorder = CreateFrame("Frame", nil, health)
-		hBorder:SetFrameLevel(health:GetFrameLevel() - 1)
-		hBorder:SetPoint("TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
-		hBorder:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
-		TukuiDB.SkinPanel(hBorder)
-		TukuiDB.Kill(hBorder.bg)
-		self.Health.border = hBorder		
-
-		local power = CreateFrame("StatusBar", nil, self)
 		power:SetHeight(TukuiDB.Scale(3))
-		power:SetPoint("TOPLEFT", health, "BOTTOMLEFT", 0, TukuiDB.Scale(-7))
-		power:SetPoint("TOPRIGHT", health, "BOTTOMRIGHT", 0, TukuiDB.Scale(-7))
-		power:SetStatusBarTexture(texture)
-		self.Power = power
-		
-		local pBg = power:CreateTexture(nil, "BORDER")
-		pBg:SetAllPoints()
-		pBg:SetTexture(texture)
-		pBg.multiplier = 0.3
-		self.Power.bg = pBg
-		
-		local pBorder = CreateFrame("Frame", nil, power)
-		pBorder:SetFrameLevel(power:GetFrameLevel() - 1)
-		pBorder:SetPoint("TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
-		pBorder:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
-		TukuiDB.SkinPanel(pBorder)
-		TukuiDB.Kill(pBorder.bg)
-		self.Power.border = pBorder
 		
 		
-		----- [[     Health and Power Colors / Settings     ]] -----
-
-		health.frequentUpdates = true
-		power.frequentUpdates = true
-
-		if db.showsmooth == true then
-			health.Smooth = true
-			power.Smooth = true
-		end
+		----- [[     Unit Name     ]] -----
 		
-		if db.classcolor == true then
-			health.colorTapping = true
-			health.colorDisconnected = true
-			health.colorReaction = true
-			health.colorClass = true
-			if TukuiDB.myclass == "HUNTER" then
-				health.colorHappiness = true
-			end
-			hBg.multiplier = 0.3
-			
-			power.colorPower = true
-		else
-			health.colorTapping = false
-			health.colorDisconnected = false
-			health.colorClass = false
-			health.colorReaction = false
-			health:SetStatusBarColor(unpack(db.health_color))
-			hBg:SetVertexColor(unpack(db.health_bg_color))
-
-			power.colorTapping = true
-			power.colorDisconnected = true
-			power.colorClass = true
-			power.colorReaction = true
-		end
-		
-		
-		-- Unit name
-		local Name = health:CreateFontString(nil, "OVERLAY")
 		Name:SetPoint("CENTER", health, "CENTER", 0, font_position[1])
-		Name:SetFont(font, font_size, font_style)
-		Name:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 		Name:SetJustifyH("CENTER")
 
 		if db.classcolor then
@@ -892,46 +755,24 @@ local function Shared(self, unit)
 			self:Tag(Name, '[Tukui:getnamecolor][Tukui:namemedium] [Tukui:diffcolor][level]')
 		end
 		
-		self.Name = Name
 		
-		--
-		self:SetAttribute('initial-height', ((health:GetHeight() + 4) + (power:GetHeight() + 4) + 3))
-		self:SetAttribute('initial-width', TukuiDB.Scale(130))
+		----- [[     Cast Bar     ]] -----
 		
 		if db.unitcastbar == true then
-			local castbar = CreateFrame("StatusBar", self:GetName().."_Castbar", self)
-			castbar:SetStatusBarTexture(texture)
-			
-			castbar.bg = castbar:CreateTexture(nil, "BORDER")
-			castbar.bg:SetAllPoints(castbar)
-			castbar.bg:SetTexture(texture)
-			castbar.bg:SetVertexColor(0.15, 0.15, 0.15)
 			castbar:SetFrameLevel(6)
 			castbar:SetPoint("TOPLEFT", health)
 			castbar:SetPoint("BOTTOMRIGHT", health)
-			
-			castbar.CustomTimeText = TukuiDB.CustomCastTimeText
-			castbar.CustomDelayText = TukuiDB.CustomCastDelayText
-			castbar.PostCastStart = TukuiDB.CheckCast
-			castbar.PostChannelStart = TukuiDB.CheckChannel
 
-			castbar.time = TukuiDB.SetFontString(castbar, font, font_size, font_style)
-			castbar.time:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-			castbar.time:SetPoint("RIGHT", health, "RIGHT", TukuiDB.Scale(-4), font_position[1])
-			castbar.time:SetTextColor(0.84, 0.75, 0.65)
+			TukuiDB.Kill(castbarBg.shadow)
+			
+			castbar.time:SetPoint("RIGHT", castbar, "RIGHT", TukuiDB.Scale(-4), font_position[1])
 			castbar.time:SetJustifyH("RIGHT")
 
-			castbar.Text = TukuiDB.SetFontString(castbar, font, font_size, font_style)
-			castbar.Text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
-			castbar.Text:SetPoint("LEFT", health, "LEFT", TukuiDB.Scale(4), font_position[1])
-			castbar.Text:SetTextColor(0.84, 0.75, 0.65)
-			
-			self.Castbar = castbar
-			self.Castbar.Time = castbar.time
+			castbar.Text:SetPoint("LEFT", castbar, "LEFT", TukuiDB.Scale(4), font_position[1])
 		end
 		
 		
-		----- [[    Pet Aggro    ]] -----
+		----- [[     Aggro     ]] -----
 		
 		if db.playeraggro then
 			table.insert(self.__elements, TukuiDB.UpdateThreat)
@@ -940,7 +781,6 @@ local function Shared(self, unit)
 			self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', TukuiDB.UpdateThreat)
 		end
 		
-		-- update pet name, this should fix "UNKNOWN" pet names on pet unit.
 		self:RegisterEvent("UNIT_PET", TukuiDB.UpdatePetInfo)
 	end
 
@@ -995,17 +835,14 @@ oUF:RegisterStyle('Tukz', Shared)
 -- player
 local player = oUF:Spawn('player', "oUF_Tukz_player")
 player:SetPoint("BOTTOM", UIParent, "BOTTOM", -(TukuiDB.Scale(180) - adjustX), TukuiDB.Scale(167 + adjustY))
-player:SetSize(player:GetAttribute('initial-width'), player:GetAttribute('initial-height'))
+player:SetSize(TukuiDB.Scale(195), ((player.Health:GetHeight() + 4) + (player.Power:GetHeight() + 4) + (player.panel:GetHeight()) + 6))
 
--- focus
-local focus = oUF:Spawn('focus', "oUF_Tukz_focus")
-focus:SetPoint("BOTTOMRIGHT", oUF_Tukz_player, "TOPLEFT", TukuiDB.Scale(-10), TukuiDB.Scale(200))
-focus:SetSize(TukuiDataRight:GetWidth() - TukuiDB.Scale(4), TukuiDataRight:GetHeight() - TukuiDB.Scale(4))
 
 -- target
 local target = oUF:Spawn('target', "oUF_Tukz_target")
 target:SetPoint("BOTTOM", UIParent, "BOTTOM", (TukuiDB.Scale(180) - adjustX), TukuiDB.Scale(167 + adjustY))
-target:SetSize(target:GetAttribute('initial-width'), target:GetAttribute('initial-height'))
+target:SetSize(TukuiDB.Scale(195), ((target.Health:GetHeight() + 4) + (target.Power:GetHeight() + 4) + (target.panel:GetHeight()) + 6))
+
 
 -- tot
 local tot = oUF:Spawn('targettarget', "oUF_Tukz_targettarget")
@@ -1014,7 +851,8 @@ if db.charportrait then
 else
 	tot:SetPoint("TOPRIGHT", oUF_Tukz_target, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
 end
-tot:SetSize(tot:GetAttribute('initial-width'), tot:GetAttribute('initial-height'))
+tot:SetSize(TukuiDB.Scale(130), (tot.Health:GetHeight() + 4) + (tot:GetHeight() + 4) + 3)
+
 
 -- pet
 local pet = oUF:Spawn('pet', "oUF_Tukz_pet")
@@ -1023,7 +861,14 @@ if db.charportrait then
 else
 	pet:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
 end
-pet:SetSize(TukuiDB.Scale(129), TukuiDB.Scale(36))
+pet:SetSize(TukuiDB.Scale(130), (pet.Health:GetHeight() + 4) + (pet.Power:GetHeight() + 4) +3)
+
+
+-- focus
+local focus = oUF:Spawn('focus', "oUF_Tukz_focus")
+focus:SetPoint("BOTTOMRIGHT", oUF_Tukz_player, "TOPLEFT", TukuiDB.Scale(-10), TukuiDB.Scale(200))
+focus:SetSize(TukuiDataRight:GetWidth() - TukuiDB.Scale(4), TukuiDataRight:GetHeight() - TukuiDB.Scale(4))
+
 
 if db.showfocustarget then 
 	local focustarget = oUF:Spawn("focustarget", "oUF_Tukz_focustarget")
