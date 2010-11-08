@@ -577,7 +577,7 @@ local function Shared(self, unit)
 		
 		if db.unitcastbar == true then
 			if unit == "player" then
-				castbar:SetHeight(TukuiDB.Scale(23))
+				castbar:SetHeight(TukuiCF["actionbar"].buttonsize - 4)
 				if TukuiCF["actionbar"].tukui_default == true then
 					if db.cbicons then
 						castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiCF["actionbar"].buttonsize + 185, TukuiDB.Scale(5))
@@ -710,9 +710,9 @@ local function Shared(self, unit)
 		Name:SetJustifyH("CENTER")
 
 		if db.classcolor == true then
-			self:Tag(Name, '[Tukui:namemedium]')
+			self:Tag(Name, '[Tukui:name_medium] [Tukui:dead][Tukui:afk]')
 		else
-			self:Tag(Name, '[Tukui:getnamecolor][Tukui:namemedium]')
+			self:Tag(Name, '[Tukui:getnamecolor] [Tukui:namemedium] [Tukui:dead][Tukui:afk]')
 		end
 
 		
@@ -752,9 +752,9 @@ local function Shared(self, unit)
 		Name:SetJustifyH("CENTER")
 
 		if db.classcolor then
-			self:Tag(Name, '[Tukui:namemedium] [Tukui:diffcolor][level]')
+			self:Tag(Name, '[Tukui:name_medium] [Tukui:diffcolor][level] [Tukui:dead]')
 		else
-			self:Tag(Name, '[Tukui:getnamecolor][Tukui:namemedium] [Tukui:diffcolor][level]')
+			self:Tag(Name, '[Tukui:getnamecolor][Tukui:name_medium] [Tukui:diffcolor][level] [Tukui:dead]')
 		end
 		
 		
@@ -805,9 +805,9 @@ local function Shared(self, unit)
 		Name:SetJustifyH("CENTER")
 
 		if db.classcolor == true then
-			self:Tag(Name, '[Tukui:namemedium]')
+			self:Tag(Name, '[Tukui:name_medium] [Tukui:dead][Tukui:afk]')
 		else
-			self:Tag(Name, '[Tukui:getnamecolor][Tukui:namemedium]')
+			self:Tag(Name, '[Tukui:getnamecolor][Tukui:name_medium] [Tukui:dead][Tukui:afk]')
 		end
 
 		

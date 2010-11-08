@@ -144,6 +144,31 @@ oUF.Tags['Tukui:namelong'] = function(unit)
 	return utf8sub(name, 20, true)
 end
 
+
+----- [[     Custom Tags     ]] -----
+
+oUF.TagEvents['Tukui:name_short'] = 'UNIT_NAME_UPDATE', 'UNIT_CONNECTION', 'PLAYER_FLAGS_CHANGED', 'UNIT_HEALTH'
+oUF.Tags['Tukui:name_short'] = function(unit)
+	local name = UnitName(unit)
+	if UnitIsAFK(unit) or not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit) then
+		return utf8sub(name, 5, false)
+	else
+		return utf8sub(name, 10, false)
+	end
+end
+
+
+oUF.TagEvents['Tukui:name_medium'] = 'UNIT_NAME_UPDATE', 'UNIT_CONNECTION', 'PLAYER_FLAGS_CHANGED', 'UNIT_HEALTH'
+oUF.Tags['Tukui:name_medium'] = function(unit)
+	local name = UnitName(unit)
+	if UnitIsAFK(unit) or not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit) then
+		return utf8sub(name, 10, false)
+	else
+		return utf8sub(name, 15, false)
+	end
+end
+
+
 oUF.TagEvents['Tukui:dead'] = 'UNIT_HEALTH'
 oUF.Tags['Tukui:dead'] = function(unit)
 	if UnitIsDead(unit) then
@@ -151,27 +176,6 @@ oUF.Tags['Tukui:dead'] = function(unit)
 		return "|cffff0000[D]|r"
 	elseif UnitIsGhost(unit) then
 		return "|cffff0000[G]|r"
-	end
-end
-
-
-oUF.TagEvents['Tukui:name_dps'] = 'UNIT_NAME_UPDATE', 'UNIT_CONNECTION', 'PLAYER_FLAGS_CHANGED', 'UNIT_HEALTH'
-oUF.Tags['Tukui:name_dps'] = function(unit)
-	local name = UnitName(unit)
-	if UnitIsAFK(unit) or not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit) then
-		return utf8sub(name, 5, false)
-	else
-		return utf8sub(name, 10, false)
-	end
-end
-
-oUF.TagEvents['Tukui:name_heal'] = 'UNIT_NAME_UPDATE', 'UNIT_CONNECTION', 'PLAYER_FLAGS_CHANGED', 'UNIT_HEALTH'
-oUF.Tags['Tukui:name_heal'] = function(unit)
-	local name = UnitName(unit)
-	if UnitIsAFK(unit) or not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit) then
-		return utf8sub(name, 5, false)
-	else
-		return utf8sub(name, 10, false)
 	end
 end
 

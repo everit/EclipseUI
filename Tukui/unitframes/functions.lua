@@ -81,11 +81,11 @@ do
 	TukuiDB.PostUpdateHealth = function(health, unit, min, max)
 		if not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit) then
 			if not UnitIsConnected(unit) then
-				health.value:SetText("|cffD7BEA5"..tukuilocal.unitframes_ouf_offline.."|r")
+				health.value:SetText("|cffCC0000"..tukuilocal.unitframes_ouf_offline.."|r")
 			elseif UnitIsDead(unit) then
-				health.value:SetText("|cffD7BEA5"..tukuilocal.unitframes_ouf_dead.."|r")
+				health.value:SetText("|cffCC0000"..tukuilocal.unitframes_ouf_dead.."|r")
 			elseif UnitIsGhost(unit) then
-				health.value:SetText("|cffD7BEA5"..tukuilocal.unitframes_ouf_ghost.."|r")
+				health.value:SetText("|cffCC0000"..tukuilocal.unitframes_ouf_ghost.."|r")
 			end
 		else
 			local r, g, b
