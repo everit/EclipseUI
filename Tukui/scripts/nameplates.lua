@@ -275,7 +275,7 @@ local createPlate = function(frame)
 	frame.highlight = highlightRegion
 
 	raidIconRegion:ClearAllPoints()
-	raidIconRegion:SetPoint("CENTER", healthBar, "CENTER", 0, TukuiDB.Scale(-4))
+	raidIconRegion:SetPoint("CENTER", newNameRegion, "CENTER", 0, TukuiDB.Scale(9))
 	raidIconRegion:SetTexture("Interface\\AddOns\\Tukui\\media\\textures\\raidicons.blp")
 	raidIconRegion:SetSize(TukuiDB.Scale(15), TukuiDB.Scale(15))
 
