@@ -1,8 +1,7 @@
 if not TukuiCF["unitframes"].enable == true then return end
 
-------------------------------------------------------------------------
---	Tags
-------------------------------------------------------------------------
+
+----- [[     Tags     ]] -----
 
 local function ShortenValue(value)
 	if(value >= 1e6) then
@@ -124,24 +123,6 @@ oUF.Tags['Tukui:getnamecolor'] = function(unit)
 		r, g, b = .84,.75,.65
 		return string.format('|cff%02x%02x%02x', r * 255, g * 255, b * 255)
 	end
-end
-
-oUF.TagEvents['Tukui:nameshort'] = 'UNIT_NAME_UPDATE'
-oUF.Tags['Tukui:nameshort'] = function(unit)
-	local name = UnitName(unit)
-	return utf8sub(name, 10, false)
-end
-
-oUF.TagEvents['Tukui:namemedium'] = 'UNIT_NAME_UPDATE'
-oUF.Tags['Tukui:namemedium'] = function(unit)
-	local name = UnitName(unit)
-	return utf8sub(name, 15, true)
-end
-
-oUF.TagEvents['Tukui:namelong'] = 'UNIT_NAME_UPDATE'
-oUF.Tags['Tukui:namelong'] = function(unit)
-	local name = UnitName(unit)
-	return utf8sub(name, 20, true)
 end
 
 

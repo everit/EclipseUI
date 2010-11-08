@@ -516,9 +516,9 @@ local function Shared(self, unit)
 			Name:SetJustifyH("LEFT")
 
 			if db.classcolor then
-				self:Tag(Name, '[Tukui:namelong] [Tukui:diffcolor][level] [shortclassification]')
+				self:Tag(Name, '[Tukui:name_medium] [Tukui:diffcolor][level] [shortclassification]')
 			else
-				self:Tag(Name, '[Tukui:getnamecolor][Tukui:namelong] [Tukui:diffcolor][level] [shortclassification]')
+				self:Tag(Name, '[Tukui:getnamecolor][Tukui:name_medium] [Tukui:diffcolor][level] [shortclassification]')
 			end
 		end
 
@@ -712,7 +712,7 @@ local function Shared(self, unit)
 		if db.classcolor == true then
 			self:Tag(Name, '[Tukui:name_medium] [Tukui:dead][Tukui:afk]')
 		else
-			self:Tag(Name, '[Tukui:getnamecolor] [Tukui:namemedium] [Tukui:dead][Tukui:afk]')
+			self:Tag(Name, '[Tukui:getnamecolor] [Tukui:name_medium] [Tukui:dead][Tukui:afk]')
 		end
 
 		
