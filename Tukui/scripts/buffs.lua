@@ -6,7 +6,6 @@ ConsolidatedBuffs:SetSize(16, 16)
 ConsolidatedBuffsIcon:SetTexture(nil)
 ConsolidatedBuffs.SetPoint = TukuiDB.dummy
 
-local mainhand, _, _, offhand = GetWeaponEnchantInfo()
 local rowbuffs = 13
 
 TemporaryEnchantFrame:ClearAllPoints()
@@ -15,10 +14,8 @@ TemporaryEnchantFrame.SetPoint = TukuiDB.dummy
 
 TempEnchant1:ClearAllPoints()
 TempEnchant2:ClearAllPoints()
-
 TempEnchant1:SetPoint("TOPRIGHT", TukuiMinimap, "TOPLEFT", TukuiDB.Scale(-3), 0)
 TempEnchant2:SetPoint("RIGHT", TempEnchant1, "LEFT", TukuiDB.Scale(-3), 0)
-
 
 WorldStateAlwaysUpFrame:SetFrameStrata("BACKGROUND")
 WorldStateAlwaysUpFrame:SetFrameLevel(0)
@@ -107,12 +104,12 @@ local function UpdateBuffAnchors()
 				end
 				aboveBuff = buff;
 			elseif ( index == 1 ) then
-				local mainhand, _, _, offhand, _, _, hand3 = GetWeaponEnchantInfo()
-				if (mainhand and offhand and hand3) and not UnitHasVehicleUI("player") then
+				local mainhand, _, _, offhand, _, _, thrown = GetWeaponEnchantInfo()
+				if (mainhand and offhand and thrown) and not UnitHasVehicleUI("player") then
 					buff:SetPoint("RIGHT", TempEnchant3, "LEFT", TukuiDB.Scale(-3), 0)
-				elseif ((mainhand and offhand) or (mainhand and hand3) or (offhand and hand3)) and not UnitHasVehicleUI("player") then
+				elseif ((mainhand and offhand) or (mainhand and thrown) or (offhand and thrown)) and not UnitHasVehicleUI("player") then
 					buff:SetPoint("RIGHT", TempEnchant2, "LEFT", TukuiDB.Scale(-3), 0)
-				elseif ((mainhand and not offhand and not hand3) or (offhand and not mainhand and not hand3) or (hand3 and not mainhand and not offhand)) and not UnitHasVehicleUI("player") then
+				elseif ((mainhand and not offhand and not thrown) or (offhand and not mainhand and not thrown) or (thrown and not mainhand and not offhand)) and not UnitHasVehicleUI("player") then
 					buff:SetPoint("RIGHT", TempEnchant1, "LEFT", TukuiDB.Scale(-3), 0)
 				else
 					buff:SetPoint("TOPRIGHT", TukuiMinimap, "TOPLEFT", TukuiDB.Scale(-3), 0)
@@ -167,7 +164,7 @@ local hr, m, s, text
 end
 
 local f = CreateFrame("Frame")
-f:SetScript("OnEvent", function() mainhand, _, _, offhand = GetWeaponEnchantInfo() end)
+f:SetScript("OnEvent", function() mainhand, _, _, offhand, thrown = GetWeaponEnchantInfo() end)
 f:RegisterEvent("UNIT_INVENTORY_CHANGED")
 f:RegisterEvent("PLAYER_EVENTERING_WORLD")
 
