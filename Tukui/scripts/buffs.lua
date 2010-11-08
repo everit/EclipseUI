@@ -7,7 +7,7 @@ ConsolidatedBuffsIcon:SetTexture(nil)
 ConsolidatedBuffs.SetPoint = TukuiDB.dummy
 
 local mainhand, _, _, offhand = GetWeaponEnchantInfo()
-local rowbuffs = 16
+local rowbuffs = 13
 
 TemporaryEnchantFrame:ClearAllPoints()
 TemporaryEnchantFrame:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 0, TukuiDB.Scale(-16))
