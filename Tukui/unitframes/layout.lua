@@ -596,7 +596,8 @@ local function Shared(self, unit)
 			else
 				castbar:SetHeight(TukuiDB.Scale(21))
 				castbar:SetWidth(TukuiDB.Scale(141))
-				castbar:SetPoint("BOTTOM", TukuiActionBarBackground, "TOP", 0, TukuiDB.Scale(180))
+				-- haha I'm going to cheat and anchor it to the target unitframe, fuck you resolutions!!
+				castbar:SetPoint("BOTTOMRIGHT", hBorder, "TOPLEFT", TukuiDB.Scale(-11), TukuiDB.Scale(5))
 			end
 
 			castbar.time:SetPoint("RIGHT", castbar, "RIGHT", TukuiDB.Scale(-4), font_position[1])
@@ -719,15 +720,15 @@ local function Shared(self, unit)
 		
 		if db.totdebuffs == true then
 			local debuffs = CreateFrame("Frame", nil, health)
-			debuffs:SetHeight(20)
-			debuffs:SetWidth(127)
-			debuffs.size = 20
-			debuffs.spacing = 2
-			debuffs.num = 6
+			debuffs:SetHeight(health:GetHeight())
+			debuffs:SetWidth(130)
+			debuffs.size = health:GetHeight()
+			debuffs.spacing = 3
+			debuffs.num = 4
 
-			debuffs:SetPoint("TOPLEFT", health, "TOPLEFT", -0.5, 24)
-			debuffs.initialAnchor = "TOPLEFT"
-			debuffs["growth-y"] = "UP"
+			debuffs:SetPoint("TOPRIGHT", hBorder, "TOPLEFT", TukuiDB.Scale(-3), 0)
+			debuffs.initialAnchor = "TOPRIGHT"
+			debuffs["growth-x"] = "LEFT"
 			debuffs.PostCreateIcon = TukuiDB.PostCreateAura
 			debuffs.PostUpdateIcon = TukuiDB.PostUpdateAura
 			self.Debuffs = debuffs
@@ -791,7 +792,64 @@ local function Shared(self, unit)
 	------------------------------------------------------------------------
 	
 	if (unit == "focus") then
-		--
+	
+		----- [[     Set Health / Power Bar Height     ]] -----
+		
+		health:SetHeight(TukuiDB.Scale(23))
+		power:SetHeight(TukuiDB.Scale(3))
+		
+		
+		----- [[     Unit Name     ]] -----
+		
+		Name:SetPoint("CENTER", health, "CENTER", 0, font_position[1])
+		Name:SetJustifyH("CENTER")
+
+		if db.classcolor == true then
+			self:Tag(Name, '[Tukui:namemedium]')
+		else
+			self:Tag(Name, '[Tukui:getnamecolor][Tukui:namemedium]')
+		end
+
+		
+		----- [[     Debuffs     ]] -----
+		
+		if db.focusdebuffs == true then
+			local debuffs = CreateFrame("Frame", nil, health)
+			debuffs:SetHeight(health:GetHeight())
+			debuffs:SetWidth(125)
+			debuffs.size = health:GetHeight()
+			debuffs.spacing = 3
+			debuffs.num = 5
+
+			debuffs:SetPoint("BOTTOMLEFT", hBorder, "TOPLEFT", 0, 3)
+			debuffs.initialAnchor = "TOPLEFT"
+			debuffs["growth-x"] = "RIGHT"
+			debuffs.PostCreateIcon = TukuiDB.PostCreateAura
+			debuffs.PostUpdateIcon = TukuiDB.PostUpdateAura
+			self.Debuffs = debuffs
+		end
+		
+		
+		----- [[     Cast Bar     ]] -----
+
+		if db.unitcastbar == true then
+			castbar:SetHeight(TukuiDB.Scale(25))
+			castbar:SetWidth(TukuiDB.Scale(240))
+			castbar:SetFrameLevel(6)
+			castbar:SetPoint("CENTER", UIParent, "CENTER", 0, 200)		
+			
+			castbar.time:SetPoint("RIGHT", castbar, "RIGHT", TukuiDB.Scale(-4), font_position[1])
+			castbar.time:SetJustifyH("RIGHT")
+
+			castbar.Text:SetPoint("LEFT", castbar, "LEFT", TukuiDB.Scale(4), font_position[1])
+			
+			if db.cbicons == true then
+				castbar.button:SetHeight(TukuiDB.Scale(35))
+				castbar.button:SetWidth(TukuiDB.Scale(35))
+				castbar.button:SetPoint("BOTTOM", castbar, "TOP", 0, TukuiDB.Scale(5))
+			end
+		end
+
 	end
 	
 	------------------------------------------------------------------------
@@ -868,7 +926,7 @@ pet:SetSize(TukuiDB.Scale(130), (pet.Health:GetHeight() + 4) + (pet.Power:GetHei
 -- focus
 local focus = oUF:Spawn('focus', "oUF_Tukz_focus")
 focus:SetPoint("BOTTOMRIGHT", oUF_Tukz_player, "TOPLEFT", TukuiDB.Scale(-10), TukuiDB.Scale(200))
-focus:SetSize(TukuiDataRight:GetWidth() - TukuiDB.Scale(4), TukuiDataRight:GetHeight() - TukuiDB.Scale(4))
+focus:SetSize(TukuiDB.Scale(125), TukuiDataRight:GetHeight() - TukuiDB.Scale(4))
 
 
 if db.showfocustarget then 
