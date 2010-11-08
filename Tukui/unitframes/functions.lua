@@ -1,6 +1,4 @@
-------------------------------------------------------------------------
---	unitframes Functions
-------------------------------------------------------------------------
+----- [[     Unitframes Functions     ]] -----
 
 do
 	if TukuiCF["unitframes"].enable ~= true then return end
@@ -90,38 +88,45 @@ do
 				health.value:SetText("|cffD7BEA5"..tukuilocal.unitframes_ouf_ghost.."|r")
 			end
 		else
+			local r, g, b
+			r, g, b = oUF.ColorGradient(min/max, 0.69, 0.31, 0.31, 0.65, 0.63, 0.35, 0.33, 0.59, 0.33)
+			
 			if min ~= max then
-				local r, g, b
-				r, g, b = oUF.ColorGradient(min/max, 0.69, 0.31, 0.31, 0.65, 0.63, 0.35, 0.33, 0.59, 0.33)
-				if unit == "player" and health:GetAttribute("normalUnit") ~= "pet" then
-					if TukuiCF["unitframes"].showtotalhpmp == true then
-						health.value:SetFormattedText("|cff559655%s|r |cffD7BEA5|||r |cff559655%s|r", ShortValue(min), ShortValue(max))
-					else
-						health.value:SetFormattedText("|cffAF5050%d|r |cffD7BEA5-|r |cff%02x%02x%02x%d%%|r", min, r * 255, g * 255, b * 255, floor(min / max * 100))
-					end
-				elseif unit == "target" or unit == "focus" or (unit and unit:find("boss%d")) then
-					if TukuiCF["unitframes"].showtotalhpmp == true then
-						health.value:SetFormattedText("|cff559655%s|r |cffD7BEA5|||r |cff559655%s|r", ShortValue(min), ShortValue(max))
-					else
-						health.value:SetFormattedText("|cffAF5050%s|r |cffD7BEA5-|r |cff%02x%02x%02x%d%%|r", ShortValue(min), r * 255, g * 255, b * 255, floor(min / max * 100))
-					end
+				if unit == "player" and health:GetAttribute("normalUnit") ~= "pet" or unit == "target" then
+					if TukuiCF["unitframes"].showpercentage and not TukuiCF["unitframes"].showvalues then
+						health.value:SetFormattedText("|cff%02x%02x%02x%d%%|r", r * 255, g * 255, b * 255, floor(min / max * 100))
+					elseif TukuiCF["unitframes"].showvalues and not TukuiCF["unitframes"].showpercentage then
+						health.value:SetFormattedText("|cffAF5050%s|r |cffD7BEA5|||r |cff559655%s|r", ShortValue(min), ShortValue(max))
+					elseif TukuiCF["unitframes"].showvalues and TukuiCF["unitframes"].showpercentage then
+						health.value:SetFormattedText("|cffAF5050%s|r |cffD7BEA5|||r |cff%02x%02x%02x%d%%|r", ShortValue(min), r * 255, g * 255, b * 255, floor(min / max * 100))
+					end				
+				elseif unit == "focus" then
+					-- not done					
 				elseif (unit and unit:find("arena%d")) then
 					health.value:SetText("|cff559655"..ShortValue(min).."|r")
 				else
 					health.value:SetText("|cff559655-"..ShortValueNegative(max-min).."|r")
 				end
 			else
-				if unit == "player" and health:GetAttribute("normalUnit") ~= "pet" then
-					health.value:SetText("|cff559655"..max.."|r")
-				elseif unit == "target" or unit == "focus" or (unit and unit:find("arena%d")) then
+				if unit == "player" and health:GetAttribute("normalUnit") ~= "pet" or unit == "target" then
+					if TukuiCF["unitframes"].showpercentage and not TukuiCF["unitframes"].showvalues then
+						health.value:SetFormattedText("|cff%02x%02x%02x%d%%|r", r * 255, g * 255, b * 255, floor(min / max * 100))
+					elseif TukuiCF["unitframes"].showvalues and not TukuiCF["unitframes"].showpercentage then
+						health.value:SetText("|cff559655" .. max .. "|r")
+					elseif TukuiCF["unitframes"].showvalues and TukuiCF["unitframes"].showpercentage then
+						health.value:SetFormattedText("|cffAF5050%s|r |cffD7BEA5|||r |cff%02x%02x%02x%d%%|r", ShortValue(min), r * 255, g * 255, b * 255, floor(min / max * 100))
+					end
+				elseif unit == "focus" then
+					-- not done
+				elseif (unit and unit:find("arena%d")) then
 					health.value:SetText("|cff559655"..ShortValue(max).."|r")
 				else
 					health.value:SetText(" ")
 				end
 			end
 		end
-	end
-
+	end	
+	
 	TukuiDB.PostUpdateHealthRaid = function(health, unit, min, max)
 		if not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit) then
 			if not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit) then
@@ -182,32 +187,38 @@ do
 			if min ~= max then
 				if pType == 0 then
 					if unit == "target" then
-						if TukuiCF["unitframes"].showtotalhpmp == true then
-							power.value:SetFormattedText("%s |cffD7BEA5|||r %s", ShortValue(max - (max - min)), ShortValue(max))
-						else
-							power.value:SetFormattedText("%d%% |cffD7BEA5-|r %s", floor(min / max * 100), ShortValue(max - (max - min)))
-						end
-					elseif unit == "player" and self:GetAttribute("normalUnit") == "pet" or unit == "pet" then
-						if TukuiCF["unitframes"].showtotalhpmp == true then
-							power.value:SetFormattedText("%s |cffD7BEA5|||r %s", ShortValue(max - (max - min)), ShortValue(max))
-						else
+						if TukuiCF["unitframes"].showpercentage and not TukuiCF["unitframes"].showvalues then
 							power.value:SetFormattedText("%d%%", floor(min / max * 100))
+						elseif TukuiCF["unitframes"].showvalues and not TukuiCF["unitframes"].showpercentage then
+							power.value:SetFormattedText("|cffD7BEA5|r%s", ShortValue(max - (max - min)))
+						elseif TukuiCF["unitframes"].showvalues and TukuiCF["unitframes"].showpercentage then
+							power.value:SetFormattedText("%d%% |cffD7BEA5|||r %s", floor(min / max * 100), ShortValue(max - (max - min)))
+						end
+					elseif unit == "player" then
+						if TukuiCF["unitframes"].showpercentage and not TukuiCF["unitframes"].showvalues then
+							power.value:SetFormattedText("%d%%", floor(min / max * 100))
+						elseif TukuiCF["unitframes"].showvalues and not TukuiCF["unitframes"].showpercentage then
+							power.value:SetFormattedText("|cffD7BEA5|r%s", ShortValue(max - (max - min)))
+						elseif TukuiCF["unitframes"].showvalues and TukuiCF["unitframes"].showpercentage then
+							power.value:SetFormattedText("%d%% |cffD7BEA5|||r %s", floor(min / max * 100), ShortValue(max - (max - min)))
 						end
 					elseif (unit and unit:find("arena%d")) then
 						power.value:SetText(ShortValue(min))
-					else
-						if TukuiCF["unitframes"].showtotalhpmp == true then
-							power.value:SetFormattedText("%s |cffD7BEA5|||r %s", ShortValue(max - (max - min)), ShortValue(max))
-						else
-							power.value:SetFormattedText("%d%% |cffD7BEA5-|r %d", floor(min / max * 100), max - (max - min))
-						end
 					end
 				else
 					power.value:SetText(max - (max - min))
 				end
 			else
-				if unit == "pet" or unit == "target" or (unit and unit:find("arena%d")) then
-					power.value:SetText(ShortValue(min))
+				if pType == 0 then
+					if unit == "player" or unit == "target" then
+						if TukuiCF["unitframes"].showpercentage and not TukuiCF["unitframes"].showvalues then
+							power.value:SetFormattedText("%d%%", floor(min / max * 100))
+						elseif TukuiCF["unitframes"].showvalues and not TukuiCF["unitframes"].showpercentage then
+							power.value:SetText(min)
+						elseif TukuiCF["unitframes"].showvalues and TukuiCF["unitframes"].showpercentage then
+							power.value:SetFormattedText("%d%% |cffD7BEA5|||r %s", floor(min / max * 100), ShortValue(max - (max - min)))
+						end
+					end
 				else
 					power.value:SetText(min)
 				end
@@ -508,14 +519,26 @@ do
 		if (self.unit ~= unit) or (unit == "target" or unit == "focus" or unit == "focustarget" or unit == "targettarget") then return end
 		local threat = UnitThreatSituation(self.unit)
 		if (threat == 3) then
-			self.Health.border:SetBackdropBorderColor(.69,.31,.31,1)
-			if self.Power and unit ~= "pet" then
-				self.Power.border:SetBackdropBorderColor(.69,.31,.31,1)
+			self.Health.border:SetBackdropBorderColor(.7, .2, .2, 1)	
+			if unit ~= "pet" then
+				self.Power.border:SetBackdropBorderColor(.7, .2, .2, 1)
+			end
+			if self.Portrait then
+				self.Portrait.frame:SetBackdropBorderColor(.7, .2, .2, 1)
+			end
+			if self.panel then
+				self.panel:SetBackdropBorderColor(.7, .2, .2, 1)
 			end
 		else
 			self.Health.border:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
-			if self.Power and unit ~= "pet" then
+			if unit ~= "pet" then
 				self.Power.border:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
+			end
+			if self.Portrait then
+				self.Portrait.frame:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
+			end
+			if self.panel then
+				self.panel:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
 			end
 		end 
 	end
