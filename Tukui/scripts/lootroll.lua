@@ -338,5 +338,5 @@ anchor:SetScript("OnEvent", function(frame, event, addon)
 
 	anchor:SetScript("OnEvent", function(frame, event, ...) if event == "CHAT_MSG_LOOT" then return CHAT_MSG_LOOT(...) else return START_LOOT_ROLL(...) end end)
 
-	anchor:SetPoint("CENTER", UIParent, "CENTER", 0, TukuiDB.Scale(-200))
+	anchor:SetPoint("CENTER", UIParent, "CENTER", 0, TukuiDB.Scale(200))
 end)
