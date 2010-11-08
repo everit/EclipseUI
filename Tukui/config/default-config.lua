@@ -37,7 +37,6 @@ TukuiCF["unitframes"] = {
 	["focusdebuffs"] = false,              -- enable focus debuffs 
 
 	["showfocustarget"] = false,           -- show focus target
-	["showtotalhpmp"] = false,             -- change the display of info text on player and target with XXXX/Total.
 	["showsmooth"] = true,                 -- enable smooth bar
 	["showthreat"] = true,                 -- enable the threat bar anchored to info left panel.
 
@@ -56,6 +55,9 @@ TukuiCF["unitframes"] = {
 	["classcolor"] = false,
 		["health_color"] = { .15, .15, .15 },
 		["health_bg_color"] = { .05, .05, .05 },
+	
+	["showvalues"] = true,
+	["showpercentage"] = false,
 	
 	-- raid layout
 	["showrange"] = true,                  -- show range opacity on raidframes

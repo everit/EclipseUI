@@ -180,6 +180,7 @@ local function Shared(self, unit)
 	
 	if (unit == "player") or (unit == "target") then
 	
+
 		----- [[     Set Health / Power Bar Height     ]] -----
 		
 		health:SetHeight(TukuiDB.Scale(26))
