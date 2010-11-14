@@ -425,7 +425,7 @@ function Stuffing:CreateBagFrame(w)
 				if TukuiCF["actionbar"].vertical_rightbars == true then
 					f:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, 3)
 				else
-					if TukuiCF["actionbar"].rightbars > 0 then
+					if EclipseSettings.rightbars >= 1 then
 						f:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, 3)
 					else
 						f:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, 3)
@@ -745,6 +745,10 @@ function Stuffing:Layout(lb)
 	f:SetWidth(TukuiDB.Scale(TukuiCF["panels"].tinfowidth)) 
 	f:SetHeight(TukuiDB.Scale(rows * 30 + (rows - 1) * 2 + off + 12 * 2))
 
+	local sf = CreateFrame("Frame", "SlotFrame", f)
+	sf:SetWidth((31 + 1) * cols)
+	sf:SetHeight(f:GetHeight() - (6))
+	sf:SetPoint("BOTTOM", f, "BOTTOM")
 
 	local idx = 0
 	for _, i in ipairs(bs) do
@@ -753,7 +757,7 @@ function Stuffing:Layout(lb)
 		if bag_cnt > 0 then
 			self.bags[i] = self:BagNew(i, f)
 			local bagType = self.bags[i].bagType
-
+			
 			self.bags[i]:Show()
 			for j = 1, bag_cnt do
 				local b, isnew = self:SlotNew (i, j)
@@ -766,11 +770,6 @@ function Stuffing:Layout(lb)
 					table.insert(self.buttons, idx + 1, b)
 				end
 
-				local bf = CreateFrame("Frame", nil, f)
-				bf:SetWidth((31 + 1) * cols)
-				bf:SetHeight(f:GetHeight() - (6))
-				bf:SetPoint("BOTTOM", f, "BOTTOM")
-
 				xoff = (x * 31) + (x * 1)
 
 				yoff = off + 12 + (y * 30) + ((y - 1) * 2)
@@ -778,7 +777,7 @@ function Stuffing:Layout(lb)
 				yoff = yoff * -1
 
 				b.frame:ClearAllPoints()
-				b.frame:SetPoint("TOPLEFT", bf, "TOPLEFT", TukuiDB.Scale(xoff), TukuiDB.Scale(yoff))
+				b.frame:SetPoint("TOPLEFT", sf, "TOPLEFT", TukuiDB.Scale(xoff), TukuiDB.Scale(yoff))
 				b.frame:SetHeight(TukuiDB.Scale(29))
 				b.frame:SetWidth(TukuiDB.Scale(29))
 				b.frame:SetPushedTexture("")

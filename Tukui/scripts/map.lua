@@ -5,7 +5,7 @@ if not TukuiCF["map"].enable == true then return end
 
 local mapscale = WORLDMAP_WINDOWED_SIZE
 local font, font_size, font_style, font_shadow, font_position = TukuiCF["fonts"].map_font, TukuiCF["fonts"].map_font_size, TukuiCF["fonts"].map_font_style, TukuiCF["fonts"].map_font_shadow, TukuiCF["fonts"].map_button_xy_position
-local infoheight = TukuiCF["panels"].infoheight
+local infoheight = TukuiCF["panels"].tinfoheight
 
 
 ----- [[     Map Background     ]] -----

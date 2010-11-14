@@ -2,17 +2,19 @@ local db = TukuiCF["actionbar"]
 
 if not db.enable then return end
 
----------------------------------------------------------------------------
--- Setup Shapeshift Bar
----------------------------------------------------------------------------
-
-local DummyShift = CreateFrame("Frame","DummyShiftBar",UIParent)
-local TukuiShift = CreateFrame("Frame","TukuiShiftBar",UIParent)
+local DummyShift = CreateFrame("Frame", "DummyShiftBar", UIParent)
+local TukuiShift = CreateFrame("Frame", "TukuiShiftBar", UIParent)
 if TukuiDB.myclass ~= "SHAMAN" and db.vertical_shapeshift == true then
-	TukuiDB.CreatePanel(TukuiShift, db.stancebuttonsize, db.stancebuttonsize / 2, "TOPLEFT", 8, -40)
+	TukuiShift:SetSize(db.stancebuttonsize, db.stancebuttonsize / 2)
 else
-	TukuiDB.CreatePanel(TukuiShift, db.stancebuttonsize / 2, db.stancebuttonsize, "TOPLEFT", 8, -40)
+	TukuiShift:SetSize(db.stancebuttonsize / 2, db.stancebuttonsize)
 end
+if db.vertical_shapeshift == true then
+	TukuiShift:SetPoint("TOPLEFT", TukuiChatLeftTabs, "TOPRIGHT", 3, TukuiShift:GetHeight() + 3)
+else	
+	TukuiShift:SetPoint("BOTTOMLEFT", TukuiDataLeft, "BOTTOMRIGHT", 3, 0)
+end
+TukuiDB.SkinPanel(TukuiShift)
 TukuiShift:SetScript("OnEnter", TukuiDB.SetModifiedBackdrop)
 TukuiShift:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 
@@ -21,7 +23,6 @@ TukuiShift:SetMovable(true)
 TukuiShift:SetUserPlaced(true)
 local ssmove = false
 local function showmovebutton()
-	-- don't allow moving while in combat
 	if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
 
 	if ssmove == false then
@@ -71,6 +72,7 @@ bar:SetScript("OnEvent", function(self, event, ...)
 		local button
 		for i = 1, NUM_SHAPESHIFT_SLOTS do
 			button = _G["ShapeshiftButton"..i]
+			local previous = _G["ShapeshiftButton"..i-1]
 			button:ClearAllPoints()
 			button:SetSize(db.stancebuttonsize, db.stancebuttonsize)
 			button:SetParent(DummyShift)
@@ -81,7 +83,6 @@ bar:SetScript("OnEvent", function(self, event, ...)
 					button:SetPoint("TOPLEFT", TukuiShiftBar, "TOPRIGHT", 3, 0)
 				end
 			else
-				local previous = _G["ShapeshiftButton"..i-1]
 				if db.vertical_shapeshift == true then
 					button:SetPoint("TOP", previous, "BOTTOM", 0, -db.buttonspacing)
 				else

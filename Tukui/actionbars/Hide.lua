@@ -48,3 +48,4 @@ do
 	end
 	uiManagedFrames = nil
 end
+

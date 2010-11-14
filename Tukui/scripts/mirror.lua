@@ -6,7 +6,7 @@ local _, settings = ...
 
 local _DEFAULTS = {
 	width = TukuiDB.Scale(220),
-	height = TukuiDB.Scale(18),
+	height = TukuiCF["panels"].tinfoheight,
 	texture = TukuiCF["general"].game_texture,
 
 	position = {
@@ -89,10 +89,7 @@ do
 		text:SetJustifyH'CENTER'
 		text:SetTextColor(1, 1, 1)
 
-		text:SetPoint('LEFT', frame)
-		text:SetPoint('RIGHT', frame)
-		text:SetPoint('TOP', frame)
-		text:SetPoint('BOTTOM', frame)
+		text:SetPoint('CENTER', 0, 1)
 
 		frame:SetSize(settings.width, settings.height)
 

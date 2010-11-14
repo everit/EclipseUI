@@ -1,12 +1,21 @@
 ﻿## Interface: 40000
+
 ## Author: Eclípsé, Tukz
-## Credits to: Caith, Caellian, Shestak, Haste, Tekkub, Alza, Roth, P3lim, Tulla, Hungtar, hankthetank, Ishtara and others...
-## Version: 12.30
+
+## Credits to: Caith, Caellian, Shestak, Haste, Tekkub, Alza, Roth, P3lim, 
+## More Credits to: Tulla, Hungtar, hankthetank, Ishtara, Foof and others...
+
+## Version: 12.32
+
 ## Title: |cffC495DDTukui|r
+
 ## Notes: UI of awesomeness!
+
 ## SavedVariables: TukuiData, TukuiArena
 ## SavedVariablesPerCharacter: TukuiInstallv1200, TukuiUFpos, EclipseSettings
+
 ## OptionalDeps: Tukui_ConfigUI, !ClassColors, Clique
+
 ## X-oUF: oUF
 
 Tukui.xml

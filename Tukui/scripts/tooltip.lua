@@ -49,10 +49,10 @@ hooksecurefunc("GameTooltip_SetDefaultAnchor", function(self, parent)
 					self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "TOPRIGHT", 0, TukuiDB.Scale(3))
 				end
 			else
-				if db2.vertical_rightbars == true and db2.rightbars > 0 then
+				if db2.vertical_rightbars == true and EclipseSettings.rightbars > 0 then
 					self:ClearAllPoints()
 					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
-				elseif not db2.vertical_rightbars == true and db2.rightbars > 0 then
+				elseif not db2.vertical_rightbars == true and EclipseSettings.rightbars > 0 then
 					self:ClearAllPoints()
 					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, TukuiDB.Scale(3))
 				else
@@ -88,10 +88,10 @@ GameTooltip:HookScript("OnUpdate",function(self, ...)
 					self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "TOPRIGHT", 0, TukuiDB.Scale(3))
 				end
 			else
-				if db2.vertical_rightbars == true and db2.rightbars > 0 then
+				if db2.vertical_rightbars == true and EclipseSettings.rightbars > 0 then
 					self:ClearAllPoints()
 					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
-				elseif not db2.vertical_rightbars == true and db2.rightbars > 0 then
+				elseif not db2.vertical_rightbars == true and EclipseSettings.rightbars > 0 then
 					self:ClearAllPoints()
 					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, TukuiDB.Scale(3))
 				else
@@ -328,7 +328,7 @@ local BorderColor = function(self)
 end
 
 local SetStyle = function(self)
-	TukuiDB.SetTemplate(self)
+	TukuiDB.SkinPanel(self)
 	BorderColor(self)
 end
 
@@ -340,9 +340,6 @@ TukuiTooltip:SetScript("OnEvent", function(self)
 	
 	TukuiDB.SetTemplate(FriendsTooltip)
 	TukuiDB.CreateShadow(FriendsTooltip)
-	
-	TukuiDB.CreateShadow(GameTooltip)
-	TukuiDB.CreateOverlay(GameTooltip)
 
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 	self:SetScript("OnEvent", nil)

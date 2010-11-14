@@ -1,0 +1,11 @@
+## Interface: 40000
+
+## Author: Eclípsé, Tukz
+
+## Title: |cffC495DDTukui|r Dps
+
+## X-Category: UnitFrame
+
+## RequiredDeps: Tukui
+
+TukuiDpsParty.lua

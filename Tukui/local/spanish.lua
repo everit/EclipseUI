@@ -25,11 +25,10 @@ if TukuiDB.client == "esES" then
 	tukuilocal.chat_lfg = "LookingForGroup"
 	
 	tukuilocal.disband = "Desacer grupo."
-
+ 
 	tukuilocal.datatext_download = "Descarga: "
 	tukuilocal.datatext_bandwidth = "Ancho de banda: "
-	
-	tukuilocal.datatext_guild = "Hermandad: "
+	tukuilocal.datatext_guild = "Hermandad:"
 	tukuilocal.datatext_noguild = "Sin Hermandad"
 	tukuilocal.datatext_bags = "Bolsas: "
 	tukuilocal.datatext_friends = "Amigos: "
@@ -98,7 +97,7 @@ if TukuiDB.client == "esES" then
 	tukuilocal.bg_alterac = "Valle de Alterac"
 	tukuilocal.bg_strand = "Playa de los Ancestros"
 	tukuilocal.bg_isle = "Isla de la Conquista"
-	
+ 
 	tukuilocal.Slots = {
 		[1] = {1, "Cabeza", 1000},
 		[2] = {3, "Hombro", 1000},

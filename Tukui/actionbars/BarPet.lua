@@ -35,7 +35,7 @@ bar:SetScript("OnEvent", function(self, event, ...)
 			if i == 1 then
 				button:SetPoint("TOPLEFT")
 			else
-				if db.vertical_rightbars then
+				if db.vertical_rightbars == true then
 					button:SetPoint("TOP", _G["PetActionButton"..(i - 1)], "BOTTOM", 0, -db.buttonspacing)
 				else
 					button:SetPoint("LEFT", _G["PetActionButton"..(i - 1)], "RIGHT", db.buttonspacing, 0)

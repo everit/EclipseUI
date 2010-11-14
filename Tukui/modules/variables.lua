@@ -1,11 +1,32 @@
-----------------------------------------------------------------
--- TUKUI VARS
-----------------------------------------------------------------
+----- [[     Set Up Table Values On Initial Login If They Don't Exist     ]] -----
+
+if not EclipseSettings then
+	EclipseSettings = {
+		["minimap_shown"] = true,
+		
+		["bottomrows"] = 1,
+		["rightbars"] = 1,
+		["splitbars"] = false,
+		
+		["24h_time"] = false,
+		["local_time"] = true,
+		["game_time"] = false,
+		
+		["location_shown"] = true,
+		["experience_shown"] = false,
+		["reputation_shown"] = false,
+	}	
+end
+
+
+----- [[     Set Up Tukui Tables     ]] -----
 
 TukuiCF = { }
 TukuiDB = { }
 tukuilocal = { }
-EclipseSettings = { }
+
+
+----- [[     Set Up Tukui Variables     ]] -----
 
 TukuiDB.dummy = function() return end
 TukuiDB.myname, _ = UnitName("player")

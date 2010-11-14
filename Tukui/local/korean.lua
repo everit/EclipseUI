@@ -28,11 +28,10 @@ if TukuiDB.client == "koKR" then
  
 	tukuilocal.datatext_download = "Download: "
 	tukuilocal.datatext_bandwidth = "Bandwidth: "
-	
 	tukuilocal.datatext_guild = "길드: "
 	tukuilocal.datatext_noguild = "길드 없음"
 	tukuilocal.datatext_bags = "소지품: "
-	tukuilocal.datatext_friends = "친구"
+	tukuilocal.datatext_friends = "친구: "
 	tukuilocal.datatext_online = "온라인: "
 	tukuilocal.datatext_armor = "방어구"
 	tukuilocal.datatext_earned = "수입:"
@@ -53,8 +52,8 @@ if TukuiDB.client == "koKR" then
 	tukuilocal.datatext_totalgold = "전체: "
 	tukuilocal.datatext_savedraid = "귀속된 던전"
 	tukuilocal.datatext_currency = "화폐:"
-	tukuilocal.datatext_fps = " fps & "
-	tukuilocal.datatext_ms = " ms"
+	tukuilocal.datatext_fps = "FPS: "
+	tukuilocal.datatext_ms = "MS: "
 	tukuilocal.datatext_playercrit = " 치명타율"
 	tukuilocal.datatext_playerheal = " 극대화율"
 	tukuilocal.datatext_avoidancebreakdown = "완방 수치"

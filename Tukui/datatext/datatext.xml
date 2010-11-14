@@ -1,0 +1,17 @@
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">	
+	<Script file="setup.lua"/>
+	
+	<Script file="newdata.lua"/>
+	<Script file="databar.lua"/>
+	
+	<Script file="bags.lua"/>
+	<Script file="crit.lua"/>
+	<Script file="currency.lua"/>
+	<Script file="friend.lua"/>
+	<Script file="gold.lua"/>
+	<Script file="guild.lua"/>
+	<Script file="haste.lua"/>
+	<Script file="hitrating.lua"/>
+	<Script file="power.lua"/>
+	<Script file="wintergrasp.lua"/>
+</Ui>

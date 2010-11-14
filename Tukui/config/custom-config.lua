@@ -2,38 +2,26 @@
 	
 	!!YOU CAN KEEP THIS FILE WHEN UPDATING!!
 	
-	So how does this work?
+	-- Characater: Overwrites configuration for the character(s) name(s) listed. --
 	
-	Overall: Overwrites configuration for all your characters.
+	if TukuiDB.myname == "Eclípsé" then
+		TukuiCF["general"].game_texture = custom_texture_1
+		
+		TukuiCF["actionbar"].buttonsize = 28
+		TukuiCF["actionbar"].vertical_rightbars = false
+	end
 	
-	Characater: Overwrites configuration for the character(s) name(s) listed.
 	
-	Class: Overwrites configuration for the characters class(es) listed.
+	-- Class: Overwrites configuration for the characters class(es) listed. --
 	
+	if TukuiDB.myname == "PRIEST" then
+		TukuiCF["general"].game_texture = normTex
+		
+		TukuiCF["actionbar"].buttonsize = 26
+		TukuiCF["actionbar"].vertical_rightbars = true
+	end
 ]] --
 
-
------ [[     Overall Custom Config     ]] -----
-
--- TukuiCF["general"].game_texture = TukuiCF["media"].custom_texture_1
-
--- TukuiCF["unitframes"].classcolor = false
--- TukuiCF["unitframes"].auratimer = false
-
--- TukuiCF["actionbar"].split_bar = true
--- TukuiCF["actionbar"].rightbars = 0
--- TukuiCF["actionbar"].bottomrows = 1
--- TukuiCF["actionbar"].vertical_rightbars = false
--- TukuiCF["actionbar"].vertical_shapeshift = true
--- TukuiCF["actionbar"].tukui_default = true
-
--- TukuiCF["datatext"].location = false
--- TukuiCF["datatext"].classcolor = false
--- TukuiCF["datatext"].color = { 0, .6, 1 }
-
--- TukuiCF["media"].bordercolor = { .125, .125, .125, 1 }
--- TukuiCF["media"].backdropcolor = { 0, 0, 0, 1 }
--- TukuiCF["media"].fadedbackdropcolor = { 0, 0, 0, .7 }
 
 
 ----- [[     Character Custom Config     ]] -----
@@ -52,33 +40,33 @@ end
 
 ----- [[     Support for TelUI_AddonSkins     ]] -----
 
-local TelUI_AddonSkins = CreateFrame("Frame")
+-- local TelUI_AddonSkins = CreateFrame("Frame")
 
-TelUI_AddonSkins:RegisterEvent("ADDON_LOADED")
-TelUI_AddonSkins:SetScript("OnEvent", function(self, event, addon)
-	if not addon == "TelUI_AddonSkins" then return end
+-- TelUI_AddonSkins:RegisterEvent("ADDON_LOADED")
+-- TelUI_AddonSkins:SetScript("OnEvent", function(self, event, addon)
+	-- if not addon == "TelUI_AddonSkins" then return end
 
-	CustomSkin = { }
+	-- CustomSkin = { }
 	
-	CustomSkin.normTexture = TukuiCF["general"].game_texture
-	CustomSkin.bgTexture = TukuiCF["general"].game_texture
-	CustomSkin.font = TukuiCF["fonts"].datatext_font
-	CustomSkin.smallFont = TukuiCF["fonts"].datatext_font
-	CustomSkin.fontSize = TukuiCF["fonts"].datatext_font_size
-	CustomSkin.fontFlags = TukuiCF["fonts"].datatext_font_style
-	CustomSkin.buttonSize = TukuiCF["actionbar"].buttonsize
-	CustomSkin.buttonSpacing = TukuiCF["actionbar"].buttonspacing
-	CustomSkin.borderWidth = TukuiDB.Scale(2)
-	CustomSkin.buttonZoom = { .08, .92, .08, .92 }
-	CustomSkin.barSpacing = TukuiDB.Scale(1)
-	CustomSkin.barHeight = TukuiCF["panels"].infoheight
+	-- CustomSkin.normTexture = TukuiCF["general"].game_texture
+	-- CustomSkin.bgTexture = TukuiCF["general"].game_texture
+	-- CustomSkin.font = TukuiCF["fonts"].datatext_font
+	-- CustomSkin.smallFont = TukuiCF["fonts"].datatext_font
+	-- CustomSkin.fontSize = TukuiCF["fonts"].datatext_font_size
+	-- CustomSkin.fontFlags = TukuiCF["fonts"].datatext_font_style
+	-- CustomSkin.buttonSize = TukuiCF["actionbar"].buttonsize
+	-- CustomSkin.buttonSpacing = TukuiCF["actionbar"].buttonspacing
+	-- CustomSkin.borderWidth = TukuiDB.Scale(2)
+	-- CustomSkin.buttonZoom = { .08, .92, .08, .92 }
+	-- CustomSkin.barSpacing = TukuiDB.Scale(1)
+	-- CustomSkin.barHeight = TukuiCF["panels"].infoheight
 	
-	function CustomSkin:SkinBackgroundFrame(frame)
-		self:SkinFrame(frame)
-		TukuiDB.CreateOverlay(frame)
-		TukuiDB.CreateShadow(frame)
-	end
+	-- function CustomSkin:SkinBackgroundFrame(frame)
+		-- self:SkinFrame(frame)
+		-- TukuiDB.CreateOverlay(frame)
+		-- TukuiDB.CreateShadow(frame)
+	-- end
 
-	self:UnregisterEvent("ADDON_LOADED")
-end)
+	-- self:UnregisterEvent("ADDON_LOADED")
+-- end)
 

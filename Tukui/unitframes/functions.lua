@@ -520,7 +520,7 @@ do
 		local threat = UnitThreatSituation(self.unit)
 		if (threat == 3) then
 			self.Health.border:SetBackdropBorderColor(.7, .2, .2, 1)	
-			if unit ~= "pet" then
+			if self.Power and unit ~= "pet" then
 				self.Power.border:SetBackdropBorderColor(.7, .2, .2, 1)
 			end
 			if self.Portrait then
@@ -531,7 +531,7 @@ do
 			end
 		else
 			self.Health.border:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
-			if unit ~= "pet" then
+			if self.Power and unit ~= "pet" then
 				self.Power.border:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
 			end
 			if self.Portrait then

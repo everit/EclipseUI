@@ -561,6 +561,7 @@ local function Shared(self, unit)
 			buffs.initialAnchor = 'TOPLEFT'
 			buffs.PostCreateIcon = TukuiDB.PostCreateAura
 			buffs.PostUpdateIcon = TukuiDB.PostUpdateAura
+			buffs.onlyShowPlayer = db.onlyplayerbuffs	
 			self.Buffs = buffs	
 
 			debuffs.spacing = 3
@@ -569,6 +570,7 @@ local function Shared(self, unit)
 			debuffs["growth-x"] = "LEFT"
 			debuffs.PostCreateIcon = TukuiDB.PostCreateAura
 			debuffs.PostUpdateIcon = TukuiDB.PostUpdateAura
+			debuffs.onlyShowPlayer = db.onlyplayerdebuffs
 			self.Debuffs = debuffs
 		end
 		
@@ -597,7 +599,7 @@ local function Shared(self, unit)
 				castbar:SetHeight(TukuiDB.Scale(21))
 				castbar:SetWidth(TukuiDB.Scale(141))
 				-- haha I'm going to cheat and anchor it to the target unitframe, fuck you resolutions!!
-				castbar:SetPoint("BOTTOMRIGHT", hBorder, "TOPLEFT", TukuiDB.Scale(-11), TukuiDB.Scale(5))
+				castbar:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, TukuiDB.Scale(233))
 			end
 
 			castbar.time:SetPoint("RIGHT", castbar, "RIGHT", TukuiDB.Scale(-4), font_position[1])
@@ -710,9 +712,9 @@ local function Shared(self, unit)
 		Name:SetJustifyH("CENTER")
 
 		if db.classcolor == true then
-			self:Tag(Name, '[Tukui:name_medium] [Tukui:dead][Tukui:afk]')
+			self:Tag(Name, '[Tukui:name_medium][Tukui:dead][Tukui:afk]')
 		else
-			self:Tag(Name, '[Tukui:getnamecolor] [Tukui:name_medium] [Tukui:dead][Tukui:afk]')
+			self:Tag(Name, '[Tukui:getnamecolor][Tukui:name_medium][Tukui:dead][Tukui:afk]')
 		end
 
 		
@@ -795,7 +797,7 @@ local function Shared(self, unit)
 	
 		----- [[     Set Health / Power Bar Height     ]] -----
 		
-		health:SetHeight(TukuiDB.Scale(23))
+		health:SetHeight(TukuiDB.Scale(26))
 		power:SetHeight(TukuiDB.Scale(3))
 		
 		
@@ -805,9 +807,9 @@ local function Shared(self, unit)
 		Name:SetJustifyH("CENTER")
 
 		if db.classcolor == true then
-			self:Tag(Name, '[Tukui:name_medium] [Tukui:dead][Tukui:afk]')
+			self:Tag(Name, '[Tukui:name_medium][Tukui:dead][Tukui:afk]')
 		else
-			self:Tag(Name, '[Tukui:getnamecolor][Tukui:name_medium] [Tukui:dead][Tukui:afk]')
+			self:Tag(Name, '[Tukui:getnamecolor][Tukui:name_medium][Tukui:dead][Tukui:afk]')
 		end
 
 		
@@ -893,13 +895,13 @@ oUF:RegisterStyle('Tukz', Shared)
 
 -- player
 local player = oUF:Spawn('player', "oUF_Tukz_player")
-player:SetPoint("BOTTOM", UIParent, "BOTTOM", -(TukuiDB.Scale(180) - adjustX), TukuiDB.Scale(167 + adjustY))
+player:SetPoint("BOTTOM", UIParent, "BOTTOM", -(TukuiDB.Scale(190) - adjustX), TukuiDB.Scale(167 + adjustY))
 player:SetSize(TukuiDB.Scale(195), ((player.Health:GetHeight() + 4) + (player.Power:GetHeight() + 4) + (player.panel:GetHeight()) + 6))
 
 
 -- target
 local target = oUF:Spawn('target', "oUF_Tukz_target")
-target:SetPoint("BOTTOM", UIParent, "BOTTOM", (TukuiDB.Scale(180) - adjustX), TukuiDB.Scale(167 + adjustY))
+target:SetPoint("BOTTOM", UIParent, "BOTTOM", (TukuiDB.Scale(190) - adjustX), TukuiDB.Scale(167 + adjustY))
 target:SetSize(TukuiDB.Scale(195), ((target.Health:GetHeight() + 4) + (target.Power:GetHeight() + 4) + (target.panel:GetHeight()) + 6))
 
 
@@ -925,8 +927,8 @@ pet:SetSize(TukuiDB.Scale(130), (pet.Health:GetHeight() + 4) + (pet.Power:GetHei
 
 -- focus
 local focus = oUF:Spawn('focus', "oUF_Tukz_focus")
-focus:SetPoint("BOTTOMRIGHT", oUF_Tukz_player, "TOPLEFT", TukuiDB.Scale(-10), TukuiDB.Scale(200))
-focus:SetSize(TukuiDB.Scale(125), TukuiDataRight:GetHeight() - TukuiDB.Scale(4))
+focus:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, TukuiDB.Scale(190))
+focus:SetSize(TukuiDB.Scale(125), ((focus.Health:GetHeight() + 4) + (focus.Power:GetHeight() + 4)))
 
 
 if db.showfocustarget then 

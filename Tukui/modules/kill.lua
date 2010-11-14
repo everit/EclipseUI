@@ -1,6 +1,12 @@
 -- here we kill all shit stuff on default UI that we don't need!
 
-local k = TukuiDB.Kill
+function TukuiDB.Kill(object)
+	if object.UnregisterAllEvents then
+		object:UnregisterAllEvents()
+	end
+	object.Show = TukuiDB.dummy
+	object:Hide()
+end
 
 local Kill = CreateFrame("Frame")
 Kill:RegisterEvent("ADDON_LOADED")
@@ -12,9 +18,9 @@ Kill:SetScript("OnEvent", function(self, event, addon)
 			InterfaceOptionsFrameCategoriesButton10:SetAlpha(0)		
 			InterfaceOptionsFrameCategoriesButton11:SetScale(0.00001)
 			InterfaceOptionsFrameCategoriesButton11:SetAlpha(0)
-			k(CompactPartyFrame)
-			k(CompactRaidFrameManager)
-			k(CompactRaidFrameContainer)
+			TukuiDB.Kill(CompactPartyFrame)
+			TukuiDB.Kill(CompactRaidFrameManager)
+			TukuiDB.Kill(CompactRaidFrameContainer)
 		end	
 	else
 		if addon == "Blizzard_AchievementUI" then
@@ -25,26 +31,28 @@ Kill:SetScript("OnEvent", function(self, event, addon)
 		
 		if addon ~= "Tukui" then return end
 		
-		k(StreamingIcon)
-		k(Advanced_UseUIScale)
-		k(Advanced_UIScaleSlider)
-		k(PartyMemberBackground)
-		k(TutorialFrameAlertButton)
+		TukuiDB.Kill(StreamingIcon)
+		TukuiDB.Kill(Advanced_UseUIScale)
+		TukuiDB.Kill(Advanced_UIScaleSlider)
+		TukuiDB.Kill(PartyMemberBackground)
+		TukuiDB.Kill(TutorialFrameAlertButton)
 		
-		k(InterfaceOptionsUnitFramePanelPartyBackground)
+		TukuiDB.Kill(InterfaceOptionsUnitFramePanelPartyBackground)
+
+		-- make sure boss or arena frame is always disabled when running tukui
+		SetCVar("showArenaEnemyFrames", 0)
 		
 		if TukuiCF.arena.unitframes then
-			SetCVar("showArenaEnemyFrames", 0)
-			k(InterfaceOptionsUnitFramePanelArenaEnemyFrames)
-			k(InterfaceOptionsUnitFramePanelArenaEnemyCastBar)
-			k(InterfaceOptionsUnitFramePanelArenaEnemyPets)
+			TukuiDB.Kill(InterfaceOptionsUnitFramePanelArenaEnemyFrames)
+			TukuiDB.Kill(InterfaceOptionsUnitFramePanelArenaEnemyCastBar)
+			TukuiDB.Kill(InterfaceOptionsUnitFramePanelArenaEnemyPets)
 		end
 		
 		if TukuiCF.chat.enable then
 			SetCVar("WholeChatWindowClickable", 0)
 			SetCVar("ConversationMode", "inline")
-			k(InterfaceOptionsSocialPanelWholeChatWindowClickable)
-			k(InterfaceOptionsSocialPanelConversationMode)
+			TukuiDB.Kill(InterfaceOptionsSocialPanelWholeChatWindowClickable)
+			TukuiDB.Kill(InterfaceOptionsSocialPanelConversationMode)
 		end
 		
 		if TukuiCF.unitframes.enable then
@@ -52,20 +60,14 @@ Kill:SetScript("OnEvent", function(self, event, addon)
 			InterfaceOptionsFrameCategoriesButton9:SetAlpha(0)	
 			InterfaceOptionsFrameCategoriesButton9:SetScale(0.00001)
 			InterfaceOptionsFrameCategoriesButton9:SetAlpha(0)
-			
-			-- it seem that 2 people have problem with RuneFrame.
-			-- Make sure they are not show anymore
-			if TukuiDB.myclass == "DEATHKNIGHT" then
-				k(RuneFrame)
-			end
 		end
 		
 		if TukuiCF.actionbar.enable then
-			k(InterfaceOptionsActionBarsPanelBottomLeft)
-			k(InterfaceOptionsActionBarsPanelBottomRight)
-			k(InterfaceOptionsActionBarsPanelRight)
-			k(InterfaceOptionsActionBarsPanelRightTwo)
-			k(InterfaceOptionsActionBarsPanelAlwaysShowActionBars)
+			TukuiDB.Kill(InterfaceOptionsActionBarsPanelBottomLeft)
+			TukuiDB.Kill(InterfaceOptionsActionBarsPanelBottomRight)
+			TukuiDB.Kill(InterfaceOptionsActionBarsPanelRight)
+			TukuiDB.Kill(InterfaceOptionsActionBarsPanelRightTwo)
+			TukuiDB.Kill(InterfaceOptionsActionBarsPanelAlwaysShowActionBars)
 		end
 	end
 end)

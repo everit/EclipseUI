@@ -1,8 +1,13 @@
 -- just some random skin, not everything is skinned atm.
 
 function TukuiDB.SetModifiedBackdrop(self)
-	local color = RAID_CLASS_COLORS[TukuiDB.myclass]
-	self:SetBackdropBorderColor(color.r, color.g, color.b)
+	if TukuiCF["datatext"].classcolor == true then
+		local color = RAID_CLASS_COLORS[TukuiDB.myclass]
+		self:SetBackdropBorderColor(color.r, color.g, color.b)
+	else
+		local r, g, b = unpack(TukuiCF["datatext"].color)
+		self:SetBackdropBorderColor(r, g, b)
+	end
 end
 
 function TukuiDB.SetOriginalBackdrop(self)
@@ -15,7 +20,7 @@ local function SkinButton(f)
 	f:SetPushedTexture("")
 	f:SetDisabledTexture("")
 	TukuiDB.SkinPanel(f)
-	TukuiDB.Kill(f.shadow) -- overlay > shadows
+	f.shadow:Hide()
 	f:HookScript("OnEnter", TukuiDB.SetModifiedBackdrop)
 	f:HookScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 end
@@ -71,8 +76,8 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 		TukuiDB.Kill(_G["AudioOptionsSoundPanelVolume"])
 		
 		TukuiDB.Kill(_G["GhostFrame"]) -- fuck you
-		
-	-- reskin popup buttons
+
+		-- reskin popup buttons
 		for i = 1, 3 do
 			for j = 1, 3 do
 				SkinButton(_G["StaticPopup"..i.."Button"..j])
@@ -89,7 +94,7 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 		
 		for i = 1, getn(nonshadowskins) do
 			TukuiDB.SkinPanel(_G[nonshadowskins[i]])
-			TukuiDB.Kill(_G[nonshadowskins[i]].shadow)
+			_G[nonshadowskins[i]].shadow:Hide()
 		end
 		
 		local ChatMenus = {
@@ -195,11 +200,11 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 		
 		-- others
 		_G["ReadyCheckListenerFrame"]:SetAlpha(0)
-		_G["ReadyCheckFrame"]:HookScript("OnShow", function(self) if UnitIsUnit("player", self.initiator) then self:Hide() end end) -- bug fix, don't show it if initiator		
+		_G["ReadyCheckFrame"]:HookScript("OnShow", function(self) if UnitIsUnit("player", self.initiator) then self:Hide() end end) -- bug fix, don't show it if initiator
 		_G["PlayerPowerBarAlt"]:HookScript("OnShow", function(self) self:ClearAllPoints() self:SetPoint("TOP", 0, -12) end)
 	end
 	
--- mac menu/option panel, made by affli.
+	-- mac menu/option panel, made by affli.
 	if IsMacClient() then
 		-- Skin main frame and reposition the header
 		TukuiDB.SetTemplate(MacOptionsFrame)
@@ -242,7 +247,7 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
  
 		_G["MacOptionsFrameDefaults"]:SetWidth(96)
 		_G["MacOptionsFrameDefaults"]:SetHeight(22)
-
+		
 		-- why these buttons is using game menu template? oO
 		_G["MacOptionsButtonCompressLeft"]:SetAlpha(0)
 		_G["MacOptionsButtonCompressMiddle"]:SetAlpha(0)

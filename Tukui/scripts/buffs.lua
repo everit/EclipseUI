@@ -1,12 +1,14 @@
 local font, font_size, font_style, font_shadow, font_count_pos, font_duration_pos = TukuiCF["fonts"].aura_font, TukuiCF["fonts"].aura_font_size, TukuiCF["fonts"].aura_font_style, TukuiCF["fonts"].aura_font_shadow, TukuiCF["fonts"].aura_count_xy_position, TukuiCF["fonts"].aura_duration_xy_position
 
+PlayerFrame:Hide()
+
 ConsolidatedBuffs:ClearAllPoints()
 ConsolidatedBuffs:SetPoint("LEFT", Minimap, "LEFT", TukuiDB.Scale(0), TukuiDB.Scale(0))
 ConsolidatedBuffs:SetSize(16, 16)
 ConsolidatedBuffsIcon:SetTexture(nil)
 ConsolidatedBuffs.SetPoint = TukuiDB.dummy
 
-local rowbuffs = 13
+local rowbuffs = 16
 
 TemporaryEnchantFrame:ClearAllPoints()
 TemporaryEnchantFrame:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 0, TukuiDB.Scale(-16))
@@ -14,8 +16,8 @@ TemporaryEnchantFrame.SetPoint = TukuiDB.dummy
 
 TempEnchant1:ClearAllPoints()
 TempEnchant2:ClearAllPoints()
-TempEnchant1:SetPoint("TOPRIGHT", TukuiMinimap, "TOPLEFT", TukuiDB.Scale(-3), 0)
-TempEnchant2:SetPoint("RIGHT", TempEnchant1, "LEFT", TukuiDB.Scale(-3), 0)
+TempEnchant1:SetPoint("TOPLEFT", UIParent, "TOPLEFT", TukuiDB.Scale(8), TukuiDB.Scale(-8))
+TempEnchant2:SetPoint("LEFT", TempEnchant1, "RIGHT", TukuiDB.Scale(-3), 0)
 
 WorldStateAlwaysUpFrame:SetFrameStrata("BACKGROUND")
 WorldStateAlwaysUpFrame:SetFrameLevel(0)
@@ -55,7 +57,7 @@ local function StyleBuffs(buttonName, index, debuff)
 		duration:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 		
 		count:ClearAllPoints()
-		count:SetPoint("TOPLEFT", font_count_pos[1], font_count_pos[2])
+		count:SetPoint("TOPRIGHT", font_count_pos[1], font_count_pos[2])
 		count:SetFont(font, font_size, font_style)
 		count:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 
@@ -98,24 +100,25 @@ local function UpdateBuffAnchors()
 			buff:ClearAllPoints()
 			if ( (index > 1) and (mod(index, rowbuffs) == 1) ) then
 				if ( index == rowbuffs+1 ) then
-					buff:SetPoint("TOPRIGHT", TukuiMinimap, "TOPLEFT", TukuiDB.Scale(-3), TukuiDB.Scale(-38))
+					buff:SetPoint("TOPLEFT", UIParent, "TOPLEFT", TukuiDB.Scale(8), TukuiDB.Scale(-55))
 				else
-					buff:SetPoint("TOPRIGHT", TukuiMinimap, "TOPLEFT", TukuiDB.Scale(-3), TukuiDB.Scale(-76))
+					buff:SetPoint("TOPLEFT", UIParent, "TOPLEFT", TukuiDB.Scale(8), TukuiDB.Scale(-103))
 				end
 				aboveBuff = buff;
 			elseif ( index == 1 ) then
 				local mainhand, _, _, offhand, _, _, thrown = GetWeaponEnchantInfo()
+				
 				if (mainhand and offhand and thrown) and not UnitHasVehicleUI("player") then
-					buff:SetPoint("RIGHT", TempEnchant3, "LEFT", TukuiDB.Scale(-3), 0)
+					buff:SetPoint("LEFT", TempEnchant3, "RIGHT", TukuiDB.Scale(3), 0)
 				elseif ((mainhand and offhand) or (mainhand and thrown) or (offhand and thrown)) and not UnitHasVehicleUI("player") then
-					buff:SetPoint("RIGHT", TempEnchant2, "LEFT", TukuiDB.Scale(-3), 0)
+					buff:SetPoint("LEFT", TempEnchant2, "RIGHT", TukuiDB.Scale(3), 0)
 				elseif ((mainhand and not offhand and not thrown) or (offhand and not mainhand and not thrown) or (thrown and not mainhand and not offhand)) and not UnitHasVehicleUI("player") then
-					buff:SetPoint("RIGHT", TempEnchant1, "LEFT", TukuiDB.Scale(-3), 0)
+					buff:SetPoint("LEFT", TempEnchant1, "RIGHT", TukuiDB.Scale(3), 0)
 				else
-					buff:SetPoint("TOPRIGHT", TukuiMinimap, "TOPLEFT", TukuiDB.Scale(-3), 0)
+					buff:SetPoint("TOPLEFT", UIParent, "TOPLEFT", TukuiDB.Scale(8), TukuiDB.Scale(-8))
 				end
 			else
-				buff:SetPoint("RIGHT", previousBuff, "LEFT", TukuiDB.Scale(-3), 0)
+				buff:SetPoint("LEFT", previousBuff, "RIGHT", TukuiDB.Scale(3), 0)
 			end
 			previousBuff = buff
 		end		
@@ -162,11 +165,6 @@ local hr, m, s, text
 	text = format("|cffffffff".."%s", text)
 	return text
 end
-
-local f = CreateFrame("Frame")
-f:SetScript("OnEvent", function() mainhand, _, _, offhand, thrown = GetWeaponEnchantInfo() end)
-f:RegisterEvent("UNIT_INVENTORY_CHANGED")
-f:RegisterEvent("PLAYER_EVENTERING_WORLD")
 
 hooksecurefunc("BuffFrame_UpdateAllBuffAnchors", UpdateBuffAnchors)
 hooksecurefunc("DebuffButton_UpdateAnchors", UpdateDebuffAnchors)
