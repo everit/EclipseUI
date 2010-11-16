@@ -13,10 +13,21 @@ Minimap:ClearAllPoints()
 Minimap:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", TukuiDB.Scale(-10), TukuiDB.Scale(-10))
 Minimap:SetSize(TukuiMinimap:GetWidth(), TukuiMinimap:GetHeight())
 
+
+----- [[     Toggle Button / Text     ]] -----
+
 local Toggle = CreateFrame("Frame", "ToggleMinimap", UIParent)
 Toggle:SetSize(TukuiMinimap:GetHeight() + 4, TukuiCF["panels"].tinfoheight)
 Toggle:EnableMouse(true)
 TukuiDB.SkinPanel(Toggle)
+
+local Toggle_Text = Toggle:CreateFontString(nil, "OVERLAY")
+Toggle_Text:SetFont(TukuiCF["media"].custom_font_1, 12, "MONOCHROMEOUTLINE")
+Toggle_Text:SetPoint("CENTER", 2, 1)
+
+
+----- [[     Mouse-over Functions     ]] -----
+
 Toggle:SetScript("OnEnter", function()
 	if InCombatLockdown() then return end
 	if MinimapCluster:IsShown() then
@@ -24,12 +35,17 @@ Toggle:SetScript("OnEnter", function()
 	end
 	TukuiDB.SetModifiedBackdrop(Toggle)
 end)
+
 Toggle:SetScript("OnLeave", function() 
 	if MinimapCluster:IsShown() then
 		TukuiDB.FadeOut(Toggle)
 	end
 	TukuiDB.SetOriginalBackdrop(Toggle)
 end)
+
+
+----- [[     Make Sure Toggle Button Fades On Combat     ]] -----
+
 Toggle:RegisterEvent("PLAYER_REGEN_DISABLED")
 Toggle:SetScript("OnEvent", function(self, event)
 	if (event == "PLAYER_REGEN_DISABLED") then
@@ -39,14 +55,13 @@ Toggle:SetScript("OnEvent", function(self, event)
 	end
 end)
 
-local Toggle_Text = Toggle:CreateFontString(nil, "OVERLAY")
-Toggle_Text:SetFont(TukuiCF["media"].custom_font_1, 12, "MONOCHROMEOUTLINE")
-Toggle_Text:SetPoint("CENTER", 2, 1)
+
+----- [[     Toggle / Minimap Set Up / Check Function     ]] -----
 
 local minimap_check = function()
 	if EclipseSettings.minimap_shown == true then
 		Toggle:SetAlpha(0)
-		
+
 		Toggle:ClearAllPoints()
 		Toggle:SetPoint("TOPRIGHT", TukuiMinimap, "BOTTOMRIGHT", 0, -3)
 		
@@ -68,6 +83,9 @@ local minimap_check = function()
 		end
 	end
 end
+
+
+----- [[     Mouse-click Function     ]] -----
 
 Toggle:SetScript("OnMouseDown", function()
 	if not InCombatLockdown() then

@@ -4,12 +4,15 @@
     To-do:
 	-- Clean up code.
 	
-	© 2010 Eclípsé
+	Â© 2010 EclÃ­psÃ©
 ]]--
 
+----- [[     Local Variables     ]] -----
 
 local font, font_size, font_style, font_shadow, font_position = TukuiCF["fonts"].datatext_font, TukuiCF["fonts"].datatext_font_size, TukuiCF["fonts"].datatext_font_style, TukuiCF["fonts"].datatext_font_shadow, TukuiCF["fonts"].datatext_xy_position
 local maxlevel = UnitLevel("player") == MAX_PLAYER_LEVEL
+local collapsed, expanded = 15, 200
+
 
 ----- [[     Panels     ]] -----
 
@@ -45,7 +48,8 @@ local expframe = frame[1]
 local locframe = frame[2]
 local repframe = frame[3]
 
--- colors
+
+----- [[     Color Table     ]] -----
 
 local colors = {
 	{ r = .3, g = .3, b = .8 }, -- Normal Bar
@@ -61,6 +65,9 @@ local colors = {
 	{ r = .3, g = .9, b = .3 }, -- Exalted
 }
 
+
+----- [[     Short Value Function     ]] -----
+
 local function shortvalue(value)
 	if value >= 1e6 then
 		return ("%.1fm"):format(value / 1e6):gsub("%.?0+([km])$", "%1")
@@ -71,7 +78,8 @@ local function shortvalue(value)
 	end
 end
 
-local collapsed, expanded = 15, 200
+
+----- [[     Location / Return To Graveyard Function     ]] -----
 
 local function location(self, event)
 	if maxlevel then
@@ -101,6 +109,9 @@ local function location(self, event)
 		locframe.text:SetText(loc)
 	end
 end
+
+
+----- [[     Experience Functon     ]] -----
 
 local function experience()
 	if maxlevel then
@@ -141,6 +152,9 @@ local function experience()
 	end
 end
 
+
+----- [[     Reputation Function     ]] -----
+
 local function reputation()
 	if maxlevel then
 		expframe.bar:Hide()
@@ -162,6 +176,9 @@ local function reputation()
 		repframe.text:SetText(cStart .. "No Reputation Tracked")
 	end
 end
+
+
+----- [[     Set Up / Check Function     ]] -----
 
 local function setup()
 	if EclipseSettings.experience_shown == true then
@@ -232,21 +249,23 @@ local function setup()
 	end
 end
 frame:SetScript("OnEvent", setup)
-frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 
+----- [[     Register Events     ]] -----
+
+frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 frame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 frame:RegisterEvent("ZONE_CHANGED")
 frame:RegisterEvent("ZONE_CHANGED_INDOORS")
-
 frame:RegisterEvent("PLAYER_XP_UPDATE")
 frame:RegisterEvent("PLAYER_LEVEL_UP")
 frame:RegisterEvent("UPDATE_EXHAUSTION")
 frame:RegisterEvent("PLAYER_UPDATE_RESTING")
-
 frame:RegisterEvent("UPDATE_FACTION")
-
 frame:RegisterEvent('PLAYER_ALIVE')
 frame:RegisterEvent('PLAYER_UNGHOST')
+
+
+----- [[     Mouse-click Functions     ]] -----
 
 expframe:SetScript("OnMouseDown", function()
 	EclipseSettings.experience_shown = true

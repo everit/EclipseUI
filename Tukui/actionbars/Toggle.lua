@@ -2,23 +2,24 @@
     In-game Action Bar Toggle for my Tukui edit.
 
     To-do:
-	-- Big code clean up..
-	-- Pull some other code from other files into this one, would work better.
+	-- Clean up code.
 	
-	© 2010 Eclípsé
+	Â© 2010 EclÃ­psÃ©
 ]]--
 
 local db = TukuiCF["actionbar"]
 
 if not db.enable then return end
 
------ [[     Color / Text Values     ]] -----
+----- [[     Local Variables - Color / Text Values     ]] -----
+
+local barbg, rightbbg, splbg, sprbg, petbg, crtabs = TukuiActionBarBackground, TukuiActionBarBackgroundRight, TukuiLeftSplitBarBackground, TukuiRightSplitBarBackground, TukuiPetActionBarBackground, TukuiChatRightTabs
 
 local c_increase, c_decrease = {.3, .3, .9}, {.9, .3, .3}
 local plus, minus = "+", "-"
 
 
------ [[     Action Bar Toggle Buttons     ]] -----
+----- [[     Action Bar Toggle Buttons / Text     ]] -----
 
 local Toggle = CreateFrame("Frame")
 
@@ -27,36 +28,30 @@ for i = 1, 5 do
 	Toggle[i]:EnableMouse(true)
 	Toggle[i]:SetAlpha(0)
 	
-	if i == 1 then
-		TukuiDB.CreatePanel(Toggle[i], ((db.buttonsize * 2) + db.buttonspacing), db.buttonsize / 2, "BOTTOM", TukuiActionBarBackground, "TOP", 0, 3)
-	elseif i == 2 then
-		TukuiDB.CreatePanel(Toggle[i], db.buttonsize, TukuiChatRightTabs:GetHeight(), "TOPRIGHT", TukuiChatRightTabs, "TOPRIGHT")
-		Toggle[i]:SetFrameLevel(TukuiChatRightTabs:GetFrameLevel() + 1)
-		TukuiDB.Kill(Toggle[i].shadow)
-	elseif i == 3 then
-		TukuiDB.CreatePanel(Toggle[i], db.buttonsize, TukuiChatRightTabs:GetHeight(), "TOPRIGHT", Toggle[i-1], "TOPLEFT", -3, 0)
-		Toggle[i]:SetFrameLevel(TukuiChatRightTabs:GetFrameLevel() + 1)
-		TukuiDB.Kill(Toggle[i].shadow)
-	elseif i == 4 then
-		TukuiDB.CreatePanel(Toggle[i], db.buttonsize / 2, ((db.buttonsize * 2) + (db.buttonspacing * 1)), "BOTTOMRIGHT", TukuiLeftSplitBarBackground, "BOTTOMLEFT", -3, 0)
-	elseif i == 5 then
-		TukuiDB.CreatePanel(Toggle[i], db.buttonsize / 2, ((db.buttonsize * 2) + (db.buttonspacing * 1)), "BOTTOMLEFT", TukuiRightSplitBarBackground, "BOTTOMRIGHT", 3, 0)
-	end
-end
-
------ [[     Action Bar Adjust Text     ]] -----
-
-for i = 1, 5 do
 	Toggle[i].text = Toggle[i]:CreateFontString(nil, "OVERLAY")
 	Toggle[i].text:SetFont(TukuiCF["media"].custom_font_1, 12, "MONOCHROMEOUTLINE")
 	Toggle[i].text:SetPoint("CENTER", 2, 1)
-	
-	if i == 2 then
+
+	if i == 1 then
+		TukuiDB.CreatePanel(Toggle[i], ((db.buttonsize * 2) + db.buttonspacing), db.buttonsize / 2, "BOTTOM", barbg, "TOP", 0, 3)
+	elseif i == 2 then
+		TukuiDB.CreatePanel(Toggle[i], db.buttonsize, crtabs:GetHeight(), "TOPRIGHT", crtabs, "TOPRIGHT")
+		Toggle[i]:SetFrameLevel(crtabs:GetFrameLevel() + 1)
+		Toggle[i].shadow:Hide()
+		
 		Toggle[i].text:SetText(plus)
 		Toggle[i].text:SetTextColor(unpack(c_increase))
 	elseif i == 3 then
+		TukuiDB.CreatePanel(Toggle[i], db.buttonsize, crtabs:GetHeight(), "TOPRIGHT", Toggle[i-1], "TOPLEFT", -3, 0)
+		Toggle[i]:SetFrameLevel(crtabs:GetFrameLevel() + 1)
+		Toggle[i].shadow:Hide()
+		
 		Toggle[i].text:SetText(minus)
 		Toggle[i].text:SetTextColor(unpack(c_decrease))	
+	elseif i == 4 then
+		TukuiDB.CreatePanel(Toggle[i], db.buttonsize / 2, ((db.buttonsize * 2) + (db.buttonspacing * 1)), "BOTTOMRIGHT", splbg, "BOTTOMLEFT", -3, 0)
+	elseif i == 5 then
+		TukuiDB.CreatePanel(Toggle[i], db.buttonsize / 2, ((db.buttonsize * 2) + (db.buttonspacing * 1)), "BOTTOMLEFT", sprbg, "BOTTOMRIGHT", 3, 0)
 	end
 end
 
@@ -65,7 +60,7 @@ end
 
 local bb_check = function()
 	if EclipseSettings.bottomrows == 1 then
-		TukuiActionBarBackground:SetHeight(db.buttonsize)
+		barbg:SetHeight(db.buttonsize)
 		
 		Toggle[1].text:SetText(plus)
 		Toggle[1].text:SetTextColor(unpack(c_increase))
@@ -77,14 +72,13 @@ local bb_check = function()
 		if EclipseSettings.splitbars == true then
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
-				b:SetAlpha(0)
-				b:SetScale(0.0001)
+				b:Hide()
 			end
 		end
 		Toggle[4]:SetHeight(db.buttonsize)
 		Toggle[5]:SetHeight(db.buttonsize)
 	elseif EclipseSettings.bottomrows == 2 then
-		TukuiActionBarBackground:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 1))
+		barbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 1))
 		
 		Toggle[1].text:SetText(minus)
 		Toggle[1].text:SetTextColor(unpack(c_decrease))
@@ -94,8 +88,7 @@ local bb_check = function()
 		if EclipseSettings.splitbars == true then
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
-				b:SetAlpha(1)
-				b:SetScale(1)
+				b:Show()
 			end
 		end
 		Toggle[4]:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 1))
@@ -105,32 +98,32 @@ end
 
 local rbb_check = function()
 	if EclipseSettings.rightbars >= 1 then
-		TukuiPetActionBarBackground:ClearAllPoints()
+		petbg:ClearAllPoints()
 		if db.vertical_rightbars == true then
-			TukuiPetActionBarBackground:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "BOTTOMLEFT", -3, 0)
+			petbg:SetPoint("BOTTOMRIGHT", rightbbg, "BOTTOMLEFT", -3, 0)
 		else
-			TukuiPetActionBarBackground:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, 3)
+			petbg:SetPoint("BOTTOMRIGHT", rightbbg, "TOPRIGHT", 0, 3)
 		end
 	else
-		TukuiPetActionBarBackground:ClearAllPoints()
-		TukuiPetActionBarBackground:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, 3)
+		petbg:ClearAllPoints()
+		petbg:SetPoint("BOTTOMRIGHT", crtabs, "TOPRIGHT", 0, 3)
 	end
 	
 	if db.vertical_rightbars == true then
-		TukuiPetActionBarBackground:SetWidth(db.petbuttonsize)
-		TukuiPetActionBarBackground:SetHeight((db.petbuttonsize * NUM_PET_ACTION_SLOTS) + (db.buttonspacing * 9))
+		petbg:SetWidth(db.petbuttonsize)
+		petbg:SetHeight((db.petbuttonsize * NUM_PET_ACTION_SLOTS) + (db.buttonspacing * 9))
 	else
-		TukuiPetActionBarBackground:SetWidth((db.petbuttonsize * NUM_PET_ACTION_SLOTS) + (db.buttonspacing * 9))
-		TukuiPetActionBarBackground:SetHeight(db.petbuttonsize)
+		petbg:SetWidth((db.petbuttonsize * NUM_PET_ACTION_SLOTS) + (db.buttonspacing * 9))
+		petbg:SetHeight(db.petbuttonsize)
 	end
 	
 	if EclipseSettings.rightbars == 1 then
 
-		TukuiActionBarBackgroundRight:Show()
+		rightbbg:Show()
 		if db.vertical_rightbars == true then
-			TukuiActionBarBackgroundRight:SetWidth(db.buttonsize)
+			rightbbg:SetWidth(db.buttonsize)
 		else
-			TukuiActionBarBackgroundRight:SetHeight(db.buttonsize)
+			rightbbg:SetHeight(db.buttonsize)
 		end
 		
 		if EclipseSettings.splitbars ~= true and TukuiBar3:IsShown() then
@@ -141,11 +134,11 @@ local rbb_check = function()
 		end
 		TukuiBar4:Show()
 	elseif EclipseSettings.rightbars == 2 then
-		TukuiActionBarBackgroundRight:Show()
+		rightbbg:Show()
 		if db.vertical_rightbars == true then
-			TukuiActionBarBackgroundRight:SetWidth((db.buttonsize * 2) + db.buttonspacing)
+			rightbbg:SetWidth((db.buttonsize * 2) + db.buttonspacing)
 		else
-			TukuiActionBarBackgroundRight:SetHeight((db.buttonsize * 2) + db.buttonspacing)
+			rightbbg:SetHeight((db.buttonsize * 2) + db.buttonspacing)
 		end
 		
 		if EclipseSettings.splitbars ~= true and TukuiBar3:IsShown() then
@@ -154,11 +147,11 @@ local rbb_check = function()
 		TukuiBar4:Show()
 		TukuiBar5:Show()
 	elseif EclipseSettings.rightbars == 3 then
-		TukuiActionBarBackgroundRight:Show()
+		rightbbg:Show()
 		if db.vertical_rightbars == true then
-			TukuiActionBarBackgroundRight:SetWidth((db.buttonsize * 3) + (db.buttonspacing * 2))
+			rightbbg:SetWidth((db.buttonsize * 3) + (db.buttonspacing * 2))
 		else
-			TukuiActionBarBackgroundRight:SetHeight((db.buttonsize * 3) + (db.buttonspacing * 2))
+			rightbbg:SetHeight((db.buttonsize * 3) + (db.buttonspacing * 2))
 		end
 		
 		TukuiBar4:Show()
@@ -172,7 +165,7 @@ local rbb_check = function()
 				b:ClearAllPoints()
 				
 				if i == 1 then
-					b:SetPoint("TOPLEFT", TukuiActionBarBackgroundRight)
+					b:SetPoint("TOPLEFT", rightbbg)
 				else
 					if not EclipseSettings.splitbars and db.vertical_rightbars == true then
 						b:SetPoint("TOP", b2, "BOTTOM", 0, -db.buttonspacing)
@@ -183,7 +176,7 @@ local rbb_check = function()
 			end
 		end
 	elseif EclipseSettings.rightbars == 0 then
-		TukuiActionBarBackgroundRight:Hide()
+		rightbbg:Hide()
 
 		if EclipseSettings.splitbars ~= true then
 			TukuiBar3:Hide()
@@ -200,10 +193,10 @@ local splbb_check = function()
 			local b2 = _G["MultiBarLeftButton"..i-1]
 			b:ClearAllPoints()
 			if i == 1 then
-				b:SetPoint("BOTTOMLEFT", TukuiLeftSplitBarBackground)
+				b:SetPoint("BOTTOMLEFT", splbg)
 			else
 				if i == 4 then
-					b:SetPoint("BOTTOMLEFT", TukuiRightSplitBarBackground)
+					b:SetPoint("BOTTOMLEFT", sprbg)
 				elseif i == 7 then
 					b:SetPoint("BOTTOMLEFT", _G["MultiBarLeftButton1"], "TOPLEFT", 0, db.buttonspacing)
 				elseif i == 10 then
@@ -215,20 +208,19 @@ local splbb_check = function()
 		end		
 
 		if EclipseSettings.rightbars == 3 then
-			TukuiActionBarBackgroundRight:Show()
+			rightbbg:Show()
 			if db.vertical_rightbars == true then
-			TukuiActionBarBackgroundRight:SetWidth((db.buttonsize * 2) + (db.buttonspacing))
+			rightbbg:SetWidth((db.buttonsize * 2) + (db.buttonspacing))
 				else
-				TukuiActionBarBackgroundRight:SetHeight((db.buttonsize * 2) + (db.buttonspacing))
+				rightbbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing))
 			end
 		end
 		
 		Toggle[4]:ClearAllPoints()
 		Toggle[5]:ClearAllPoints()
-		Toggle[4]:SetPoint("BOTTOMRIGHT", TukuiLeftSplitBarBackground, "BOTTOMLEFT", -3, 0)
-		Toggle[5]:SetPoint("BOTTOMLEFT", TukuiRightSplitBarBackground, "BOTTOMRIGHT", 3, 0)
+		Toggle[4]:SetPoint("BOTTOMRIGHT", splbg, "BOTTOMLEFT", -3, 0)
+		Toggle[5]:SetPoint("BOTTOMLEFT", sprbg, "BOTTOMRIGHT", 3, 0)
 	
-
 		Toggle[4].text:SetText(minus)
 		Toggle[5].text:SetText(minus)
 		Toggle[4].text:SetTextColor(unpack(c_decrease))
@@ -239,14 +231,12 @@ local splbb_check = function()
 		if EclipseSettings.bottomrows == 1 then
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
-				b:SetAlpha(0)
-				b:SetScale(0.0001)
+				b:Hide()
 			end
 		elseif EclipseSettings.bottomrows == 2 then
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
-				b:SetAlpha(1)
-				b:SetScale(1)
+				b:Show()
 			end
 		end
 	elseif EclipseSettings.splitbars == false then
@@ -255,7 +245,7 @@ local splbb_check = function()
 			local b2 = _G["MultiBarLeftButton"..i-1]
 			b:ClearAllPoints()
 			if i == 1 then
-				b:SetPoint("TOPLEFT", TukuiActionBarBackgroundRight)
+				b:SetPoint("TOPLEFT", rightbbg)
 			else
 				b:SetPoint("LEFT", b2, "RIGHT", db.buttonspacing, 0)
 			end
@@ -263,8 +253,8 @@ local splbb_check = function()
 		
 		Toggle[4]:ClearAllPoints()
 		Toggle[5]:ClearAllPoints()
-		Toggle[4]:SetPoint("BOTTOMRIGHT", TukuiActionBarBackground, "BOTTOMLEFT", -3, 0)
-		Toggle[5]:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "BOTTOMRIGHT", 3, 0)
+		Toggle[4]:SetPoint("BOTTOMRIGHT", barbg, "BOTTOMLEFT", -3, 0)
+		Toggle[5]:SetPoint("BOTTOMLEFT", barbg, "BOTTOMRIGHT", 3, 0)
 
 		Toggle[4].text:SetText(plus)
 		Toggle[5].text:SetText(plus)
@@ -275,12 +265,11 @@ local splbb_check = function()
 
 		for i = 7, 12 do
 			local b = _G["MultiBarLeftButton"..i]
-			b:SetAlpha(1)
-			b:SetScale(1)
+			b:Show()
 		end
 
-		TukuiLeftSplitBarBackground:Hide()
-		TukuiRightSplitBarBackground:Hide()
+		splbg:Hide()
+		sprbg:Hide()
 	end
 end
 
@@ -289,11 +278,12 @@ end
 
 Toggle[1]:SetScript("OnMouseDown", function()
 	if not InCombatLockdown() then
-		if EclipseSettings.bottomrows == 1 then
-			EclipseSettings.bottomrows = 2
-		elseif EclipseSettings.bottomrows == 2 then
+		EclipseSettings.bottomrows = EclipseSettings.bottomrows + 1
+
+		if EclipseSettings.bottomrows > 2 then
 			EclipseSettings.bottomrows = 1
 		end
+		
 		bb_check()
 	else
 		print(ERR_NOT_IN_COMBAT)
@@ -304,19 +294,14 @@ Toggle[1]:SetScript("OnEvent", bb_check)
 
 Toggle[2]:SetScript("OnMouseDown", function()
 	if not InCombatLockdown() then
-		if EclipseSettings.rightbars == 1 then
-			EclipseSettings.rightbars = 2
-		elseif EclipseSettings.rightbars == 2 then
-			if EclipseSettings.splitbars == true then
-				EclipseSettings.rightbars = 0
-			else
-				EclipseSettings.rightbars = 3
-			end
-		elseif EclipseSettings.rightbars == 3 then
+		EclipseSettings.rightbars = EclipseSettings.rightbars + 1
+	
+		if EclipseSettings.splitbars == true and EclipseSettings.rightbars > 2 then
 			EclipseSettings.rightbars = 0
-		elseif EclipseSettings.rightbars == 0 then
-			EclipseSettings.rightbars = 1
+		elseif EclipseSettings.rightbars > 3 then
+			EclipseSettings.rightbars = 0
 		end
+
 		rbb_check()
 	else
 		print(ERR_NOT_IN_COMBAT)
@@ -327,23 +312,18 @@ Toggle[2]:SetScript("OnEvent", bb_check)
 
 Toggle[3]:SetScript("OnMouseDown", function()
 	if not InCombatLockdown() then
-		if EclipseSettings.rightbars == 3 then
-			if EclipseSettings.splitbars == true then
-				EclipseSettings.rightbars = 1
-			else
-				EclipseSettings.rightbars = 2
-			end
-		elseif EclipseSettings.rightbars == 2 then
+		EclipseSettings.rightbars = EclipseSettings.rightbars - 1
+
+		if EclipseSettings.splitbars == true and EclipseSettings.rightbars > 2 then
 			EclipseSettings.rightbars = 1
-		elseif EclipseSettings.rightbars == 1 then
-			EclipseSettings.rightbars = 0
-		elseif EclipseSettings.rightbars == 0 then
+		elseif EclipseSettings.rightbars < 0 then
 			if EclipseSettings.splitbars == true then
 				EclipseSettings.rightbars = 2
 			else
 				EclipseSettings.rightbars = 3
 			end
 		end
+
 		rbb_check()
 	else
 		print(ERR_NOT_IN_COMBAT)

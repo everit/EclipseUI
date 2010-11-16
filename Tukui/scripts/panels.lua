@@ -75,7 +75,6 @@ sprbg:SetPoint("BOTTOMLEFT", barbg, "BOTTOMRIGHT", 10, 0)
 
 local petbg = CreateFrame("Frame", "TukuiPetActionBarBackground", UIParent)
 
-
 -- if not db.hideshapeshift then
 	-- local shiftbg = CreateFrame("Frame", "TukuiShapeShiftBarBackground", UIParent)
 	-- shiftbg:RegisterEvent("PLAYER_LOGIN")
