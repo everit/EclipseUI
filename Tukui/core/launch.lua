@@ -1,4 +1,4 @@
-﻿------------------------------------------------------------------------
+------------------------------------------------------------------------
 --	First Time Launch and On Login file
 ------------------------------------------------------------------------
 
@@ -225,8 +225,8 @@ StaticPopupDialogs["DISABLE_RAID"] = {
 	text = tukuilocal.popup_2raidactive,
 	button1 = "DPS - TANK",
 	button2 = "HEAL",
-	OnAccept = function() DisableAddOn("Tukui_Heal_Layout") EnableAddOn("Tukui_Dps_Layout") ReloadUI() end,
-	OnCancel = function() EnableAddOn("Tukui_Heal_Layout") DisableAddOn("Tukui_Dps_Layout") ReloadUI() end,
+	OnAccept = function() DisableAddOn("TukuiHeal") EnableAddOn("TukuiDps") ReloadUI() end,
+	OnCancel = function() EnableAddOn("TukuiHeal") DisableAddOn("TukuiDps") ReloadUI() end,
 	timeout = 0,
 	whileDead = 1,
 }
@@ -261,13 +261,11 @@ TukuiOnLogon:SetScript("OnEvent", function(self, event)
 		end
 	end
 	
-	if (IsAddOnLoaded("Tukui_Dps_Layout") and IsAddOnLoaded("Tukui_Heal_Layout")) then
+	if (IsAddOnLoaded("TukuiDps") and IsAddOnLoaded("TukuiHeal")) then
 		StaticPopup_Show("DISABLE_RAID")
 	end
 	
-	-- print(tukuilocal.core_welcome1..TukuiDB.version)
-	-- print(tukuilocal.core_welcome2)
-	print("Mooooooooo.")
+	print("[Eclípsé's Edit] - Stage: Alpha")
 end)
 
 SLASH_CONFIGURE1 = "/resetui"
