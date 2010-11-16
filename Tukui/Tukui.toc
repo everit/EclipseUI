@@ -5,7 +5,7 @@
 ## Credits to: Caith, Caellian, Shestak, Haste, Tekkub, Alza, Roth, P3lim, 
 ## More Credits to: Tulla, Hungtar, hankthetank, Ishtara, Foof and others...
 
-## Version: 12.32
+## Version: 12.35
 
 ## Title: |cffC495DDTukui|r
 

@@ -73,10 +73,9 @@ local function UpdateBuffAnchors()
 	buttonName = "BuffButton"
 	local buff, previousBuff, aboveBuff;
 	local numBuffs = 0;
-	local index;
-	for index=1, BUFF_ACTUAL_DISPLAY do
-		local buff = _G[buttonName..index]
-		StyleBuffs(buttonName, index, false)
+	for i=1, BUFF_ACTUAL_DISPLAY do
+		local buff = _G[buttonName..i]
+		StyleBuffs(buttonName, i, false)
 		
 		-- Leaving this here just in case someone want to use it
 		-- This enable buff border coloring according to Type
@@ -96,7 +95,6 @@ local function UpdateBuffAnchors()
 			end
 		else
 			numBuffs = numBuffs + 1
-			index = numBuffs
 			buff:ClearAllPoints()
 			if ( (index > 1) and (mod(index, rowbuffs) == 1) ) then
 				if ( index == rowbuffs+1 ) then
