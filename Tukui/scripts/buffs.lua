@@ -1,7 +1,5 @@
 local font, font_size, font_style, font_shadow, font_count_pos, font_duration_pos = TukuiCF["fonts"].aura_font, TukuiCF["fonts"].aura_font_size, TukuiCF["fonts"].aura_font_style, TukuiCF["fonts"].aura_font_shadow, TukuiCF["fonts"].aura_count_xy_position, TukuiCF["fonts"].aura_duration_xy_position
 
-PlayerFrame:Hide()
-
 ConsolidatedBuffs:ClearAllPoints()
 ConsolidatedBuffs:SetPoint("LEFT", Minimap, "LEFT", TukuiDB.Scale(0), TukuiDB.Scale(0))
 ConsolidatedBuffs:SetSize(16, 16)
@@ -96,14 +94,14 @@ local function UpdateBuffAnchors()
 		else
 			numBuffs = numBuffs + 1
 			buff:ClearAllPoints()
-			if ( (index > 1) and (mod(index, rowbuffs) == 1) ) then
-				if ( index == rowbuffs+1 ) then
+			if ( (numBuffs > 1) and (mod(numBuffs, rowbuffs) == 1) ) then
+				if ( numBuffs == rowbuffs+1 ) then
 					buff:SetPoint("TOPLEFT", UIParent, "TOPLEFT", TukuiDB.Scale(8), TukuiDB.Scale(-55))
 				else
 					buff:SetPoint("TOPLEFT", UIParent, "TOPLEFT", TukuiDB.Scale(8), TukuiDB.Scale(-103))
 				end
 				aboveBuff = buff;
-			elseif ( index == 1 ) then
+			elseif ( numBuffs == 1 ) then
 				local mainhand, _, _, offhand, _, _, thrown = GetWeaponEnchantInfo()
 				
 				if (mainhand and offhand and thrown) and not UnitHasVehicleUI("player") then
