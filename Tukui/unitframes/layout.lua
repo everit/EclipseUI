@@ -971,42 +971,6 @@ f:SetScript("OnEvent", function(self, event, addon)
 		local focus = oUF:Spawn('focus', "oUF_Tukz_focus")
 		focus:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, TukuiDB.Scale(190))
 		focus:SetSize(TukuiDB.Scale(125), ((focus.Health:GetHeight() + 4) + (focus.Power:GetHeight() + 4)))
-	else
-		----- [[     Player     ]] -----
-
-		local player = oUF:Spawn('player', "oUF_Tukz_player")
-		player:SetSize(TukuiDB.Scale(198), ((player.Health:GetHeight() + 4) + (player.Power:GetHeight() + 4) + (player.panel:GetHeight()) + 6))
-		player:SetPoint("BOTTOM", UIParent, "BOTTOM", -TukuiDB.Scale(190), TukuiDB.Scale(167))
-		
-		----- [[     Target     ]] -----
-		local target = oUF:Spawn('target', "oUF_Tukz_target")
-		target:SetPoint("BOTTOM", UIParent, "BOTTOM", TukuiDB.Scale(190), TukuiDB.Scale(167))
-		target:SetSize(TukuiDB.Scale(198), ((target.Health:GetHeight() + 4) + (target.Power:GetHeight() + 4) + (target.panel:GetHeight()) + 6))
-		
-		----- [[     Target of Target     ]] -----
-		local tot = oUF:Spawn('targettarget', "oUF_Tukz_targettarget")
-		if db.charportrait then
-			tot:SetPoint("TOPRIGHT", oUF_Tukz_target, "BOTTOMRIGHT", TukuiDB.Scale(63), TukuiDB.Scale(-3))
-		else
-			tot:SetPoint("TOPRIGHT", oUF_Tukz_target, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
-		end
-		tot:SetSize(TukuiDB.Scale(130), (tot.Health:GetHeight() + 4) + (tot:GetHeight() + 4) + 3)
-		
-		----- [[     Pet     ]] -----
-		local pet = oUF:Spawn('pet', "oUF_Tukz_pet")
-		if db.charportrait then
-			pet:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", TukuiDB.Scale(-63), TukuiDB.Scale(-3))
-		else
-			pet:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
-		end
-		pet:SetSize(TukuiDB.Scale(130), (pet.Health:GetHeight() + 4) + (pet.Power:GetHeight() + 4) +3)
-		
-		----- [[     Pet     ]] -----
-		
-		local focus = oUF:Spawn('focus', "oUF_Tukz_focus")
-		focus:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, TukuiDB.Scale(190))
-		focus:SetSize(TukuiDB.Scale(125), ((focus.Health:GetHeight() + 4) + (focus.Power:GetHeight() + 4)))
-	end
 end)
 
 -- if db.showfocustarget then 
