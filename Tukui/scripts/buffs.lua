@@ -24,7 +24,7 @@ for i = 1, 3 do
 	local f = CreateFrame("Frame", nil, _G["TempEnchant"..i])
 	TukuiDB.CreatePanel(f, 30, 30, "CENTER", _G["TempEnchant"..i], "CENTER", 0, 0)	
 	_G["TempEnchant"..i.."Border"]:Hide()
-	_G["TempEnchant"..i.."Icon"]:SetTexCoord(.08, .92, .08, .92)
+	_G["TempEnchant"..i.."Icon"]:SetTexCoord(.09, .91, .09, .91)
 	_G["TempEnchant"..i.."Icon"]:SetPoint("TOPLEFT", _G["TempEnchant"..i], TukuiDB.Scale(2), TukuiDB.Scale(-2))
 	_G["TempEnchant"..i.."Icon"]:SetPoint("BOTTOMRIGHT", _G["TempEnchant"..i], TukuiDB.Scale(-2), TukuiDB.Scale(2))
 	_G["TempEnchant"..i]:SetHeight(TukuiDB.Scale(30))
@@ -42,7 +42,7 @@ local function StyleBuffs(buttonName, index, debuff)
 	local duration	= _G[buttonName..index.."Duration"]
 	local count 	= _G[buttonName..index.."Count"]
 	if icon and not _G[buttonName..index.."Panel"] then
-		icon:SetTexCoord(.08, .92, .08, .92)
+		icon:SetTexCoord(.09, .91, .09, .91)
 		icon:SetPoint("TOPLEFT", buff, TukuiDB.Scale(2), TukuiDB.Scale(-2))
 		icon:SetPoint("BOTTOMRIGHT", buff, TukuiDB.Scale(-2), TukuiDB.Scale(2))
 		
@@ -134,9 +134,9 @@ local function UpdateDebuffAnchors(buttonName, index)
 	_G[buttonName..index.."Panel"]:SetBackdropBorderColor(color.r * 0.6, color.g * 0.6, color.b * 0.6)
 	debuff:ClearAllPoints()
 	if index == 1 then
-		debuff:SetPoint("BOTTOMRIGHT", TukuiMinimap, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
+		debuff:SetPoint("TOPLEFT", UIParent, "TOPLEFT", TukuiDB.Scale(8), TukuiDB.Scale(-103))
 	else
-		debuff:SetPoint("RIGHT", _G[buttonName..(index-1)], "LEFT", TukuiDB.Scale(-3), 0)
+		debuff:SetPoint("LEFT", _G[buttonName..(index-1)], "RIGHT", TukuiDB.Scale(3), 0)
 	end
 end
 

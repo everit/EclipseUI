@@ -33,7 +33,7 @@ for i = 1, 5 do
 	Toggle[i].text:SetPoint("CENTER", 2, 1)
 
 	if i == 1 then
-		TukuiDB.CreatePanel(Toggle[i], ((db.buttonsize * 2) + db.buttonspacing), db.buttonsize / 2, "BOTTOM", barbg, "TOP", 0, 3)
+		TukuiDB.CreatePanel(Toggle[i], ((db.buttonsize * 12) + (db.buttonspacing * 13)), db.buttonsize / 2, "BOTTOM", barbg, "TOP", 0, 3)
 	elseif i == 2 then
 		TukuiDB.CreatePanel(Toggle[i], db.buttonsize, crtabs:GetHeight(), "TOPRIGHT", crtabs, "TOPRIGHT")
 		Toggle[i]:SetFrameLevel(crtabs:GetFrameLevel() + 1)
@@ -49,9 +49,9 @@ for i = 1, 5 do
 		Toggle[i].text:SetText(minus)
 		Toggle[i].text:SetTextColor(unpack(c_decrease))	
 	elseif i == 4 then
-		TukuiDB.CreatePanel(Toggle[i], db.buttonsize / 2, ((db.buttonsize * 2) + (db.buttonspacing * 1)), "BOTTOMRIGHT", splbg, "BOTTOMLEFT", -3, 0)
+		TukuiDB.CreatePanel(Toggle[i], db.buttonsize / 2, ((db.buttonsize * 2) + (db.buttonspacing * 3)), "BOTTOMRIGHT", splbg, "BOTTOMLEFT", -3, 0)
 	elseif i == 5 then
-		TukuiDB.CreatePanel(Toggle[i], db.buttonsize / 2, ((db.buttonsize * 2) + (db.buttonspacing * 1)), "BOTTOMLEFT", sprbg, "BOTTOMRIGHT", 3, 0)
+		TukuiDB.CreatePanel(Toggle[i], db.buttonsize / 2, ((db.buttonsize * 2) + (db.buttonspacing * 3)), "BOTTOMLEFT", sprbg, "BOTTOMRIGHT", 3, 0)
 	end
 end
 
@@ -60,7 +60,9 @@ end
 
 local bb_check = function()
 	if EclipseSettings.bottomrows == 1 then
-		barbg:SetHeight(db.buttonsize)
+		barbg:SetHeight(db.buttonsize + (db.buttonspacing * 2))
+		splbg:SetHeight(db.buttonsize  + (db.buttonspacing * 2))
+		sprbg:SetHeight(db.buttonsize + (db.buttonspacing * 2))
 		
 		Toggle[1].text:SetText(plus)
 		Toggle[1].text:SetTextColor(unpack(c_increase))
@@ -72,13 +74,16 @@ local bb_check = function()
 		if EclipseSettings.splitbars == true then
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
-				b:Hide()
+				b:SetAlpha(0)
+				b:SetScale(0.0001)		
 			end
 		end
-		Toggle[4]:SetHeight(db.buttonsize)
-		Toggle[5]:SetHeight(db.buttonsize)
+		Toggle[4]:SetHeight(db.buttonsize + (db.buttonspacing * 2))
+		Toggle[5]:SetHeight(db.buttonsize + (db.buttonspacing * 2))
 	elseif EclipseSettings.bottomrows == 2 then
-		barbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 1))
+		barbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
+		splbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
+		sprbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
 		
 		Toggle[1].text:SetText(minus)
 		Toggle[1].text:SetTextColor(unpack(c_decrease))
@@ -88,11 +93,12 @@ local bb_check = function()
 		if EclipseSettings.splitbars == true then
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
-				b:Show()
+				b:SetAlpha(1)
+				b:SetScale(1)		
 			end
 		end
-		Toggle[4]:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 1))
-		Toggle[5]:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 1))
+		Toggle[4]:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
+		Toggle[5]:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
 	end
 end
 
@@ -110,20 +116,19 @@ local rbb_check = function()
 	end
 	
 	if db.vertical_rightbars == true then
-		petbg:SetWidth(db.petbuttonsize)
-		petbg:SetHeight((db.petbuttonsize * NUM_PET_ACTION_SLOTS) + (db.buttonspacing * 9))
+		petbg:SetWidth(db.petbuttonsize + (db.buttonspacing * 2))
+		petbg:SetHeight((db.petbuttonsize * NUM_PET_ACTION_SLOTS) + (db.buttonspacing * 11))
 	else
-		petbg:SetWidth((db.petbuttonsize * NUM_PET_ACTION_SLOTS) + (db.buttonspacing * 9))
-		petbg:SetHeight(db.petbuttonsize)
+		petbg:SetWidth((db.petbuttonsize * NUM_PET_ACTION_SLOTS) + (db.buttonspacing * 11))
+		petbg:SetHeight(db.petbuttonsize + (db.buttonspacing * 2))
 	end
 	
 	if EclipseSettings.rightbars == 1 then
-
 		rightbbg:Show()
 		if db.vertical_rightbars == true then
-			rightbbg:SetWidth(db.buttonsize)
+			rightbbg:SetWidth(db.buttonsize + (db.buttonspacing * 2))
 		else
-			rightbbg:SetHeight(db.buttonsize)
+			rightbbg:SetHeight(db.buttonsize + (db.buttonspacing * 2))
 		end
 		
 		if EclipseSettings.splitbars ~= true and TukuiBar3:IsShown() then
@@ -136,9 +141,9 @@ local rbb_check = function()
 	elseif EclipseSettings.rightbars == 2 then
 		rightbbg:Show()
 		if db.vertical_rightbars == true then
-			rightbbg:SetWidth((db.buttonsize * 2) + db.buttonspacing)
+			rightbbg:SetWidth((db.buttonsize * 2) + (db.buttonspacing * 3))
 		else
-			rightbbg:SetHeight((db.buttonsize * 2) + db.buttonspacing)
+			rightbbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
 		end
 		
 		if EclipseSettings.splitbars ~= true and TukuiBar3:IsShown() then
@@ -149,9 +154,9 @@ local rbb_check = function()
 	elseif EclipseSettings.rightbars == 3 then
 		rightbbg:Show()
 		if db.vertical_rightbars == true then
-			rightbbg:SetWidth((db.buttonsize * 3) + (db.buttonspacing * 2))
+			rightbbg:SetWidth((db.buttonsize * 3) + (db.buttonspacing * 4))
 		else
-			rightbbg:SetHeight((db.buttonsize * 3) + (db.buttonspacing * 2))
+			rightbbg:SetHeight((db.buttonsize * 3) + (db.buttonspacing * 4))
 		end
 		
 		TukuiBar4:Show()
@@ -165,7 +170,7 @@ local rbb_check = function()
 				b:ClearAllPoints()
 				
 				if i == 1 then
-					b:SetPoint("TOPLEFT", rightbbg)
+					b:SetPoint("TOPLEFT", rightbbg, db.buttonspacing, -db.buttonspacing)
 				else
 					if not EclipseSettings.splitbars and db.vertical_rightbars == true then
 						b:SetPoint("TOP", b2, "BOTTOM", 0, -db.buttonspacing)
@@ -193,10 +198,10 @@ local splbb_check = function()
 			local b2 = _G["MultiBarLeftButton"..i-1]
 			b:ClearAllPoints()
 			if i == 1 then
-				b:SetPoint("BOTTOMLEFT", splbg)
+				b:SetPoint("BOTTOMLEFT", splbg, db.buttonspacing, db.buttonspacing)
 			else
 				if i == 4 then
-					b:SetPoint("BOTTOMLEFT", sprbg)
+					b:SetPoint("BOTTOMLEFT", sprbg, db.buttonspacing, db.buttonspacing)
 				elseif i == 7 then
 					b:SetPoint("BOTTOMLEFT", _G["MultiBarLeftButton1"], "TOPLEFT", 0, db.buttonspacing)
 				elseif i == 10 then
@@ -210,9 +215,9 @@ local splbb_check = function()
 		if EclipseSettings.rightbars == 3 then
 			rightbbg:Show()
 			if db.vertical_rightbars == true then
-			rightbbg:SetWidth((db.buttonsize * 2) + (db.buttonspacing))
+			rightbbg:SetWidth((db.buttonsize * 2) + (db.buttonspacing * 3))
 				else
-				rightbbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing))
+				rightbbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
 			end
 		end
 		
@@ -231,21 +236,25 @@ local splbb_check = function()
 		if EclipseSettings.bottomrows == 1 then
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
-				b:Hide()
+				b:SetAlpha(0)
+				b:SetScale(0.0001)		
 			end
 		elseif EclipseSettings.bottomrows == 2 then
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
-				b:Show()
+				b:SetAlpha(1)
+				b:SetScale(1)		
 			end
 		end
+		splbg:Show()
+		sprbg:Show()
 	elseif EclipseSettings.splitbars == false then
 		for i = 1, 12 do
 			local b = _G["MultiBarLeftButton"..i]
 			local b2 = _G["MultiBarLeftButton"..i-1]
 			b:ClearAllPoints()
 			if i == 1 then
-				b:SetPoint("TOPLEFT", rightbbg)
+				b:SetPoint("TOPLEFT", rightbbg, db.buttonspacing, -db.buttonspacing)
 			else
 				b:SetPoint("LEFT", b2, "RIGHT", db.buttonspacing, 0)
 			end
@@ -265,7 +274,8 @@ local splbb_check = function()
 
 		for i = 7, 12 do
 			local b = _G["MultiBarLeftButton"..i]
-			b:Show()
+			b:SetAlpha(1)
+			b:SetScale(1)		
 		end
 
 		splbg:Hide()

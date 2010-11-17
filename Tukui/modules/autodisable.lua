@@ -3,7 +3,7 @@
 ------------------------------------------------------------------------
 
 if not TukuiCF["actionbar"].vertical_rightbars then
-	TukuiCF["panels"].tinfowidth = (TukuiCF["actionbar"].buttonsize * 12) + (TukuiCF["actionbar"].buttonspacing * 11)
+	TukuiCF["panels"].tinfowidth = (TukuiCF["actionbar"].buttonsize * 12) + (TukuiCF["actionbar"].buttonspacing * 13)
 end
 
 ------------------------------------------------------------------------

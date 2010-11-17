@@ -4,7 +4,7 @@
 
 local TukuiMinimap = CreateFrame("Frame", "TukuiMinimap", Minimap)
 TukuiMinimap:RegisterEvent("ADDON_LOADED")
-TukuiDB.CreatePanel(TukuiMinimap, 144, 144, "CENTER", Minimap, "CENTER", -0, 0)
+TukuiDB.CreatePanel(TukuiMinimap, 168, 148, "CENTER", Minimap, "CENTER", -0, 0)
 TukuiMinimap:ClearAllPoints()
 TukuiMinimap:SetPoint("TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
 TukuiMinimap:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
@@ -17,7 +17,7 @@ Minimap:SetSize(TukuiMinimap:GetWidth(), TukuiMinimap:GetHeight())
 ----- [[     Toggle Button / Text     ]] -----
 
 local Toggle = CreateFrame("Frame", "ToggleMinimap", UIParent)
-Toggle:SetSize(TukuiMinimap:GetHeight() + 4, TukuiCF["panels"].tinfoheight)
+Toggle:SetSize(TukuiMinimap:GetWidth() + 4, TukuiCF["panels"].tinfoheight)
 Toggle:EnableMouse(true)
 TukuiDB.SkinPanel(Toggle)
 

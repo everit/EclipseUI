@@ -5,10 +5,10 @@ local font, font_size, font_style, font_shadow, font_position = TukuiCF["fonts"]
 -- disabled bars for now until I decide what I'm doing with them
 
 local stat = CreateFrame("Frame")
-	
+
 for i = 1, 4 do
 	stat[i] = CreateFrame("Frame", "TukuiStat"..i, UIParent)
-	stat[i]:SetSize(75, TukuiCF["panels"].tinfoheight)
+	stat[i]:SetSize(85, TukuiCF["panels"].tinfoheight)
 	stat[i]:EnableMouse(true)
 	TukuiDB.SkinPanel(stat[i])
 	
@@ -33,14 +33,6 @@ for i = 1, 4 do
 		stat[i]:ClearAllPoints()
 		stat[i]:SetPoint("TOPRIGHT", stat[i-1], "TOPLEFT", -3, 0)
 	end
-	
-	if i == 4 then
-		stat[i]:SetWidth(85)
-	end
-	
-	-- if i == 2 or i == 3 then
-		-- stat[i]:SetWidth(100)
-	-- end
 end
 
 

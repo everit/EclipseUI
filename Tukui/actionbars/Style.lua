@@ -51,8 +51,8 @@ function style(self)
 
 		-- create the bg/border panel
 		local panel = CreateFrame("Frame", name.."Panel", self)
-		TukuiDB.CreateFadedPanel(panel, db.buttonsize, db.buttonsize, "CENTER", self, "CENTER", 0, 0)
- 
+		TukuiDB.CreatePanel(panel, db.buttonsize, db.buttonsize, "CENTER", self, "CENTER", 0, 0)
+		
 		panel:SetFrameStrata(self:GetFrameStrata())
 		panel:SetFrameLevel(self:GetFrameLevel() - 1)
  
@@ -95,7 +95,7 @@ local function stylesmallbutton(normal, button, icon, name, pet)
 			button:SetSize(db.petbuttonsize, db.petbuttonsize)
 			
 			local panel = CreateFrame("Frame", name.."Panel", button)
-			TukuiDB.CreateFadedPanel(panel, db.petbuttonsize, db.petbuttonsize, "CENTER", button, "CENTER", 0, 0)
+			TukuiDB.CreatePanel(panel, db.petbuttonsize, db.petbuttonsize, "CENTER", button, "CENTER", 0, 0)
 			panel:SetFrameStrata(button:GetFrameStrata())
 			panel:SetFrameLevel(button:GetFrameLevel() - 1)
 
@@ -108,7 +108,7 @@ local function stylesmallbutton(normal, button, icon, name, pet)
 			button:SetSize(db.stancebuttonsize, db.stancebuttonsize)
 			
 			local panel = CreateFrame("Frame", name.."Panel", button)
-			TukuiDB.CreateFadedPanel(panel, db.stancebuttonsize, db.stancebuttonsize, "CENTER", button, "CENTER", 0, 0)
+			TukuiDB.CreatePanel(panel, db.stancebuttonsize, db.stancebuttonsize, "CENTER", button, "CENTER", 0, 0)
 			panel:SetFrameStrata(button:GetFrameStrata())
 			panel:SetFrameLevel(button:GetFrameLevel() - 1)
 		end

@@ -64,7 +64,7 @@ function TukuiDB.CreateOverlay(f)
 	f.bg:SetPoint("TOPLEFT", mult, -mult)
 	f.bg:SetPoint("BOTTOMRIGHT", -mult, mult)
 	f.bg:SetTexture(textures.overlay)
-	f.bg:SetVertexColor(0.075, 0.075, 0.075)
+	f.bg:SetVertexColor(.05, .05, .05, 1)
 end
 
 function TukuiDB.CreateInnerBorder(f)

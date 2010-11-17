@@ -42,6 +42,8 @@ for i = 1, 3 do
 	frame[i].text:SetFont(font, font_size, font_style)
 	frame[i].text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	frame[i].text:SetPoint("CENTER", frame[i], "CENTER", 2, font_position[2])
+	
+	frame[i]:Hide()
 end
 
 local expframe = frame[1]

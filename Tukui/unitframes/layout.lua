@@ -533,28 +533,28 @@ local function Shared(self, unit)
 			if ((TukuiDB.myclass == "SHAMAN" and db.totemtimer) or (TukuiDB.myclass == "DEATHKNIGHT" and db.runebar) or TukuiDB.myclass == "PALADIN" or TukuiDB.myclass == "WARLOCK") and (db.playerauras) and (unit == "player") then
 				buffs:SetPoint("TOPLEFT", self, "TOPLEFT", TukuiDB.Scale(-1), TukuiDB.Scale(37))
 			else
-				buffs:SetPoint("TOPLEFT", self, "TOPLEFT", TukuiDB.Scale(-1), TukuiDB.Scale(26))
+				buffs:SetPoint("TOPLEFT", self, "TOPLEFT", TukuiDB.Scale(-1), TukuiDB.Scale(30))
 			end
 			
 			local buffheight = 0
 			local buffnum = 0
 			if db.aurarows == 1 then
-				buffheight = 22
+				buffheight = 26
 				buffnum = 8
 			else
-				buffheight = 47
+				buffheight = 52
 				buffnum = 16
 			end
 			
 			buffs:SetHeight(buffheight)
 			buffs:SetWidth(195)
-			buffs.size = 22
+			buffs.size = 26
 			buffs.num = buffnum
 
 			debuffs:SetHeight(buffheight)
 			debuffs:SetWidth(195)
-			debuffs:SetPoint("BOTTOMLEFT", buffs, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(3))
-			debuffs.size = 22
+			debuffs:SetPoint("BOTTOMLEFT", buffs, "TOPLEFT", TukuiDB.Scale(5), TukuiDB.Scale(3))
+			debuffs.size = 26
 			debuffs.num = 24
 
 			buffs.spacing = 3
@@ -848,7 +848,7 @@ local function Shared(self, unit)
 			if db.cbicons == true then
 				castbar.button:SetHeight(TukuiDB.Scale(35))
 				castbar.button:SetWidth(TukuiDB.Scale(35))
-				castbar.button:SetPoint("BOTTOM", castbar, "TOP", 0, TukuiDB.Scale(5))
+				castbar.button:SetPoint("BOTTOM", castbar, "TOP", 0, TukuiDB.Scale(6))
 			end
 		end
 
@@ -893,49 +893,127 @@ if TukuiDB.lowversion then adjustY = 10 end
 
 oUF:RegisterStyle('Tukz', Shared)
 
--- player
-local player = oUF:Spawn('player', "oUF_Tukz_player")
-player:SetPoint("BOTTOM", UIParent, "BOTTOM", -(TukuiDB.Scale(190) - adjustX), TukuiDB.Scale(167 + adjustY))
-player:SetSize(TukuiDB.Scale(195), ((player.Health:GetHeight() + 4) + (player.Power:GetHeight() + 4) + (player.panel:GetHeight()) + 6))
+local f = CreateFrame("Frame")
 
+f:RegisterEvent("ADDON_LOADED")
+f:SetScript("OnEvent", function(self, event, addon)
 
--- target
-local target = oUF:Spawn('target', "oUF_Tukz_target")
-target:SetPoint("BOTTOM", UIParent, "BOTTOM", (TukuiDB.Scale(190) - adjustX), TukuiDB.Scale(167 + adjustY))
-target:SetSize(TukuiDB.Scale(195), ((target.Health:GetHeight() + 4) + (target.Power:GetHeight() + 4) + (target.panel:GetHeight()) + 6))
+	if addon == "TukuiHeal" then
+		----- [[     Player     ]] -----
+		
+		local player = oUF:Spawn('player', "oUF_Tukz_player")
+		player:SetPoint("BOTTOM", UIParent, "BOTTOM", -TukuiDB.Scale(190) , TukuiDB.Scale(167))
+		player:SetSize(TukuiDB.Scale(198), ((player.Health:GetHeight() + 4) + (player.Power:GetHeight() + 4) + (player.panel:GetHeight()) + 6))
+		
+		----- [[     Target     ]] -----
+		
+		local target = oUF:Spawn('target', "oUF_Tukz_target")
+		target:SetPoint("BOTTOM", UIParent, "BOTTOM", TukuiDB.Scale(190), TukuiDB.Scale(167))
+		target:SetSize(TukuiDB.Scale(198), ((target.Health:GetHeight() + 4) + (target.Power:GetHeight() + 4) + (target.panel:GetHeight()) + 6))
+		
+		----- [[     Target of Target     ]] -----
+		
+		local tot = oUF:Spawn('targettarget', "oUF_Tukz_targettarget")
+		if db.charportrait then
+			tot:SetPoint("TOPRIGHT", oUF_Tukz_target, "BOTTOMRIGHT", TukuiDB.Scale(63), TukuiDB.Scale(-3))
+		else
+			tot:SetPoint("TOPRIGHT", oUF_Tukz_target, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
+		end
+		tot:SetSize(TukuiDB.Scale(130), (tot.Health:GetHeight() + 4) + (tot:GetHeight() + 4) + 3)
+		
+		----- [[     Pet     ]] -----
+		
+		local pet = oUF:Spawn('pet', "oUF_Tukz_pet")
+		if db.charportrait then
+			pet:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", TukuiDB.Scale(-63), TukuiDB.Scale(-3))
+		else
+			pet:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
+		end
+		pet:SetSize(TukuiDB.Scale(130), (pet.Health:GetHeight() + 4) + (pet.Power:GetHeight() + 4) +3)
+		
+		----- [[     Pet     ]] -----
+		
+		local focus = oUF:Spawn('focus', "oUF_Tukz_focus")
+		focus:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, TukuiDB.Scale(190))
+		focus:SetSize(TukuiDB.Scale(125), ((focus.Health:GetHeight() + 4) + (focus.Power:GetHeight() + 4)))
+	elseif addon == "TukuiDps" then
+		----- [[     Player     ]] -----
 
+		local player = oUF:Spawn('player', "oUF_Tukz_player")
+		player:SetSize(TukuiDB.Scale(198), ((player.Health:GetHeight() + 4) + (player.Power:GetHeight() + 4) + (player.panel:GetHeight()) + 6))
+		player:SetPoint("BOTTOM", UIParent, "BOTTOM", -TukuiDB.Scale(190), TukuiDB.Scale(167))
+		
+		----- [[     Target     ]] -----
+		local target = oUF:Spawn('target', "oUF_Tukz_target")
+		target:SetPoint("BOTTOM", UIParent, "BOTTOM", TukuiDB.Scale(190), TukuiDB.Scale(167))
+		target:SetSize(TukuiDB.Scale(198), ((target.Health:GetHeight() + 4) + (target.Power:GetHeight() + 4) + (target.panel:GetHeight()) + 6))
+		
+		----- [[     Target of Target     ]] -----
+		local tot = oUF:Spawn('targettarget', "oUF_Tukz_targettarget")
+		if db.charportrait then
+			tot:SetPoint("TOPRIGHT", oUF_Tukz_target, "BOTTOMRIGHT", TukuiDB.Scale(63), TukuiDB.Scale(-3))
+		else
+			tot:SetPoint("TOPRIGHT", oUF_Tukz_target, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
+		end
+		tot:SetSize(TukuiDB.Scale(130), (tot.Health:GetHeight() + 4) + (tot:GetHeight() + 4) + 3)
+		
+		----- [[     Pet     ]] -----
+		local pet = oUF:Spawn('pet', "oUF_Tukz_pet")
+		if db.charportrait then
+			pet:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", TukuiDB.Scale(-63), TukuiDB.Scale(-3))
+		else
+			pet:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
+		end
+		pet:SetSize(TukuiDB.Scale(130), (pet.Health:GetHeight() + 4) + (pet.Power:GetHeight() + 4) +3)
+		
+		----- [[     Pet     ]] -----
+		
+		local focus = oUF:Spawn('focus', "oUF_Tukz_focus")
+		focus:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, TukuiDB.Scale(190))
+		focus:SetSize(TukuiDB.Scale(125), ((focus.Health:GetHeight() + 4) + (focus.Power:GetHeight() + 4)))
+	else
+		----- [[     Player     ]] -----
 
--- tot
-local tot = oUF:Spawn('targettarget', "oUF_Tukz_targettarget")
-if db.charportrait then
-	tot:SetPoint("TOPRIGHT", oUF_Tukz_target, "BOTTOMRIGHT", TukuiDB.Scale(63), TukuiDB.Scale(-3))
-else
-	tot:SetPoint("TOPRIGHT", oUF_Tukz_target, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
-end
-tot:SetSize(TukuiDB.Scale(130), (tot.Health:GetHeight() + 4) + (tot:GetHeight() + 4) + 3)
+		local player = oUF:Spawn('player', "oUF_Tukz_player")
+		player:SetSize(TukuiDB.Scale(198), ((player.Health:GetHeight() + 4) + (player.Power:GetHeight() + 4) + (player.panel:GetHeight()) + 6))
+		player:SetPoint("BOTTOM", UIParent, "BOTTOM", -TukuiDB.Scale(190), TukuiDB.Scale(167))
+		
+		----- [[     Target     ]] -----
+		local target = oUF:Spawn('target', "oUF_Tukz_target")
+		target:SetPoint("BOTTOM", UIParent, "BOTTOM", TukuiDB.Scale(190), TukuiDB.Scale(167))
+		target:SetSize(TukuiDB.Scale(198), ((target.Health:GetHeight() + 4) + (target.Power:GetHeight() + 4) + (target.panel:GetHeight()) + 6))
+		
+		----- [[     Target of Target     ]] -----
+		local tot = oUF:Spawn('targettarget', "oUF_Tukz_targettarget")
+		if db.charportrait then
+			tot:SetPoint("TOPRIGHT", oUF_Tukz_target, "BOTTOMRIGHT", TukuiDB.Scale(63), TukuiDB.Scale(-3))
+		else
+			tot:SetPoint("TOPRIGHT", oUF_Tukz_target, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
+		end
+		tot:SetSize(TukuiDB.Scale(130), (tot.Health:GetHeight() + 4) + (tot:GetHeight() + 4) + 3)
+		
+		----- [[     Pet     ]] -----
+		local pet = oUF:Spawn('pet', "oUF_Tukz_pet")
+		if db.charportrait then
+			pet:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", TukuiDB.Scale(-63), TukuiDB.Scale(-3))
+		else
+			pet:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
+		end
+		pet:SetSize(TukuiDB.Scale(130), (pet.Health:GetHeight() + 4) + (pet.Power:GetHeight() + 4) +3)
+		
+		----- [[     Pet     ]] -----
+		
+		local focus = oUF:Spawn('focus', "oUF_Tukz_focus")
+		focus:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, TukuiDB.Scale(190))
+		focus:SetSize(TukuiDB.Scale(125), ((focus.Health:GetHeight() + 4) + (focus.Power:GetHeight() + 4)))
+	end
+end)
 
-
--- pet
-local pet = oUF:Spawn('pet', "oUF_Tukz_pet")
-if db.charportrait then
-	pet:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", TukuiDB.Scale(-63), TukuiDB.Scale(-3))
-else
-	pet:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
-end
-pet:SetSize(TukuiDB.Scale(130), (pet.Health:GetHeight() + 4) + (pet.Power:GetHeight() + 4) +3)
-
-
--- focus
-local focus = oUF:Spawn('focus', "oUF_Tukz_focus")
-focus:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, TukuiDB.Scale(190))
-focus:SetSize(TukuiDB.Scale(125), ((focus.Health:GetHeight() + 4) + (focus.Power:GetHeight() + 4)))
-
-
-if db.showfocustarget then 
-	local focustarget = oUF:Spawn("focustarget", "oUF_Tukz_focustarget")
-	focustarget:SetPoint("BOTTOM", 0, 224)
-	focustarget:SetSize(TukuiDB.Scale(129), TukuiDB.Scale(36))
-end
+-- if db.showfocustarget then 
+	-- local focustarget = oUF:Spawn("focustarget", "oUF_Tukz_focustarget")
+	-- focustarget:SetPoint("BOTTOM", 0, 224)
+	-- focustarget:SetSize(TukuiDB.Scale(129), TukuiDB.Scale(36))
+-- end
 
 if TukuiCF.arena.unitframes then
 	local arena = {}

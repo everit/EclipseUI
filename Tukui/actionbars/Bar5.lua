@@ -15,15 +15,15 @@ for i = 1, 12 do
 	
 	if i == 1 then
 		if db.vertical_rightbars == true then
-			b:SetPoint("TOPRIGHT", _G["MultiBarRightButton1"], "TOPLEFT", -3, 0)
+			b:SetPoint("TOPRIGHT", _G["MultiBarRightButton1"], "TOPLEFT", TukuiDB.Scale(-db.buttonspacing), 0)
 		else
-			b:SetPoint("BOTTOMLEFT", _G["MultiBarRightButton1"], "TOPLEFT", 0, 3)
+			b:SetPoint("BOTTOMLEFT", _G["MultiBarRightButton1"], "TOPLEFT", 0, TukuiDB.Scale(db.buttonspacing))
 		end
 	else
 		if db.vertical_rightbars == true then
-			b:SetPoint("TOP", b2, "BOTTOM", 0, -db.buttonspacing)
+			b:SetPoint("TOP", b2, "BOTTOM", 0, TukuiDB.Scale(-db.buttonspacing))
 		else
-			b:SetPoint("LEFT", b2, "RIGHT", db.buttonspacing, 0)
+			b:SetPoint("LEFT", b2, "RIGHT", TukuiDB.Scale(db.buttonspacing), 0)
 		end
 	end
 end
