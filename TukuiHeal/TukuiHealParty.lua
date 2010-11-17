@@ -224,7 +224,7 @@ local function Shared(self, unit)
 		ohpb:SetStatusBarColor(0, 1, 0, 0.25)
 		ohpb:SetFrameLevel(health:GetFrameLevel())
 		
-		if db.gridhealthvertical == true then
+		if db.healthvertical == true then
 			mhpb:SetPoint('BOTTOMLEFT', self.Health:GetStatusBarTexture(), 'TOPLEFT', 0, 0)
 			mhpb:SetPoint('BOTTOMRIGHT', self.Health:GetStatusBarTexture(), 'TOPRIGHT', 0, 0)
 
@@ -313,7 +313,7 @@ oUF:Factory(function(self)
 	"initial-width", (TukuiCF["panels"].tinfowidth / 5) - 4.3,
 	"initial-height", 43,	
 	"showParty", true, 
-	--"showSolo", true, --TukuiCF["unitframes"].show_solomode,
+	-- "showSolo", true, --TukuiCF["unitframes"].show_solomode,
 	"showPlayer", db.showplayerinparty, 
 	"groupFilter", "1,2,3,4,5,6,7,8", 
 	"groupingOrder", "1,2,3,4,5,6,7,8", 
