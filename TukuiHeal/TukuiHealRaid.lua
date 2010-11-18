@@ -41,7 +41,7 @@ local function Shared(self, unit)
 
 	local hBg = health:CreateTexture(nil, "BORDER")
 	hBg:SetAllPoints()
-	hBg:SetTexture(.05, .05, .05)
+	hBg:SetTexture(unpack(db.health_bg_color))
 	self.Health.bg = hBg
 
 	local hBorder = CreateFrame("Frame", nil, health)

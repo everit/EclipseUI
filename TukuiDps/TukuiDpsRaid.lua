@@ -32,7 +32,7 @@ local function Shared(self, unit)
 
 	local hBg = health:CreateTexture(nil, "BORDER")
 	hBg:SetAllPoints()
-	hBg:SetTexture(.05, .05, .05)
+	hBg:SetTexture(unpack(db.health_bg_color))
 	self.Health.bg = hBg
 
 	local hBorder = CreateFrame("Frame", nil, health)
@@ -56,7 +56,6 @@ local function Shared(self, unit)
 		health.colorDisconnected = true
 		health.colorReaction = true
 		health.colorClass = true
-		hBg.multiplier = 0.3
 	else
 		health.colorTapping = false
 		health.colorDisconnected = false
