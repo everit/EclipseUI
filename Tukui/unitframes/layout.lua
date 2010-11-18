@@ -971,6 +971,7 @@ f:SetScript("OnEvent", function(self, event, addon)
 		local focus = oUF:Spawn('focus', "oUF_Tukz_focus")
 		focus:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, TukuiDB.Scale(190))
 		focus:SetSize(TukuiDB.Scale(125), ((focus.Health:GetHeight() + 4) + (focus.Power:GetHeight() + 4)))
+	end
 end)
 
 -- if db.showfocustarget then 
