@@ -519,10 +519,10 @@ do
 		if (self.unit ~= unit) or (unit == "target" or unit == "focus" or unit == "focustarget" or unit == "targettarget") then return end
 		local threat = UnitThreatSituation(self.unit)
 		if (threat == 3) then
-			self.Health.border:SetBackdropBorderColor(.7, .2, .2, 1)	
-			if self.Power and unit ~= "pet" then
-				self.Power.border:SetBackdropBorderColor(.7, .2, .2, 1)
-			end
+			-- self.Health.border:SetBackdropBorderColor(.7, .2, .2, 1)	
+			-- if self.Power and unit ~= "pet" then
+				-- self.Power.border:SetBackdropBorderColor(.7, .2, .2, 1)
+			-- end
 			if self.Portrait then
 				self.Portrait.frame:SetBackdropBorderColor(.7, .2, .2, 1)
 			end
@@ -530,10 +530,10 @@ do
 				self.panel:SetBackdropBorderColor(.7, .2, .2, 1)
 			end
 		else
-			self.Health.border:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
-			if self.Power and unit ~= "pet" then
-				self.Power.border:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
-			end
+			-- self.Health.border:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
+			-- if self.Power and unit ~= "pet" then
+				-- self.Power.border:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
+			-- end
 			if self.Portrait then
 				self.Portrait.frame:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
 			end

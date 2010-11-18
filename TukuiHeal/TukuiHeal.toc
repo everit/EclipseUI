@@ -9,3 +9,4 @@
 ## RequiredDeps: Tukui
 
 TukuiHealParty.lua
+TukuiHealRaid.lua

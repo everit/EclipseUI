@@ -21,7 +21,6 @@ local function Shared(self, unit)
 	
 	self.menu = TukuiDB.SpawnMenu
 	
-	
 	----- [[     Features For All Units     ]] -----
 
 	----- [[     Dummy Frame     ]] -----
@@ -58,20 +57,18 @@ local function Shared(self, unit)
 
 	local hBg = health:CreateTexture(nil, "BORDER")
 	hBg:SetAllPoints()
-	hBg:SetTexture(.05, .05, .05)
+	hBg:SetTexture(unpack(db.health_bg_color))
 	self.Health.bg = hBg
 
 	local hBorder = CreateFrame("Frame", nil, health)
 	hBorder:SetFrameLevel(health:GetFrameLevel() - 1)
-	hBorder:SetPoint("TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
-	hBorder:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
-	TukuiDB.SkinPanel(hBorder)
-	TukuiDB.Kill(hBorder.bg)
+	hBorder:SetAllPoints()
+	TukuiDB.CreateOuterBorder(hBorder)
 	self.Health.border = hBorder		
 
 	local power = CreateFrame("StatusBar", nil, self)
-	power:SetPoint("TOPLEFT", health, "BOTTOMLEFT", 0, TukuiDB.Scale(-7))
-	power:SetPoint("TOPRIGHT", health, "BOTTOMRIGHT", 0, TukuiDB.Scale(-7))
+	power:SetPoint("TOPLEFT", health, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
+	power:SetPoint("TOPRIGHT", health, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
 	power:SetStatusBarTexture(texture)
 	self.Power = power
 
@@ -83,12 +80,23 @@ local function Shared(self, unit)
 
 	local pBorder = CreateFrame("Frame", nil, power)
 	pBorder:SetFrameLevel(power:GetFrameLevel() - 1)
-	pBorder:SetPoint("TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
-	pBorder:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
-	TukuiDB.SkinPanel(pBorder)
-	TukuiDB.Kill(pBorder.bg)
+	pBorder:SetAllPoints()
+	TukuiDB.CreateOuterBorder(pBorder)
 	self.Power.border = pBorder
 
+	local frame = CreateFrame("Frame", nil, health)
+	frame:SetFrameLevel(health:GetFrameLevel() - 1)
+	frame:SetPoint("TOPLEFT", health, TukuiDB.Scale(-2), TukuiDB.Scale(2))
+	frame:SetPoint("BOTTOMRIGHT", power, TukuiDB.Scale(2), TukuiDB.Scale(-2))
+	frame:SetBackdrop({
+		bgFile = texture,
+		insets = { left = -TukuiDB.mult, right = -TukuiDB.mult, top = -TukuiDB.mult, bottom = -TukuiDB.mult }
+	})
+	frame:SetBackdropColor(unpack(TukuiCF["media"].bordercolor))
+	TukuiDB.CreateOuterBorder(frame)
+	TukuiDB.CreateShadow(frame)
+	self.frame = frame		
+	
 	
 	----- [[     Health and Power Colors / Settings     ]] -----
 	
@@ -99,7 +107,7 @@ local function Shared(self, unit)
 		health.Smooth = true
 		power.Smooth = true
 	end
-		
+
 	if db.classcolor == true then
 		health.colorTapping = true
 		health.colorDisconnected = true
@@ -108,7 +116,6 @@ local function Shared(self, unit)
 		if TukuiDB.myclass == "HUNTER" then
 			health.colorHappiness = true
 		end
-		hBg.multiplier = 0.3
 		
 		power.colorPower = true
 	else
@@ -117,7 +124,6 @@ local function Shared(self, unit)
 		health.colorClass = false
 		health.colorReaction = false
 		health:SetStatusBarColor(unpack(db.health_color))
-		hBg:SetVertexColor(unpack(db.health_bg_color))
 
 		power.colorTapping = true
 		power.colorDisconnected = true
@@ -183,8 +189,8 @@ local function Shared(self, unit)
 
 		----- [[     Set Health / Power Bar Height     ]] -----
 		
-		health:SetHeight(TukuiDB.Scale(26))
-		power:SetHeight(TukuiDB.Scale(3))
+		health:SetHeight(TukuiDB.Scale(30))
+		power:SetHeight(TukuiDB.Scale(4))
 		
 		
 		----- [[     Unit Information Panel     ]] -----
@@ -194,8 +200,8 @@ local function Shared(self, unit)
 		panel:SetFrameLevel(2)
 		panel:SetFrameStrata("MEDIUM")
 		panel:ClearAllPoints()
-		panel:SetPoint("TOPLEFT", pBorder, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
-		panel:SetPoint("TOPRIGHT", pBorder, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
+		panel:SetPoint("TOPLEFT", frame, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
+		panel:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
 		self.panel = panel
 		
 		
@@ -215,13 +221,13 @@ local function Shared(self, unit)
 		
 		if (db.charportrait == true) then
 			local portrait = CreateFrame("PlayerModel", nil, self)
-			portrait:SetHeight( ((health:GetHeight() + 4) + (power:GetHeight() + 4) + (panel:GetHeight()) + 6))
+			portrait:SetHeight( ((health:GetHeight()) + (power:GetHeight() + 4) + (panel:GetHeight()) + 6))
 			portrait:SetWidth(TukuiDB.Scale(60))
 			portrait:SetAlpha(1)
 			if unit == "player" then
-				portrait:SetPoint("TOPRIGHT", hBorder, "TOPLEFT", TukuiDB.Scale(-3), 0)
+				portrait:SetPoint("TOPRIGHT", frame, "TOPLEFT", TukuiDB.Scale(-3), 0)
 			elseif unit == "target" then
-				portrait:SetPoint("TOPLEFT", hBorder, "TOPRIGHT", TukuiDB.Scale(3), 0)
+				portrait:SetPoint("TOPLEFT", frame, "TOPRIGHT", TukuiDB.Scale(3), 0)
 			end
 			table.insert(self.__elements, TukuiDB.HidePortrait)
 			self.Portrait = portrait
@@ -258,6 +264,7 @@ local function Shared(self, unit)
 			Combat:SetVertexColor(0.69, 0.31, 0.31)
 			self.Combat = Combat
 
+			
 			----- [[     Custom Information - Low Mana, etc.     ]] -----
 			
 			FlashInfo = CreateFrame("Frame", "FlashInfo", self)
@@ -334,8 +341,8 @@ local function Shared(self, unit)
 				self.DruidMana = DruidMana
 
 				local eclipseBar = CreateFrame('Frame', nil, self)
-				eclipseBar:SetPoint("BOTTOMLEFT", hBorder, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(5))
-				eclipseBar:SetSize(TukuiDB.Scale(195 - 2), TukuiDB.Scale(4))
+				eclipseBar:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(5))
+				eclipseBar:SetSize(TukuiDB.Scale(196), TukuiDB.Scale(4))
 				eclipseBar:SetFrameStrata("MEDIUM")
 				eclipseBar:SetFrameLevel(8)
 				eclipseBar:SetScript("OnShow", function() TukuiDB.EclipseDisplay(self, false) end)
@@ -384,11 +391,11 @@ local function Shared(self, unit)
 					barFrame[i] = CreateFrame("Frame", nil, self)
 					barFrame[i]:SetFrameLevel(health:GetFrameLevel() + 1)
 					barFrame[i]:SetHeight(TukuiDB.Scale(8))
-					barFrame[i]:SetWidth(TukuiDB.Scale(195 - 4) / 3)
+					barFrame[i]:SetWidth(TukuiDB.Scale(195 - 1) / 3)
 					TukuiDB.SkinPanel(barFrame[i])
 					
 					if i == 1 then
-						barFrame[i]:SetPoint("BOTTOMLEFT", hBorder, "TOPLEFT", 0, TukuiDB.Scale(3))
+						barFrame[i]:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, TukuiDB.Scale(3))
 					else
 						barFrame[i]:SetPoint("TOPLEFT", barFrame[i-1], "TOPRIGHT", TukuiDB.Scale(3), 0)
 					end
@@ -431,9 +438,9 @@ local function Shared(self, unit)
 					rB[i] = CreateFrame("Frame", nil, self)
 					rB[i]:SetFrameLevel(health:GetFrameLevel() + 1)
 					rB[i]:SetHeight(TukuiDB.Scale(8))
-					rB[i]:SetWidth(TukuiDB.Scale(195 - 13) / 6)
+					rB[i]:SetWidth(TukuiDB.Scale(195 - 10) / 6)
 					if (i == 1) then
-						rB[i]:SetPoint("BOTTOMLEFT", hBorder, "TOPLEFT", 0, TukuiDB.Scale(3))
+						rB[i]:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, TukuiDB.Scale(3))
 					else
 						rB[i]:SetPoint("TOPLEFT", rB[i-1], "TOPRIGHT", TukuiDB.Scale(3), 0)
 					end
@@ -462,11 +469,11 @@ local function Shared(self, unit)
 					totemFrame[i] = CreateFrame("Frame", nil, self)
 					totemFrame[i]:SetFrameLevel(health:GetFrameLevel() + 1)
 					totemFrame[i]:SetHeight(TukuiDB.Scale(8))
-					totemFrame[i]:SetWidth(TukuiDB.Scale(195 - 7) / 4)
+					totemFrame[i]:SetWidth(TukuiDB.Scale(195 - 4) / 4)
 					TukuiDB.SkinPanel(totemFrame[i])
 
 					if i == 1 then
-						totemFrame[i]:SetPoint("BOTTOMLEFT", hBorder, "TOPLEFT", 0, TukuiDB.Scale(3))
+						totemFrame[i]:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, TukuiDB.Scale(3))
 					else
 						totemFrame[i]:SetPoint("TOPLEFT", totemFrame[i-1], "TOPRIGHT", TukuiDB.Scale(3), 0)
 					end
@@ -745,7 +752,7 @@ local function Shared(self, unit)
 		----- [[     Health / Power Bars + Backgrounds / Borders     ]] -----
 		
 		health:SetHeight(TukuiDB.Scale(23))
-		power:SetHeight(TukuiDB.Scale(3))
+		power:SetHeight(TukuiDB.Scale(4))
 		
 		
 		----- [[     Unit Name     ]] -----
@@ -798,7 +805,7 @@ local function Shared(self, unit)
 		----- [[     Set Health / Power Bar Height     ]] -----
 		
 		health:SetHeight(TukuiDB.Scale(26))
-		power:SetHeight(TukuiDB.Scale(3))
+		power:SetHeight(TukuiDB.Scale(4))
 		
 		
 		----- [[     Unit Name     ]] -----
@@ -902,14 +909,14 @@ f:SetScript("OnEvent", function(self, event, addon)
 		----- [[     Player     ]] -----
 		
 		local player = oUF:Spawn('player', "oUF_Tukz_player")
-		player:SetPoint("BOTTOM", UIParent, "BOTTOM", -TukuiDB.Scale(190) , TukuiDB.Scale(167))
-		player:SetSize(TukuiDB.Scale(198), ((player.Health:GetHeight() + 4) + (player.Power:GetHeight() + 4) + (player.panel:GetHeight()) + 6))
+		player:SetPoint("TOP", UIParent, "BOTTOM", -TukuiDB.Scale(300) , TukuiDB.Scale(230))
+		player:SetSize(TukuiDB.Scale(198), player.Health:GetHeight() + player.Power:GetHeight() + player.panel:GetHeight() + 10)
 		
 		----- [[     Target     ]] -----
 		
 		local target = oUF:Spawn('target', "oUF_Tukz_target")
-		target:SetPoint("BOTTOM", UIParent, "BOTTOM", TukuiDB.Scale(190), TukuiDB.Scale(167))
-		target:SetSize(TukuiDB.Scale(198), ((target.Health:GetHeight() + 4) + (target.Power:GetHeight() + 4) + (target.panel:GetHeight()) + 6))
+		target:SetPoint("TOP", UIParent, "BOTTOM", TukuiDB.Scale(300), TukuiDB.Scale(230))
+		target:SetSize(TukuiDB.Scale(198), target.Health:GetHeight() + target.Power:GetHeight() + target.panel:GetHeight() + 10)
 		
 		----- [[     Target of Target     ]] -----
 		
@@ -919,7 +926,7 @@ f:SetScript("OnEvent", function(self, event, addon)
 		else
 			tot:SetPoint("TOPRIGHT", oUF_Tukz_target, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
 		end
-		tot:SetSize(TukuiDB.Scale(130), (tot.Health:GetHeight() + 4) + (tot:GetHeight() + 4) + 3)
+		tot:SetSize(TukuiDB.Scale(130), tot.Health:GetHeight() + tot.Power:GetHeight() + 7)
 		
 		----- [[     Pet     ]] -----
 		
@@ -929,48 +936,51 @@ f:SetScript("OnEvent", function(self, event, addon)
 		else
 			pet:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
 		end
-		pet:SetSize(TukuiDB.Scale(130), (pet.Health:GetHeight() + 4) + (pet.Power:GetHeight() + 4) +3)
+		pet:SetSize(TukuiDB.Scale(130), pet.Health:GetHeight() + pet.Power:GetHeight() + 7)
 		
-		----- [[     Pet     ]] -----
+		----- [[     Focus     ]] -----
 		
 		local focus = oUF:Spawn('focus', "oUF_Tukz_focus")
-		focus:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, TukuiDB.Scale(190))
-		focus:SetSize(TukuiDB.Scale(125), ((focus.Health:GetHeight() + 4) + (focus.Power:GetHeight() + 4)))
+		focus:SetPoint("TOP", UIParent, "BOTTOM", 0, TukuiDB.Scale(230))
+		focus:SetSize(TukuiDB.Scale(125), focus.Health:GetHeight() + focus.Power:GetHeight() + 7)
 	elseif addon == "TukuiDps" then
 		----- [[     Player     ]] -----
-
+		
 		local player = oUF:Spawn('player', "oUF_Tukz_player")
-		player:SetSize(TukuiDB.Scale(198), ((player.Health:GetHeight() + 4) + (player.Power:GetHeight() + 4) + (player.panel:GetHeight()) + 6))
-		player:SetPoint("BOTTOM", UIParent, "BOTTOM", -TukuiDB.Scale(190), TukuiDB.Scale(167))
+		player:SetPoint("TOP", UIParent, "BOTTOM", -TukuiDB.Scale(190) , TukuiDB.Scale(230))
+		player:SetSize(TukuiDB.Scale(198), player.Health:GetHeight() + player.Power:GetHeight() + player.panel:GetHeight() + 10)
 		
 		----- [[     Target     ]] -----
+		
 		local target = oUF:Spawn('target', "oUF_Tukz_target")
-		target:SetPoint("BOTTOM", UIParent, "BOTTOM", TukuiDB.Scale(190), TukuiDB.Scale(167))
-		target:SetSize(TukuiDB.Scale(198), ((target.Health:GetHeight() + 4) + (target.Power:GetHeight() + 4) + (target.panel:GetHeight()) + 6))
+		target:SetPoint("TOP", UIParent, "BOTTOM", TukuiDB.Scale(190), TukuiDB.Scale(230))
+		target:SetSize(TukuiDB.Scale(198), target.Health:GetHeight() + target.Power:GetHeight() + target.panel:GetHeight() + 10)
 		
 		----- [[     Target of Target     ]] -----
+		
 		local tot = oUF:Spawn('targettarget', "oUF_Tukz_targettarget")
 		if db.charportrait then
 			tot:SetPoint("TOPRIGHT", oUF_Tukz_target, "BOTTOMRIGHT", TukuiDB.Scale(63), TukuiDB.Scale(-3))
 		else
 			tot:SetPoint("TOPRIGHT", oUF_Tukz_target, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
 		end
-		tot:SetSize(TukuiDB.Scale(130), (tot.Health:GetHeight() + 4) + (tot:GetHeight() + 4) + 3)
+		tot:SetSize(TukuiDB.Scale(130), tot.Health:GetHeight() + tot.Power:GetHeight() + 7)
 		
 		----- [[     Pet     ]] -----
+		
 		local pet = oUF:Spawn('pet', "oUF_Tukz_pet")
 		if db.charportrait then
 			pet:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", TukuiDB.Scale(-63), TukuiDB.Scale(-3))
 		else
 			pet:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
 		end
-		pet:SetSize(TukuiDB.Scale(130), (pet.Health:GetHeight() + 4) + (pet.Power:GetHeight() + 4) +3)
+		pet:SetSize(TukuiDB.Scale(130), pet.Health:GetHeight() + pet.Power:GetHeight() + 7)
 		
-		----- [[     Pet     ]] -----
+		----- [[     Focus     ]] -----
 		
 		local focus = oUF:Spawn('focus', "oUF_Tukz_focus")
-		focus:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, TukuiDB.Scale(190))
-		focus:SetSize(TukuiDB.Scale(125), ((focus.Health:GetHeight() + 4) + (focus.Power:GetHeight() + 4)))
+		focus:SetPoint("TOP", UIParent, "BOTTOM", 0, TukuiDB.Scale(230))
+		focus:SetSize(TukuiDB.Scale(125), focus.Health:GetHeight() + focus.Power:GetHeight() + 7)
 	end
 end)
 

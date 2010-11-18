@@ -163,11 +163,11 @@ local function Shared(self, unit)
 	return self
 end
 
-oUF:RegisterStyle('TukuiDpsParty', Shared)
+oUF:RegisterStyle('TukuiDpsRaid', Shared)
 oUF:Factory(function(self)
-	oUF:SetActiveStyle("TukuiDpsParty")
+	oUF:SetActiveStyle("TukuiDpsRaid")
 
-	local party = self:SpawnHeader("oUF_TukuiDpsParty", nil, "party", 
+	local raid = self:SpawnHeader("oUF_TukuiDpsRaid", nil, "raid", 
 	'oUF-initialConfigFunction', [[
 		local header = self:GetParent()
 		self:SetWidth(header:GetAttribute('initial-width'))
@@ -175,13 +175,16 @@ oUF:Factory(function(self)
 	]],
 	"initial-width", (TukuiCF["panels"].tinfowidth / 5) - 4.3,
 	"initial-height", 24,	
-	"showParty", true, 
-	"showPlayer", db.showplayerinparty, 
+	"showRaid", true, 
 	"groupFilter", "1,2,3,4,5,6,7,8", 
 	"groupingOrder", "1,2,3,4,5,6,7,8", 
 	"groupBy", "GROUP", 
 	"xOffset", 5,
-	"point", "LEFT"
+	"point", "LEFT",
+	"maxColumns", 5,
+	"unitsPerColumn", 5,
+	"columnSpacing", TukuiDB.Scale(5),
+	"columnAnchorPoint", "BOTTOM"
 	)
-	party:SetPoint("BOTTOMLEFT", TukuiChatLeftTabs, "TOPLEFT", 1, 4)
+	raid:SetPoint("BOTTOMLEFT", TukuiChatLeftTabs, "TOPLEFT", 1, 4)
 end)

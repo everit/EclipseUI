@@ -307,59 +307,28 @@ local function Shared(self, unit)
 	return self
 end
 
-oUF:RegisterStyle('TukuiHealParty', Shared)
+oUF:RegisterStyle('TukuiHealRaid', Shared)
 oUF:Factory(function(self)
-	oUF:SetActiveStyle("TukuiHealParty")
+	oUF:SetActiveStyle("TukuiHealRaid")
 
-	local party = self:SpawnHeader("oUF_TukuiHealParty", nil, "party", 
+	local raid = self:SpawnHeader("oUF_TukuiHealModeRaid", nil, "raid", 
 	'oUF-initialConfigFunction', [[
 		local header = self:GetParent()
 		self:SetWidth(header:GetAttribute('initial-width'))
 		self:SetHeight(header:GetAttribute('initial-height'))
 	]],
 	"initial-width", 70,
-	"initial-height", 41,	
-	"showParty", true, 
-	"showPlayer", db.showplayerinparty, 
+	"initial-height", 43,	
+	"showRaid", true, 
 	"groupFilter", "1,2,3,4,5,6,7,8", 
 	"groupingOrder", "1,2,3,4,5,6,7,8", 
 	"groupBy", "GROUP", 
 	"xOffset", 5,
-	"point", "LEFT"
-	)
-	party:SetPoint("TOP", UIParent, "BOTTOM", 0, TukuiDB.Scale(230))
-	
-	local pets = {}
-	for i = 1, 5 do 
-		pets[i] = oUF:Spawn('partypet'..i, 'oUF_TukuiPartyPet'..i) 
-		pets[i]:SetSize((TukuiCF["panels"].tinfowidth / 5) - 4.3, 21)
-		if i == 1 then
-			if db.showplayerinparty == true then
-				pets[i]:SetPoint('BOTTOMLEFT', party, 'TOPLEFT', (TukuiCF["panels"].tinfowidth / 5) - 4.3 + 5, 6)
-			else
-				pets[i]:SetPoint('BOTTOMLEFT', party, 'TOPLEFT', 0, 6)
-			end
-		else
-			pets[i]:SetPoint('TOPLEFT', pets[i-1], 'TOPRIGHT', 3, 0)
-		end
-	end
-	
-	local PetsFuckOffSeriously = CreateFrame("Frame")
-	PetsFuckOffSeriously:RegisterEvent("PLAYER_ENTERING_WORLD")
-	PetsFuckOffSeriously:RegisterEvent("RAID_ROSTER_UPDATE")
-	PetsFuckOffSeriously:RegisterEvent("PARTY_LEADER_CHANGED")
-	PetsFuckOffSeriously:RegisterEvent("PARTY_MEMBERS_CHANGED")
-	PetsFuckOffSeriously:SetScript("OnEvent", function(self)
-		if InCombatLockdown() then
-			self:RegisterEvent("PLAYER_REGEN_ENABLED")
-		else
-			self:UnregisterEvent("PLAYER_REGEN_ENABLED")
-			local numraid = GetNumRaidMembers()
-			if numraid > 5  then
-				for i,v in ipairs(pets) do v:Disable() end
-			else
-				for i,v in ipairs(pets) do v:Enable() end
-			end
-		end
-	end)
+	"point", "LEFT",
+	"maxColumns", 5,
+	"unitsPerColumn", 5,
+	"columnSpacing", TukuiDB.Scale(1),
+	"columnAnchorPoint", "BOTTOM"
+	)	
+	raid:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, TukuiDB.Scale(143))
 end)
