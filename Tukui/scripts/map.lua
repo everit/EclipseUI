@@ -35,6 +35,7 @@ lockText:SetFont(font, font_size, font_style)
 lockText:SetPoint("CENTER", font_position[1], font_position[2])
 lockText:SetText(tukuilocal.map_move)
 mapLock:SetWidth(lockText:GetWidth() + 20)
+TukuiDB.Color(lockText)
 
 -- hi blizzard, i'm just going to steal this code to fix quest blobs, thanks
 -- greetings from eclípsé
@@ -75,6 +76,8 @@ local closeText = mapClose:CreateFontString(nil, "OVERLAY")
 closeText:SetFont(font, font_size, font_style)
 closeText:SetPoint("CENTER", font_position[1], font_position[2])
 closeText:SetText(tukuilocal.map_close)
+TukuiDB.Color(closeText)
+
 mapClose:SetWidth(closeText:GetWidth() + 20)
 
 mapClose:SetScript("OnMouseUp", function(self) ToggleFrame(WorldMapFrame) end)
@@ -96,6 +99,8 @@ local expandText = mapExpand:CreateFontString(nil, "OVERLAY", mapExpand)
 expandText:SetFont(font, font_size, font_style)
 expandText:SetPoint("CENTER", font_position[1], font_position[2])
 expandText:SetText(tukuilocal.map_expand)
+TukuiDB.Color(expandText)
+
 mapExpand:SetWidth(expandText:GetWidth() + 20)
 
 mapExpand:SetScript("OnMouseUp", function(self) 

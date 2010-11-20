@@ -162,20 +162,9 @@ local function SetChatStyle(frame)
 		origs[_G[chat]] = _G[chat].AddMessage
 		_G[chat].AddMessage = AddMessage
 	end
-	
-	local tabcolor
-	if TukuiCF["datatext"].classcolor == true then
-		local _,class = UnitClass("player")
-		tabcolor = oUF.colors.class[class]
-	else
-		tabcolor = TukuiCF["datatext"].color
-	end
 
 	hooksecurefunc("FCFTab_UpdateColors", function(chatTab, isSelected) 
-		chatTab:GetFontString():SetTextColor(unpack(tabcolor))
-		if ( chatTab.conversationIcon ) then
-			chatTab.conversationIcon:SetVertexColor(unpack(tabcolor))
-		end
+		TukuiDB.Color(chatTab:GetFontString())
 		if isSelected then 
 			FCFTab_UpdateColors(chatTab, false) 
 		end 

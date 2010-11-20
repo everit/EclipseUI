@@ -467,7 +467,8 @@ function Stuffing:CreateBagFrame(w)
 	f.b_text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	f.b_text:SetPoint("CENTER", TukuiCF["fonts"].bag_button_xy_position[1], TukuiCF["fonts"].bag_button_xy_position[2])
 	f.b_text:SetText(tukuilocal.bags_close)
-
+	TukuiDB.Color(f.b_text)
+	
 	f.b_close:SetWidth(f.b_text:GetWidth() + 20)
 
 	if w == "Bags" then
@@ -490,6 +491,7 @@ function Stuffing:CreateBagFrame(w)
 		f.b_ktext:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 		f.b_ktext:SetPoint("CENTER", TukuiCF["fonts"].bag_button_xy_position[1], TukuiCF["fonts"].bag_button_xy_position[2])
 		f.b_ktext:SetText(tukuilocal.bags_keyring)
+		TukuiDB.Color(f.b_ktext)
 
 		f.b_key:SetWidth(f.b_ktext:GetWidth() + 20)
 	end
