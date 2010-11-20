@@ -155,3 +155,22 @@ end
 function TukuiDB.FadeOut(f)
 	UIFrameFadeOut(f, .8, f:GetAlpha(), 0)
 end
+
+
+
+----- [[     Setup Text Coloring     ]] -----
+
+function TukuiDB.Color(f)
+	if TukuiCF["datatext"].classcolor == true then
+		local color = RAID_CLASS_COLORS[TukuiDB.myclass]
+		f:SetTextColor(color.r, color.g, color.b)
+		
+		cStart = ("|cff%.2x%.2x%.2x"):format(color.r * 255, color.g * 255, color.b * 255)
+	else
+		local r, g, b = unpack(TukuiCF["datatext"].color)
+		f:SetTextColor(r, g, b)
+		
+		cStart = ("|cff%.2x%.2x%.2x"):format(r * 255, g * 255, b * 255)
+	end
+end
+cEnd = "|r"
