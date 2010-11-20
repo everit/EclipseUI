@@ -31,9 +31,9 @@ TukuiCF["media"] = {
 	
 	----- [[     Colors     ]] -----
 	
-	["bordercolor"] = { .125, .125, .125, 1 },
+	["bordercolor"] = { .1, .1, .1, 1 },
 	["backdropcolor"] = { 0, 0, 0, 1 },
-	["fadedbackdropcolor"] = { 0, 0, 0, .7 },	
+	["fadedbackdropcolor"] = { 0, 0, 0, .5 },	
 	
 	
 	----- [[     Sounds     ]] -----
