@@ -174,21 +174,18 @@ local function install()
 	end
 	
 	-- we can reset this shit here :)
+	EclipseSettings = {} -- make sure we clear the table first, don't want any unnecessary values
 	EclipseSettings = {
 		["minimap_shown"] = true,
 		
 		["bottomrows"] = 1,
 		["rightbars"] = 1,
 		["splitbars"] = false,
-		
+
 		["hr_time"] = false,
 		["local_time"] = true,
 		["game_time"] = false,
-		
-		["location_shown"] = true,
-		["experience_shown"] = false,
-		["reputation_shown"] = false,
-	}	
+	}
 
 	ReloadUI()
 end
