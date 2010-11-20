@@ -14,8 +14,8 @@ TemporaryEnchantFrame.SetPoint = TukuiDB.dummy
 
 TempEnchant1:ClearAllPoints()
 TempEnchant2:ClearAllPoints()
-TempEnchant1:SetPoint("TOPLEFT", UIParent, "TOPLEFT", TukuiDB.Scale(8), TukuiDB.Scale(-8))
-TempEnchant2:SetPoint("LEFT", TempEnchant1, "RIGHT", TukuiDB.Scale(-3), 0)
+TempEnchant1:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", TukuiDB.Scale(-8), TukuiDB.Scale(-8))
+TempEnchant2:SetPoint("RIGHT", TempEnchant1, "LEFT", TukuiDB.Scale(-3), 0)
 
 WorldStateAlwaysUpFrame:SetFrameStrata("BACKGROUND")
 WorldStateAlwaysUpFrame:SetFrameLevel(0)
@@ -96,9 +96,9 @@ local function UpdateBuffAnchors()
 			buff:ClearAllPoints()
 			if ( (numBuffs > 1) and (mod(numBuffs, rowbuffs) == 1) ) then
 				if ( numBuffs == rowbuffs+1 ) then
-					buff:SetPoint("TOPLEFT", UIParent, "TOPLEFT", TukuiDB.Scale(8), TukuiDB.Scale(-55))
+					buff:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", TukuiDB.Scale(-8), TukuiDB.Scale(-55))
 				else
-					buff:SetPoint("TOPLEFT", UIParent, "TOPLEFT", TukuiDB.Scale(8), TukuiDB.Scale(-103))
+					buff:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", TukuiDB.Scale(-8), TukuiDB.Scale(-103))
 				end
 				aboveBuff = buff;
 			elseif ( numBuffs == 1 ) then
@@ -111,10 +111,10 @@ local function UpdateBuffAnchors()
 				elseif ((mainhand and not offhand and not thrown) or (offhand and not mainhand and not thrown) or (thrown and not mainhand and not offhand)) and not UnitHasVehicleUI("player") then
 					buff:SetPoint("LEFT", TempEnchant1, "RIGHT", TukuiDB.Scale(3), 0)
 				else
-					buff:SetPoint("TOPLEFT", UIParent, "TOPLEFT", TukuiDB.Scale(8), TukuiDB.Scale(-8))
+					buff:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", TukuiDB.Scale(-8), TukuiDB.Scale(-8))
 				end
 			else
-				buff:SetPoint("LEFT", previousBuff, "RIGHT", TukuiDB.Scale(3), 0)
+				buff:SetPoint("RIGHT", previousBuff, "LEFT", TukuiDB.Scale(-3), 0)
 			end
 			previousBuff = buff
 		end		
@@ -134,9 +134,9 @@ local function UpdateDebuffAnchors(buttonName, index)
 	_G[buttonName..index.."Panel"]:SetBackdropBorderColor(color.r * 0.6, color.g * 0.6, color.b * 0.6)
 	debuff:ClearAllPoints()
 	if index == 1 then
-		debuff:SetPoint("TOPLEFT", UIParent, "TOPLEFT", TukuiDB.Scale(8), TukuiDB.Scale(-103))
+		debuff:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", TukuiDB.Scale(-8), TukuiDB.Scale(-103))
 	else
-		debuff:SetPoint("LEFT", _G[buttonName..(index-1)], "RIGHT", TukuiDB.Scale(3), 0)
+		debuff:SetPoint("RIGHT", _G[buttonName..(index-1)], "LEFT", TukuiDB.Scale(-3), 0)
 	end
 end
 
