@@ -6,7 +6,7 @@ TukuiCF["general"] = {
 	["overridelowtohigh"] = false,         -- EXPERIMENTAL ONLY! override lower version to higher version on a lower reso.
 	["multisampleprotect"] = true,         -- i don't recommend this because of shitty border but, voila!
 	
-	["game_texture"] = TukuiCF["media"].custom_texture_1,
+	["game_texture"] = TukuiCF["media"].normTex,
 }
 
 ----- [[     Unitframe Settings     ]] -----
@@ -29,13 +29,13 @@ TukuiCF["unitframes"] = {
 	["showtotalhpmp"] = false,             -- change the display of info text on player and target with XXXX/Total.
 	["showsmooth"] = true,                 -- enable smooth bar
 	["showthreat"] = true,                 -- enable the threat bar anchored to info left panel.
-	["charportrait"] = true,              -- do i really need to explain this?
+	["charportrait"] = false,              -- do i really need to explain this?
 	["maintank"] = false,                  -- enable maintank
 	["mainassist"] = false,                -- enable mainassist
 	["combatfeedback"] = true,             -- enable combattext on player and target.
 	["playeraggro"] = true,                -- color player border to red if you have aggro on current target.
 	["positionbychar"] = true,             -- save X, Y position with /uf (movable frame) per character instead of per account.
-	["healcomm"] = false,                  -- enable healprediction support.
+	["healcomm"] = true,                  -- enable healprediction support.
 
 	["showrange"] = true,                  -- show range opacity on raidframes
 	["raidalphaoor"] = 0.3,                -- alpha of unitframes when unit is out of range
@@ -56,7 +56,7 @@ TukuiCF["unitframes"] = {
 	
 	["classcolor"] = false,
 	["health_color"] = { .15, .15, .15 },
-	["health_bg_color"] = { .05, .05, .05 },
+	["health_bg_color"] = { .05, .05, .05},
 	
 	["showvalues"] = true,
 	["showpercentage"] = false,
@@ -82,7 +82,7 @@ TukuiCF["actionbar"] = {
 	["buttonsize"] = 27,
 	["petbuttonsize"] = 27,
 	["stancebuttonsize"] = 27,
-	["buttonspacing"] = 3,
+	["buttonspacing"] = 4,
 	
 	-- ["split_bar_mouseover"] = false,
 	-- ["rightbar_mouseover"] = false,
@@ -120,7 +120,7 @@ TukuiCF["chat"] = {
 	["enable"] = true,                     -- blah
 	["whispersound"] = true,               -- play a sound when receiving whisper
 	
-	["chatheight"] = 120,						-- Set the height of your chat here!
+	["chatheight"] = 140,						-- Set the height of your chat here!
 }
 
 ----- [[     Panel Settings     ]] -----
