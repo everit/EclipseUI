@@ -15,7 +15,7 @@ local texture = TukuiCF["general"].game_texture
 local function Shared(self, unit)
 	self.colors = TukuiDB.oUF_colors
 	
-	self:RegisterForClicks("LeftButtonDown", "RightButtonDown")
+	self:RegisterForClicks("AnyUp")
 	self:SetScript('OnEnter', UnitFrame_OnEnter)
 	self:SetScript('OnLeave', UnitFrame_OnLeave)
 	
@@ -791,8 +791,6 @@ local function Shared(self, unit)
 			self:RegisterEvent('UNIT_THREAT_LIST_UPDATE', TukuiDB.UpdateThreat)
 			self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', TukuiDB.UpdateThreat)
 		end
-		
-		self:RegisterEvent("UNIT_PET", TukuiDB.UpdatePetInfo)
 	end
 
 
@@ -947,13 +945,13 @@ f:SetScript("OnEvent", function(self, event, addon)
 		----- [[     Player     ]] -----
 		
 		local player = oUF:Spawn('player', "oUF_Tukz_player")
-		player:SetPoint("TOP", UIParent, "BOTTOM", -TukuiDB.Scale(190) , TukuiDB.Scale(230))
+		player:SetPoint("TOP", UIParent, "BOTTOM", -TukuiDB.Scale(191) , TukuiDB.Scale(230))
 		player:SetSize(TukuiDB.Scale(198), player.Health:GetHeight() + player.Power:GetHeight() + player.panel:GetHeight() + 10)
 		
 		----- [[     Target     ]] -----
 		
 		local target = oUF:Spawn('target', "oUF_Tukz_target")
-		target:SetPoint("TOP", UIParent, "BOTTOM", TukuiDB.Scale(190), TukuiDB.Scale(230))
+		target:SetPoint("TOP", UIParent, "BOTTOM", TukuiDB.Scale(191), TukuiDB.Scale(230))
 		target:SetSize(TukuiDB.Scale(198), target.Health:GetHeight() + target.Power:GetHeight() + target.panel:GetHeight() + 10)
 		
 		----- [[     Target of Target     ]] -----

@@ -15,7 +15,7 @@ local texture = TukuiCF["general"].game_texture
 local function Shared(self, unit)
 	self.colors = TukuiDB.oUF_colors
 	
-	self:RegisterForClicks("LeftButtonDown", "RightButtonDown")
+	self:RegisterForClicks("AnyUp")
 	self:SetScript('OnEnter', UnitFrame_OnEnter)
 	self:SetScript('OnLeave', UnitFrame_OnLeave)
 	
@@ -129,6 +129,7 @@ local function Shared(self, unit)
 	Name:SetJustifyH("CENTER")
 	Name:SetFont(font, font_size, font_style)
 	Name:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
+	Name.frequentUpdates = 0.2
 	if db.classcolor == true then
 		self:Tag(Name, "[Tukui:name_short][Tukui:dead][Tukui:afk]")
 	else
@@ -311,7 +312,7 @@ oUF:RegisterStyle('TukuiHealParty', Shared)
 oUF:Factory(function(self)
 	oUF:SetActiveStyle("TukuiHealParty")
 
-	local party = self:SpawnHeader("oUF_TukuiHealParty", nil, "party", 
+	local party = self:SpawnHeader("oUF_TukuiHealParty", nil, "solo,party", 
 	'oUF-initialConfigFunction', [[
 		local header = self:GetParent()
 		self:SetWidth(header:GetAttribute('initial-width'))
@@ -320,6 +321,7 @@ oUF:Factory(function(self)
 	"initial-width", 70,
 	"initial-height", 41,	
 	"showParty", true, 
+	"showSolo", true, 
 	"showPlayer", db.showplayerinparty, 
 	"groupFilter", "1,2,3,4,5,6,7,8", 
 	"groupingOrder", "1,2,3,4,5,6,7,8", 

@@ -128,7 +128,7 @@ end
 
 ----- [[     Custom Tags     ]] -----
 
-oUF.TagEvents['Tukui:name_short'] = 'UNIT_NAME_UPDATE', 'UNIT_CONNECTION', 'PLAYER_FLAGS_CHANGED', 'UNIT_HEALTH'
+oUF.TagEvents['Tukui:name_short'] = 'UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH UNIT_MAXHEALTH'
 oUF.Tags['Tukui:name_short'] = function(unit)
 	local name = UnitName(unit)
 	if UnitIsAFK(unit) or not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit) then
@@ -139,7 +139,7 @@ oUF.Tags['Tukui:name_short'] = function(unit)
 end
 
 
-oUF.TagEvents['Tukui:name_medium'] = 'UNIT_NAME_UPDATE', 'UNIT_CONNECTION', 'PLAYER_FLAGS_CHANGED', 'UNIT_HEALTH'
+oUF.TagEvents['Tukui:name_medium'] = 'UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH UNIT_MAXHEALTH'
 oUF.Tags['Tukui:name_medium'] = function(unit)
 	local name = UnitName(unit)
 	if UnitIsAFK(unit) or not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit) then
