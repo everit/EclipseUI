@@ -2,7 +2,7 @@
 	
 	!!YOU CAN KEEP THIS FILE WHEN UPDATING!!
 	
-	-- Characater: Overwrites configuration for the character(s) name(s) listed. --
+	-- Character: Overwrites configuration for the character(s) name(s) listed. --
 	
 	if TukuiDB.myname == "Eclípsé" then
 		TukuiCF["general"].game_texture = custom_texture_1
