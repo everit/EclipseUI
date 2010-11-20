@@ -1,16 +1,3 @@
------ [[     Setup Datatext Coloring     ]] -----
-
-if TukuiCF["datatext"].classcolor == true then
-	local _,class = UnitClass("player")
-	local r, g, b = unpack(oUF.colors.class[class])
-	cStart = ("|cff%.2x%.2x%.2x"):format(r * 255, g * 255, b * 255)
-else
-	local r, g, b = unpack(TukuiCF["datatext"].color)
-	cStart = ("|cff%.2x%.2x%.2x"):format(r * 255, g * 255, b * 255)
-end
-cEnd = "|r"
-
-
 ----- [[     Datatext Panel Positions     ]] -----
 
 local font_position = TukuiCF["fonts"].datatext_xy_position
