@@ -69,8 +69,8 @@ end
 
 local function UpdateBuffAnchors()
 	buttonName = "BuffButton"
-	local buff, previousBuff, aboveBuff;
-	local numBuffs = 0;
+	local buff, previousBuff, aboveBuff
+	local numBuffs = 0
 	for i=1, BUFF_ACTUAL_DISPLAY do
 		local buff = _G[buttonName..i]
 		StyleBuffs(buttonName, i, false)
@@ -105,11 +105,11 @@ local function UpdateBuffAnchors()
 				local mainhand, _, _, offhand, _, _, thrown = GetWeaponEnchantInfo()
 				
 				if (mainhand and offhand and thrown) and not UnitHasVehicleUI("player") then
-					buff:SetPoint("LEFT", TempEnchant3, "RIGHT", TukuiDB.Scale(3), 0)
+					buff:SetPoint("RIGHT", TempEnchant3, "LEFT", TukuiDB.Scale(-3), 0)
 				elseif ((mainhand and offhand) or (mainhand and thrown) or (offhand and thrown)) and not UnitHasVehicleUI("player") then
-					buff:SetPoint("LEFT", TempEnchant2, "RIGHT", TukuiDB.Scale(3), 0)
+					buff:SetPoint("RIGHT", TempEnchant2, "LEFT", TukuiDB.Scale(-3), 0)
 				elseif ((mainhand and not offhand and not thrown) or (offhand and not mainhand and not thrown) or (thrown and not mainhand and not offhand)) and not UnitHasVehicleUI("player") then
-					buff:SetPoint("LEFT", TempEnchant1, "RIGHT", TukuiDB.Scale(3), 0)
+					buff:SetPoint("RIGHT", TempEnchant1, "LEFT", TukuiDB.Scale(-3), 0)
 				else
 					buff:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", TukuiDB.Scale(-8), TukuiDB.Scale(-8))
 				end
