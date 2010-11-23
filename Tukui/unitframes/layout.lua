@@ -547,10 +547,10 @@ local function Shared(self, unit)
 			local buffnum = 0
 			if db.aurarows == 1 then
 				buffheight = 26
-				buffnum = 8
+				buffnum = 7
 			else
-				buffheight = 52
-				buffnum = 16
+				buffheight = 55
+				buffnum = 14
 			end
 			
 			buffs:SetHeight(buffheight)
@@ -562,7 +562,7 @@ local function Shared(self, unit)
 			debuffs:SetWidth(195)
 			debuffs:SetPoint("BOTTOMLEFT", buffs, "TOPLEFT", TukuiDB.Scale(5), TukuiDB.Scale(3))
 			debuffs.size = 26
-			debuffs.num = 24
+			debuffs.num = 21
 
 			buffs.spacing = 3
 			buffs.initialAnchor = 'TOPLEFT'
@@ -604,9 +604,13 @@ local function Shared(self, unit)
 				end
 			else
 				castbar:SetHeight(TukuiDB.Scale(21))
-				castbar:SetWidth(TukuiDB.Scale(141))
-				-- haha I'm going to cheat and anchor it to the target unitframe, fuck you resolutions!!
-				castbar:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, TukuiDB.Scale(233))
+				castbar:SetWidth(TukuiDB.Scale(196))
+
+				if db.aurarows == 1 then
+					castbar:SetPoint("BOTTOM", oUF_Tukz_target, "TOP", 0, TukuiDB.Scale(122))
+				else
+					castbar:SetPoint("BOTTOM", oUF_Tukz_target, "TOP", 0, TukuiDB.Scale(151))
+				end
 			end
 
 			castbar.time:SetPoint("RIGHT", castbar, "RIGHT", TukuiDB.Scale(-4), font_position[1])
@@ -890,13 +894,8 @@ end
 --	Default position of Tukui unitframes
 ------------------------------------------------------------------------
 
--- for lower reso
-local adjustX = 0
-local adjustY = 0
-if TukuiDB.lowversion then adjustX = 80 end
-if TukuiDB.lowversion then adjustY = 10 end
-
 oUF:RegisterStyle('Tukz', Shared)
+
 
 local f = CreateFrame("Frame")
 
@@ -926,21 +925,21 @@ f:SetScript("OnEvent", function(self, event, addon)
 		end
 		tot:SetSize(TukuiDB.Scale(130), tot.Health:GetHeight() + tot.Power:GetHeight() + 7)
 		
-		----- [[     Pet     ]] -----
-		
-		local pet = oUF:Spawn('pet', "oUF_Tukz_pet")
-		if db.charportrait then
-			pet:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", TukuiDB.Scale(-63), TukuiDB.Scale(-3))
-		else
-			pet:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
-		end
-		pet:SetSize(TukuiDB.Scale(130), pet.Health:GetHeight() + pet.Power:GetHeight() + 7)
-		
 		----- [[     Focus     ]] -----
 		
 		local focus = oUF:Spawn('focus', "oUF_Tukz_focus")
-		focus:SetPoint("TOP", UIParent, "BOTTOM", 0, TukuiDB.Scale(230))
-		focus:SetSize(TukuiDB.Scale(125), focus.Health:GetHeight() + focus.Power:GetHeight() + 7)
+		if db.charportrait then
+			focus:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", TukuiDB.Scale(-63), TukuiDB.Scale(-3))
+		else
+			focus:SetPoint("TOPLEFT", oUF_Tukz_player, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
+		end
+		focus:SetSize(TukuiDB.Scale(130), focus.Health:GetHeight() + focus.Power:GetHeight() + 7)
+		
+		----- [[     Pet     ]] -----
+		
+		local pet = oUF:Spawn('pet', "oUF_Tukz_pet")
+		pet:SetPoint("TOPLEFT", oUF_Tukz_focus, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
+		pet:SetSize(TukuiDB.Scale(130), pet.Health:GetHeight() + pet.Power:GetHeight() + 7)
 	elseif addon == "TukuiDps" then
 		----- [[     Player     ]] -----
 		
@@ -982,11 +981,6 @@ f:SetScript("OnEvent", function(self, event, addon)
 	end
 end)
 
--- if db.showfocustarget then 
-	-- local focustarget = oUF:Spawn("focustarget", "oUF_Tukz_focustarget")
-	-- focustarget:SetPoint("BOTTOM", 0, 224)
-	-- focustarget:SetSize(TukuiDB.Scale(129), TukuiDB.Scale(36))
--- end
 
 if TukuiCF.arena.unitframes then
 	local arena = {}
