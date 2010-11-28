@@ -3,7 +3,11 @@
 local db = TukuiCF["tooltip"]
 if not db.enable then return end
 
-local font, font_size, font_style, font_shadow = TukuiCF["fonts"].tooltip_font, TukuiCF["fonts"].tooltip_font_size, TukuiCF["fonts"].tooltip_font_style, TukuiCF["fonts"].tooltip_font_shadow
+local ecUI = ecUI
+local font = TukuiCF["fonts"].tooltip_font
+local font_size = TukuiCF["fonts"].tooltip_font_size
+local font_style = TukuiCF["fonts"].tooltip_font_style
+local font_shadow = TukuiCF["fonts"].tooltip_font_shadow
 
 local db2 = TukuiCF["actionbar"]
 
@@ -49,10 +53,10 @@ hooksecurefunc("GameTooltip_SetDefaultAnchor", function(self, parent)
 					self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "TOPRIGHT", 0, TukuiDB.Scale(3))
 				end
 			else
-				if db2.vertical_rightbars == true and EclipseSettings.rightbars > 0 then
+				if db2.vertical_rightbars == true and ecSV.rightbars > 0 then
 					self:ClearAllPoints()
 					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
-				elseif not db2.vertical_rightbars == true and EclipseSettings.rightbars > 0 then
+				elseif not db2.vertical_rightbars == true and ecSV.rightbars > 0 then
 					self:ClearAllPoints()
 					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, TukuiDB.Scale(3))
 				else
@@ -88,10 +92,10 @@ GameTooltip:HookScript("OnUpdate",function(self, ...)
 					self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "TOPRIGHT", 0, TukuiDB.Scale(3))
 				end
 			else
-				if db2.vertical_rightbars == true and EclipseSettings.rightbars > 0 then
+				if db2.vertical_rightbars == true and ecSV.rightbars > 0 then
 					self:ClearAllPoints()
 					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
-				elseif not db2.vertical_rightbars == true and EclipseSettings.rightbars > 0 then
+				elseif not db2.vertical_rightbars == true and ecSV.rightbars > 0 then
 					self:ClearAllPoints()
 					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, TukuiDB.Scale(3))
 				else
@@ -195,7 +199,7 @@ healthBar:ClearAllPoints()
 healthBar:SetHeight(TukuiDB.Scale(6))
 healthBar:SetPoint("BOTTOMLEFT", healthBar:GetParent(), "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(5))
 healthBar:SetPoint("BOTTOMRIGHT", healthBar:GetParent(), "TOPRIGHT", -TukuiDB.Scale(2), TukuiDB.Scale(5))
-healthBar:SetStatusBarTexture(TukuiCF["general"].game_texture)
+healthBar:SetStatusBarTexture(TukuiCF["customise"].texture)
 
 local healthBarBG = CreateFrame("Frame", "StatusBarBG", healthBar)
 healthBarBG:SetFrameLevel(healthBar:GetFrameLevel() - 1)
@@ -328,7 +332,7 @@ local BorderColor = function(self)
 end
 
 local SetStyle = function(self)
-	TukuiDB.SkinPanel(self)
+	ecUI.SkinPanel(self)
 	BorderColor(self)
 end
 

@@ -9,7 +9,13 @@
 
 ----- [[     Local Variables     ]] -----
 
-local font, font_size, font_style, font_shadow, font_position = TukuiCF["fonts"].datatext_font, TukuiCF["fonts"].datatext_font_size, TukuiCF["fonts"].datatext_font_style, TukuiCF["fonts"].datatext_font_shadow, TukuiCF["fonts"].datatext_xy_position
+local ecUI = ecUI
+local font = TukuiCF["fonts"].datatext_font
+local font_size = TukuiCF["fonts"].datatext_font_size
+local font_style = TukuiCF["fonts"].datatext_font_style
+local font_shadow = TukuiCF["fonts"].datatext_font_shadow
+local font_position = TukuiCF["fonts"].datatext_xy_position
+
 local maxlevel = UnitLevel("player") == MAX_PLAYER_LEVEL
 local collapsed, expanded = 15, 200
 
@@ -22,12 +28,12 @@ for i = 1, 3 do
 	frame[i] = CreateFrame("Frame", "TukuiDataFrame"..i, UIParent)
 	frame[i]:SetSize(200, TukuiCF["panels"].tinfoheight)
 	frame[i]:EnableMouse(true)
-	TukuiDB.SkinPanel(frame[i])
+	ecUI.SkinPanel(frame[i])
 	
 	frame[i].bar = CreateFrame("StatusBar", "TukuiDataBar"..i, frame[i])
 	frame[i].bar:SetPoint("TOPLEFT", frame[i], TukuiDB.Scale(2), TukuiDB.Scale(-2))
 	frame[i].bar:SetPoint("BOTTOMRIGHT", frame[i], TukuiDB.Scale(-2), TukuiDB.Scale(2))
-	frame[i].bar:SetStatusBarTexture(TukuiCF["general"].game_texture)
+	frame[i].bar:SetStatusBarTexture(TukuiCF["customise"].texture)
 	frame[i].bar:SetFrameLevel(frame[i]:GetFrameLevel() + 1)
 	frame[i].bar:SetAlpha(0)
 	
@@ -42,13 +48,12 @@ for i = 1, 3 do
 	frame[i].text:SetFont(font, font_size, font_style)
 	frame[i].text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	frame[i].text:SetPoint("CENTER", frame[i], "CENTER", 2, font_position[2])
-	
-	frame[i]:Hide()
 end
 
 local expframe = frame[1]
 local locframe = frame[2]
 local repframe = frame[3]
+
 
 
 ----- [[     Color Table     ]] -----
@@ -183,7 +188,11 @@ end
 ----- [[     Set Up / Check Function     ]] -----
 
 local function setup()
-	if EclipseSettings.experience_shown == true then
+	if ecSV.experience_shown == true then
+		-- just hide bars depending on what's enabled
+		expframe.bar:SetAlpha(1)
+		locframe.bar:SetAlpha(1)
+
 		-- run chosen func
 		experience()
 
@@ -205,10 +214,11 @@ local function setup()
 		locframe.text:SetText(cStart .. "L")
 		repframe.text:SetText(cStart .. "R")
 		
-		-- just hide bars depending on what's enabled
-		expframe.bar:SetAlpha(1)
-		locframe.bar:SetAlpha(1)
-	elseif EclipseSettings.location_shown == true then
+	elseif ecSV.location_shown == true then
+		expframe.bar:SetAlpha(0)
+		locframe.bar:SetAlpha(0)
+		repframe.bar:SetAlpha(0)
+
 		location()
 		
 		expframe:SetWidth(collapsed)
@@ -225,10 +235,11 @@ local function setup()
 		expframe.text:SetText(cStart .. "E")
 		repframe.text:SetText(cStart .. "R")
 		
+	elseif ecSV.reputation_shown == true then
 		expframe.bar:SetAlpha(0)
 		locframe.bar:SetAlpha(0)
-		repframe.bar:SetAlpha(0)
-	elseif EclipseSettings.reputation_shown == true then
+		repframe.bar:SetAlpha(1)
+
 		reputation()
 		
 		expframe:SetWidth(collapsed)
@@ -244,10 +255,6 @@ local function setup()
 		expframe:SetPoint("TOPLEFT", locframe, "TOPRIGHT", TukuiDB.Scale(3), 0)
 		locframe:SetPoint("TOPLEFT", repframe, "TOPRIGHT", TukuiDB.Scale(3), 0)
 		repframe:SetPoint("TOP", UIParent, "TOP", 0, TukuiDB.Scale(-8))
-		
-		expframe.bar:SetAlpha(0)
-		locframe.bar:SetAlpha(0)
-		repframe.bar:SetAlpha(1)
 	end
 end
 frame:SetScript("OnEvent", setup)
@@ -270,22 +277,22 @@ frame:RegisterEvent('PLAYER_UNGHOST')
 ----- [[     Mouse-click Functions     ]] -----
 
 expframe:SetScript("OnMouseDown", function()
-	EclipseSettings.experience_shown = true
-	EclipseSettings.location_shown = false
-	EclipseSettings.reputation_shown = false
+	ecSV.experience_shown = true
+	ecSV.location_shown = false
+	ecSV.reputation_shown = false
 	setup()
 end)
 
 locframe:SetScript("OnMouseDown", function()
-	EclipseSettings.experience_shown = false
-	EclipseSettings.location_shown = true
-	EclipseSettings.reputation_shown = false
+	ecSV.experience_shown = false
+	ecSV.location_shown = true
+	ecSV.reputation_shown = false
 	setup()
 end)
 
 repframe:SetScript("OnMouseDown", function()
-	EclipseSettings.experience_shown = false
-	EclipseSettings.location_shown = false
-	EclipseSettings.reputation_shown = true
+	ecSV.experience_shown = false
+	ecSV.location_shown = false
+	ecSV.reputation_shown = true
 	setup()
 end)

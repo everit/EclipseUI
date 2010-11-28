@@ -126,7 +126,7 @@ if TukuiCF["unitframes"].raidunitdebuffwatch == true then
 		if not ORD then return end
 		
 		ORD.ShowDispelableDebuff = true
-		ORD.FilterDispellableDebuff = false
+		ORD.FilterDispellableDebuff = true
 		ORD.MatchBySpellName = false
 
 		TukuiDB.debuffids = {

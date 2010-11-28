@@ -16,7 +16,7 @@ for i = 1, 12 do
 	if i == 1 then
 		b:SetPoint("TOPLEFT", TukuiActionBarBackgroundRight, TukuiDB.Scale(4), TukuiDB.Scale(-4))
 	else
-		if not EclipseSettings.splitbars and db.vertical_rightbars == true then
+		if not ecUI.splitbars and db.vertical_rightbars == true then
 			b:SetPoint("TOP", b2, "BOTTOM", 0, -db.buttonspacing)
 		else
 			b:SetPoint("LEFT", b2, "RIGHT", db.buttonspacing, 0)

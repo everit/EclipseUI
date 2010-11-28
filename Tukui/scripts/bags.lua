@@ -9,7 +9,12 @@
 
 if not TukuiCF["bags"].enable == true then return end
 
-local font, font_size, font_style, font_shadow = TukuiCF["fonts"].bag_font, TukuiCF["fonts"].bag_font_size, TukuiCF["fonts"].bag_font_style, TukuiCF["fonts"].bag_font_shadow
+local ecUI = ecUI
+
+local font = TukuiCF["fonts"].bag_font
+local font_size = TukuiCF["fonts"].bag_font_size
+local font_style = TukuiCF["fonts"].bag_font_style
+local font_shadow = TukuiCF["fonts"].bag_font_shadow
 
 local bags_BACKPACK = {0, 1, 2, 3, 4}
 local bags_BANK = {-1, 5, 6, 7, 8, 9, 10, 11}
@@ -407,7 +412,7 @@ function Stuffing:CreateBagFrame(w)
 	f:SetToplevel(1)
 	f:SetFrameStrata("HIGH")
 	f:SetFrameLevel(20)
-	TukuiDB.SkinFadedPanel(f)
+	ecUI.SkinFadedPanel(f)
 
 	local function bagUpdate(f, ...)
 		if w == "Bank" then
@@ -425,7 +430,7 @@ function Stuffing:CreateBagFrame(w)
 				if TukuiCF["actionbar"].vertical_rightbars == true then
 					f:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, 3)
 				else
-					if EclipseSettings.rightbars >= 1 then
+					if ecSV.rightbars >= 1 then
 						f:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, 3)
 					else
 						f:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, 3)
@@ -460,14 +465,14 @@ function Stuffing:CreateBagFrame(w)
     f.b_close:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 
 	TukuiDB.SetTemplate(f.b_close)
-	TukuiDB.CreateOverlay(f.b_close)
+	ecUI.CreateOverlay(f.b_close)
 
 	f.b_text = f.b_close:CreateFontString(nil, "OVERLAY")
 	f.b_text:SetFont(font, font_size, font_style)
 	f.b_text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	f.b_text:SetPoint("CENTER", TukuiCF["fonts"].bag_button_xy_position[1], TukuiCF["fonts"].bag_button_xy_position[2])
 	f.b_text:SetText(tukuilocal.bags_close)
-	TukuiDB.Color(f.b_text)
+	ecUI.Color(f.b_text)
 	
 	f.b_close:SetWidth(f.b_text:GetWidth() + 20)
 
@@ -484,14 +489,14 @@ function Stuffing:CreateBagFrame(w)
 		f.b_key:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 
 		TukuiDB.SetTemplate(f.b_key)
-		TukuiDB.CreateOverlay(f.b_key)
+		ecUI.CreateOverlay(f.b_key)
 
 		f.b_ktext = f.b_key:CreateFontString(nil, "OVERLAY")
 		f.b_ktext:SetFont(font, font_size, font_style)
 		f.b_ktext:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 		f.b_ktext:SetPoint("CENTER", TukuiCF["fonts"].bag_button_xy_position[1], TukuiCF["fonts"].bag_button_xy_position[2])
 		f.b_ktext:SetText(tukuilocal.bags_keyring)
-		TukuiDB.Color(f.b_ktext)
+		ecUI.Color(f.b_ktext)
 
 		f.b_key:SetWidth(f.b_ktext:GetWidth() + 20)
 	end
@@ -501,7 +506,7 @@ function Stuffing:CreateBagFrame(w)
 	fb:SetPoint("BOTTOMLEFT", f, "TOPLEFT", 0, TukuiDB.Scale(3))
 	fb:SetFrameStrata("HIGH")
 	f.bags_frame = fb
-	TukuiDB.SkinFadedPanel(fb)
+	ecUI.SkinFadedPanel(fb)
 
 	return f
 end

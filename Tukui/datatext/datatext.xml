@@ -3,7 +3,7 @@
 	
 	<Script file="newdata.lua"/>
 	<Script file="databar.lua"/>
-	
+
 	<Script file="bags.lua"/>
 	<Script file="crit.lua"/>
 	<Script file="currency.lua"/>

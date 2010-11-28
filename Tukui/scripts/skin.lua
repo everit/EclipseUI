@@ -1,25 +1,13 @@
 -- just some random skin, not everything is skinned atm.
 
-function TukuiDB.SetModifiedBackdrop(self)
-	if TukuiCF["datatext"].classcolor == true then
-		local color = RAID_CLASS_COLORS[TukuiDB.myclass]
-		self:SetBackdropBorderColor(color.r, color.g, color.b)
-	else
-		local r, g, b = unpack(TukuiCF["datatext"].color)
-		self:SetBackdropBorderColor(r, g, b)
-	end
-end
-
-function TukuiDB.SetOriginalBackdrop(self)
-	self:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
-end
+local ecUI = ecUI
 
 local function SkinButton(f)
 	f:SetNormalTexture("")
 	f:SetHighlightTexture("")
 	f:SetPushedTexture("")
 	f:SetDisabledTexture("")
-	TukuiDB.SkinPanel(f)
+	ecUI.SkinPanel(f)
 	f.shadow:Hide()
 	f:HookScript("OnEnter", TukuiDB.SetModifiedBackdrop)
 	f:HookScript("OnLeave", TukuiDB.SetOriginalBackdrop)
@@ -85,15 +73,15 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 		end
 		
 		for i = 1, getn(bgskins) do
-			TukuiDB.SkinFadedPanel(_G[bgskins[i]])
+			ecUI.SkinFadedPanel(_G[bgskins[i]])
 		end
 		
 		for i = 1, getn(insetskins) do
-			TukuiDB.SkinPanel(_G[insetskins[i]])
+			ecUI.SkinPanel(_G[insetskins[i]])
 		end
 		
 		for i = 1, getn(nonshadowskins) do
-			TukuiDB.SkinPanel(_G[nonshadowskins[i]])
+			ecUI.SkinPanel(_G[nonshadowskins[i]])
 			_G[nonshadowskins[i]].shadow:Hide()
 		end
 		
@@ -201,7 +189,6 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 		-- others
 		_G["ReadyCheckListenerFrame"]:SetAlpha(0)
 		_G["ReadyCheckFrame"]:HookScript("OnShow", function(self) if UnitIsUnit("player", self.initiator) then self:Hide() end end) -- bug fix, don't show it if initiator
-		_G["PlayerPowerBarAlt"]:HookScript("OnShow", function(self) self:ClearAllPoints() self:SetPoint("TOP", 0, -12) end)
 	end
 	
 	-- mac menu/option panel, made by affli.

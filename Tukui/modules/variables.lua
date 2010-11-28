@@ -1,24 +1,3 @@
------ [[     Set Up Table Values On Initial Login If They Don't Exist     ]] -----
-
-if not EclipseSettings then
-	EclipseSettings = {
-		["minimap_shown"] = true,
-		
-		["bottomrows"] = 1,
-		["rightbars"] = 1,
-		["splitbars"] = false,
-		
-		["24h_time"] = false,
-		["local_time"] = true,
-		["game_time"] = false,
-		
-		["location_shown"] = true,
-		["experience_shown"] = false,
-		["reputation_shown"] = false,
-	}	
-end
-
-
 ----- [[     Set Up Tukui Tables     ]] -----
 
 TukuiCF = { }
@@ -40,4 +19,30 @@ TukuiDB.patch = GetBuildInfo()
 TukuiDB.level = UnitLevel("player")
 
 
+----- [[     Set Up ecUI Variables     ]] -----
+
+ecUI = { }
+
+----- [[     Set Up Table Values     ]] -----
+
+if not ecSV then
+	ecSV = {
+		["minimap_shown"] = true,
+		["locked_minimap"] = false,
+		
+		["bottomrows"] = 1,
+		["rightbars"] = 1,
+		["splitbars"] = false,
+		["locked_actionbars"] = false,
+		
+		["24h_time"] = false,
+		["local_time"] = true,
+		["game_time"] = false,
+		
+		["experience_shown"] = false,
+		["location_shown"] = true,
+		["reputation_shown"] = false,
+		["lfg_shown"] = false,
+	}	
+end
 

@@ -1,4 +1,9 @@
-local font, font_size, font_style, font_shadow, font_count_pos, font_duration_pos = TukuiCF["fonts"].aura_font, TukuiCF["fonts"].aura_font_size, TukuiCF["fonts"].aura_font_style, TukuiCF["fonts"].aura_font_shadow, TukuiCF["fonts"].aura_count_xy_position, TukuiCF["fonts"].aura_duration_xy_position
+local font = TukuiCF["fonts"].aura_font
+local font_size = TukuiCF["fonts"].aura_font_size
+local font_style = TukuiCF["fonts"].aura_font_style
+local font_shadow = TukuiCF["fonts"].aura_font_shadow
+local font_count_pos = TukuiCF["fonts"].aura_count_xy_position
+local font_duration_pos = TukuiCF["fonts"].aura_duration_xy_position
 
 ConsolidatedBuffs:ClearAllPoints()
 ConsolidatedBuffs:SetPoint("LEFT", Minimap, "LEFT", TukuiDB.Scale(0), TukuiDB.Scale(0))

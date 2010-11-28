@@ -1,5 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">	
 	<Script file="Hide.lua"/>
+
 	<Script file="Bar1.lua"/>
 	<Script file="Bar2.lua"/>
 	<Script file="Bar3.lua"/>
@@ -13,4 +14,5 @@
 	<Script file="Others.lua"/>
 	<Script file="Toggle.lua"/>
 	<Script file="Mouseover.lua"/>
+
 </Ui>

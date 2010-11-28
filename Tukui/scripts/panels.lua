@@ -4,7 +4,6 @@ local panels = TukuiCF["panels"]
 local chat = TukuiCF["chat"]
 local db = TukuiCF["actionbar"]
 
-
 ----- [[     Top "Art" Panel     ]] -----
 
 -- leaving this here incase some one wants to use it
@@ -79,11 +78,11 @@ sprbg:SetPoint("BOTTOMLEFT", barbg, "BOTTOMRIGHT", 6, 0)
 
 local petbg = CreateFrame("Frame", "TukuiPetActionBarBackground", UIParent)
 
-TukuiDB.SkinPanel(barbg)
-TukuiDB.SkinPanel(rightbbg)
-TukuiDB.SkinPanel(splbg)
-TukuiDB.SkinPanel(sprbg)
-TukuiDB.SkinPanel(petbg)
+ecUI.SkinPanel(barbg)
+ecUI.SkinPanel(rightbbg)
+ecUI.SkinPanel(splbg)
+ecUI.SkinPanel(sprbg)
+ecUI.SkinPanel(petbg)
 
 
 -- if not db.hideshapeshift then

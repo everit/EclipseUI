@@ -4,10 +4,14 @@ if not db.enable then return end
 
 ----- [[     Local Variables     ]] -----
 
-local font, font_size, font_style, font_shadow, font_position = TukuiCF["fonts"].unitframe_font, TukuiCF["fonts"].unitframe_font_size, TukuiCF["fonts"].unitframe_font_style, TukuiCF["fonts"].unitframe_font_shadow, TukuiCF["fonts"].unitframe_y_position
+local ecUI = ecUI
+local texture = TukuiCF["customise"].texture
 
-
-local texture = TukuiCF["general"].game_texture
+local font = TukuiCF["fonts"].unitframe_font
+local font_size = TukuiCF["fonts"].unitframe_font_size
+local font_style = TukuiCF["fonts"].unitframe_font_style
+local font_shadow =  TukuiCF["fonts"].unitframe_font_shadow
+local font_position = TukuiCF["fonts"].unitframe_y_position
 
 
 ----- [[     Layout     ]] -----
@@ -63,7 +67,7 @@ local function Shared(self, unit)
 	local hBorder = CreateFrame("Frame", nil, health)
 	hBorder:SetFrameLevel(health:GetFrameLevel() - 1)
 	hBorder:SetAllPoints()
-	TukuiDB.CreateOuterBorder(hBorder)
+	ecUI.CreateOuterBorder(hBorder)
 	self.Health.border = hBorder		
 
 	local power = CreateFrame("StatusBar", nil, self)
@@ -81,7 +85,7 @@ local function Shared(self, unit)
 	local pBorder = CreateFrame("Frame", nil, power)
 	pBorder:SetFrameLevel(power:GetFrameLevel() - 1)
 	pBorder:SetAllPoints()
-	TukuiDB.CreateOuterBorder(pBorder)
+	ecUI.CreateOuterBorder(pBorder)
 	self.Power.border = pBorder
 
 	local frame = CreateFrame("Frame", nil, health)
@@ -93,7 +97,7 @@ local function Shared(self, unit)
 		insets = { left = -TukuiDB.mult, right = -TukuiDB.mult, top = -TukuiDB.mult, bottom = -TukuiDB.mult }
 	})
 	frame:SetBackdropColor(unpack(TukuiCF["media"].bordercolor))
-	TukuiDB.CreateOuterBorder(frame)
+	ecUI.CreateOuterBorder(frame)
 	TukuiDB.CreateShadow(frame)
 	self.frame = frame		
 	
@@ -149,7 +153,7 @@ local function Shared(self, unit)
 	castbarBg:SetPoint("TOPLEFT", -TukuiDB.Scale(2), TukuiDB.Scale(2))
 	castbarBg:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), -TukuiDB.Scale(2))
 	castbarBg:SetFrameLevel(castbar:GetFrameLevel() - 1)
-	TukuiDB.SkinPanel(castbarBg)
+	ecUI.SkinPanel(castbarBg)
 
 	castbar.time = TukuiDB.SetFontString(castbar, font, font_size, font_style)
 	castbar.time:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
@@ -215,7 +219,7 @@ local function Shared(self, unit)
 		power.value:SetPoint("LEFT", panel, "LEFT", TukuiDB.Scale(4), font_position[1])
 		power.PreUpdate = TukuiDB.PreUpdatePower
 		power.PostUpdate = TukuiDB.PostUpdatePower
-		
+
 		
 		----- [[     Portraits     ]] -----
 		
@@ -243,7 +247,7 @@ local function Shared(self, unit)
 			portrait.bg = poBg
 			
 			local pFrame = CreateFrame("Frame", nil, portrait)
-			TukuiDB.SkinFadedPanel(pFrame)
+			ecUI.SkinFadedPanel(pFrame)
 			pFrame:SetAllPoints()
 			pFrame:SetFrameLevel(portrait:GetFrameLevel()+1)
 			pFrame:SetBackdropColor(0, 0, 0, 0)
@@ -254,7 +258,7 @@ local function Shared(self, unit)
 		----- [[     Player Only Settings     ]] -----
 
 		if (unit == "player") then
-		
+
 			----- [[     Combat Icon     ]] -----
 			
 			local Combat = health:CreateTexture(nil, "OVERLAY")
@@ -352,7 +356,7 @@ local function Shared(self, unit)
 				local eclipseBarBG = CreateFrame("Frame", nil, eclipseBar)
 				eclipseBarBG:SetPoint("TOPLEFT", eclipseBar, "TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
 				eclipseBarBG:SetPoint("BOTTOMRIGHT", eclipseBar, "BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
-				TukuiDB.SkinPanel(eclipseBarBG)
+				ecUI.SkinPanel(eclipseBarBG)
 
 				local lunarBar = CreateFrame('StatusBar', nil, eclipseBar)
 				lunarBar:SetPoint('LEFT', eclipseBar, 'LEFT', 0, 0)
@@ -392,7 +396,7 @@ local function Shared(self, unit)
 					barFrame[i]:SetFrameLevel(health:GetFrameLevel() + 1)
 					barFrame[i]:SetHeight(TukuiDB.Scale(8))
 					barFrame[i]:SetWidth(TukuiDB.Scale(195 - 1) / 3)
-					TukuiDB.SkinPanel(barFrame[i])
+					ecUI.SkinPanel(barFrame[i])
 					
 					if i == 1 then
 						barFrame[i]:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, TukuiDB.Scale(3))
@@ -444,7 +448,7 @@ local function Shared(self, unit)
 					else
 						rB[i]:SetPoint("TOPLEFT", rB[i-1], "TOPRIGHT", TukuiDB.Scale(3), 0)
 					end
-					TukuiDB.SkinPanel(rB[i])
+					ecUI.SkinPanel(rB[i])
 
 					Runes[i] = CreateFrame("StatusBar", self:GetName().."_Runes"..i, self)
 					Runes[i]:SetPoint("TOPLEFT", rB[i], "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
@@ -470,7 +474,7 @@ local function Shared(self, unit)
 					totemFrame[i]:SetFrameLevel(health:GetFrameLevel() + 1)
 					totemFrame[i]:SetHeight(TukuiDB.Scale(8))
 					totemFrame[i]:SetWidth(TukuiDB.Scale(195 - 4) / 4)
-					TukuiDB.SkinPanel(totemFrame[i])
+					ecUI.SkinPanel(totemFrame[i])
 
 					if i == 1 then
 						totemFrame[i]:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, TukuiDB.Scale(3))
@@ -533,46 +537,60 @@ local function Shared(self, unit)
 		----- [[     Auras     ]] -----
 
 		if (unit == "target" and db.targetauras) or (unit == "player" and db.playerauras) then
-			local buffs = CreateFrame("Frame", nil, self)
-			local debuffs = CreateFrame("Frame", nil, self)
-			
+			local buffs = CreateFrame("Frame", self:GetName().."Buffs", self)
+			local debuffs = CreateFrame("Frame", self:GetName().."Debuffs", self)
 			
 			if ((TukuiDB.myclass == "SHAMAN" and db.totemtimer) or (TukuiDB.myclass == "DEATHKNIGHT" and db.runebar) or TukuiDB.myclass == "PALADIN" or TukuiDB.myclass == "WARLOCK") and (db.playerauras) and (unit == "player") then
-				buffs:SetPoint("TOPLEFT", self, "TOPLEFT", TukuiDB.Scale(-1), TukuiDB.Scale(37))
+				buffs:SetPoint("BOTTOMLEFT", self.frame, "TOPLEFT", 0, TukuiDB.Scale(10))
 			else
-				buffs:SetPoint("TOPLEFT", self, "TOPLEFT", TukuiDB.Scale(-1), TukuiDB.Scale(30))
+				buffs:SetPoint("BOTTOMLEFT", self.frame, "TOPLEFT", 0, TukuiDB.Scale(3))
 			end
-			
+		
+			local buffsize = 26		
 			local buffheight = 0
 			local buffnum = 0
-			if db.aurarows == 1 then
-				buffheight = 26
+			if db.buffrows == 1 then
+				buffheight = buffsize
 				buffnum = 7
 			else
-				buffheight = 55
+				buffheight = buffsize * 2 + 3
 				buffnum = 14
+			end
+			
+			local debuffsize = 26
+			local debuffheight = debuffsize
+			local debuffnum = 0
+			if db.debuffrows == 3 then
+				debuffheight = debuffsize * 3 + 6
+				debuffnum = 21
+			elseif db.debuffrows == 2 then
+				debuffheight = debuffsize * 2 + 3
+				debuffnum = 14
+			elseif db.debuffrows == 1 then
+				debuffheight = debuffsize
+				debuffnum = 7
 			end
 			
 			buffs:SetHeight(buffheight)
 			buffs:SetWidth(195)
-			buffs.size = 26
+			buffs.size = buffsize
 			buffs.num = buffnum
 
-			debuffs:SetHeight(buffheight)
+			debuffs:SetHeight(debuffheight)
 			debuffs:SetWidth(195)
-			debuffs:SetPoint("BOTTOMLEFT", buffs, "TOPLEFT", TukuiDB.Scale(5), TukuiDB.Scale(3))
-			debuffs.size = 26
-			debuffs.num = 21
+			debuffs:SetPoint("BOTTOMRIGHT", buffs, "TOPRIGHT", TukuiDB.Scale(5), TukuiDB.Scale(3))
+			debuffs.size = debuffsize
+			debuffs.num = debuffnum
 
 			buffs.spacing = 3
-			buffs.initialAnchor = 'TOPLEFT'
+			buffs.initialAnchor = 'BOTTOMLEFT'
 			buffs.PostCreateIcon = TukuiDB.PostCreateAura
 			buffs.PostUpdateIcon = TukuiDB.PostUpdateAura
 			buffs.onlyShowPlayer = db.onlyplayerbuffs	
 			self.Buffs = buffs	
 
 			debuffs.spacing = 3
-			debuffs.initialAnchor = 'TOPRIGHT'
+			debuffs.initialAnchor = 'BOTTOMRIGHT'
 			debuffs["growth-y"] = "UP"
 			debuffs["growth-x"] = "LEFT"
 			debuffs.PostCreateIcon = TukuiDB.PostCreateAura
@@ -587,29 +605,20 @@ local function Shared(self, unit)
 		if db.unitcastbar == true then
 			if unit == "player" then
 				castbar:SetHeight(TukuiCF["actionbar"].buttonsize - 4)
-				if TukuiCF["actionbar"].tukui_default == true then
-					if db.cbicons then
-						castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiCF["actionbar"].buttonsize + 185, TukuiDB.Scale(5))
-					else
-						castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiDB.Scale(182), TukuiDB.Scale(5))
-					end
-					castbar:SetPoint("BOTTOMRIGHT", TukuiActionBarBackground, "TOPRIGHT", TukuiDB.Scale(-182), TukuiDB.Scale(5))
+				if db.cbicons then
+					castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiCF["actionbar"].buttonsize + 5, TukuiDB.Scale(5))
 				else
-					if db.cbicons then
-						castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiCF["actionbar"].buttonsize + 5, TukuiDB.Scale(5))
-					else
-						castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(5))
-					end
-					castbar:SetPoint("BOTTOMRIGHT", TukuiActionBarBackground, "TOPRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(5))
+					castbar:SetPoint("BOTTOMLEFT", TukuiActionBarBackground, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(5))
 				end
+				castbar:SetPoint("BOTTOMRIGHT", TukuiActionBarBackground, "TOPRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(5))
 			else
 				castbar:SetHeight(TukuiDB.Scale(21))
 				castbar:SetWidth(TukuiDB.Scale(196))
 
-				if db.aurarows == 1 then
-					castbar:SetPoint("BOTTOM", oUF_Tukz_target, "TOP", 0, TukuiDB.Scale(122))
+				if db.targetauras == true then
+					castbar:SetPoint("BOTTOM", oUF_Tukz_targetDebuffs, "TOP", TukuiDB.Scale(-2), TukuiDB.Scale(5))
 				else
-					castbar:SetPoint("BOTTOM", oUF_Tukz_target, "TOP", 0, TukuiDB.Scale(151))
+					castbar:SetPoint("BOTTOMLEFT", self.frame, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(5))
 				end
 			end
 
@@ -778,7 +787,7 @@ local function Shared(self, unit)
 			castbar:SetPoint("TOPLEFT", health)
 			castbar:SetPoint("BOTTOMRIGHT", health)
 
-			TukuiDB.Kill(castbarBg.shadow)
+			castbarBg.shadow:Hide()
 			
 			castbar.time:SetPoint("RIGHT", castbar, "RIGHT", TukuiDB.Scale(-4), font_position[1])
 			castbar.time:SetJustifyH("RIGHT")

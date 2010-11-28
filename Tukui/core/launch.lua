@@ -174,17 +174,24 @@ local function install()
 	end
 	
 	-- we can reset this shit here :)
-	EclipseSettings = {} -- make sure we clear the table first, don't want any unnecessary values
-	EclipseSettings = {
+	ecSV = {} -- make sure we clear the table first, don't want any unnecessary values
+	ecSV = {
 		["minimap_shown"] = true,
+		["locked_minimap"] = false,
 		
 		["bottomrows"] = 1,
 		["rightbars"] = 1,
 		["splitbars"] = false,
+		["locked_actionbars"] = false,
 
 		["hr_time"] = false,
 		["local_time"] = true,
 		["game_time"] = false,
+		
+		["experience_shown"] = false,
+		["location_shown"] = true,
+		["reputation_shown"] = false,
+		["lfg_shown"] = false,
 	}
 
 	ReloadUI()

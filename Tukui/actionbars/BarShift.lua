@@ -14,7 +14,7 @@ if db.vertical_shapeshift == true then
 else	
 	TukuiShift:SetPoint("BOTTOMLEFT", TukuiDataLeft, "BOTTOMRIGHT", 3, 0)
 end
-TukuiDB.SkinPanel(TukuiShift)
+ecUI.SkinPanel(TukuiShift)
 TukuiShift:SetScript("OnEnter", TukuiDB.SetModifiedBackdrop)
 TukuiShift:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 

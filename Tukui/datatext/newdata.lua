@@ -1,39 +1,175 @@
-local font, font_size, font_style, font_shadow, font_position = TukuiCF["fonts"].datatext_font, TukuiCF["fonts"].datatext_font_size, TukuiCF["fonts"].datatext_font_style, TukuiCF["fonts"].datatext_font_shadow, TukuiCF["fonts"].datatext_xy_position
-	
------ [[     Panels     ]] -----
+local ecUI = ecUI
 
--- disabled bars for now until I decide what I'm doing with them
+local font = TukuiCF["fonts"].datatext_font
+local font_size = TukuiCF["fonts"].datatext_font_size
+local font_style = TukuiCF["fonts"].datatext_font_style
+local font_shadow = TukuiCF["fonts"].datatext_font_shadow
+local font_position = TukuiCF["fonts"].datatext_xy_position
+
+----- [[     Panels     ]] -----
 
 local stat = CreateFrame("Frame")
 
 for i = 1, 4 do
 	stat[i] = CreateFrame("Frame", "TukuiStat"..i, UIParent)
-	stat[i]:SetSize(85, TukuiCF["panels"].tinfoheight)
+	stat[i]:SetSize(70, TukuiCF["panels"].tinfoheight)
 	stat[i]:EnableMouse(true)
-	TukuiDB.SkinPanel(stat[i])
+	ecUI.SkinPanel(stat[i])
 	
 	stat[i].text = stat[i]:CreateFontString(nil, "OVERLAY")
 	stat[i].text:SetFont(font, font_size, font_style)
 	stat[i].text:SetSize(stat[i]:GetWidth() - 10, 12)
 	stat[i].text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	stat[i].text:SetPoint("CENTER", font_position[1], font_position[2])
-
-	-- if i == 2 or i == 3 then
+	
+	-- if i == 3 or i == 4 then
 		-- stat[i].bar = CreateFrame("StatusBar", nil, stat[i])
 		-- stat[i].bar:SetPoint("TOPLEFT", stat[i], TukuiDB.Scale(2), TukuiDB.Scale(-2))
 		-- stat[i].bar:SetPoint("BOTTOMRIGHT", stat[i], TukuiDB.Scale(-2), TukuiDB.Scale(2))
-		-- stat[i].bar:SetStatusBarTexture(TukuiCF["general"].game_texture)
+		-- stat[i].bar:SetStatusBarTexture(TukuiCF["customise"].texture)
 		-- stat[i].bar:SetFrameLevel(stat[i]:GetFrameLevel())
 	-- end
-	
+
 	if i == 1 then
 		stat[i]:ClearAllPoints()
-		stat[i]:SetPoint("TOPRIGHT", TukuiMinimap, "TOPLEFT", TukuiDB.Scale(-3), 0)
+		stat[i]:SetPoint("TOPLEFT", TukuiMinimap, "TOPRIGHT", TukuiDB.Scale(3), 0)
+		stat[i]:SetWidth(85)
 	else
 		stat[i]:ClearAllPoints()
-		stat[i]:SetPoint("TOPRIGHT", stat[i-1], "TOPLEFT", -3, 0)
+		stat[i]:SetPoint("TOPLEFT", stat[i-1], "TOPRIGHT", TukuiDB.Scale(3), 0)
 	end
 end
+
+
+----- [[     Time     ]] -----
+
+stat[1]:HookScript("OnMouseDown", function(self, btn)
+	if btn == "RightButton" then
+		if ecSV.game_time == true then
+			ecSV.game_time = false
+			ecSV.local_time = true
+		elseif ecSV.local_time == true then
+			ecSV.game_time = true
+			ecSV.local_time = false
+		end
+	elseif btn == "LeftButton" then
+		if ecSV.hr_time == true then
+			ecSV.hr_time = false
+			hrmode = "Disabled"
+		elseif ecSV.hr_time == false then
+			ecSV.hr_time = true
+			hrmode = "Enabled"
+		end
+	end
+end)
+
+local int4 = 1
+local function TimeUpdate(self, t)
+	local pendingCalendarInvites = CalendarGetNumPendingInvites()
+	int4 = int4 - t
+	
+	if int4 < 0 then
+		if ecSV.local_time == true then
+			Hr24 = tonumber(date("%H"))
+			Hr = tonumber(date("%I"))
+			Min = date("%M")
+			
+			if ecSV.hr_time == true then
+				if pendingCalendarInvites > 0 then
+						stat[1].text:SetText(cStart .. "L: |r" .. "|cffFF0000" .. Hr24 .. ":" .. Min)
+					else
+						stat[1].text:SetText(cStart .. "L: |r" .. Hr24 .. ":" .. Min)
+					end
+				else
+					if Hr24>=12 then
+						if pendingCalendarInvites > 0 then
+							stat[1].text:SetText(cStart .. "L: |r" .. "|cffFF0000" .. Hr .. ":" .. Min .. cStart .. " pm|r")
+						else
+							stat[1].text:SetText(cStart .. "L: |r" .. Hr .. ":" .. Min .. cStart .. " pm|r")
+						end
+				else
+					if pendingCalendarInvites > 0 then
+						stat[1].text:SetText(cStart .. "L: |r" .. "|cffFF0000" .. Hr .. ":" .. Min .. cStart .. " am|r")
+					else
+						stat[1].text:SetText(cStart .. "L: |r" .. Hr .. ":" .. Min .. cStart .. " am|r")
+					end
+				end
+			end	
+		elseif ecSV.game_time == true then
+			local Hr, Min = GetGameTime()
+			if Min<10 then Min = "0"..Min end
+			if ecSV.hr_time == true then
+				if pendingCalendarInvites > 0 then
+					stat[1].text:SetText(cStart .. "S: |r" .. "|cffFF0000" .. Hr .. ":" .. Min)
+				else
+					stat[1].text:SetText(cStart .. "S: |r" .. Hr .. ":" .. Min)
+				end
+			elseif ecSV.hr_time == false then
+				if Hr>=12 then
+					if Hr>12 then Hr = Hr-12 end
+					if pendingCalendarInvites > 0 then
+						stat[1].text:SetText(cStart .. "S: |r" .. "|cffFF0000" .. Hr .. ":" .. Min .. cStart .. " pm|r")
+					else
+						stat[1].text:SetText(cStart .. "S: |r" .. Hr .. ":" .. Min .. cStart .. " pm|r")
+					end
+				else
+					if Hr == 0 then Hr = 12 end
+					if pendingCalendarInvites > 0 then
+						stat[1].text:SetText(cStart .. "S: |r" .. "|cffFF0000" .. Hr .. ":" .. Min .. cStart .. " am|r")
+					else
+						stat[1].text:SetText(cStart .. "S: |r" .. Hr .. ":" .. Min .. cStart .. " am|r")
+					end
+				end
+			end
+		end
+		int4 = 1
+	end
+end
+stat[1]:SetScript("OnUpdate", TimeUpdate)
+TimeUpdate(stat[1], 10)
+
+stat[1]:SetScript("OnEnter", function()
+	GameTooltip:SetOwner(stat[1], "ANCHOR_BOTTOMRIGHT", -stat[1]:GetWidth(), TukuiDB.Scale(-3))
+	GameTooltip:ClearLines()
+
+	if not ecSV.game_time == true then
+		Hr24 = tonumber(date("%H"))
+		Hr = tonumber(date("%I"))
+		Min = date("%M")
+
+		if ecSV.hr_time == true then
+			GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_localtime, Hr24 .. ":" .. Min, _, _, _, 1, 1, 1)
+		else
+			if Hr24>=12 then
+				GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_localtime, Hr .. ":" .. Min .. " pm|r", _, _, _, 1, 1, 1)
+			else
+				GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_localtime, Hr .. ":" .. Min .. " am|r", _, _, _, 1, 1, 1)
+			end
+		end	
+	else
+		local Hr, Min = GetGameTime()
+		if Min<10 then Min = "0"..Min end
+		if ecSV.hr_time == true then
+			GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_servertime, Hr .. ":" .. Min, _, _, _, 1, 1, 1)
+		else
+			if Hr>=12 then
+				if Hr>12 then Hr = Hr-12 end
+				GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_servertime, Hr .. ":" .. Min .. " pm|r", _, _, _, 1, 1, 1)
+			else
+			if Hr == 0 then Hr = 12 end
+			GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_servertime, Hr .. ":" .. Min .. " am|r", _, _, _, 1, 1, 1)
+		end
+	end
+end
+
+GameTooltip:AddLine" "
+GameTooltip:AddDoubleLine(cStart .. "Right-click:", "Local or Server Time", _, _, _, 1, 1, 1)
+GameTooltip:AddDoubleLine(cStart .. "Left-click:", "Format 24H or AM/PM", _, _, _, 1, 1, 1)
+GameTooltip:AddDoubleLine(cStart .. "Middle-click:", "Show Calender", _, _, _, 1, 1, 1)
+
+GameTooltip:Show()
+end)
+stat[1]:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
 
 ----- [[     Memory     ]] -----
@@ -108,18 +244,18 @@ local function MemUpdate(self, t)
 			memC = format("|cff32DC46 %s|r ", MEMORY_TEXT)
 		end
 
-		stat[1].text:SetText(memC)
+		stat[2].text:SetText(memC)
 		int10 = 1
 	end
 end
 
-stat[1]:SetScript("OnMouseDown", function() collectgarbage("collect") MemUpdate(stat[1], 20) end)
-stat[1]:SetScript("OnUpdate", MemUpdate) 
+stat[2]:SetScript("OnMouseDown", function() collectgarbage("collect") MemUpdate(stat[2], 20) end)
+stat[2]:SetScript("OnUpdate", MemUpdate) 
 
-stat[1]:SetScript("OnEnter", function()
+stat[2]:SetScript("OnEnter", function()
 	if not InCombatLockdown() then
 		local bandwidth = GetAvailableBandwidth()
-		GameTooltip:SetOwner(stat[1], "ANCHOR_BOTTOMRIGHT", -stat[1]:GetWidth(), TukuiDB.Scale(-3))
+		GameTooltip:SetOwner(stat[2], "ANCHOR_BOTTOMRIGHT", -stat[2]:GetWidth(), TukuiDB.Scale(-3))
 		GameTooltip:ClearLines()
 		if bandwidth ~= 0 then
 			GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_bandwidth,format("%s ".. cStart .. "Mbps",bandwidth), _, _, _, 1, 1, 1)
@@ -138,8 +274,8 @@ stat[1]:SetScript("OnEnter", function()
 		GameTooltip:Show()
 	end
 end)
-stat[1]:SetScript("OnLeave", function() GameTooltip:Hide() end)
-MemUpdate(stat[1], 20)
+stat[2]:SetScript("OnLeave", function() GameTooltip:Hide() end)
+MemUpdate(stat[2], 20)
 
 
 ----- [[     Fps     ]] -----
@@ -151,27 +287,27 @@ local function FpsUpdate(self, t)
 		local fps = floor(GetFramerate())
 		local color_fps
 		
+		-- stat[3].bar:SetMinMaxValues(0, 180)
+		-- stat[3].bar:SetValue(fps)
+
 		if fps >= 50 then
 			color_fps = "|cff32DC46"..floor(GetFramerate()).."|r"
-			-- stat[2].bar:SetStatusBarColor(.3, .9, .3)
+			-- stat[3].bar:SetStatusBarColor(.3, .9, .3)
 		elseif fps >= 25 then
 			color_fps = "|cffFDD842"..floor(GetFramerate()).."|r"
-			-- stat[2].bar:SetStatusBarColor(.8, .7, .4)
+			-- stat[3].bar:SetStatusBarColor(.8, .7, .4)
 		elseif fps >= 0 then
 			color_fps = "|cffCC3333"..floor(GetFramerate()).."|r"
-			-- stat[2].bar:SetStatusBarColor(.9, .3, .3)
+			-- stat[3].bar:SetStatusBarColor(.9, .3, .3)
 		end
 		
-		-- stat[2].bar:SetMinMaxValues(0, 200)
-		-- stat[2].bar:SetValue(fps)
-
-		stat[2].text:SetText(cStart .. tukuilocal.datatext_fps .. color_fps)
+		stat[3].text:SetText(cStart .. tukuilocal.datatext_fps .. color_fps)
 		
 		int2 = 1
 	end	
 end
-stat[2]:SetScript("OnUpdate", FpsUpdate)
-FpsUpdate(stat[2], 10)
+stat[3]:SetScript("OnUpdate", FpsUpdate)
+FpsUpdate(stat[3], 10)
 
 
 ----- [[     Latency     ]] -----
@@ -182,158 +318,25 @@ local function LatencyUpdate(self, t)
 	if int3 < 0 then
 		local _, _, ms = GetNetStats()
 		local color_ms
+
+		-- stat[4].bar:SetMinMaxValues(0, 500)
+		-- stat[4].bar:SetValue(ms)
 		
 		if ms >= 300 then
 			color_ms = "|cffCC3333"..select(3, GetNetStats()).."|r"
-			-- stat[3].bar:SetStatusBarColor(.9, .3, .3)
-		elseif ms >= 150 then
+			-- stat[4].bar:SetStatusBarColor(.9, .3, .3)
+		elseif ms >= 200 then
 			color_ms = "|cffFDD842"..select(3, GetNetStats()).."|r"
-			-- stat[3].bar:SetStatusBarColor(.8, .7, .4)
+			-- stat[4].bar:SetStatusBarColor(.8, .7, .4)
 		elseif ms >= 0 then
 			color_ms = "|cff32DC46"..select(3, GetNetStats()).."|r"
-			-- stat[3].bar:SetStatusBarColor(.3, .9, .3)
+			-- stat[4].bar:SetStatusBarColor(.3, .9, .3)
 		end
-		
-		-- stat[3].bar:SetMinMaxValues(0, 1000)
-		-- stat[3].bar:SetValue(ms)
-		
-		stat[3].text:SetText(cStart .. tukuilocal.datatext_ms .. color_ms)
+
+		stat[4].text:SetText(cStart .. tukuilocal.datatext_ms .. color_ms)
 
 		int3 = 1
 	end	
 end
-stat[3]:SetScript("OnUpdate", LatencyUpdate)
-LatencyUpdate(stat[3], 10)
-
-
------ [[     Time     ]] -----
-
-stat[4]:HookScript("OnMouseDown", function(self, btn)
-	if btn == "RightButton" then
-		if EclipseSettings.game_time == true then
-			EclipseSettings.game_time = false
-			EclipseSettings.local_time = true
-		elseif EclipseSettings.local_time == true then
-			EclipseSettings.game_time = true
-			EclipseSettings.local_time = false
-		end
-	elseif btn == "LeftButton" then
-		if EclipseSettings.hr_time == true then
-			EclipseSettings.hr_time = false
-			hrmode = "Disabled"
-		elseif EclipseSettings.hr_time == false then
-			EclipseSettings.hr_time = true
-			hrmode = "Enabled"
-		end
-	elseif btn == "MiddleButton" then
-		GameTimeFrame:Click()
-	end
-end)
-
-local int4 = 1
-local function TimeUpdate(self, t)
-	local pendingCalendarInvites = CalendarGetNumPendingInvites()
-	int4 = int4 - t
-	
-	if int4 < 0 then
-		if EclipseSettings.local_time == true then
-			Hr24 = tonumber(date("%H"))
-			Hr = tonumber(date("%I"))
-			Min = date("%M")
-			
-			if EclipseSettings.hr_time == true then
-				if pendingCalendarInvites > 0 then
-						stat[4].text:SetText(cStart .. "L: |r" .. "|cffFF0000" .. Hr24 .. ":" .. Min)
-					else
-						stat[4].text:SetText(cStart .. "L: |r" .. Hr24 .. ":" .. Min)
-					end
-				else
-					if Hr24>=12 then
-						if pendingCalendarInvites > 0 then
-							stat[4].text:SetText(cStart .. "L: |r" .. "|cffFF0000" .. Hr .. ":" .. Min .. cStart .. " pm|r")
-						else
-							stat[4].text:SetText(cStart .. "L: |r" .. Hr .. ":" .. Min .. cStart .. " pm|r")
-						end
-				else
-					if pendingCalendarInvites > 0 then
-						stat[4].text:SetText(cStart .. "L: |r" .. "|cffFF0000" .. Hr .. ":" .. Min .. cStart .. " am|r")
-					else
-						stat[4].text:SetText(cStart .. "L: |r" .. Hr .. ":" .. Min .. cStart .. " am|r")
-					end
-				end
-			end	
-		elseif EclipseSettings.game_time == true then
-			local Hr, Min = GetGameTime()
-			if Min<10 then Min = "0"..Min end
-			if EclipseSettings.hr_time == true then
-				if pendingCalendarInvites > 0 then
-					stat[4].text:SetText(cStart .. "S: |r" .. "|cffFF0000" .. Hr .. ":" .. Min)
-				else
-					stat[4].text:SetText(cStart .. "S: |r" .. Hr .. ":" .. Min)
-				end
-			elseif EclipseSettings.hr_time == false then
-				if Hr>=12 then
-					if Hr>12 then Hr = Hr-12 end
-					if pendingCalendarInvites > 0 then
-						stat[4].text:SetText(cStart .. "S: |r" .. "|cffFF0000" .. Hr .. ":" .. Min .. cStart .. " pm|r")
-					else
-						stat[4].text:SetText(cStart .. "S: |r" .. Hr .. ":" .. Min .. cStart .. " pm|r")
-					end
-				else
-					if Hr == 0 then Hr = 12 end
-					if pendingCalendarInvites > 0 then
-						stat[4].text:SetText(cStart .. "S: |r" .. "|cffFF0000" .. Hr .. ":" .. Min .. cStart .. " am|r")
-					else
-						stat[4].text:SetText(cStart .. "S: |r" .. Hr .. ":" .. Min .. cStart .. " am|r")
-					end
-				end
-			end
-		end
-		int4 = 1
-	end
-end
-stat[4]:SetScript("OnUpdate", TimeUpdate)
-TimeUpdate(stat[4], 10)
-
-stat[4]:SetScript("OnEnter", function()
-	GameTooltip:SetOwner(stat[4], "ANCHOR_BOTTOMRIGHT", -stat[4]:GetWidth(), TukuiDB.Scale(-3))
-	GameTooltip:ClearLines()
-
-	if not EclipseSettings.game_time == true then
-		Hr24 = tonumber(date("%H"))
-		Hr = tonumber(date("%I"))
-		Min = date("%M")
-
-		if EclipseSettings.hr_time == true then
-			GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_localtime, Hr24 .. ":" .. Min, _, _, _, 1, 1, 1)
-		else
-			if Hr24>=12 then
-				GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_localtime, Hr .. ":" .. Min .. " pm|r", _, _, _, 1, 1, 1)
-			else
-				GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_localtime, Hr .. ":" .. Min .. " am|r", _, _, _, 1, 1, 1)
-			end
-		end	
-	else
-		local Hr, Min = GetGameTime()
-		if Min<10 then Min = "0"..Min end
-		if EclipseSettings.hr_time == true then
-			GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_servertime, Hr .. ":" .. Min, _, _, _, 1, 1, 1)
-		else
-			if Hr>=12 then
-				if Hr>12 then Hr = Hr-12 end
-				GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_servertime, Hr .. ":" .. Min .. " pm|r", _, _, _, 1, 1, 1)
-			else
-			if Hr == 0 then Hr = 12 end
-			GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_servertime, Hr .. ":" .. Min .. " am|r", _, _, _, 1, 1, 1)
-		end
-	end
-end
-
-GameTooltip:AddLine" "
-GameTooltip:AddDoubleLine(cStart .. "Right-click:", "Local or Server Time", _, _, _, 1, 1, 1)
-GameTooltip:AddDoubleLine(cStart .. "Left-click:", "Format 24H or AM/PM", _, _, _, 1, 1, 1)
-GameTooltip:AddDoubleLine(cStart .. "Middle-click:", "Show Calender", _, _, _, 1, 1, 1)
-
-GameTooltip:Show()
-end)
-stat[4]:SetScript("OnLeave", function() GameTooltip:Hide() end)
+stat[4]:SetScript("OnUpdate", LatencyUpdate)
+LatencyUpdate(stat[4], 10)

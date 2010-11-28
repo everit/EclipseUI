@@ -1,16 +1,17 @@
 ----- [[     Textures     ]] -----
 
-local db = TukuiCF["media"]
+local eciUI = ecUI
 local mult = TukuiDB.mult
 local scale = TukuiDB.Scale
-local g_tex = TukuiCF["general"].game_texture
 
+local db = TukuiCF["media"]
+local texture = TukuiCF["customise"].texture
 
 ----- [[     Textures     ]] -----
 
 local textures = {
 	normbg = {
-		bgFile = g_tex,
+		bgFile = texture,
 		edgeFile = db.blank,
 		tile = false,
 		tileSize = 0,
@@ -18,8 +19,9 @@ local textures = {
 		insets = { left = -mult, right = -mult, top = -mult, bottom = -mult }
 	},
 	
-	fadebg = {
-		bgFile = db.blank, -- no we keep this as blank or it looks terrible
+	-- don't touch this texture
+	template_fadebg = {
+		bgFile = db.blank,
 		edgeFile = db.blank,
 		tile = false,
 		tileSize = 0,
@@ -39,7 +41,7 @@ local textures = {
 		insets = { left = mult, right = mult, top = mult, bottom = mult }
 	},
 	
-	overlay = g_tex,		
+	overlay = texture,		
 }
 
 
@@ -57,7 +59,7 @@ function TukuiDB.CreateShadow(f)
 	f.shadow:SetBackdropBorderColor(0, 0, 0, .75)
 end
 
-function TukuiDB.CreateOverlay(f)
+function ecUI.CreateOverlay(f)
 	if f.bg then return end
 	f.bg = f:CreateTexture(f:GetName() and f:GetName().."_overlay" or nil, "BORDER", f)
 	f.bg:ClearAllPoints()
@@ -67,7 +69,7 @@ function TukuiDB.CreateOverlay(f)
 	f.bg:SetVertexColor(.05, .05, .05, 1)
 end
 
-function TukuiDB.CreateInnerBorder(f)
+function ecUI.CreateInnerBorder(f)
 	if f.iborder then return end
 	f.iborder = CreateFrame("Frame", "_iborder", f)
 	f.iborder:SetPoint("TOPLEFT", mult, -mult)
@@ -76,11 +78,12 @@ function TukuiDB.CreateInnerBorder(f)
 	f.iborder:SetBackdropBorderColor(unpack(db.backdropcolor))
 end
 
-function TukuiDB.CreateOuterBorder(f)
+function ecUI.CreateOuterBorder(f)
 	if f.oborder then return end
 	f.oborder = CreateFrame("Frame", "_oborder", f)
 	f.oborder:SetPoint("TOPLEFT", -mult, mult)
 	f.oborder:SetPoint("BOTTOMRIGHT", mult, -mult)
+	f.oborder:SetFrameLevel(f:GetFrameLevel() + 1)
 	f.oborder:SetBackdrop(textures.border)
 	f.oborder:SetBackdropBorderColor(unpack(db.backdropcolor))
 end
@@ -88,22 +91,22 @@ end
 
 ----- [[     Create Panel Skins     ]] -----
 
-function TukuiDB.SkinPanel(f)
+function ecUI.SkinPanel(f)
 	f:SetBackdrop(textures.normbg)
 	f:SetBackdropColor(unpack(db.backdropcolor))
 	f:SetBackdropBorderColor(unpack(db.bordercolor))
 	
-	TukuiDB.CreateOverlay(f)
+	ecUI.CreateOverlay(f)
 	TukuiDB.CreateShadow(f)
 end
 
-function TukuiDB.SkinFadedPanel(f)
-	f:SetBackdrop(textures.fadebg)
+function ecUI.SkinFadedPanel(f)
+	f:SetBackdrop(textures.template_fadebg)
 	f:SetBackdropColor(unpack(db.fadedbackdropcolor))
 	f:SetBackdropBorderColor(unpack(db.bordercolor))
 
-	TukuiDB.CreateInnerBorder(f)
-	TukuiDB.CreateOuterBorder(f)
+	ecUI.CreateInnerBorder(f)
+	ecUI.CreateOuterBorder(f)
 	TukuiDB.CreateShadow(f)
 end
 
@@ -119,7 +122,7 @@ function TukuiDB.CreatePanel(f, w, h, a1, p, a2, x, y)
 	f:SetFrameStrata("BACKGROUND")
 	f:SetPoint(a1, p, a2, x, y)
 	
-	TukuiDB.SkinPanel(f)
+	ecUI.SkinPanel(f)
 end
 
 function TukuiDB.CreateFadedPanel(f, w, h, a1, p, a2, x, y)
@@ -131,16 +134,11 @@ function TukuiDB.CreateFadedPanel(f, w, h, a1, p, a2, x, y)
 	f:SetFrameStrata("BACKGROUND")
 	f:SetPoint(a1, p, a2, x, y)
 	
-	TukuiDB.SkinFadedPanel(f)
+	ecUI.SkinFadedPanel(f)
 end
 
 function TukuiDB.SetTemplate(f)
-	f:SetBackdrop({
-		bgFile = db.blank, 
-		edgeFile = db.blank, 
-		tile = false, tileSize = 0, edgeSize = mult, 
-		insets = { left = -mult, right = -mult, top = -mult, bottom = -mult}
-	})
+	f:SetBackdrop(textures.template_fadebg)
 	f:SetBackdropColor(unpack(db.backdropcolor))
 	f:SetBackdropBorderColor(unpack(db.bordercolor))
 end
@@ -148,29 +146,53 @@ end
 
 ----- [[     Fade In / Out Functions     ]] -----
 
-function TukuiDB.FadeIn(f)
+function ecUI.FadeIn(f)
 	UIFrameFadeIn(f, .4, f:GetAlpha(), 1)
 end
 	
-function TukuiDB.FadeOut(f)
+function ecUI.FadeOut(f)
 	UIFrameFadeOut(f, .8, f:GetAlpha(), 0)
 end
 
 
-
 ----- [[     Setup Text Coloring     ]] -----
 
-function TukuiDB.Color(f)
-	if TukuiCF["datatext"].classcolor == true then
-		local color = RAID_CLASS_COLORS[TukuiDB.myclass]
-		f:SetTextColor(color.r, color.g, color.b)
-		
-		cStart = ("|cff%.2x%.2x%.2x"):format(color.r * 255, color.g * 255, color.b * 255)
+function ecUI.Color(f, red, green, blue)
+	if red then
+		f:SetTextColor(.9, .3, .3)
+	elseif green then
+		f:SetTextColor(.3, .9, .3)
+	elseif blue then
+		f:SetTextColor(.3, .3, .9)	
 	else
-		local r, g, b = unpack(TukuiCF["datatext"].color)
-		f:SetTextColor(r, g, b)
-		
-		cStart = ("|cff%.2x%.2x%.2x"):format(r * 255, g * 255, b * 255)
+		if TukuiCF["datatext"].classcolor == true then
+			local color = RAID_CLASS_COLORS[TukuiDB.myclass]
+			f:SetTextColor(color.r, color.g, color.b)
+			
+			cStart = ("|cff%.2x%.2x%.2x"):format(color.r * 255, color.g * 255, color.b * 255)
+		else
+			local r, g, b = unpack(TukuiCF["datatext"].color)
+			f:SetTextColor(r, g, b)
+			
+			cStart = ("|cff%.2x%.2x%.2x"):format(r * 255, g * 255, b * 255)
+		end
 	end
 end
 cEnd = "|r"
+
+
+----- [[     Setup Button Border Coloring     ]] -----
+
+function TukuiDB.SetModifiedBackdrop(f)
+	if TukuiCF["datatext"].classcolor == true then
+		local color = RAID_CLASS_COLORS[TukuiDB.myclass]
+		f:SetBackdropBorderColor(color.r, color.g, color.b)
+	else
+		local r, g, b = unpack(TukuiCF["datatext"].color)
+		f:SetBackdropBorderColor(r, g, b)	
+	end
+end
+
+function TukuiDB.SetOriginalBackdrop(f)
+	f:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
+end

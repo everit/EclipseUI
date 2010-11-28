@@ -4,10 +4,14 @@ if not db.enable then return end
 
 ----- [[     Local Variables     ]] -----
 
-local font, font_size, font_style, font_shadow, font_position = TukuiCF["fonts"].unitframe_font, TukuiCF["fonts"].unitframe_font_size, TukuiCF["fonts"].unitframe_font_style, TukuiCF["fonts"].unitframe_font_shadow, TukuiCF["fonts"].unitframe_y_position
+local ecUI = ecUI
+local font = TukuiCF["fonts"].unitframe_font
+local font_size = TukuiCF["fonts"].unitframe_font_size
+local font_style = TukuiCF["fonts"].unitframe_font_style
+local font_shadow = TukuiCF["fonts"].unitframe_font_shadow
+local font_position = TukuiCF["fonts"].unitframe_y_position
 
-
-local texture = TukuiCF["general"].game_texture
+local texture = TukuiCF["customise"].texture
 
 
 ----- [[     Layout     ]] -----
@@ -47,7 +51,7 @@ local function Shared(self, unit)
 	local hBorder = CreateFrame("Frame", nil, health)
 	hBorder:SetFrameLevel(health:GetFrameLevel() - 1)
 	hBorder:SetAllPoints()
-	TukuiDB.CreateOuterBorder(hBorder)
+	ecUI.CreateOuterBorder(hBorder)
 	self.Health.border = hBorder		
 
 	local power = CreateFrame("StatusBar", nil, self)
@@ -70,7 +74,7 @@ local function Shared(self, unit)
 	local pBorder = CreateFrame("Frame", nil, power)
 	pBorder:SetFrameLevel(power:GetFrameLevel() - 1)
 	pBorder:SetAllPoints()
-	TukuiDB.CreateOuterBorder(pBorder)
+	ecUI.CreateOuterBorder(pBorder)
 	self.Power.border = pBorder
 
 	local frame = CreateFrame("Frame", nil, health)
@@ -82,7 +86,7 @@ local function Shared(self, unit)
 		insets = { left = -TukuiDB.mult, right = -TukuiDB.mult, top = -TukuiDB.mult, bottom = -TukuiDB.mult }
 	})
 	frame:SetBackdropColor(unpack(TukuiCF["media"].bordercolor))
-	TukuiDB.CreateOuterBorder(frame)
+	ecUI.CreateOuterBorder(frame)
 	TukuiDB.CreateShadow(frame)
 	self.frame = frame			
 	
@@ -321,7 +325,7 @@ oUF:Factory(function(self)
 	"initial-width", 70,
 	"initial-height", 41,	
 	"showParty", true, 
-	"showSolo", true, 
+	-- "showSolo", true, 
 	"showPlayer", db.showplayerinparty, 
 	"groupFilter", "1,2,3,4,5,6,7,8", 
 	"groupingOrder", "1,2,3,4,5,6,7,8", 

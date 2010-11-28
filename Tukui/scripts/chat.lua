@@ -4,6 +4,7 @@ if TukuiCF["chat"].enable ~= true then return end
 -- SETUP TUKUI CHATS
 -----------------------------------------------------------------------
 
+local ecUI = ecUI
 local TukuiChat = CreateFrame("Frame")
 local tabalpha = 1
 local tabnoalpha = 1
@@ -137,7 +138,7 @@ local function SetChatStyle(frame)
 	EditBoxBackground:SetFrameStrata("LOW")
 	EditBoxBackground:SetFrameLevel(1)
 	TukuiDB.SetTemplate(EditBoxBackground)
-	TukuiDB.CreateOverlay(EditBoxBackground)
+	ecUI.CreateOverlay(EditBoxBackground)
 	
 	local function colorize(r,g,b)
 		EditBoxBackground:SetBackdropBorderColor(r, g, b)
@@ -164,7 +165,7 @@ local function SetChatStyle(frame)
 	end
 
 	hooksecurefunc("FCFTab_UpdateColors", function(chatTab, isSelected) 
-		TukuiDB.Color(chatTab:GetFontString())
+		ecUI.Color(chatTab:GetFontString())
 		if isSelected then 
 			FCFTab_UpdateColors(chatTab, false) 
 		end 
@@ -291,12 +292,10 @@ local function CreatCopyFrame()
 	})
 	frame:SetBackdropColor(unpack(TukuiCF["media"].backdropcolor))
 	frame:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
-	if TukuiDB.lowversion == true then
-		frame:SetWidth(TukuiDB.Scale(410))
-	else
-		frame:SetWidth(TukuiDB.Scale(710))
-	end
+	
+	frame:SetWidth(TukuiDB.Scale(710))
 	frame:SetHeight(TukuiDB.Scale(200))
+	
 	frame:SetScale(1)
 	frame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, TukuiDB.Scale(10))
 	frame:Hide()
@@ -312,11 +311,9 @@ local function CreatCopyFrame()
 	editBox:EnableMouse(true)
 	editBox:SetAutoFocus(false)
 	editBox:SetFontObject(ChatFontNormal)
-	if TukuiDB.lowversion == true then
-		editBox:SetWidth(TukuiDB.Scale(410))
-	else
-		editBox:SetWidth(TukuiDB.Scale(710))
-	end
+
+	editBox:SetWidth(TukuiDB.Scale(710))
+
 	editBox:SetHeight(TukuiDB.Scale(200))
 	editBox:SetScript("OnEscapePressed", function() frame:Hide() end)
 

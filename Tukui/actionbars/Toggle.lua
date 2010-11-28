@@ -2,9 +2,11 @@
     In-game Action Bar Toggle for my Tukui edit.
 
     To-do:
-	-- Clean up code.
+	-- ??
 	
 	© 2010 Eclípsé
+	
+	Don't use without my permission, please respect this.
 ]]--
 
 local db = TukuiCF["actionbar"]
@@ -13,45 +15,28 @@ if not db.enable then return end
 
 ----- [[     Local Variables - Color / Text Values     ]] -----
 
-local barbg, rightbbg, splbg, sprbg, petbg, crtabs = TukuiActionBarBackground, TukuiActionBarBackgroundRight, TukuiLeftSplitBarBackground, TukuiRightSplitBarBackground, TukuiPetActionBarBackground, TukuiChatRightTabs
+local ecUI = ecUI
 
-local c_increase, c_decrease = {.3, .3, .9}, {.9, .3, .3}
-local plus, minus = "+", "-"
+local barbg = TukuiActionBarBackground
+local rightbbg = TukuiActionBarBackgroundRight
+local splbg = TukuiLeftSplitBarBackground
+local sprbg = TukuiRightSplitBarBackground
+local petbg = TukuiPetActionBarBackground
+local crtabs = TukuiChatRightTabs
+
+local Toggle = CreateFrame("Frame", "TukuiToggleActionbar", UIParent)
 
 
------ [[     Action Bar Toggle Buttons / Text     ]] -----
+----- [[     Text Function     ]] -----
 
-local Toggle = CreateFrame("Frame")
-
-for i = 1, 5 do
-	Toggle[i] = CreateFrame("Frame", "TukuiToggle"..i, UIParent)
-	Toggle[i]:EnableMouse(true)
-	Toggle[i]:SetAlpha(0)
-	
-	Toggle[i].text = Toggle[i]:CreateFontString(nil, "OVERLAY")
-	Toggle[i].text:SetFont(TukuiCF["media"].custom_font_1, 12, "MONOCHROMEOUTLINE")
-	Toggle[i].text:SetPoint("CENTER", 2, 1)
-
-	if i == 1 then
-		TukuiDB.CreatePanel(Toggle[i], ((db.buttonsize * 12) + (db.buttonspacing * 13)), db.buttonsize / 2, "BOTTOM", barbg, "TOP", 0, 3)
-	elseif i == 2 then
-		TukuiDB.CreatePanel(Toggle[i], db.buttonsize, crtabs:GetHeight(), "TOPRIGHT", crtabs, "TOPRIGHT")
-		Toggle[i]:SetFrameLevel(crtabs:GetFrameLevel() + 1)
-		Toggle[i].shadow:Hide()
-		
-		Toggle[i].text:SetText(plus)
-		Toggle[i].text:SetTextColor(unpack(c_increase))
-	elseif i == 3 then
-		TukuiDB.CreatePanel(Toggle[i], db.buttonsize, crtabs:GetHeight(), "TOPRIGHT", Toggle[i-1], "TOPLEFT", -3, 0)
-		Toggle[i]:SetFrameLevel(crtabs:GetFrameLevel() + 1)
-		Toggle[i].shadow:Hide()
-		
-		Toggle[i].text:SetText(minus)
-		Toggle[i].text:SetTextColor(unpack(c_decrease))	
-	elseif i == 4 then
-		TukuiDB.CreatePanel(Toggle[i], db.buttonsize / 2, ((db.buttonsize * 2) + (db.buttonspacing * 3)), "BOTTOMRIGHT", splbg, "BOTTOMLEFT", -3, 0)
-	elseif i == 5 then
-		TukuiDB.CreatePanel(Toggle[i], db.buttonsize / 2, ((db.buttonsize * 2) + (db.buttonspacing * 3)), "BOTTOMLEFT", sprbg, "BOTTOMRIGHT", 3, 0)
+local text_display = function(index, plus, neg)
+	local p, m = "+", "-"
+	if plus then
+		Toggle[index].text:SetText(p)
+		ecUI.Color(Toggle[index].text, false, false, true)
+	elseif neg then
+		Toggle[index].text:SetText(m)
+		ecUI.Color(Toggle[index].text, true)
 	end
 end
 
@@ -59,19 +44,18 @@ end
 ----- [[     Action Bar Check + Change Functions     ]] -----
 
 local bb_check = function()
-	if EclipseSettings.bottomrows == 1 then
+	if ecSV.bottomrows == 1 then
 		barbg:SetHeight(db.buttonsize + (db.buttonspacing * 2))
 		splbg:SetHeight(db.buttonsize  + (db.buttonspacing * 2))
 		sprbg:SetHeight(db.buttonsize + (db.buttonspacing * 2))
 		
-		Toggle[1].text:SetText(plus)
-		Toggle[1].text:SetTextColor(unpack(c_increase))
+		text_display(1, true)
 		
 		if TukuiBar2:IsShown() then
 			TukuiBar2:Hide()
 		end
 		
-		if EclipseSettings.splitbars == true then
+		if ecSV.splitbars == true then
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
 				b:SetAlpha(0)
@@ -80,17 +64,16 @@ local bb_check = function()
 		end
 		Toggle[4]:SetHeight(db.buttonsize + (db.buttonspacing * 2))
 		Toggle[5]:SetHeight(db.buttonsize + (db.buttonspacing * 2))
-	elseif EclipseSettings.bottomrows == 2 then
+	elseif ecSV.bottomrows == 2 then
 		barbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
 		splbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
 		sprbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
 		
-		Toggle[1].text:SetText(minus)
-		Toggle[1].text:SetTextColor(unpack(c_decrease))
+		text_display(1, false, true)
 
 		TukuiBar2:Show()
 		
-		if EclipseSettings.splitbars == true then
+		if ecSV.splitbars == true then
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
 				b:SetAlpha(1)
@@ -103,7 +86,7 @@ local bb_check = function()
 end
 
 local rbb_check = function()
-	if EclipseSettings.rightbars >= 1 then
+	if ecSV.rightbars >= 1 then
 		petbg:ClearAllPoints()
 		if db.vertical_rightbars == true then
 			petbg:SetPoint("BOTTOMRIGHT", rightbbg, "BOTTOMLEFT", -3, 0)
@@ -123,7 +106,7 @@ local rbb_check = function()
 		petbg:SetHeight(db.petbuttonsize + (db.buttonspacing * 2))
 	end
 	
-	if EclipseSettings.rightbars == 1 then
+	if ecSV.rightbars == 1 then
 		rightbbg:Show()
 		if db.vertical_rightbars == true then
 			rightbbg:SetWidth(db.buttonsize + (db.buttonspacing * 2))
@@ -131,14 +114,14 @@ local rbb_check = function()
 			rightbbg:SetHeight(db.buttonsize + (db.buttonspacing * 2))
 		end
 		
-		if EclipseSettings.splitbars ~= true and TukuiBar3:IsShown() then
+		if ecSV.splitbars ~= true and TukuiBar3:IsShown() then
 			TukuiBar3:Hide()
 		end
 		if TukuiBar5:IsShown() then
 			TukuiBar5:Hide()
 		end
 		TukuiBar4:Show()
-	elseif EclipseSettings.rightbars == 2 then
+	elseif ecSV.rightbars == 2 then
 		rightbbg:Show()
 		if db.vertical_rightbars == true then
 			rightbbg:SetWidth((db.buttonsize * 2) + (db.buttonspacing * 3))
@@ -146,12 +129,12 @@ local rbb_check = function()
 			rightbbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
 		end
 		
-		if EclipseSettings.splitbars ~= true and TukuiBar3:IsShown() then
+		if ecSV.splitbars ~= true and TukuiBar3:IsShown() then
 			TukuiBar3:Hide()
 		end
 		TukuiBar4:Show()
 		TukuiBar5:Show()
-	elseif EclipseSettings.rightbars == 3 then
+	elseif ecSV.rightbars == 3 then
 		rightbbg:Show()
 		if db.vertical_rightbars == true then
 			rightbbg:SetWidth((db.buttonsize * 3) + (db.buttonspacing * 4))
@@ -161,7 +144,7 @@ local rbb_check = function()
 		
 		TukuiBar4:Show()
 		TukuiBar5:Show()
-		if EclipseSettings.splitbars ~= true then
+		if ecSV.splitbars ~= true then
 			TukuiBar3:Show()
 			for i = 1, 12 do
 				local b = _G["MultiBarLeftButton"..i]
@@ -172,7 +155,7 @@ local rbb_check = function()
 				if i == 1 then
 					b:SetPoint("TOPLEFT", rightbbg, db.buttonspacing, -db.buttonspacing)
 				else
-					if not EclipseSettings.splitbars and db.vertical_rightbars == true then
+					if not ecSV.splitbars and db.vertical_rightbars == true then
 						b:SetPoint("TOP", b2, "BOTTOM", 0, -db.buttonspacing)
 					else
 						b:SetPoint("LEFT", b2, "RIGHT", db.buttonspacing, 0)
@@ -180,10 +163,10 @@ local rbb_check = function()
 				end
 			end
 		end
-	elseif EclipseSettings.rightbars == 0 then
+	elseif ecSV.rightbars == 0 then
 		rightbbg:Hide()
 
-		if EclipseSettings.splitbars ~= true then
+		if ecSV.splitbars ~= true then
 			TukuiBar3:Hide()
 		end
 		TukuiBar4:Hide()
@@ -192,7 +175,7 @@ local rbb_check = function()
 end
 
 local splbb_check = function()
-	if EclipseSettings.splitbars == true then
+	if ecSV.splitbars == true then
 		for i = 1, 12 do
 			local b = _G["MultiBarLeftButton"..i]
 			local b2 = _G["MultiBarLeftButton"..i-1]
@@ -212,7 +195,7 @@ local splbb_check = function()
 			end
 		end		
 
-		if EclipseSettings.rightbars == 3 then
+		if ecSV.rightbars == 3 then
 			rightbbg:Show()
 			if db.vertical_rightbars == true then
 			rightbbg:SetWidth((db.buttonsize * 2) + (db.buttonspacing * 3))
@@ -226,20 +209,18 @@ local splbb_check = function()
 		Toggle[4]:SetPoint("BOTTOMRIGHT", splbg, "BOTTOMLEFT", -3, 0)
 		Toggle[5]:SetPoint("BOTTOMLEFT", sprbg, "BOTTOMRIGHT", 3, 0)
 	
-		Toggle[4].text:SetText(minus)
-		Toggle[5].text:SetText(minus)
-		Toggle[4].text:SetTextColor(unpack(c_decrease))
-		Toggle[5].text:SetTextColor(unpack(c_decrease))
+		text_display(4, false, true)
+		text_display(5, false, true)
 	
 		TukuiBar3:Show()
 		
-		if EclipseSettings.bottomrows == 1 then
+		if ecSV.bottomrows == 1 then
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
 				b:SetAlpha(0)
 				b:SetScale(0.0001)		
 			end
-		elseif EclipseSettings.bottomrows == 2 then
+		elseif ecSV.bottomrows == 2 then
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
 				b:SetAlpha(1)
@@ -248,7 +229,7 @@ local splbb_check = function()
 		end
 		splbg:Show()
 		sprbg:Show()
-	elseif EclipseSettings.splitbars == false then
+	elseif ecSV.splitbars == false then
 		for i = 1, 12 do
 			local b = _G["MultiBarLeftButton"..i]
 			local b2 = _G["MultiBarLeftButton"..i-1]
@@ -265,10 +246,8 @@ local splbb_check = function()
 		Toggle[4]:SetPoint("BOTTOMRIGHT", barbg, "BOTTOMLEFT", -3, 0)
 		Toggle[5]:SetPoint("BOTTOMLEFT", barbg, "BOTTOMRIGHT", 3, 0)
 
-		Toggle[4].text:SetText(plus)
-		Toggle[5].text:SetText(plus)
-		Toggle[4].text:SetTextColor(unpack(c_increase))
-		Toggle[5].text:SetTextColor(unpack(c_increase))
+		text_display(4, true)
+		text_display(5, true)
 	
 		rbb_check()
 
@@ -284,166 +263,118 @@ local splbb_check = function()
 end
 
 
------ [[     Action Bar Mouse Down Functions     ]] -----
+----- [[     Action Bar Toggle Buttons / Text     ]] -----
 
-Toggle[1]:SetScript("OnMouseDown", function()
-	if not InCombatLockdown() then
-		EclipseSettings.bottomrows = EclipseSettings.bottomrows + 1
-
-		if EclipseSettings.bottomrows > 2 then
-			EclipseSettings.bottomrows = 1
-		end
-		
-		bb_check()
-	else
-		print(ERR_NOT_IN_COMBAT)
-	end
-end)
-Toggle[1]:RegisterEvent("PLAYER_ENTERING_WORLD")
-Toggle[1]:SetScript("OnEvent", bb_check)
-
-Toggle[2]:SetScript("OnMouseDown", function()
-	if not InCombatLockdown() then
-		EclipseSettings.rightbars = EclipseSettings.rightbars + 1
+for i = 1, 5 do
+	Toggle[i] = CreateFrame("Frame", "TukuiToggle"..i, Toggle)
+	Toggle[i]:EnableMouse(true)
+	Toggle[i]:SetAlpha(0)
 	
-		if EclipseSettings.splitbars == true and EclipseSettings.rightbars > 2 then
-			EclipseSettings.rightbars = 0
-		elseif EclipseSettings.rightbars > 3 then
-			EclipseSettings.rightbars = 0
-		end
+	Toggle[i].text = Toggle[i]:CreateFontString(nil, "OVERLAY")
+	Toggle[i].text:SetFont(TukuiCF["media"].custom_font_1, 12, "MONOCHROMEOUTLINE")
+	Toggle[i].text:SetPoint("CENTER", 2, 1)
+	
+	if i == 1 then
+		TukuiDB.CreatePanel(Toggle[i], ((db.buttonsize * 12) + (db.buttonspacing * 13)), db.buttonsize / 2, "BOTTOM", barbg, "TOP", 0, 3)
+		
+		Toggle[i]:SetScript("OnMouseDown", function()
+			ecSV.bottomrows = ecSV.bottomrows + 1
 
-		rbb_check()
-	else
-		print(ERR_NOT_IN_COMBAT)
-	end
-end)
-Toggle[2]:RegisterEvent("PLAYER_ENTERING_WORLD")
-Toggle[2]:SetScript("OnEvent", bb_check)
-
-Toggle[3]:SetScript("OnMouseDown", function()
-	if not InCombatLockdown() then
-		EclipseSettings.rightbars = EclipseSettings.rightbars - 1
-
-		if EclipseSettings.splitbars == true and EclipseSettings.rightbars > 2 then
-			EclipseSettings.rightbars = 1
-		elseif EclipseSettings.rightbars < 0 then
-			if EclipseSettings.splitbars == true then
-				EclipseSettings.rightbars = 2
-			else
-				EclipseSettings.rightbars = 3
+			if ecSV.bottomrows > 2 then
+				ecSV.bottomrows = 1
 			end
-		end
 
-		rbb_check()
-	else
-		print(ERR_NOT_IN_COMBAT)
+			bb_check()
+		end)
+		Toggle[i]:SetScript("OnEvent", bb_check)
+	elseif i == 2 then
+		TukuiDB.CreatePanel(Toggle[i], db.buttonsize, crtabs:GetHeight(), "TOPRIGHT", crtabs, "TOPRIGHT")
+		Toggle[i]:SetFrameLevel(crtabs:GetFrameLevel() + 1)
+		Toggle[i].shadow:Hide()
+		
+		text_display(i, true)
+		
+		Toggle[2]:SetScript("OnMouseDown", function()
+			ecSV.rightbars = ecSV.rightbars + 1
+			
+			if ecSV.splitbars == true and ecSV.rightbars > 2 then
+				ecSV.rightbars = 0
+			elseif ecSV.rightbars > 3 then
+				ecSV.rightbars = 0
+			end
+
+			rbb_check()
+		end)
+		Toggle[i]:SetScript("OnEvent", bb_check)
+	elseif i == 3 then
+		TukuiDB.CreatePanel(Toggle[i], db.buttonsize, crtabs:GetHeight(), "TOPRIGHT", Toggle[i-1], "TOPLEFT", -3, 0)
+		Toggle[i]:SetFrameLevel(crtabs:GetFrameLevel() + 1)
+		Toggle[i].shadow:Hide()
+		
+		text_display(i, false, true)
+		
+		Toggle[i]:SetScript("OnMouseDown", function()
+			ecSV.rightbars = ecSV.rightbars - 1
+
+			if ecSV.splitbars == true and ecSV.rightbars > 2 then
+				ecSV.rightbars = 1
+			elseif ecSV.rightbars < 0 then
+				if ecSV.splitbars == true then
+					ecSV.rightbars = 2
+				else
+					ecSV.rightbars = 3
+				end
+			end
+			rbb_check()
+		end)
+		Toggle[i]:SetScript("OnEvent", rbb_check)
+	elseif i == 4 then
+		TukuiDB.CreatePanel(Toggle[i], db.buttonsize / 2, ((db.buttonsize * 2) + (db.buttonspacing * 3)), "BOTTOMRIGHT", splbg, "BOTTOMLEFT", -3, 0)
+		
+		Toggle[i]:SetScript("OnMouseDown", function()
+			if ecSV.splitbars == false then
+				ecSV.splitbars = true
+			elseif ecSV.splitbars == true then
+				ecSV.splitbars = false
+			end
+			splbb_check()
+		end)
+		Toggle[i]:SetScript("OnEvent", splbb_check)
+	elseif i == 5 then
+		TukuiDB.CreatePanel(Toggle[i], db.buttonsize / 2, ((db.buttonsize * 2) + (db.buttonspacing * 3)), "BOTTOMLEFT", sprbg, "BOTTOMRIGHT", 3, 0)
+		
+		Toggle[i]:SetScript("OnMouseDown", function()
+			if ecSV.splitbars == false then
+				ecSV.splitbars = true
+			elseif ecSV.splitbars == true then
+				ecSV.splitbars = false
+			end
+			splbb_check()
+		end)
+		Toggle[i]:SetScript("OnEvent", splbb_check)
 	end
-end)
-Toggle[3]:RegisterEvent("PLAYER_ENTERING_WORLD")
-Toggle[3]:SetScript("OnEvent", rbb_check)
+	Toggle[i]:RegisterEvent("PLAYER_ENTERING_WORLD")
+	Toggle[i]:RegisterEvent("PLAYER_REGEN_DISABLED")
+	Toggle[i]:RegisterEvent("PLAYER_REGEN_ENABLED")
 
-Toggle[4]:SetScript("OnMouseDown", function()
-	if not InCombatLockdown() then
-		if EclipseSettings.splitbars == false then
-			EclipseSettings.splitbars = true
-		elseif EclipseSettings.splitbars == true then
-			EclipseSettings.splitbars = false
+	Toggle[i]:SetScript("OnEnter", function()
+		if InCombatLockdown() then return end
+		ecUI.FadeIn(Toggle[i])
+	end)
+
+	Toggle[i]:SetScript("OnLeave", function()
+		ecUI.FadeOut(Toggle[i])
+	end)
+	
+	Toggle[i]:HookScript("OnEvent", function(self, event)
+		if (event == "PLAYER_REGEN_DISABLED") then
+			if Toggle[i]:GetAlpha() > 0 then
+				ecUI.FadeOut(Toggle[i])
+			end
+			Toggle[i]:EnableMouse(false)
+		elseif (event == "PLAYER_REGEN_ENABLED") then
+			Toggle[i]:EnableMouse(true)
 		end
-		splbb_check()
-	else
-		print(ERR_NOT_IN_COMBAT)
-	end
-end)
-Toggle[4]:RegisterEvent("PLAYER_ENTERING_WORLD")
-Toggle[4]:SetScript("OnEvent", splbb_check)
-
-Toggle[5]:SetScript("OnMouseDown", function()
-	if not InCombatLockdown() then
-		if EclipseSettings.splitbars == false then
-			EclipseSettings.splitbars = true
-		elseif EclipseSettings.splitbars == true then
-			EclipseSettings.splitbars = false
-		end
-		splbb_check()
-	else
-		print(ERR_NOT_IN_COMBAT)
-	end
-end)
-Toggle[5]:RegisterEvent("PLAYER_ENTERING_WORLD")
-Toggle[5]:SetScript("OnEvent", splbb_check)
-
-
------ [[     Action Bar Mouse Over Functions     ]] -----
-
-Toggle[1]:SetScript("OnEnter", function()
-	if InCombatLockdown() then return end
-	TukuiDB.FadeIn(Toggle[1])
-end)
-
-Toggle[1]:SetScript("OnLeave", function()
-	TukuiDB.FadeOut(Toggle[1])
-end)
-
-Toggle[2]:SetScript("OnEnter", function()
-	if InCombatLockdown() then return end
-	TukuiDB.FadeIn(Toggle[2])
-end)
-
-Toggle[2]:SetScript("OnLeave", function()
-	TukuiDB.FadeOut(Toggle[2])
-end)
-
-Toggle[3]:SetScript("OnEnter", function()
-	if InCombatLockdown() then return end
-	TukuiDB.FadeIn(Toggle[3])
-end)
-
-Toggle[3]:SetScript("OnLeave", function()
-	TukuiDB.FadeOut(Toggle[3])
-end)
-
-Toggle[4]:SetScript("OnEnter", function()
-	if InCombatLockdown() then return end
-	TukuiDB.FadeIn(Toggle[4])
-	TukuiDB.FadeIn(Toggle[5])
-end)
-
-Toggle[4]:SetScript("OnLeave", function()
-	TukuiDB.FadeOut(Toggle[4])
-	TukuiDB.FadeOut(Toggle[5])
-end)
-
-Toggle[5]:SetScript("OnEnter", function()
-	if InCombatLockdown() then return end
-	TukuiDB.FadeIn(Toggle[4])
-	TukuiDB.FadeIn(Toggle[5])
-end)
-
-Toggle[5]:SetScript("OnLeave", function()
-	TukuiDB.FadeOut(Toggle[4])
-	TukuiDB.FadeOut(Toggle[5])
-end)
-
-
------ [[     Function To Make Sure Buttons Fade If We Enter Combat     ]] -----
-
-Toggle[1]:RegisterEvent("PLAYER_REGEN_DISABLED")
-Toggle[1]:SetScript("OnEvent", function(self, event)
-	if (event == "PLAYER_REGEN_DISABLED") then
-		if Toggle[1]:GetAlpha() > 0 then
-			TukuiDB.FadeOut(Toggle[1])
-		end
-		if Toggle[2]:GetAlpha() > 0 then
-			TukuiDB.FadeOut(Toggle[2])
-		end		
-		if Toggle[3]:GetAlpha() > 0 then
-			TukuiDB.FadeOut(Toggle[3])
-		end
-		if Toggle[4]:GetAlpha() > 0 then
-			TukuiDB.FadeOut(Toggle[4])
-		end
-		if Toggle[5]:GetAlpha() > 0 then
-			TukuiDB.FadeOut(Toggle[5])
-		end
-	end
-end)
+	end)
+end
+Toggle:RegisterEvent("PLAYER_ENTERING_WORLD")

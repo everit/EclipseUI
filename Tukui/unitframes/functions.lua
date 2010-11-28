@@ -157,7 +157,7 @@ do
 			self.Name:SetPoint("CENTER", self.panel, "CENTER", 0, TukuiCF["fonts"].unitframe_y_position[1])
 		else
 			self.Power.value:SetAlpha(0)
-			self.Name:SetPoint("LEFT", self.panel, "LEFT", 4, TukuiCF["fonts"].unitframe_y_position[1])
+			self.Name:SetPoint("LEFT", self.panel, "LEFT", TukuiDB.Scale(4), TukuiCF["fonts"].unitframe_y_position[1])
 		end
 	end
 

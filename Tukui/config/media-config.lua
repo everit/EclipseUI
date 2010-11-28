@@ -9,9 +9,26 @@
 TukuiCF["media"] = {
 	----- [[     Fonts     ]] -----
 	
-	["font"] = [[Interface\Addons\Tukui\media\fonts\arial.ttf]],
+	-- fonts (ENGLISH, FRENCH, DEUTCH, SPANISH)
+	["font"] = [=[Interface\Addons\Tukui\media\fonts\normal_font.ttf]=], 
 	["uffont"] = [[Interface\AddOns\Tukui\media\fonts\uf_font.ttf]],
 	["dmgfont"] = [[Interface\AddOns\Tukui\media\fonts\combat_font.ttf]],
+	
+	-- fonts (RUSSIAN)
+	["ru_font"] = [=[Interface\Addons\Tukui\media\fonts\normal_font.ttf]=], 
+	["ru_uffont"] = [[Fonts\ARIALN.TTF]],
+	["ru_dmgfont"] = [[Fonts\ARIALN.TTF]],
+	
+	-- fonts (TAIWAN ONLY)
+	["tw_font"] = [=[Fonts\bLEI00D.ttf]=], 
+	["tw_uffont"] = [[Fonts\bLEI00D.ttf]],
+	["tw_dmgfont"] = [[Fonts\bLEI00D.ttf]],
+	
+	-- fonts (KOREAN ONLY)
+	["kr_font"] = [=[Fonts\2002.TTF]=], 
+	["kr_uffont"] = [[Fonts\2002.TTF]],
+	["kr_dmgfont"] = [[Fonts\2002.TTF]],
+	
 	
 	["custom_font_1"] = [[Interface\Addons\Tukui\media\fonts\visitor2.ttf]],
 	["custom_font_2"] = [[Interface\Addons\Tukui\media\fonts\visitor_rus.ttf]],

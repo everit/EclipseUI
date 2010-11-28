@@ -29,6 +29,11 @@ Kill:SetScript("OnEvent", function(self, event, addon)
 			end
 		end
 		
+		if addon == "Blizzard_TimeManager" then
+			-- Hide Game Time
+			TukuiDB.Kill(TimeManagerClockButton)
+		end
+
 		if addon ~= "Tukui" then return end
 		
 		TukuiDB.Kill(StreamingIcon)
@@ -42,11 +47,11 @@ Kill:SetScript("OnEvent", function(self, event, addon)
 		-- make sure boss or arena frame is always disabled when running tukui
 		SetCVar("showArenaEnemyFrames", 0)
 		
-		if TukuiCF.arena.unitframes then
-			TukuiDB.Kill(InterfaceOptionsUnitFramePanelArenaEnemyFrames)
-			TukuiDB.Kill(InterfaceOptionsUnitFramePanelArenaEnemyCastBar)
-			TukuiDB.Kill(InterfaceOptionsUnitFramePanelArenaEnemyPets)
-		end
+		-- if TukuiCF.arena.unitframes then
+			-- TukuiDB.Kill(InterfaceOptionsUnitFramePanelArenaEnemyFrames)
+			-- TukuiDB.Kill(InterfaceOptionsUnitFramePanelArenaEnemyCastBar)
+			-- TukuiDB.Kill(InterfaceOptionsUnitFramePanelArenaEnemyPets)
+		-- end
 		
 		if TukuiCF.chat.enable then
 			SetCVar("WholeChatWindowClickable", 0)
@@ -55,12 +60,12 @@ Kill:SetScript("OnEvent", function(self, event, addon)
 			TukuiDB.Kill(InterfaceOptionsSocialPanelConversationMode)
 		end
 		
-		if TukuiCF.unitframes.enable then
-			InterfaceOptionsFrameCategoriesButton9:SetScale(0.00001)
-			InterfaceOptionsFrameCategoriesButton9:SetAlpha(0)	
-			InterfaceOptionsFrameCategoriesButton9:SetScale(0.00001)
-			InterfaceOptionsFrameCategoriesButton9:SetAlpha(0)
-		end
+		-- if TukuiCF.unitframes.enable then
+			-- InterfaceOptionsFrameCategoriesButton9:SetScale(0.00001)
+			-- InterfaceOptionsFrameCategoriesButton9:SetAlpha(0)	
+			-- InterfaceOptionsFrameCategoriesButton9:SetScale(0.00001)
+			-- InterfaceOptionsFrameCategoriesButton9:SetAlpha(0)
+		-- end
 		
 		if TukuiCF.actionbar.enable then
 			TukuiDB.Kill(InterfaceOptionsActionBarsPanelBottomLeft)
@@ -69,5 +74,16 @@ Kill:SetScript("OnEvent", function(self, event, addon)
 			TukuiDB.Kill(InterfaceOptionsActionBarsPanelRightTwo)
 			TukuiDB.Kill(InterfaceOptionsActionBarsPanelAlwaysShowActionBars)
 		end
+		
+		TukuiDB.Kill(MinimapBorder)
+		TukuiDB.Kill(MinimapBorderTop)
+		TukuiDB.Kill(MinimapZoomIn)
+		TukuiDB.Kill(MinimapZoomOut)
+		TukuiDB.Kill(MiniMapVoiceChatFrame)
+		TukuiDB.Kill(MinimapNorthTag)
+		TukuiDB.Kill(MinimapZoneTextButton)
+		TukuiDB.Kill(MiniMapTracking)
+		TukuiDB.Kill(GameTimeFrame)
+		TukuiDB.Kill(MiniMapWorldMapButton)
 	end
 end)

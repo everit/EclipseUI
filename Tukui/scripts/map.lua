@@ -7,17 +7,18 @@ local mapscale = WORLDMAP_WINDOWED_SIZE
 local font, font_size, font_style, font_shadow, font_position = TukuiCF["fonts"].map_font, TukuiCF["fonts"].map_font_size, TukuiCF["fonts"].map_font_style, TukuiCF["fonts"].map_font_shadow, TukuiCF["fonts"].map_button_xy_position
 local infoheight = TukuiCF["panels"].tinfoheight
 
+local ecUI = ecUI
 
 ----- [[     Map Background     ]] -----
 
 local map = CreateFrame("Frame", "TukuiMap", WorldMapDetailFrame)
-TukuiDB.SkinPanel(map)
+ecUI.SkinPanel(map)
 
 
 ----- [[     Map Title Frame     ]] -----
 
 local mapTitle = CreateFrame ("Frame", "TukuiMapTitle", WorldMapDetailFrame)
-TukuiDB.SkinFadedPanel(mapTitle)
+ecUI.SkinFadedPanel(mapTitle)
 mapTitle:SetHeight(infoheight)
 
 
@@ -35,11 +36,13 @@ lockText:SetFont(font, font_size, font_style)
 lockText:SetPoint("CENTER", font_position[1], font_position[2])
 lockText:SetText(tukuilocal.map_move)
 mapLock:SetWidth(lockText:GetWidth() + 20)
-TukuiDB.Color(lockText)
+ecUI.Color(lockText)
 
 -- hi blizzard, i'm just going to steal this code to fix quest blobs, thanks
 -- greetings from eclípsé
 mapLock:SetScript("OnMouseDown", function(self)
+	if WORLDMAP_SETTINGS.advanced ~= 1 then return end
+
 	if ( WORLDMAP_SETTINGS.selectedQuest ) then
 		WorldMapBlobFrame:DrawBlob(WORLDMAP_SETTINGS.selectedQuestId, false)
 	end
@@ -49,6 +52,7 @@ mapLock:SetScript("OnMouseDown", function(self)
 end)
 
 mapLock:SetScript("OnMouseUp", function(self)
+	if WORLDMAP_SETTINGS.advanced ~= 1 then return end
 	WorldMapFrame:StopMovingOrSizing()
 	WorldMapBlobFrame_CalculateHitTranslations()
 	if ( WORLDMAP_SETTINGS.selectedQuest and not WORLDMAP_SETTINGS.selectedQuest.completed ) then
@@ -76,7 +80,7 @@ local closeText = mapClose:CreateFontString(nil, "OVERLAY")
 closeText:SetFont(font, font_size, font_style)
 closeText:SetPoint("CENTER", font_position[1], font_position[2])
 closeText:SetText(tukuilocal.map_close)
-TukuiDB.Color(closeText)
+ecUI.Color(closeText)
 
 mapClose:SetWidth(closeText:GetWidth() + 20)
 
@@ -99,7 +103,7 @@ local expandText = mapExpand:CreateFontString(nil, "OVERLAY", mapExpand)
 expandText:SetFont(font, font_size, font_style)
 expandText:SetPoint("CENTER", font_position[1], font_position[2])
 expandText:SetText(tukuilocal.map_expand)
-TukuiDB.Color(expandText)
+ecUI.Color(expandText)
 
 mapExpand:SetWidth(expandText:GetWidth() + 20)
 
@@ -230,77 +234,3 @@ local OnEvent = function(self, event)
 	end
 end
 addon:SetScript("OnEvent", OnEvent)
-
-
------ [[     Tiny Map     ]] -----
-
-local tinymap = CreateFrame("Frame", "TukuiTinyMapMover", UIParent)
-tinymap:SetPoint("CENTER")
-tinymap:SetSize(223, 150)
-tinymap:EnableMouse(true)
-tinymap:SetMovable(true)
-tinymap:RegisterEvent("ADDON_LOADED")
-tinymap:SetPoint("CENTER", UIParent, 0, 0)
-tinymap:SetFrameLevel(20)
-tinymap:Hide()
-
-
------ [[     Tiny Map Background     ]] -----
-
-local tinymapbg = CreateFrame("Frame", nil, tinymap)
-tinymapbg:SetAllPoints()
-tinymapbg:SetFrameLevel(tinymap:GetFrameLevel() - 10)
-TukuiDB.SkinPanel(tinymapbg)
-
-
------ [[     Tiny Map Show/Hide/Click Functions     ]] -----
-
-tinymap:SetScript("OnEvent", function(self, event, addon)
-	if addon ~= "Blizzard_BattlefieldMinimap" then return end
-
-	-- show holder
-	self:Show()
-
-	BattlefieldMinimap:HookScript("OnShow", function() -- use hookscript instead otherwise tinymap doesn't function correctly
-		TukuiDB.Kill(BattlefieldMinimapCorner)
-		TukuiDB.Kill(BattlefieldMinimapBackground)
-		TukuiDB.Kill(BattlefieldMinimapTab)
-		TukuiDB.Kill(BattlefieldMinimapTabLeft)
-		TukuiDB.Kill(BattlefieldMinimapTabMiddle)
-		TukuiDB.Kill(BattlefieldMinimapTabRight)
-		BattlefieldMinimap:SetParent(self)
-		BattlefieldMinimap:SetPoint("TOPLEFT", self, "TOPLEFT", 2, -2)
-		BattlefieldMinimap:SetFrameStrata(self:GetFrameStrata())
-		BattlefieldMinimap:SetFrameLevel(self:GetFrameLevel() + 1)
-		BattlefieldMinimapCloseButton:ClearAllPoints()
-		BattlefieldMinimapCloseButton:SetPoint("TOPRIGHT", -4, 0)
-		BattlefieldMinimapCloseButton:SetFrameLevel(self:GetFrameLevel() + 1)
-		self:SetScale(1)
-		self:SetAlpha(1)
-	end)
-
-	BattlefieldMinimap:HookScript("OnHide", function() -- use hookscript instead otherwise tinymap doesn't function correctly
-		self:SetScale(0.00001)
-		self:SetAlpha(0)
-	end)
-
-	self:SetScript("OnMouseUp", function(self, btn)
-		if btn == "LeftButton" then
-			self:StopMovingOrSizing()
-			if OpacityFrame:IsShown() then OpacityFrame:Hide() end -- seem to be a bug with default ui in 4.0, we hide it on next click
-		elseif btn == "RightButton" then
-			ToggleDropDownMenu(1, nil, BattlefieldMinimapTabDropDown, self:GetName(), 0, -4)
-			if OpacityFrame:IsShown() then OpacityFrame:Hide() end -- seem to be a bug with default ui in 4.0, we hide it on next click
-		end
-	end)
-
-	self:SetScript("OnMouseDown", function(self, btn)
-		if btn == "LeftButton" then
-			if BattlefieldMinimapOptions.locked then
-				return
-			else
-				self:StartMoving()
-			end
-		end
-	end)
-end)

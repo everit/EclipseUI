@@ -303,17 +303,6 @@ local function updatehotkey(self, actionButtonType)
 	else
 		hotkey:SetText(text)
 	end
-	
-	hotkey:ClearAllPoints()
-	hotkey:SetPoint("TOPRIGHT", TukuiDB.Scale(-1), 0)
-	hotkey:SetFont(font, font_size, font_style)
-	hotkey:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
- 
-	if not db.hotkey then
-		hotkey:SetText("")
-		hotkey:Hide()
-		hotkey.Show = TukuiDB.dummy
-	end
 end
 
 -- rescale cooldown spiral to fix texture.
@@ -405,7 +394,7 @@ local function styleflyout(self)
 		self.FlyoutArrow:SetPoint("LEFT", self, "LEFT", -arrowDistance, 0)
 		SetClampedTextureRotation(self.FlyoutArrow, 270)
 		FlyoutButtonPos(self,buttons,"LEFT")
-	elseif (self:GetParent() == MultiBarLeft and not TukuiDB.lowversion) then
+	elseif (self:GetParent() == MultiBarLeft) then
 		self.FlyoutArrow:ClearAllPoints()
 		self.FlyoutArrow:SetPoint("TOP", self, "TOP", 0, arrowDistance)
 		SetClampedTextureRotation(self.FlyoutArrow, 0)
@@ -429,7 +418,7 @@ function TukuiDB.StyleButton(b, checked)
 
 	local pushed = b:CreateTexture("frame", nil, self)
 	pushed:SetTexture(0.9, 0.8, 0.1, 0.3)
-		pushed:SetSize(button:GetWidth(), button:GetHeight())
+	pushed:SetSize(button:GetWidth(), button:GetHeight())
 	pushed:SetPoint("TOPLEFT", button, 2, -2)
 	pushed:SetPoint("BOTTOMRIGHT", button, -2, 2)
 	button:SetPushedTexture(pushed)
@@ -463,3 +452,229 @@ end
 hooksecurefunc("ActionButton_Update", style)
 hooksecurefunc("ActionButton_UpdateHotkeys", updatehotkey)
 hooksecurefunc("ActionButton_UpdateFlyout", styleflyout)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SLOT_EMPTY_TCOORDS = {
+	[EARTH_TOTEM_SLOT] = {
+		left	= 66 / 128,
+		right	= 96 / 128,
+		top		= 3 / 256,
+		bottom	= 33 / 256,
+	},
+	[FIRE_TOTEM_SLOT] = {
+		left	= 67 / 128,
+		right	= 97 / 128,
+		top		= 100 / 256,
+		bottom	= 130 / 256,
+	},
+	[WATER_TOTEM_SLOT] = {
+		left	= 39 / 128,
+		right	= 69 / 128,
+		top		= 209 / 256,
+		bottom	= 239 / 256,
+	},
+	[AIR_TOTEM_SLOT] = {
+		left	= 66 / 128,
+		right	= 96 / 128,
+		top		= 36 / 256,
+		bottom	= 66 / 256,
+	},
+}
+
+local bordercolors = {
+	{.23,.45,.13},    -- Earth
+	{.58,.23,.10},    -- Fire
+	{.19,.48,.60},   -- Water
+	{.42,.18,.74},   -- Air
+	{.39,.39,.12}    -- Summon / Recall
+}
+
+-- Skin Flyout
+function SkinMCABFlyoutFrame(flyout)
+	flyout.top:SetTexture(nil)
+	flyout.middle:SetTexture(nil)
+	flyout:SetBackdropBorderColor(0,0,0,0)
+	flyout:SetBackdropColor(0,0,0,0)
+
+	-- Skin buttons
+	local last = nil
+	for _,button in ipairs(flyout.buttons) do
+		if not InCombatLockdown() then
+			button:SetSize(db.stancebuttonsize, db.stancebuttonsize)
+			button:ClearAllPoints()
+			button:SetPoint("BOTTOM", last, "TOP", 0, db.buttonspacing)
+		end			
+
+		if button.icon then
+			button.icon:SetTexCoord(.09, .91, .09, .91)
+			button.icon:SetDrawLayer("ARTWORK",-1)
+			button.icon:ClearAllPoints()
+			button.icon:SetPoint("TOPLEFT",button,"TOPLEFT",2, -2)
+			button.icon:SetPoint("BOTTOMRIGHT",button,"BOTTOMRIGHT",-2, 2)
+		end
+
+		if button.hotkey then
+			button.hotkey:SetFont(font,font_size, font_style)
+			button.hotkey:SetDrawLayer("OVERLAY")
+		end
+
+		if button:IsVisible() then 
+			last = button 
+		end
+
+		TukuiDB.SetTemplate(button)
+		TukuiDB.CreateShadow(button)
+		TukuiDB.StyleButton(button, false)
+
+		button:SetBackdropBorderColor(flyout.parent:GetBackdropBorderColor())
+	end
+
+	flyout.buttons[1]:SetPoint("BOTTOM",flyout,"BOTTOM")
+
+	if flyout.type == "slot" then
+		local tcoords = SLOT_EMPTY_TCOORDS[flyout.parent:GetID()]
+		flyout.buttons[1].icon:SetTexCoord(tcoords.left,tcoords.right,tcoords.top,tcoords.bottom)
+	end
+
+
+	-- Skin Close button
+	local close = MultiCastFlyoutFrameCloseButton
+	TukuiDB.SetTemplate(close)
+	TukuiDB.CreateShadow(close)
+	TukuiDB.StyleButton(close, false)
+
+    close:GetHighlightTexture():SetPoint("TOPLEFT",close,"TOPLEFT",2,-2)
+    close:GetHighlightTexture():SetPoint("BOTTOMRIGHT",close,"BOTTOMRIGHT",-2,2)
+    close:GetNormalTexture():SetTexture(nil)
+	close:ClearAllPoints()
+	close:SetPoint("BOTTOMLEFT",last,"TOPLEFT",0,3)
+	close:SetPoint("BOTTOMRIGHT",last,"TOPRIGHT",0,3)
+	close:SetHeight(db.buttonspacing * 3)
+
+	flyout:ClearAllPoints()
+	flyout:SetPoint("BOTTOM",flyout.parent,"TOP",0,3)
+end
+hooksecurefunc("MultiCastFlyoutFrame_ToggleFlyout",function(self) SkinMCABFlyoutFrame(self) end)
+	
+	
+	
+function SkinMCABFlyoutOpenButton(button, parent)
+	TukuiDB.SetTemplate(button)
+	TukuiDB.CreateShadow(button)
+	TukuiDB.StyleButton(button, false)
+
+	button:SetHeight(db.buttonspacing * 4)
+
+    button:GetNormalTexture():SetTexture(nil)
+	button:GetHighlightTexture():SetPoint("TOPLEFT",button,"TOPLEFT",2, -2)
+	button:GetHighlightTexture():SetPoint("BOTTOMRIGHT",button,"BOTTOMRIGHT",-2, 2)
+	
+	button:ClearAllPoints()
+	button:SetFrameLevel(parent:GetFrameLevel())
+	button:SetPoint("BOTTOMLEFT", parent, "TOPLEFT", 1, TukuiDB.Scale(-1))
+	button:SetPoint("BOTTOMRIGHT", parent, "TOPRIGHT", -1, TukuiDB.Scale(-1))
+end
+hooksecurefunc("MultiCastFlyoutFrameOpenButton_Show",function(button,_, parent) SkinMCABFlyoutOpenButton(button, parent) end)
+	
+	
+function SkinMCABSlotButton(button, index)
+	TukuiDB.SetTemplate(button)
+	TukuiDB.CreateShadow(button)
+	TukuiDB.StyleButton(button, false)
+
+	if _G[button:GetName().."Panel"] then 
+		_G[button:GetName().."Panel"]:Hide() 
+	end
+
+	button.overlayTex:SetTexture(nil)
+	button.background:SetDrawLayer("ARTWORK")
+	button.background:ClearAllPoints()
+	button.background:SetPoint("TOPLEFT",button,"TOPLEFT",2,-2)
+	button.background:SetPoint("BOTTOMRIGHT",button,"BOTTOMRIGHT",-2, 2)
+	button:SetSize(db.stancebuttonsize, db.stancebuttonsize)
+	button:SetBackdropBorderColor(unpack(bordercolors[((index-1) % 4) + 1]))
+end
+hooksecurefunc("MultiCastSlotButton_Update",function(self, slot) SkinMCABSlotButton(self,tonumber( string.match(self:GetName(),"MultiCastSlotButton(%d)"))) end)
+	
+	
+	-- Skin the actual totem buttons
+function SkinMCABActionButton(button, index)
+	button.overlayTex:SetTexture(nil)
+	button.overlayTex:Hide()
+	button:GetNormalTexture():SetTexture(nil)
+
+	if button.icon then
+		button.icon:SetTexCoord(.09, .91, .09, .91)
+		button.icon:SetDrawLayer("ARTWORK",-1)
+		button.icon:ClearAllPoints()
+		button.icon:SetPoint("TOPLEFT",button,"TOPLEFT",2, -2)
+		button.icon:SetPoint("BOTTOMRIGHT",button,"BOTTOMRIGHT",-2, 2)
+	end
+
+	if _G[button:GetName().."Panel"] then 
+		_G[button:GetName().."Panel"]:Hide() 
+	end
+
+	if not InCombatLockdown() and button.slotButton then
+		button:ClearAllPoints()
+		button:SetAllPoints(button.slotButton)
+		button:SetFrameLevel(button.slotButton:GetFrameLevel()+1)
+	end
+	button:SetBackdropBorderColor(unpack(bordercolors[((index-1) % 4) + 1]))
+	button:SetBackdropColor(0,0,0,0)
+end
+hooksecurefunc("MultiCastActionButton_Update",function(actionButton, actionId, actionIndex, slot) SkinMCABActionButton(actionButton,actionIndex) end)
+	
+	
+	
+	
+	-- Skin the summon and recall buttons
+	-- function SkinMCABSpellButton(button, index)
+		-- if not button then return end
+		-- self:SkinActionButton(button) already commented
+		-- button:GetNormalTexture():SetTexture(nil)
+		-- self:SkinBackgroundFrame(button) alreadycommented
+		-- button:SetBackdropBorderColor(unpack(bordercolors[((index-1)%5)+1]))
+		
+		-- if not InCombatLockdown() then 
+			-- button:SetSize(db.stancebuttonsize, db.stancebuttonsize) 
+		-- end
+		
+		-- _G[button:GetName().."Highlight"]:SetTexture(nil)
+		-- _G[button:GetName().."NormalTexture"]:SetTexture(nil)
+	-- end
+	-- hooksecurefunc("MultiCastSummonSpellButton_Update", function(self) SkinMCABSpellButton(self,0) end)
+	-- hooksecurefunc("MultiCastRecallSpellButton_Update", function(self) SkinMCABSpellButton(self,5) end)
+	
+	-- local frame = MultiCastActionBarFrame
+-- end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

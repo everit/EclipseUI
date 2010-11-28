@@ -5,8 +5,12 @@ TukuiCF["general"] = {
 	["uiscale"] = 0.71,                    -- set your value (between 0.64 and 1) of your uiscale if autoscale is off
 	["overridelowtohigh"] = false,         -- EXPERIMENTAL ONLY! override lower version to higher version on a lower reso.
 	["multisampleprotect"] = true,         -- i don't recommend this because of shitty border but, voila!
-	
-	["game_texture"] = TukuiCF["media"].normTex,
+}
+
+----- [[      Customise Settings     ]] -----
+
+TukuiCF["customise"] = {
+	["texture"] = TukuiCF["media"].custom_texture_1,
 }
 
 ----- [[     Unitframe Settings     ]] -----
@@ -32,7 +36,7 @@ TukuiCF["unitframes"] = {
 	["charportrait"] = false,              -- do i really need to explain this?
 	["maintank"] = false,                  -- enable maintank
 	["mainassist"] = false,                -- enable mainassist
-	["combatfeedback"] = true,             -- enable combattext on player and target.
+	["combatfeedback"] = false,             -- enable combattext on player and target.
 	["playeraggro"] = true,                -- color player border to red if you have aggro on current target.
 	["positionbychar"] = true,             -- save X, Y position with /uf (movable frame) per character instead of per account.
 	["healcomm"] = true,                  -- enable healprediction support.
@@ -41,7 +45,7 @@ TukuiCF["unitframes"] = {
 	["raidalphaoor"] = 0.3,                -- alpha of unitframes when unit is out of range
 	["showsymbols"] = true,	               -- show symbol.
 	["aggro"] = true,                      -- show aggro on all raids layouts
-	["raidunitdebuffwatch"] = true,        -- track important spell to watch in pve for grid mode.
+	["raidunitdebuffwatch"] = false,        -- track important spell to watch in pve for grid mode.
 	["healthvertical"] = true,         -- enable vertical grow on health bar for grid mode.
 	["showplayerinparty"] = true,         -- show my player frame in party
 	
@@ -50,8 +54,8 @@ TukuiCF["unitframes"] = {
 	["ws_show_player"] = true,             -- show weakened soul bar on player unit
 	["ws_show_target"] = true,             -- show weakened soul bar on target unit
 	
-	["runebar"] = true,                    -- enable tukui runebar plugin
-	["totemtimer"] = true,                 -- enable tukui totem timer plugin
+	["runebar"] = false,                    -- enable tukui runebar plugin
+	["totemtimer"] = false,                 -- enable tukui totem timer plugin
 	
 	
 	["classcolor"] = false,
@@ -61,8 +65,9 @@ TukuiCF["unitframes"] = {
 	["showvalues"] = true,
 	["showpercentage"] = false,
 	["onlyplayerdebuffs"] = true,
-	["onlyplayerbuffs"] = false,
-	["aurarows"] = 1,
+	["onlyplayerbuffs"] = true,
+	["buffrows"] = 1,
+	["debuffrows"] = 1,
 }
 
 ----- [[     Actionbar Settings     ]] -----
@@ -75,7 +80,6 @@ TukuiCF["actionbar"] = {
 
 	["hideshapeshift"] = false,            -- hide shapeshift or totembar because it was a lot requested.
 	
-	-- ["mainbar_swap"] = false,
 	["vertical_rightbars"] = false,
 	["vertical_shapeshift"] = false,
 
@@ -83,11 +87,6 @@ TukuiCF["actionbar"] = {
 	["petbuttonsize"] = 27,
 	["stancebuttonsize"] = 27,
 	["buttonspacing"] = 4,
-	
-	-- ["split_bar_mouseover"] = false,
-	-- ["rightbar_mouseover"] = false,
-	-- ["petbar_mouseover"] = false,
-	-- ["shapeshift_mouseover"] = false,
 }
 
 ----- [[     Datatext Settings     ]] -----
@@ -118,7 +117,7 @@ TukuiCF["datatext"] = {
 
 TukuiCF["chat"] = {
 	["enable"] = true,                     -- blah
-	["whispersound"] = true,               -- play a sound when receiving whisper
+	["whispersound"] = false,               -- play a sound when receiving whisper
 	
 	["chatheight"] = 140,						-- Set the height of your chat here!
 }
@@ -133,8 +132,8 @@ TukuiCF["panels"] = {
 ----- [[     Arena Settings     ]] -----
 
 TukuiCF["arena"] = {
-	["unitframes"] = true,                 -- enable tukz arena unitframes (requirement : tukui unitframes enabled)
-	["spelltracker"] = true,               -- enable tukz enemy spell tracker (an afflicted3 or interruptbar alternative)
+	["unitframes"] = false,                 -- enable tukz arena unitframes (requirement : tukui unitframes enabled)
+	["spelltracker"] = false,               -- enable tukz enemy spell tracker (an afflicted3 or interruptbar alternative)
 }
 
 ----- [[     Nameplate Settings     ]] -----
@@ -178,39 +177,4 @@ TukuiCF["tooltip"] = {
 	["hidebuttons"] = false,               -- always hide action bar buttons tooltip.
 	["hideuf"] = false,                    -- hide tooltip on unitframes
 	["cursor"] = false,                    -- tooltip via cursor only
-}
-
------ [[     Merchant Settings     ]] -----
-
-TukuiCF["merchant"] = {
-	["sellgrays"] = true,                  -- automaticly sell grays?
-	["autorepair"] = true,                 -- automaticly repair?
-}
-
------ [[     Error Settings     ]] -----
-
-TukuiCF["error"] = {
-	["enable"] = true,                     -- true to enable this mod, false to disable
-	filter = {                             -- what messages to not hide
-		["Inventory is full."] = true,     -- inventory is full will not be hidden by default
-	},
-}
-
------ [[     Invite Settings     ]] -----
-
-TukuiCF["invite"] = { 
-	["autoaccept"] = true,                 -- auto-accept invite from guildmate and friends.
-}
-
------ [[     Buff Reminder Settings     ]] -----
-
-TukuiCF["buffreminder"] = {
-	["enable"] = true,                     -- this is now the new innerfire warning script for all armor/aspect class.
-	["sound"] = true,                      -- enable warning sound notification for reminder.
-}
-
------ [[     Other Settings     ]] -----
-
-TukuiCF["others"] = {
-	["pvpautorelease"] = true,             -- enable auto-release in bg or wintergrasp. (not working for shaman, sorry)
 }

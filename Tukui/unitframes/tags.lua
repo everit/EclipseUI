@@ -153,7 +153,6 @@ end
 oUF.TagEvents['Tukui:dead'] = 'UNIT_HEALTH'
 oUF.Tags['Tukui:dead'] = function(unit)
 	if UnitIsDead(unit) then
-
 		return " |cffff0000[D]|r"
 	elseif UnitIsGhost(unit) then
 		return " |cffff0000[G]|r"
@@ -164,7 +163,6 @@ end
 oUF.TagEvents['Tukui:afk'] = 'PLAYER_FLAGS_CHANGED', 'UNIT_CONNECTION'
 oUF.Tags['Tukui:afk'] = function(unit)
 	if UnitIsAFK(unit) then
-
 		return " |cffff0000[A]|r"
 	elseif not UnitIsConnected(unit) then
 		return " |cffff0000[O]|r"
