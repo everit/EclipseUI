@@ -156,18 +156,17 @@ stat[1]:SetScript("OnEnter", function()
 				if Hr>12 then Hr = Hr-12 end
 				GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_servertime, Hr .. ":" .. Min .. " pm|r", _, _, _, 1, 1, 1)
 			else
-			if Hr == 0 then Hr = 12 end
-			GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_servertime, Hr .. ":" .. Min .. " am|r", _, _, _, 1, 1, 1)
+				if Hr == 0 then Hr = 12 end
+				GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_servertime, Hr .. ":" .. Min .. " am|r", _, _, _, 1, 1, 1)
+			end
 		end
 	end
-end
 
-GameTooltip:AddLine" "
-GameTooltip:AddDoubleLine(cStart .. "Right-click:", "Local or Server Time", _, _, _, 1, 1, 1)
-GameTooltip:AddDoubleLine(cStart .. "Left-click:", "Format 24H or AM/PM", _, _, _, 1, 1, 1)
-GameTooltip:AddDoubleLine(cStart .. "Middle-click:", "Show Calender", _, _, _, 1, 1, 1)
+	GameTooltip:AddLine" "
+	GameTooltip:AddDoubleLine(cStart .. "Right-click:", "Local or Server Time", _, _, _, 1, 1, 1)
+	GameTooltip:AddDoubleLine(cStart .. "Left-click:", "Format 24H or AM/PM", _, _, _, 1, 1, 1)
 
-GameTooltip:Show()
+	GameTooltip:Show()
 end)
 stat[1]:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
