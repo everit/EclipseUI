@@ -7,7 +7,7 @@ local _, settings = ...
 local _DEFAULTS = {
 	width = TukuiDB.Scale(220),
 	height = TukuiCF["panels"].tinfoheight,
-	texture = TukuiCF["general"].game_texture,
+	texture = TukuiCF["customise"].texture,
 
 	position = {
 		["BREATH"] = 'TOP#UIParent#TOP#0#-96';
