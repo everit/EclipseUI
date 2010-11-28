@@ -92,7 +92,7 @@ TukuiCF["actionbar"] = {
 ----- [[     Datatext Settings     ]] -----
 
 TukuiCF["datatext"] = {
-	["bags"] = 1,                          -- show space used in bags on panels
+	["bags"] = 0,                          -- show space used in bags on panels
 	["gold"] = 2,                          -- show your current gold on panels
 	["guild"] = 0,                         -- show number on guildmate connected on panels
 	["friends"] = 3,                       -- show number of friends connected.
@@ -106,6 +106,7 @@ TukuiCF["datatext"] = {
 	["currency"] = 5,                      -- show your tracked currency on panels
 	["hitrating"] = 0,
 	["wintergrasp"] = 4,
+	["dur"] = 1,
 	
 	["battleground"] = true,               -- enable 3 stats in battleground only that replace stat1,stat2,stat3.
 	
