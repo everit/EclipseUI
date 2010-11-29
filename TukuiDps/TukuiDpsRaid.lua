@@ -4,10 +4,14 @@ if not db.enable then return end
 
 ----- [[     Local Variables     ]] -----
 
-local font, font_size, font_style, font_shadow, font_position = TukuiCF["fonts"].unitframe_font, TukuiCF["fonts"].unitframe_font_size, TukuiCF["fonts"].unitframe_font_style, TukuiCF["fonts"].unitframe_font_shadow, TukuiCF["fonts"].unitframe_y_position
+local ecUI = ecUI
+local texture = TukuiCF["customise"].texture
 
-
-local texture = TukuiCF["general"].game_texture
+local font = TukuiCF["fonts"].unitframe_font
+local font_size = TukuiCF["fonts"].unitframe_font_size
+local font_style = TukuiCF["fonts"].unitframe_font_style
+local font_shadow = TukuiCF["fonts"].unitframe_font_shadow
+local font_position = TukuiCF["fonts"].unitframe_y_position
 
 
 ----- [[     Layout     ]] -----
@@ -39,7 +43,7 @@ local function Shared(self, unit)
 	hBorder:SetFrameLevel(health:GetFrameLevel() - 1)
 	hBorder:SetPoint("TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
 	hBorder:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
-	TukuiDB.SkinPanel(hBorder)
+	ecUI.SkinPanel(hBorder)
 	TukuiDB.Kill(hBorder.bg)
 	self.Health.border = hBorder		
 
