@@ -9,7 +9,6 @@
 	<Script file="config\font-config.lua"/>
 	<Script file="config\custom-config.lua"/>
 	
-	
 	<Script file="core\pixelperf.lua"/>
 	<Script file="core\launch.lua"/>
 	<Script file="core\create.lua"/>
@@ -36,7 +35,6 @@
 	<Script file="modules\bind.lua"/>
 	<Script file="modules\commands.lua"/>
 	<Script file="modules\altpowerbar.lua"/>
-
 	
 	<Script file="scripts\panels.lua"/>
 	<Script file="scripts\chat.lua"/>
@@ -57,9 +55,10 @@
 	<Include file="datatext\datatext.xml"/>
 
 	<Include file="actionbars\actionbars.xml"/>
-	<Script file="scripts\minimenu.lua"/>
-
 	
+	<Script file="scripts\minimenu.lua"/>
+	<Script file="scripts\combo.lua"/>
+
 	<Include file="unitframes\templates.xml"/>
 	<Script file="unitframes\functions.lua"/>
 	<Script file="unitframes\tags.lua"/>
