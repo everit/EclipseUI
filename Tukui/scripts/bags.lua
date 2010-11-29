@@ -951,7 +951,7 @@ function Stuffing:PLAYER_ENTERING_WORLD()
 		keybackdrop:SetPoint("TOPLEFT", TukuiDB.Scale(9), TukuiDB.Scale(-40))
 		keybackdrop:SetPoint("BOTTOMLEFT", 0, 0)
 		keybackdrop:SetSize(TukuiDB.Scale(179),TukuiDB.Scale(215))
-		TukuiDB.SkinFadedPanel(KeyringFrame)
+		ecUI.SkinFadedPanel(KeyringFrame)
 
 		ContainerFrame1CloseButton:Hide()
 		ContainerFrame1Portrait:Hide()
