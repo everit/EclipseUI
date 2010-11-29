@@ -212,8 +212,8 @@ local function setup()
 		location()
 	elseif ecSV.reputation_shown == true then
 		um(repframe, 1, expanded, "TOP", UIParent, "TOP", 0, TukuiDB.Scale(-8), "")
-		um(expframe, 0, collapsed, "TOPLEFT", locframe, "TOPRIGHT", TukuiDB.Scale(3), 0, "E")
 		um(locframe, 0, collapsed, "TOPLEFT", repframe, "TOPRIGHT", TukuiDB.Scale(3), 0, "L")
+		um(expframe, 0, collapsed, "TOPLEFT", locframe, "TOPRIGHT", TukuiDB.Scale(3), 0, "E")
 
 		reputation()
 	end
