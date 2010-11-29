@@ -187,74 +187,35 @@ end
 
 ----- [[     Set Up / Check Function     ]] -----
 
+local um = function(f, n, s, a1, a, a2, x, y, t)
+	f.bar:SetAlpha(n)
+	f:SetWidth(s)
+
+	f:ClearAllPoints()
+	f:SetPoint(a1, a, a2, x, y)
+	
+	f.text:SetText(cStart .. t)
+end
+
 local function setup()
 	if ecSV.experience_shown == true then
-		-- just hide bars depending on what's enabled
-		expframe.bar:SetAlpha(1)
-		locframe.bar:SetAlpha(1)
-
-		-- run chosen func
+		um(expframe, 1, expanded, "TOP", UIParent, "TOP", 0, TukuiDB.Scale(-8), "")
+		um(locframe, 1, collapsed, "TOPRIGHT", expframe, "TOPLEFT", TukuiDB.Scale(-3), 0, "L")
+		um(repframe, 0, collapsed, "TOPRIGHT", locframe, "TOPLEFT", TukuiDB.Scale(-3), 0, "R")
+		
 		experience()
-
-		-- set up frame widths depending on what's enabled
-		expframe:SetWidth(expanded)
-		locframe:SetWidth(collapsed)
-		repframe:SetWidth(collapsed)
-		
-		-- re-anchor our frames depending on what's enabled, 
-		-- since we always want the enabled frame to be in the center of the screen
-		expframe:ClearAllPoints()
-		locframe:ClearAllPoints()
-		repframe:ClearAllPoints()
-		expframe:SetPoint("TOP", UIParent, "TOP", 0, TukuiDB.Scale(-8))
-		locframe:SetPoint("TOPRIGHT", expframe, "TOPLEFT", TukuiDB.Scale(-3), 0)
-		repframe:SetPoint("TOPRIGHT", locframe, "TOPLEFT", TukuiDB.Scale(-3), 0)
-
-		-- change text values to mini-mode depending on what's enabled
-		locframe.text:SetText(cStart .. "L")
-		repframe.text:SetText(cStart .. "R")
-		
 	elseif ecSV.location_shown == true then
-		expframe.bar:SetAlpha(0)
-		locframe.bar:SetAlpha(0)
-		repframe.bar:SetAlpha(0)
+		um(locframe, 0, expanded, "TOP", UIParent, "TOP", 0, TukuiDB.Scale(-8), "")
+		um(expframe, 0, collapsed, "TOPLEFT", locframe, "TOPRIGHT", TukuiDB.Scale(3), 0, "E")
+		um(repframe, 0, collapsed, "TOPRIGHT", locframe, "TOPLEFT", TukuiDB.Scale(-3), 0, "R")
 
 		location()
-		
-		expframe:SetWidth(collapsed)
-		locframe:SetWidth(expanded)
-		repframe:SetWidth(collapsed)
-		
-		expframe:ClearAllPoints()
-		locframe:ClearAllPoints()
-		repframe:ClearAllPoints()
-		expframe:SetPoint("TOPLEFT", locframe, "TOPRIGHT", TukuiDB.Scale(3), 0)
-		locframe:SetPoint("TOP", UIParent, "TOP", 0, TukuiDB.Scale(-8))
-		repframe:SetPoint("TOPRIGHT", locframe, "TOPLEFT", TukuiDB.Scale(-3), 0)
-		
-		expframe.text:SetText(cStart .. "E")
-		repframe.text:SetText(cStart .. "R")
-		
 	elseif ecSV.reputation_shown == true then
-		expframe.bar:SetAlpha(0)
-		locframe.bar:SetAlpha(0)
-		repframe.bar:SetAlpha(1)
+		um(repframe, 1, expanded, "TOP", UIParent, "TOP", 0, TukuiDB.Scale(-8), "")
+		um(expframe, 0, collapsed, "TOPLEFT", locframe, "TOPRIGHT", TukuiDB.Scale(3), 0, "E")
+		um(locframe, 0, collapsed, "TOPLEFT", repframe, "TOPRIGHT", TukuiDB.Scale(3), 0, "L")
 
 		reputation()
-		
-		expframe:SetWidth(collapsed)
-		locframe:SetWidth(collapsed)
-		repframe:SetWidth(expanded)
-		
-		expframe.text:SetText(cStart .. "E")
-		locframe.text:SetText(cStart .. "L")
-		
-		expframe:ClearAllPoints()
-		locframe:ClearAllPoints()
-		repframe:ClearAllPoints()
-		expframe:SetPoint("TOPLEFT", locframe, "TOPRIGHT", TukuiDB.Scale(3), 0)
-		locframe:SetPoint("TOPLEFT", repframe, "TOPRIGHT", TukuiDB.Scale(3), 0)
-		repframe:SetPoint("TOP", UIParent, "TOP", 0, TukuiDB.Scale(-8))
 	end
 end
 frame:SetScript("OnEvent", setup)
