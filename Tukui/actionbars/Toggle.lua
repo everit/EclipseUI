@@ -85,6 +85,11 @@ local bb_check = function()
 	end
 end
 
+
+
+
+
+
 local rbb_check = function()
 	if ecSV.rightbars >= 1 then
 		petbg:ClearAllPoints()
@@ -267,7 +272,7 @@ end
 
 for i = 1, 5 do
 	Toggle[i] = CreateFrame("Frame", "TukuiToggle"..i, Toggle)
-	Toggle[i]:EnableMouse(true)
+	-- Toggle[i]:EnableMouse(true)
 	Toggle[i]:SetAlpha(0)
 	
 	Toggle[i].text = Toggle[i]:CreateFontString(nil, "OVERLAY")
@@ -365,16 +370,14 @@ for i = 1, 5 do
 	Toggle[i]:SetScript("OnLeave", function()
 		ecUI.FadeOut(Toggle[i])
 	end)
-	
-	Toggle[i]:HookScript("OnEvent", function(self, event)
-		if (event == "PLAYER_REGEN_DISABLED") then
-			if Toggle[i]:GetAlpha() > 0 then
-				ecUI.FadeOut(Toggle[i])
-			end
+
+	Toggle[i]:SetScript("OnUpdate", function() 
+		if ecSV.locked_actionbars == true then
 			Toggle[i]:EnableMouse(false)
-		elseif (event == "PLAYER_REGEN_ENABLED") then
+		elseif ecSV.locked_actionbars == false then
 			Toggle[i]:EnableMouse(true)
 		end
-	end)
+	end)		
 end
+
 Toggle:RegisterEvent("PLAYER_ENTERING_WORLD")

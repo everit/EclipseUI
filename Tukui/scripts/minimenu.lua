@@ -31,8 +31,6 @@ local check_locked = function(index, var, text)
 
 		if var == ecSV.locked_minimap then
 			TukuiToggleMinimap:EnableMouse(false)
-		elseif var == ecSV.locked_actionbars then
-			-- need to implement
 		end
 	elseif var == false then
 		MiniMenu[index].text:SetText("Lock " .. text)
@@ -40,8 +38,6 @@ local check_locked = function(index, var, text)
 		
 		if var == ecSV.locked_minimap then
 			TukuiToggleMinimap:EnableMouse(true)
-		elseif var == ecSV.locked_actionbars then 
-			-- need to implement
 		end
 	end
 end
