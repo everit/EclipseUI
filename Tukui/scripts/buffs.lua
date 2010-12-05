@@ -27,7 +27,7 @@ WorldStateAlwaysUpFrame:SetFrameLevel(0)
 
 for i = 1, 3 do
 	local f = CreateFrame("Frame", nil, _G["TempEnchant"..i])
-	TukuiDB.CreatePanel(f, 30, 30, "CENTER", _G["TempEnchant"..i], "CENTER", 0, 0)	
+	TukuiDB.CreateUltimate(f, false, 30, 30, "CENTER", _G["TempEnchant"..i])
 	_G["TempEnchant"..i.."Border"]:Hide()
 	_G["TempEnchant"..i.."Icon"]:SetTexCoord(.09, .91, .09, .91)
 	_G["TempEnchant"..i.."Icon"]:SetPoint("TOPLEFT", _G["TempEnchant"..i], TukuiDB.Scale(2), TukuiDB.Scale(-2))
@@ -65,7 +65,7 @@ local function StyleBuffs(buttonName, index, debuff)
 		count:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 
 		local panel = CreateFrame("Frame", buttonName..index.."Panel", buff)
-		TukuiDB.CreatePanel(panel, 30, 30, "CENTER", buff, "CENTER", 0, 0)
+		TukuiDB.CreateUltimate(panel, false, 30, 30, "CENTER", buff)
 		panel:SetFrameLevel(buff:GetFrameLevel() - 1)
 		panel:SetFrameStrata(buff:GetFrameStrata())
 	end

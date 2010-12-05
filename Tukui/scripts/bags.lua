@@ -9,8 +9,6 @@
 
 if not TukuiCF["bags"].enable == true then return end
 
-local ecUI = ecUI
-
 local font = TukuiCF["fonts"].bag_font
 local font_size = TukuiCF["fonts"].bag_font_size
 local font_style = TukuiCF["fonts"].bag_font_style
@@ -407,33 +405,37 @@ end
 function Stuffing:CreateBagFrame(w)
 	local n = "StuffingFrame"  .. w
 	local f = CreateFrame ("Frame", n, UIParent)
+	TukuiDB.CreateUltimate(f, true, 0, 0)
 	f:EnableMouse(1)
 	f:SetMovable(1)
 	f:SetToplevel(1)
 	f:SetFrameStrata("HIGH")
 	f:SetFrameLevel(20)
-	ecUI.SkinFadedPanel(f)
 
 	local function bagUpdate(f, ...)
 		if w == "Bank" then
 			f:SetPoint("BOTTOMLEFT", TukuiChatLeftTabs, "TOPLEFT", 0, 3)
 		else
-			if HasPetUI() then
-				if TukuiCF["actionbar"].vertical_rightbars == true then
-					f:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, 3)
-				else
-					f:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "TOPRIGHT", 0, 3)
-				end
-			elseif UnitHasVehicleUI("player") then
+			if TukuiCF["actionbar"].enable ~= true then
 				f:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, 3)
 			else
-				if TukuiCF["actionbar"].vertical_rightbars == true then
+				if HasPetUI() then
+					if TukuiCF["actionbar"].vertical_rightbars == true then
+						f:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, 3)
+					else
+						f:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "TOPRIGHT", 0, 3)
+					end
+				elseif UnitHasVehicleUI("player") then
 					f:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, 3)
 				else
-					if ecSV.rightbars >= 1 then
-						f:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, 3)
-					else
+					if TukuiCF["actionbar"].vertical_rightbars == true then
 						f:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, 3)
+					else
+						if TukuiSaved.rightbars >= 1 then
+							f:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, 3)
+						else
+							f:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, 3)
+						end
 					end
 				end
 			end
@@ -465,14 +467,14 @@ function Stuffing:CreateBagFrame(w)
     f.b_close:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 
 	TukuiDB.SetTemplate(f.b_close)
-	ecUI.CreateOverlay(f.b_close)
+	TukuiDB.CreateOverlay(f.b_close)
 
 	f.b_text = f.b_close:CreateFontString(nil, "OVERLAY")
 	f.b_text:SetFont(font, font_size, font_style)
 	f.b_text:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	f.b_text:SetPoint("CENTER", TukuiCF["fonts"].bag_button_xy_position[1], TukuiCF["fonts"].bag_button_xy_position[2])
 	f.b_text:SetText(tukuilocal.bags_close)
-	ecUI.Color(f.b_text)
+	TukuiDB.Color(f.b_text)
 	
 	f.b_close:SetWidth(f.b_text:GetWidth() + 20)
 
@@ -489,24 +491,23 @@ function Stuffing:CreateBagFrame(w)
 		f.b_key:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 
 		TukuiDB.SetTemplate(f.b_key)
-		ecUI.CreateOverlay(f.b_key)
+		TukuiDB.CreateOverlay(f.b_key)
 
 		f.b_ktext = f.b_key:CreateFontString(nil, "OVERLAY")
 		f.b_ktext:SetFont(font, font_size, font_style)
 		f.b_ktext:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 		f.b_ktext:SetPoint("CENTER", TukuiCF["fonts"].bag_button_xy_position[1], TukuiCF["fonts"].bag_button_xy_position[2])
 		f.b_ktext:SetText(tukuilocal.bags_keyring)
-		ecUI.Color(f.b_ktext)
+		TukuiDB.Color(f.b_ktext)
 
 		f.b_key:SetWidth(f.b_ktext:GetWidth() + 20)
 	end
 
 	-- create the bags frame
 	local fb = CreateFrame ("Frame", n .. "BagsFrame", f)
-	fb:SetPoint("BOTTOMLEFT", f, "TOPLEFT", 0, TukuiDB.Scale(3))
+	TukuiDB.CreateUltimate(fb, true, 0, 0, "BOTTOMLEFT", f, "TOPLEFT", 0, 3)
 	fb:SetFrameStrata("HIGH")
 	f.bags_frame = fb
-	ecUI.SkinFadedPanel(fb)
 
 	return f
 end
@@ -948,10 +949,10 @@ function Stuffing:PLAYER_ENTERING_WORLD()
 	
 	ContainerFrame1:HookScript("OnShow", function(self)
 		local keybackdrop = CreateFrame("Frame", "KeyringFrame", self)
+		TukuiDB.CreateUltimate(keybackdrop, true, 179, 215, "CENTER")
+		keybackdrop:ClearAllPoints()
 		keybackdrop:SetPoint("TOPLEFT", TukuiDB.Scale(9), TukuiDB.Scale(-40))
 		keybackdrop:SetPoint("BOTTOMLEFT", 0, 0)
-		keybackdrop:SetSize(TukuiDB.Scale(179),TukuiDB.Scale(215))
-		ecUI.SkinFadedPanel(KeyringFrame)
 
 		ContainerFrame1CloseButton:Hide()
 		ContainerFrame1Portrait:Hide()

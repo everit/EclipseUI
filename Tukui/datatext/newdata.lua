@@ -1,5 +1,3 @@
-local ecUI = ecUI
-
 local font = TukuiCF["fonts"].datatext_font
 local font_size = TukuiCF["fonts"].datatext_font_size
 local font_style = TukuiCF["fonts"].datatext_font_style
@@ -12,9 +10,8 @@ local stat = CreateFrame("Frame")
 
 for i = 1, 4 do
 	stat[i] = CreateFrame("Frame", "TukuiStat"..i, UIParent)
-	stat[i]:SetSize(70, TukuiCF["panels"].tinfoheight)
+	TukuiDB.CreateUltimate(stat[i], false, 70, TukuiCF["panels"].tinfoheight, "CENTER")
 	stat[i]:EnableMouse(true)
-	ecUI.SkinPanel(stat[i])
 	
 	stat[i].text = stat[i]:CreateFontString(nil, "OVERLAY")
 	stat[i].text:SetFont(font, font_size, font_style)
@@ -45,19 +42,19 @@ end
 
 stat[1]:HookScript("OnMouseDown", function(self, btn)
 	if btn == "RightButton" then
-		if ecSV.game_time == true then
-			ecSV.game_time = false
-			ecSV.local_time = true
-		elseif ecSV.local_time == true then
-			ecSV.game_time = true
-			ecSV.local_time = false
+		if TukuiSaved.game_time == true then
+			TukuiSaved.game_time = false
+			TukuiSaved.local_time = true
+		elseif TukuiSaved.local_time == true then
+			TukuiSaved.game_time = true
+			TukuiSaved.local_time = false
 		end
 	elseif btn == "LeftButton" then
-		if ecSV.hr_time == true then
-			ecSV.hr_time = false
+		if TukuiSaved.hr_time == true then
+			TukuiSaved.hr_time = false
 			hrmode = "Disabled"
-		elseif ecSV.hr_time == false then
-			ecSV.hr_time = true
+		elseif TukuiSaved.hr_time == false then
+			TukuiSaved.hr_time = true
 			hrmode = "Enabled"
 		end
 	end
@@ -69,12 +66,12 @@ local function TimeUpdate(self, t)
 	int4 = int4 - t
 	
 	if int4 < 0 then
-		if ecSV.local_time == true then
+		if TukuiSaved.local_time == true then
 			Hr24 = tonumber(date("%H"))
 			Hr = tonumber(date("%I"))
 			Min = date("%M")
 			
-			if ecSV.hr_time == true then
+			if TukuiSaved.hr_time == true then
 				if pendingCalendarInvites > 0 then
 						stat[1].text:SetText(cStart .. "L: |r" .. "|cffFF0000" .. Hr24 .. ":" .. Min)
 					else
@@ -95,16 +92,16 @@ local function TimeUpdate(self, t)
 					end
 				end
 			end	
-		elseif ecSV.game_time == true then
+		elseif TukuiSaved.game_time == true then
 			local Hr, Min = GetGameTime()
 			if Min<10 then Min = "0"..Min end
-			if ecSV.hr_time == true then
+			if TukuiSaved.hr_time == true then
 				if pendingCalendarInvites > 0 then
 					stat[1].text:SetText(cStart .. "S: |r" .. "|cffFF0000" .. Hr .. ":" .. Min)
 				else
 					stat[1].text:SetText(cStart .. "S: |r" .. Hr .. ":" .. Min)
 				end
-			elseif ecSV.hr_time == false then
+			elseif TukuiSaved.hr_time == false then
 				if Hr>=12 then
 					if Hr>12 then Hr = Hr-12 end
 					if pendingCalendarInvites > 0 then
@@ -132,12 +129,12 @@ stat[1]:SetScript("OnEnter", function()
 	GameTooltip:SetOwner(stat[1], "ANCHOR_BOTTOMRIGHT", -stat[1]:GetWidth(), TukuiDB.Scale(-3))
 	GameTooltip:ClearLines()
 
-	if not ecSV.game_time == true then
+	if not TukuiSaved.local_time == true then
 		Hr24 = tonumber(date("%H"))
 		Hr = tonumber(date("%I"))
 		Min = date("%M")
 
-		if ecSV.hr_time == true then
+		if TukuiSaved.hr_time == true then
 			GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_localtime, Hr24 .. ":" .. Min, _, _, _, 1, 1, 1)
 		else
 			if Hr24>=12 then
@@ -149,7 +146,7 @@ stat[1]:SetScript("OnEnter", function()
 	else
 		local Hr, Min = GetGameTime()
 		if Min<10 then Min = "0"..Min end
-		if ecSV.hr_time == true then
+		if TukuiSaved.hr_time == true then
 			GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_servertime, Hr .. ":" .. Min, _, _, _, 1, 1, 1)
 		else
 			if Hr>=12 then
@@ -253,14 +250,14 @@ stat[2]:SetScript("OnUpdate", MemUpdate)
 
 stat[2]:SetScript("OnEnter", function()
 	if not InCombatLockdown() then
-		local bandwidth = GetAvailableBandwidth()
+		-- local bandwidth = GetAvailableBandwidth()
 		GameTooltip:SetOwner(stat[2], "ANCHOR_BOTTOMRIGHT", -stat[2]:GetWidth(), TukuiDB.Scale(-3))
-		GameTooltip:ClearLines()
-		if bandwidth ~= 0 then
-			GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_bandwidth,format("%s ".. cStart .. "Mbps",bandwidth), _, _, _, 1, 1, 1)
-			GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_download,format("%s%%", floor(GetDownloadedPercentage()*100+0.5)), _, _, _, 1, 1, 1)
-			GameTooltip:AddLine' ' 
-		end
+		-- GameTooltip:ClearLines()
+		-- if bandwidth ~= 0 then
+			-- GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_bandwidth,format("%s ".. cStart .. "Mbps",bandwidth), _, _, _, 1, 1, 1)
+			-- GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_download,format("%s%%", floor(GetDownloadedPercentage()*100+0.5)), _, _, _, 1, 1, 1)
+			-- GameTooltip:AddLine' ' 
+		-- end
 		GameTooltip:AddDoubleLine(cStart .. tukuilocal.datatext_totalmemusage, formatMem(Total), _, _, _, 1, 1, 1)
 		GameTooltip:AddLine' '
 		for i = 1, #Memory do

@@ -4,9 +4,7 @@ if not db.enable then return end
 
 ----- [[     Local Variables     ]] -----
 
-local ecUI = ecUI
 local texture = TukuiCF["customise"].texture
-
 local font = TukuiCF["fonts"].unitframe_font
 local font_size = TukuiCF["fonts"].unitframe_font_size
 local font_style = TukuiCF["fonts"].unitframe_font_style
@@ -40,11 +38,10 @@ local function Shared(self, unit)
 	self.Health.bg = hBg
 
 	local hBorder = CreateFrame("Frame", nil, health)
+	TukuiDB.CreateUltimate(hBorder, false, 1, 1)
+	hBorder:SetPoint("TOPLEFT", health, TukuiDB.Scale(-2), TukuiDB.Scale(2))
+	hBorder:SetPoint("BOTTOMRIGHT", health, TukuiDB.Scale(2), TukuiDB.Scale(-2))
 	hBorder:SetFrameLevel(health:GetFrameLevel() - 1)
-	hBorder:SetPoint("TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
-	hBorder:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
-	ecUI.SkinPanel(hBorder)
-	TukuiDB.Kill(hBorder.bg)
 	self.Health.border = hBorder		
 
 	----- [[     Health Colors / Settings     ]] -----
@@ -79,22 +76,13 @@ local function Shared(self, unit)
 	Name:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	Name.frequentUpdates = 0.2
 	if db.classcolor == true then
-		self:Tag(Name, "[Tukui:name_short][Tukui:dead][Tukui:afk]")
+		self:Tag(Name, "[Tukui:leader]Tukui:name_short][Tukui:masterlooter][[Tukui:dead][Tukui:afk]")
 	else
-		self:Tag(Name, "[Tukui:getnamecolor][Tukui:name_short][Tukui:dead][Tukui:afk]")
+		self:Tag(Name, "[Tukui:leader][Tukui:getnamecolor][Tukui:name_short][Tukui:masterlooter][Tukui:dead][Tukui:afk]")
 	end
 	self.Name = Name
 	
-	
-	----- [[     Leader Icon     ]] -----
-	
-    local leader = health:CreateTexture(nil, "OVERLAY")
-    leader:SetHeight(TukuiDB.Scale(12))
-    leader:SetWidth(TukuiDB.Scale(12))
-    leader:SetPoint("TOPLEFT", 0, 6)
-	self.Leader = leader
-	
-	
+
 	----- [[     LFD Role Icon     ]] -----
 	
     local LFDRole = health:CreateTexture(nil, "OVERLAY")
@@ -103,16 +91,6 @@ local function Shared(self, unit)
 	LFDRole:SetPoint("TOPRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(-2))
 	LFDRole:SetTexture("Interface\\AddOns\\Tukui\\media\\textures\\lfdicons.blp")
 	self.LFDRole = LFDRole
-	
-	
-	----- [[     Masterlooter Icon     ]] -----
-	
-    local MasterLooter = health:CreateTexture(nil, "OVERLAY")
-    MasterLooter:SetHeight(TukuiDB.Scale(12))
-    MasterLooter:SetWidth(TukuiDB.Scale(12))
-	self.MasterLooter = MasterLooter
-    self:RegisterEvent("PARTY_LEADER_CHANGED", TukuiDB.MLAnchorUpdate)
-    self:RegisterEvent("PARTY_MEMBERS_CHANGED", TukuiDB.MLAnchorUpdate)
 	
 	
 	----- [[     Aggro     ]] -----

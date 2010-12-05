@@ -174,15 +174,15 @@ local function install()
 	end
 	
 	-- we can reset this shit here :)
-	ecSV = {} -- make sure we clear the table first, don't want any unnecessary values
-	ecSV = {
+	TukuiSaved = {} -- make sure we clear the table first, don't want any unnecessary values
+	TukuiSaved = {
 		["minimap_shown"] = true,
-		["locked_minimap"] = false,
+		["minimap_lock"] = false,
 		
 		["bottomrows"] = 1,
 		["rightbars"] = 1,
 		["splitbars"] = false,
-		["locked_actionbars"] = false,
+		["actionbars_lock"] = false,
 
 		["hr_time"] = false,
 		["local_time"] = true,
@@ -269,7 +269,7 @@ TukuiOnLogon:SetScript("OnEvent", function(self, event)
 		StaticPopup_Show("DISABLE_RAID")
 	end
 	
-	print("[Eclípsé's Edit] - Stage: Alpha")
+	print("[Eclípsé's Edit] - Stage: " .. TukuiDB.version)
 end)
 
 SLASH_CONFIGURE1 = "/resetui"

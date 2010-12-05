@@ -2,11 +2,11 @@
 ## Author: Eclípsé, Tukz
 ## Credits to: Caith, Caellian, Shestak, Haste, Tekkub, Alza, Roth, P3lim, 
 ## More Credits to: Tulla, Hungtar, hankthetank, Ishtara, Foof and others...
-## Version: 12.35
+## Version: r-beta01
 ## Title: |cffC495DDTukui|r
 ## Notes: UI of awesomeness!
 ## SavedVariables: TukuiData, TukuiArena
-## SavedVariablesPerCharacter: TukuiInstallv1200, TukuiUFpos, ecSV
+## SavedVariablesPerCharacter: TukuiInstallv1200, TukuiUFpos, TukuiSaved
 ## OptionalDeps: Tukui_ConfigUI, !ClassColors, Clique
 ## X-oUF: oUF
 

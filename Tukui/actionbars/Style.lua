@@ -51,7 +51,7 @@ function style(self)
 
 		-- create the bg/border panel
 		local panel = CreateFrame("Frame", name.."Panel", self)
-		TukuiDB.CreatePanel(panel, db.buttonsize, db.buttonsize, "CENTER", self, "CENTER", 0, 0)
+		TukuiDB.CreateUltimate(panel, false, db.buttonsize, db.buttonsize, "CENTER", self)
 		
 		panel:SetFrameStrata(self:GetFrameStrata())
 		panel:SetFrameLevel(self:GetFrameLevel() - 1)
@@ -95,7 +95,8 @@ local function stylesmallbutton(normal, button, icon, name, pet)
 			button:SetSize(db.petbuttonsize, db.petbuttonsize)
 			
 			local panel = CreateFrame("Frame", name.."Panel", button)
-			TukuiDB.CreatePanel(panel, db.petbuttonsize, db.petbuttonsize, "CENTER", button, "CENTER", 0, 0)
+			TukuiDB.CreateUltimate(panel, false, db.petbuttonsize, db.petbuttonsize, "CENTER", button)
+			
 			panel:SetFrameStrata(button:GetFrameStrata())
 			panel:SetFrameLevel(button:GetFrameLevel() - 1)
 
@@ -108,7 +109,8 @@ local function stylesmallbutton(normal, button, icon, name, pet)
 			button:SetSize(db.stancebuttonsize, db.stancebuttonsize)
 			
 			local panel = CreateFrame("Frame", name.."Panel", button)
-			TukuiDB.CreatePanel(panel, db.stancebuttonsize, db.stancebuttonsize, "CENTER", button, "CENTER", 0, 0)
+			TukuiDB.CreateUltimate(panel, false, db.stancebuttonsize, db.stancebuttonsize, "CENTER", button)
+			
 			panel:SetFrameStrata(button:GetFrameStrata())
 			panel:SetFrameLevel(button:GetFrameLevel() - 1)
 		end
@@ -403,36 +405,6 @@ local function styleflyout(self)
 		FlyoutButtonPos(self,buttons,"UP")
 	end
 end
-
-
-function TukuiDB.StyleButton(b, checked) 
-    local name = b:GetName() 
-    local button          = _G[name]
-
-	local hover = b:CreateTexture("frame", nil, self)
-	hover:SetTexture(1, 1, 1, 0.3)
-	hover:SetSize(button:GetWidth(), button:GetHeight())
-	hover:SetPoint("TOPLEFT", button, 2, -2)
-	hover:SetPoint("BOTTOMRIGHT", button, -2, 2)
-	button:SetHighlightTexture(hover)
-
-	local pushed = b:CreateTexture("frame", nil, self)
-	pushed:SetTexture(0.9, 0.8, 0.1, 0.3)
-	pushed:SetSize(button:GetWidth(), button:GetHeight())
-	pushed:SetPoint("TOPLEFT", button, 2, -2)
-	pushed:SetPoint("BOTTOMRIGHT", button, -2, 2)
-	button:SetPushedTexture(pushed)
- 
-	if checked then
-		local checked = b:CreateTexture("frame", nil, self)
-		checked:SetTexture(1, 1, 1, 0.3)
-		checked:SetSize(button:GetWidth(), button:GetHeight())
-		checked:SetPoint("TOPLEFT", button, 2, -2)
-		checked:SetPoint("BOTTOMRIGHT", button, -2, 2)
-		button:SetCheckedTexture(checked)
-	end
-end
-
 
 do
 	for i = 1, 12 do

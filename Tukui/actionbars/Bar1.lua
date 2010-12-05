@@ -78,7 +78,7 @@ bar:SetScript("OnEvent", function(self, event, ...)
 			button:ClearAllPoints()
 			button:SetParent(TukuiMainMenuBar)
 			if i == 1 then
-				button:SetPoint("BOTTOMLEFT", TukuiMainMenuBar, TukuiDB.Scale(4), TukuiDB.Scale(4))
+				button:SetPoint("BOTTOMLEFT", TukuiMainMenuBar, TukuiDB.Scale(5), TukuiDB.Scale(5))
 			else
 				button:SetPoint("LEFT", previous, "RIGHT", db.buttonspacing, 0)
 			end

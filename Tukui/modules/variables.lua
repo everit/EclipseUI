@@ -19,21 +19,15 @@ TukuiDB.patch = GetBuildInfo()
 TukuiDB.level = UnitLevel("player")
 
 
------ [[     Set Up ecUI Variables     ]] -----
-
-ecUI = { }
-
------ [[     Set Up Table Values     ]] -----
-
-if not ecSV then
-	ecSV = {
+if not TukuiSaved then
+	TukuiSaved = {
 		["minimap_shown"] = true,
-		["locked_minimap"] = false,
+		["minimap_lock"] = false,
 		
 		["bottomrows"] = 1,
 		["rightbars"] = 1,
 		["splitbars"] = false,
-		["locked_actionbars"] = false,
+		["actionbars_lock"] = false,
 		
 		["24h_time"] = false,
 		["local_time"] = true,
@@ -43,6 +37,6 @@ if not ecSV then
 		["location_shown"] = true,
 		["reputation_shown"] = false,
 		["lfg_shown"] = false,
-	}	
+	}
 end
 

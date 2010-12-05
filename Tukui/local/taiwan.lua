@@ -211,4 +211,10 @@ if TukuiDB.client == "zhTW" then
 	tukuilocal.map_close = "Close"
 	tukuilocal.map_move = "Move"
 	tukuilocal.map_expand = "Expand"
+
+	tukuilocal.minimap_lockon = "Minimap |cffCC0000locked|r"
+	tukuilocal.minimap_lockoff = "Minimap |cff00cb39unlocked|r"
+
+	tukuilocal.actionbars_lockon = "Actionbars |cffCC0000locked|r"
+	tukuilocal.actionbars_lockoff = "Actionbars |cff00cb39unlocked|r"
 end

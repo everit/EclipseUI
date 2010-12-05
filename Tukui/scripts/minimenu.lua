@@ -11,107 +11,109 @@
 ]]--
 
 
-local MiniMenu = CreateFrame("Frame", "MiniMenu", UIParent)
-MiniMenu:SetSize(TukuiMinimap:GetWidth() + 4, TukuiCF["panels"].tinfoheight)
-MiniMenu:EnableMouse(true)
-ecUI.SkinPanel(MiniMenu)
-MiniMenu:SetScript("OnEnter", TukuiDB.SetModifiedBackdrop)
-MiniMenu:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
+local Minimenu = CreateFrame("Frame", "TukuiMinimenu", UIParent)
+TukuiDB.CreateUltimate(Minimenu, false, TukuiMinimap:GetWidth() + 4, TukuiCF["panels"].tinfoheight, "TOPLEFT", TukuiMinimap, "BOTTOMLEFT", 0, -3)
+Minimenu:EnableMouse(true)
+Minimenu:SetScript("OnEnter", TukuiDB.SetModifiedBackdrop)
+Minimenu:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 
-local MiniMenuText = MiniMenu:CreateFontString(nil, "OVERLAY")
-MiniMenuText:SetFont(TukuiCF["media"].custom_font_1, 12, "MONOCHROMEOUTLINE")
-MiniMenuText:SetPoint("CENTER", 0, 1)
-MiniMenuText:SetText("MiniMenu")
-ecUI.Color(MiniMenuText)
+local MinimenuText = Minimenu:CreateFontString(nil, "OVERLAY")
+MinimenuText:SetFont(TukuiCF["media"].custom_font_1, 12, "MONOCHROMEOUTLINE")
+MinimenuText:SetPoint("CENTER", 0, 1)
+MinimenuText:SetText("Minimenu")
+TukuiDB.Color(MinimenuText)
 
-local check_locked = function(index, var, text)
+local CheckLocked = function(index, var, text)
 	if var == true then
-		MiniMenu[index].text:SetText("Unlock " .. text)
-		ecUI.Color(MiniMenu[index].text, false, true)
+		Minimenu[index].Text:SetText("Unlock " .. text)
+		TukuiDB.Color(Minimenu[index].Text, false, true)
 
-		if var == ecSV.locked_minimap then
+		if var == TukuiSaved.minimap_lock then
 			TukuiToggleMinimap:EnableMouse(false)
 		end
 	elseif var == false then
-		MiniMenu[index].text:SetText("Lock " .. text)
-		ecUI.Color(MiniMenu[index].text, true, false)
+		Minimenu[index].Text:SetText("Lock " .. text)
+		TukuiDB.Color(Minimenu[index].Text, true, false)
 		
-		if var == ecSV.locked_minimap then
+		if var == TukuiSaved.minimap_lock then
 			TukuiToggleMinimap:EnableMouse(true)
 		end
 	end
 end
 
 for i = 1, 4 do
-	MiniMenu[i] = CreateFrame("Frame", "MiniMenuButton"..i, MiniMenu)
-	MiniMenu[i]:SetSize(MiniMenu:GetWidth(), TukuiCF["panels"].tinfoheight)
-	MiniMenu[i]:EnableMouse(true)
-	ecUI.SkinPanel(MiniMenu[i])
-	MiniMenu[i]:Hide()
-	MiniMenu[i]:SetScript("OnEnter", TukuiDB.SetModifiedBackdrop)
-	MiniMenu[i]:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
+	Minimenu[i] = CreateFrame("Frame", "MinimenuButton"..i, Minimenu)
+	TukuiDB.CreateUltimate(Minimenu[i], false, Minimenu:GetWidth(), TukuiCF["panels"].tinfoheight, "CENTER")
+	Minimenu[i]:EnableMouse(true)
+	Minimenu[i]:Hide()
+	Minimenu[i]:SetScript("OnEnter", TukuiDB.SetModifiedBackdrop)
+	Minimenu[i]:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 
-	MiniMenu[i].text = MiniMenu[i]:CreateFontString(nil, "OVERLAY")
-	MiniMenu[i].text:SetFont(TukuiCF["media"].custom_font_1, 12, "MONOCHROMEOUTLINE")
-	MiniMenu[i].text:SetPoint("CENTER", 0, 1)
-	ecUI.Color(MiniMenu[i].text)
+	Minimenu[i].Text = Minimenu[i]:CreateFontString(nil, "OVERLAY")
+	Minimenu[i].Text:SetFont(TukuiCF["media"].custom_font_1, 12, "MONOCHROMEOUTLINE")
+	Minimenu[i].Text:SetPoint("CENTER", 0, 1)
+	TukuiDB.Color(Minimenu[i].Text)
 	
 	if i == 1 then
-		MiniMenu[i]:SetPoint("TOPLEFT", MiniMenu, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
+		Minimenu[i]:SetPoint("TOPLEFT", Minimenu, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
 	else
-		MiniMenu[i]:SetPoint("TOPLEFT", MiniMenu[i-1], "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
+		Minimenu[i]:SetPoint("TOPLEFT", Minimenu[i-1], "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
 	end
 	
 	if i == 1 then
-		MiniMenu[i]:SetScript("OnMouseDown", function() ToggleCalendar() end)
+		Minimenu[i]:SetScript("OnMouseDown", function() ToggleCalendar() end)
 
-		MiniMenu[i].text:SetText("Calender")
+		Minimenu[i].Text:SetText("Calendar")
 	elseif i == 2 then
-		MiniMenu[i]:SetScript("OnMouseDown", function()
-			if ecSV.locked_actionbars == true then
-				ecSV.locked_actionbars = false
-			elseif ecSV.locked_actionbars == false then
-				ecSV.locked_actionbars = true
+		Minimenu[i]:SetScript("OnMouseDown", function()
+			if TukuiSaved.actionbars_lock == true then
+				TukuiSaved.actionbars_lock = false
+				print(tukuilocal.actionbars_lockoff)
+			elseif TukuiSaved.actionbars_lock == false then
+				TukuiSaved.actionbars_lock = true
+				print(tukuilocal.actionbars_lockon)
 			end
-			check_locked(i, ecSV.locked_actionbars, "Actionbars")
+			CheckLocked(i, TukuiSaved.actionbars_lock, "Actionbars")
 		end)
 
-		MiniMenu[i]:SetScript("OnEvent", function() check_locked(i, ecSV.locked_actionbars, "Actionbars") end)
+		Minimenu[i]:SetScript("OnEvent", function() CheckLocked(i, TukuiSaved.actionbars_lock, "Actionbars") end)
 	elseif i == 3 then 
-		MiniMenu[i]:SetScript("OnMouseDown", function()
-			if ecSV.locked_minimap == true then
-				ecSV.locked_minimap = false
-			elseif ecSV.locked_minimap == false then
-				ecSV.locked_minimap = true
+		Minimenu[i]:SetScript("OnMouseDown", function()
+			if TukuiSaved.minimap_lock == true then
+				TukuiSaved.minimap_lock = false
+				print(tukuilocal.minimap_lockoff)
+			elseif TukuiSaved.minimap_lock == false then
+				TukuiSaved.minimap_lock = true
+				print(tukuilocal.minimap_lockon)
 			end
-			check_locked(i, ecSV.locked_minimap, "Minimap")
+			CheckLocked(i, TukuiSaved.minimap_lock, "Minimap")
 		end)
 
-		MiniMenu[i]:SetScript("OnEvent", function() check_locked(i, ecSV.locked_minimap, "Minimap") end)
+		Minimenu[i]:SetScript("OnEvent", function() CheckLocked(i, TukuiSaved.minimap_lock, "Minimap") end)
 	elseif i == 4 then
-		MiniMenu[i]:SetScript("OnMouseDown", function() 
-			-- if ecSV.lfg_shown == true then
-				-- ecSV.lfg_shown = false
-			-- elseif ecSV.lfg_shown == false then
-				-- ecSV.lfg_shown = true
+		Minimenu[i]:SetScript("OnMouseDown", function() 
+			-- if TukuiSaved.lfg_shown == true then
+				-- TukuiSaved.lfg_shown = false
+			-- elseif TukuiSaved.lfg_shown == false then
+				-- TukuiSaved.lfg_shown = true
 			-- end
 			-- lfd_check()
 			ToggleFrame(LFDParentFrame)
 		end)
 
-		MiniMenu[i].text:SetText("LFG / BG / Raid")
+		Minimenu[i].Text:SetText("LFG")
 	end
-	MiniMenu[i]:RegisterEvent("PLAYER_ENTERING_WORLD")
+	Minimenu[i]:RegisterEvent("PLAYER_ENTERING_WORLD")
 end
-MiniMenu:RegisterEvent("PLAYER_ENTERING_WORLD")
+Minimenu:RegisterEvent("PLAYER_ENTERING_WORLD")
 
-MiniMenu:SetScript("OnMouseDown", function()
+Minimenu:SetScript("OnMouseDown", function()
 	if InCombatLockdown() then return end
 	for i = 1, 4 do
-		if MiniMenu[i]:IsShown() then
-			MiniMenu[i]:Hide()
+		if Minimenu[i]:IsShown() then
+			Minimenu[i]:Hide()
 		else
-			MiniMenu[i]:Show()
+			Minimenu[i]:Show()
 		end
 	end
 end)

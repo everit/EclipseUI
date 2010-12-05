@@ -4,9 +4,7 @@ if not db.enable then return end
 
 ----- [[     Local Variables     ]] -----
 
-local ecUI = ecUI
 local texture = TukuiCF["customise"].texture
-
 local font = TukuiCF["fonts"].unitframe_font
 local font_size = TukuiCF["fonts"].unitframe_font_size
 local font_style = TukuiCF["fonts"].unitframe_font_style
@@ -67,7 +65,7 @@ local function Shared(self, unit)
 	local hBorder = CreateFrame("Frame", nil, health)
 	hBorder:SetFrameLevel(health:GetFrameLevel() - 1)
 	hBorder:SetAllPoints()
-	ecUI.CreateOuterBorder(hBorder)
+	TukuiDB.CreateBorder(hBorder, false, true)
 	self.Health.border = hBorder		
 
 	local power = CreateFrame("StatusBar", nil, self)
@@ -85,7 +83,7 @@ local function Shared(self, unit)
 	local pBorder = CreateFrame("Frame", nil, power)
 	pBorder:SetFrameLevel(power:GetFrameLevel() - 1)
 	pBorder:SetAllPoints()
-	ecUI.CreateOuterBorder(pBorder)
+	TukuiDB.CreateBorder(pBorder, false, true)
 	self.Power.border = pBorder
 
 	local frame = CreateFrame("Frame", nil, health)
@@ -97,7 +95,7 @@ local function Shared(self, unit)
 		insets = { left = -TukuiDB.mult, right = -TukuiDB.mult, top = -TukuiDB.mult, bottom = -TukuiDB.mult }
 	})
 	frame:SetBackdropColor(unpack(TukuiCF["media"].bordercolor))
-	ecUI.CreateOuterBorder(frame)
+	TukuiDB.CreateBorder(frame, false, true)
 	TukuiDB.CreateShadow(frame)
 	self.frame = frame		
 	
@@ -150,10 +148,10 @@ local function Shared(self, unit)
 	castbar:SetStatusBarTexture(texture)
 
 	local castbarBg = CreateFrame("Frame", nil, castbar)
+	TukuiDB.CreateUltimate(castbarBg, false, 1, 1)
 	castbarBg:SetPoint("TOPLEFT", -TukuiDB.Scale(2), TukuiDB.Scale(2))
 	castbarBg:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), -TukuiDB.Scale(2))
 	castbarBg:SetFrameLevel(castbar:GetFrameLevel() - 1)
-	ecUI.SkinPanel(castbarBg)
 
 	castbar.time = TukuiDB.SetFontString(castbar, font, font_size, font_style)
 	castbar.time:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
@@ -200,12 +198,11 @@ local function Shared(self, unit)
 		----- [[     Unit Information Panel     ]] -----
 
 		local panel = CreateFrame("Frame", nil, self)
-		TukuiDB.CreatePanel(panel, 1, 17, "BOTTOM", self, "BOTTOM", 0, 0)
-		panel:SetFrameLevel(2)
-		panel:SetFrameStrata("MEDIUM")
-		panel:ClearAllPoints()
+		TukuiDB.CreateUltimate(panel, false, 1, 17)
 		panel:SetPoint("TOPLEFT", frame, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
 		panel:SetPoint("TOPRIGHT", frame, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
+		panel:SetFrameStrata("MEDIUM")
+		panel:SetFrameLevel(2)
 		self.panel = panel
 		
 		
@@ -247,9 +244,10 @@ local function Shared(self, unit)
 			portrait.bg = poBg
 			
 			local pFrame = CreateFrame("Frame", nil, portrait)
-			ecUI.SkinFadedPanel(pFrame)
+			TukuiDB.CreateUltimate(pFrame, true, 0, 0)
 			pFrame:SetAllPoints()
-			pFrame:SetFrameLevel(portrait:GetFrameLevel()+1)
+			pFrame:SetFrameLevel(portrait:GetFrameLevel() + 1)
+			pFrame:SetFrameStrata("MEDIUM")
 			pFrame:SetBackdropColor(0, 0, 0, 0)
 			portrait.frame = pFrame
 		end
@@ -258,6 +256,21 @@ local function Shared(self, unit)
 		----- [[     Player Only Settings     ]] -----
 
 		if (unit == "player") then
+			local Leader = health:CreateFontString(nil, "OVERLAY")
+			Leader:SetFont(font, font_size, font_style)
+			Leader:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
+			Leader:SetPoint("TOPLEFT", health, "TOPLEFT", TukuiDB.Scale(2), 1)
+			Leader:SetJustifyH("LEFT")
+			self:Tag(Leader, '[Tukui:leader]')
+			self.Leader = Leader
+
+			local MLooter = health:CreateFontString(nil, "OVERLAY")
+			MLooter:SetFont(font, font_size, font_style)
+			MLooter:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
+			MLooter:SetPoint("TOPLEFT", Leader, "TOPRIGHT", TukuiDB.Scale(-11), 0)
+			MLooter:SetJustifyH("LEFT")
+			self:Tag(MLooter, '[Tukui:masterlooter]')
+			self.MLooter = MLooter
 
 			----- [[     Combat Icon     ]] -----
 			
@@ -289,25 +302,6 @@ local function Shared(self, unit)
 			self.Status = status
 			self:Tag(status, "[pvp]")
 			
-			
-			----- [[     Leader Icon     ]] -----
-			
-			local Leader = InvFrame:CreateTexture(nil, "OVERLAY")
-			Leader:SetHeight(TukuiDB.Scale(14))
-			Leader:SetWidth(TukuiDB.Scale(14))
-			Leader:SetPoint("TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(8))
-			self.Leader = Leader
-			
-			
-			----- [[     Master Loot Icon     ]] -----
-			
-			local MasterLooter = InvFrame:CreateTexture(nil, "OVERLAY")
-			MasterLooter:SetHeight(TukuiDB.Scale(14))
-			MasterLooter:SetWidth(TukuiDB.Scale(14))
-			self.MasterLooter = MasterLooter
-			self:RegisterEvent("PARTY_LEADER_CHANGED", TukuiDB.MLAnchorUpdate)
-			self:RegisterEvent("PARTY_MEMBERS_CHANGED", TukuiDB.MLAnchorUpdate)
-
 			
 			----- [[     Threat Bar     ]] -----         NOT DONE!!!
 			if (db.showthreat == true) then
@@ -354,9 +348,9 @@ local function Shared(self, unit)
 				eclipseBar:SetScript("OnHide", function() TukuiDB.EclipseDisplay(self, false) end)
 			
 				local eclipseBarBG = CreateFrame("Frame", nil, eclipseBar)
+				TukuiDB.CreateUltimate(eclipseBarBG, false, 1, 1)
 				eclipseBarBG:SetPoint("TOPLEFT", eclipseBar, "TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
 				eclipseBarBG:SetPoint("BOTTOMRIGHT", eclipseBar, "BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
-				ecUI.SkinPanel(eclipseBarBG)
 
 				local lunarBar = CreateFrame('StatusBar', nil, eclipseBar)
 				lunarBar:SetPoint('LEFT', eclipseBar, 'LEFT', 0, 0)
@@ -393,10 +387,10 @@ local function Shared(self, unit)
 				
 				for i = 1, 3 do		
 					barFrame[i] = CreateFrame("Frame", nil, self)
+					TukuiDB.CreateUltimate(barFrame[i], false, 1, 1)
 					barFrame[i]:SetFrameLevel(health:GetFrameLevel() + 1)
 					barFrame[i]:SetHeight(TukuiDB.Scale(8))
 					barFrame[i]:SetWidth(TukuiDB.Scale(195 - 1) / 3)
-					ecUI.SkinPanel(barFrame[i])
 					
 					if i == 1 then
 						barFrame[i]:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, TukuiDB.Scale(3))
@@ -440,15 +434,13 @@ local function Shared(self, unit)
 				
 				for i = 1, 6 do
 					rB[i] = CreateFrame("Frame", nil, self)
+					TukuiDB.CreateUltimate(rB[i], false, (195 - 10) / 6, 8)
 					rB[i]:SetFrameLevel(health:GetFrameLevel() + 1)
-					rB[i]:SetHeight(TukuiDB.Scale(8))
-					rB[i]:SetWidth(TukuiDB.Scale(195 - 10) / 6)
 					if (i == 1) then
 						rB[i]:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, TukuiDB.Scale(3))
 					else
 						rB[i]:SetPoint("TOPLEFT", rB[i-1], "TOPRIGHT", TukuiDB.Scale(3), 0)
 					end
-					ecUI.SkinPanel(rB[i])
 
 					Runes[i] = CreateFrame("StatusBar", self:GetName().."_Runes"..i, self)
 					Runes[i]:SetPoint("TOPLEFT", rB[i], "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
@@ -471,10 +463,8 @@ local function Shared(self, unit)
 				
 				for i = 1, 4 do
 					totemFrame[i] = CreateFrame("Frame", nil, self)
+					TukuiDB.CreateUltimate(totemFrame[i], false, (195 - 4) / 4, 8)
 					totemFrame[i]:SetFrameLevel(health:GetFrameLevel() + 1)
-					totemFrame[i]:SetHeight(TukuiDB.Scale(8))
-					totemFrame[i]:SetWidth(TukuiDB.Scale(195 - 4) / 4)
-					ecUI.SkinPanel(totemFrame[i])
 
 					if i == 1 then
 						totemFrame[i]:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, TukuiDB.Scale(3))
@@ -497,7 +487,7 @@ local function Shared(self, unit)
 				
 				self.TotemBar = TotemBar
 			end
-			
+
 			
 			----- [[     PvP Status / Low Mana Script     ]] -----
 			

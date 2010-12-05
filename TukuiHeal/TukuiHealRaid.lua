@@ -31,11 +31,7 @@ local function Shared(self, unit)
 	local health = CreateFrame("StatusBar", nil, self)
 	health:SetPoint("TOPLEFT", TukuiDB.mult, -TukuiDB.mult)
 	health:SetPoint("TOPRIGHT", -TukuiDB.mult, TukuiDB.mult)
-	if unit:find("partypet") then
-		health:SetHeight(20)
-	else
-		health:SetHeight(30)
-	end
+	health:SetHeight(30)
 	health:SetStatusBarTexture(texture)
 	self.Health = health
 
@@ -51,17 +47,13 @@ local function Shared(self, unit)
 	local hBorder = CreateFrame("Frame", nil, health)
 	hBorder:SetFrameLevel(health:GetFrameLevel() - 1)
 	hBorder:SetAllPoints()
-	ecUI.CreateOuterBorder(hBorder)
+	TukuiDB.CreateBorder(hBorder, false, true)
 	self.Health.border = hBorder		
 
 	local power = CreateFrame("StatusBar", nil, self)
 	power:SetPoint("TOPLEFT", health, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
 	power:SetPoint("TOPRIGHT", health, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
-	if unit:find("partypet") then
-		power:SetHeight(0)
-	else
-		power:SetHeight(4)
-	end
+	power:SetHeight(4)
 	power:SetStatusBarTexture(texture)
 	self.Power = power
 
@@ -74,7 +66,7 @@ local function Shared(self, unit)
 	local pBorder = CreateFrame("Frame", nil, power)
 	pBorder:SetFrameLevel(power:GetFrameLevel() - 1)
 	pBorder:SetAllPoints()
-	ecUI.CreateOuterBorder(pBorder)
+	TukuiDB.CreateBorder(pBorder, false, true)
 	self.Power.border = pBorder
 
 	local frame = CreateFrame("Frame", nil, health)
@@ -86,7 +78,7 @@ local function Shared(self, unit)
 		insets = { left = -TukuiDB.mult, right = -TukuiDB.mult, top = -TukuiDB.mult, bottom = -TukuiDB.mult }
 	})
 	frame:SetBackdropColor(unpack(TukuiCF["media"].bordercolor))
-	ecUI.CreateOuterBorder(frame)
+	TukuiDB.CreateBorder(frame, false, true)
 	TukuiDB.CreateShadow(frame)
 	self.frame = frame			
 	
@@ -125,30 +117,17 @@ local function Shared(self, unit)
 	----- [[     Unit Name     ]] -----
 	
 	local Name = health:CreateFontString(nil, "OVERLAY")
-	if unit:find("partypet") then
-		Name:SetPoint("CENTER", health, "CENTER", 0, 1)
-	else
-		Name:SetPoint("CENTER", health, "CENTER", 0, 0)
-	end
+	Name:SetPoint("CENTER", health, "CENTER", 0, 0)
 	Name:SetJustifyH("CENTER")
 	Name:SetFont(font, font_size, font_style)
 	Name:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	Name.frequentUpdates = 0.2
 	if db.classcolor == true then
-		self:Tag(Name, "[Tukui:name_short][Tukui:dead][Tukui:afk]")
+		self:Tag(Name, "[Tukui:leader]Tukui:name_short][Tukui:masterlooter][[Tukui:dead][Tukui:afk]")
 	else
-		self:Tag(Name, "[Tukui:getnamecolor][Tukui:name_short][Tukui:dead][Tukui:afk]")
+		self:Tag(Name, "[Tukui:leader][Tukui:getnamecolor][Tukui:name_short][Tukui:masterlooter][Tukui:dead][Tukui:afk]")
 	end
 	self.Name = Name
-	
-	
-	----- [[     Leader Icon     ]] -----
-	
-    local leader = health:CreateTexture(nil, "OVERLAY")
-    leader:SetHeight(TukuiDB.Scale(12))
-    leader:SetWidth(TukuiDB.Scale(12))
-    leader:SetPoint("TOPLEFT", 0, 6)
-	self.Leader = leader
 	
 	
 	----- [[     LFD Role Icon     ]] -----
@@ -159,16 +138,6 @@ local function Shared(self, unit)
 	LFDRole:SetPoint("TOPRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(-2))
 	LFDRole:SetTexture("Interface\\AddOns\\Tukui\\media\\textures\\lfdicons.blp")
 	self.LFDRole = LFDRole
-	
-	
-	----- [[     Masterlooter Icon     ]] -----
-	
-    local MasterLooter = health:CreateTexture(nil, "OVERLAY")
-    MasterLooter:SetHeight(TukuiDB.Scale(12))
-    MasterLooter:SetWidth(TukuiDB.Scale(12))
-	self.MasterLooter = MasterLooter
-    self:RegisterEvent("PARTY_LEADER_CHANGED", TukuiDB.MLAnchorUpdate)
-    self:RegisterEvent("PARTY_MEMBERS_CHANGED", TukuiDB.MLAnchorUpdate)
 	
 	
 	----- [[     Aggro     ]] -----

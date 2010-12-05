@@ -33,7 +33,7 @@ bar:SetScript("OnEvent", function(self, event, ...)
 			TukuiPetActionBarBackground:SetFrameStrata("BACKGROUND")
 			TukuiPetActionBarBackground:SetFrameLevel(1)
 			if i == 1 then
-				button:SetPoint("TOPLEFT", TukuiDB.Scale(4), TukuiDB.Scale(-4))
+				button:SetPoint("TOPLEFT", TukuiDB.Scale(5), TukuiDB.Scale(-5))
 			else
 				if db.vertical_rightbars == true then
 					button:SetPoint("TOP", _G["PetActionButton"..(i - 1)], "BOTTOM", 0, -db.buttonspacing)

@@ -97,7 +97,7 @@ if TukuiCF["datatext"].guild and TukuiCF["datatext"].guild > 0 then
 
 						local name, rank, _, level, _, zone, note, officernote, connected, status, class = GetGuildRosterInfo(i)
 						if connected and name ~= UnitName'player' then
-							local zone_r, zone_g, zone_b
+
 							if GetRealZoneText() == zone then zone_r, zone_g, zone_b = 0.3, 1.0, 0.3 else zone_r, zone_g, zone_b = 0.65, 0.65, 0.65 end
 							local classc, levelc = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[class], GetQuestDifficultyColor(level)
 							if IsShiftKeyDown() then

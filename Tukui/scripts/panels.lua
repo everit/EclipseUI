@@ -1,89 +1,58 @@
------ [[     Local Variables     ]] -----
-
 local panels = TukuiCF["panels"]
 local chat = TukuiCF["chat"]
 local db = TukuiCF["actionbar"]
 
------ [[     Top "Art" Panel     ]] -----
-
 -- leaving this here incase some one wants to use it
 
--- local tbar = CreateFrame("Frame", "TukuiTopBar", UIParent)
--- TukuiDB.CreatePanel(tbar, (GetScreenWidth() * TukuiDB.mult) * 2, 22, "TOP", UIParent, "TOP", 0, TukuiDB.Scale(5))
--- tbar:SetFrameLevel(0)
+-- local TopBar = CreateFrame("Frame", "TukuiTopBar", UIParent)
+-- TukuiDB.CreateUltimate(TopBar, false, (GetScreenWidth() * TukuiDB.mult) * 2, 22, "TOP", UIParent, "TOP", 0, 5)
+-- TopBar:SetFrameLevel(0)
 
+-- local BottomBar = CreateFrame("Frame", "TukuiBottomBar", UIParent)
+-- TukuiDB.CreateUltimate(BottomBar, false, (GetScreenWidth() * TukuiDB.mult) * 2, 22, "BOTTOM", UIParent, "BOTTOM", 0, -5)
+-- BottomBar:SetFrameLevel(0)
 
------ [[     Bottom "Art" Panel     ]] -----
+local DataLeft = CreateFrame("Frame", "TukuiDataLeft", UIParent)
+TukuiDB.CreateUltimate(DataLeft, false, panels.tinfowidth, panels.tinfoheight, "BOTTOMLEFT", UIParent, "BOTTOMLEFT", 8, 8)
 
--- leaving this here incase some one wants to use it
+local DataRight = CreateFrame("Frame", "TukuiDataRight", UIParent)
+TukuiDB.CreateUltimate(DataRight, false, panels.tinfowidth, panels.tinfoheight, "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -8, 8)
 
--- local bbar = CreateFrame("Frame", "TukuiBottomBar", UIParent)
--- TukuiDB.CreatePanel(bbar, (GetScreenWidth() * TukuiDB.mult) * 2, 22, "BOTTOM", UIParent, "BOTTOM", 0, TukuiDB.Scale(-5))
--- bbar:SetFrameLevel(0)
+local ChatLeft = CreateFrame("Frame", "TukuiChatLeft", UIParent)
+TukuiDB.CreateUltimate(ChatLeft, true, panels.tinfowidth, chat.chatheight - 3, "BOTTOM", DataLeft, "TOP", 0, 3)
 
+local ChatRight = CreateFrame("Frame", "TukuiChatRight", UIParent)
+TukuiDB.CreateUltimate(ChatRight, true, panels.tinfowidth, chat.chatheight - 3, "BOTTOM", DataRight, "TOP", 0, 3)
 
------ [[     Left Data Panel     ]] -----
+local LeftTabs = CreateFrame("Frame", "TukuiChatLeftTabs", UIParent)
+TukuiDB.CreateUltimate(LeftTabs, false, panels.tinfowidth, panels.tinfoheight, "BOTTOM", ChatLeft, "TOP", 0, 3)
 
-local dleft = CreateFrame("Frame", "TukuiDataLeft", UIParent)
-TukuiDB.CreatePanel(dleft, panels.tinfowidth, panels.tinfoheight, "BOTTOMLEFT", UIParent, "BOTTOMLEFT", TukuiDB.Scale(8), TukuiDB.Scale(8))
+local RightTabs = CreateFrame("Frame", "TukuiChatRightTabs", UIParent)
+TukuiDB.CreateUltimate(RightTabs, false, panels.tinfowidth, panels.tinfoheight, "BOTTOM", ChatRight, "TOP", 0, 3)
 
+if db.enable == true then
+	local BarBG = CreateFrame("Frame", "TukuiActionBarBackground", UIParent)
+	TukuiDB.CreateUltimate(BarBG, true, (db.buttonsize * 12 + db.buttonspacing * 13) + 2, 100, "BOTTOM", UIParent, "BOTTOM", 0, 8)
 
------ [[     Right Data Panel     ]] -----
+	local RightBG = CreateFrame("Frame", "TukuiActionBarBackgroundRight", UIParent)
+	TukuiDB.CreateUltimate(RightBG, true, (db.buttonsize * 12 + db.buttonspacing * 13) + 2, (db.buttonsize * 12 + db.buttonspacing * 13) + 2, "BOTTOMRIGHT", RightTabs, "TOPRIGHT", 0, 3)
 
-local dright = CreateFrame("Frame", "TukuiDataRight", UIParent)
-TukuiDB.CreatePanel(dright, panels.tinfowidth, panels.tinfoheight, "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", TukuiDB.Scale(-8), TukuiDB.Scale(8))
+	local PetBG = CreateFrame("Frame", "TukuiPetActionBarBackground", UIParent)
+	TukuiDB.CreateUltimate(PetBG, true, 1, 1, "BOTTOMRIGHT", RightBG, "TOPRIGHT", 0, 3)
+	if db.vertical_rightbars == true then
+		PetBG:SetWidth((db.petbuttonsize + db.buttonspacing * 2) + 2)
+		PetBG:SetHeight((db.petbuttonsize * NUM_PET_ACTION_SLOTS + db.buttonspacing * 11) + 2)
+	else
+		PetBG:SetWidth((db.petbuttonsize * NUM_PET_ACTION_SLOTS + db.buttonspacing * 11) + 2)
+		PetBG:SetHeight((db.petbuttonsize + db.buttonspacing * 2) + 2)
+	end
+		
+	local LeftSplitBG = CreateFrame("Frame", "TukuiLeftSplitBarBackground", UIParent)
+	TukuiDB.CreateUltimate(LeftSplitBG, true, (db.buttonsize * 3 + db.buttonspacing * 4) + 2, (db.buttonsize * 2 + db.buttonspacing * 3) + 2, "BOTTOMRIGHT", BarBG, "BOTTOMLEFT", -6, 0)
 
-
------ [[     Left Chat Background and Tabs     ]] -----
-
-local cleft = CreateFrame("Frame", "TukuiChatLeft", UIParent)
-TukuiDB.CreateFadedPanel(cleft, panels.tinfowidth, chat.chatheight - 3, "BOTTOM", dleft, "TOP", 0, TukuiDB.Scale(3))
-
-local cltabs = CreateFrame("Frame", "TukuiChatLeftTabs", UIParent)
-TukuiDB.CreatePanel(cltabs, panels.tinfowidth, panels.tinfoheight, "BOTTOM", cleft, "TOP", 0, TukuiDB.Scale(3))
-
-
------ [[     Right Chat Background and Tabs     ]] -----
-
-local cright = CreateFrame("Frame", "TukuiChatRight", UIParent)
-TukuiDB.CreateFadedPanel(cright, panels.tinfowidth, chat.chatheight - 3, "BOTTOM", dright, "TOP", 0, TukuiDB.Scale(3))
-
-local crtabs = CreateFrame("Frame", "TukuiChatRightTabs", UIParent)
-TukuiDB.CreatePanel(crtabs, panels.tinfowidth, panels.tinfoheight, "BOTTOM", cright, "TOP", 0, TukuiDB.Scale(3))
-
-
------ [[     Action Bar Panels     ]] -----
-
-local barbg = CreateFrame("Frame", "TukuiActionBarBackground", UIParent)
-barbg:SetWidth((db.buttonsize * 12) + (db.buttonspacing * 13))
-barbg:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 8)
-
-local rightbbg = CreateFrame("Frame", "TukuiActionBarBackgroundRight", UIParent)
-rightbbg:SetPoint("BOTTOMRIGHT", crtabs, "TOPRIGHT", 0, 3)
-if db.vertical_rightbars == true then
-	rightbbg:SetHeight((db.buttonsize * 12) + (db.buttonspacing * 13))
-else
-	rightbbg:SetWidth((db.buttonsize * 12) + (db.buttonspacing * 13))
+	local RightSplitBG = CreateFrame("Frame", "TukuiRightSplitBarBackground", UIParent)
+	TukuiDB.CreateUltimate(RightSplitBG, true, (db.buttonsize * 3 + db.buttonspacing * 4) + 2, (db.buttonsize * 2 + db.buttonspacing * 3) + 2, "BOTTOMLEFT", BarBG, "BOTTOMRIGHT", 6, 0)
 end
-
-local splbg = CreateFrame("Frame", "TukuiLeftSplitBarBackground", UIParent)
-splbg:SetWidth((db.buttonsize * 3) + (db.buttonspacing * 4))
-splbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
-splbg:SetPoint("BOTTOMRIGHT", barbg, "BOTTOMLEFT", -6, 0)
-
-local sprbg = CreateFrame("Frame", "TukuiRightSplitBarBackground", UIParent)
-sprbg:SetWidth((db.buttonsize * 3) + (db.buttonspacing * 4))
-sprbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
-sprbg:SetPoint("BOTTOMLEFT", barbg, "BOTTOMRIGHT", 6, 0)
-
-local petbg = CreateFrame("Frame", "TukuiPetActionBarBackground", UIParent)
-
-ecUI.SkinPanel(barbg)
-ecUI.SkinPanel(rightbbg)
-ecUI.SkinPanel(splbg)
-ecUI.SkinPanel(sprbg)
-ecUI.SkinPanel(petbg)
-
 
 -- if not db.hideshapeshift then
 	-- local shiftbg = CreateFrame("Frame", "TukuiShapeShiftBarBackground", UIParent)
@@ -118,4 +87,5 @@ ecUI.SkinPanel(petbg)
 	-- bgframe:SetFrameStrata("LOW")
 	-- bgframe:SetFrameLevel(0)
 	-- bgframe:EnableMouse(true)
+-- end
 -- end

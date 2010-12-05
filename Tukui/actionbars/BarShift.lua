@@ -5,16 +5,11 @@ if not db.enable then return end
 local DummyShift = CreateFrame("Frame", "DummyShiftBar", UIParent)
 local TukuiShift = CreateFrame("Frame", "TukuiShiftBar", UIParent)
 if TukuiDB.myclass ~= "SHAMAN" and db.vertical_shapeshift == true then
-	TukuiShift:SetSize(db.stancebuttonsize, db.stancebuttonsize / 2)
+	TukuiDB.CreateUltimate(TukuiShift, false, db.stancebuttonsize, db.stancebuttonsize / 2, "TOPLEFT", TukuiChatLeftTabs, "TOPRIGHT", 3, TukuiShift:GetHeight() + 3)
 else
-	TukuiShift:SetSize(db.stancebuttonsize / 2, db.stancebuttonsize)
+	TukuiDB.CreateUltimate(TukuiShift, false, db.stancebuttonsize / 2, db.stancebuttonsize, "BOTTOMRIGHT", TukuiDataLeft, "BOTTOMRIGHT", 3, 0)
 end
-if db.vertical_shapeshift == true then
-	TukuiShift:SetPoint("TOPLEFT", TukuiChatLeftTabs, "TOPRIGHT", 3, TukuiShift:GetHeight() + 3)
-else	
-	TukuiShift:SetPoint("BOTTOMLEFT", TukuiDataLeft, "BOTTOMRIGHT", 3, 0)
-end
-ecUI.SkinPanel(TukuiShift)
+TukuiShift:SetFrameStrata("MEDIUM")
 TukuiShift:SetScript("OnEnter", TukuiDB.SetModifiedBackdrop)
 TukuiShift:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 

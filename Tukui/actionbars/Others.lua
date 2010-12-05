@@ -42,16 +42,12 @@ end)
 
 -- vehicle button under minimap
 local vehicle = CreateFrame("Button", "TukuiExitVehicleButton", UIParent, "SecureHandlerClickTemplate")
-vehicle:SetWidth(TukuiCF["actionbar"].buttonsize)
-vehicle:SetHeight(TukuiCF["actionbar"].buttonsize)
-vehicle:SetPoint("BOTTOMRIGHT", TukuiActionBarBackground, "BOTTOMRIGHT", TukuiDB.Scale(-4), TukuiDB.Scale(4))
+TukuiDB.CreateUltimate(vehicle, false, TukuiCF["actionbar"].buttonsize, TukuiCF["actionbar"].buttonsize, "BOTTOMRIGHT", TukuiActionBarBackground, "BOTTOMRIGHT", TukuiDB.Scale(-5), TukuiDB.Scale(5))
 vehicle:SetFrameLevel(22)
 
 vehicle:SetNormalTexture("Interface\\AddOns\\Tukui\\media\\textures\\vehicleexit")
 vehicle:SetPushedTexture("Interface\\AddOns\\Tukui\\media\\textures\\vehicleexit")
 vehicle:SetHighlightTexture("Interface\\AddOns\\Tukui\\media\\textures\\vehicleexit")
-
-ecUI.SkinPanel(vehicle)
 
 vehicle:RegisterForClicks("AnyUp")
 vehicle:SetScript("OnClick", function() VehicleExit() end)

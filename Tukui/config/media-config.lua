@@ -35,7 +35,6 @@ TukuiCF["media"] = {
 	["custom_font_3"] = [[Interface\Addons\Tukui\media\fonts\caith.ttf]],
 	["custom_font_4"] = [[Interface\Addons\Tukui\media\fonts\zrnic.ttf]],
 
-	
 	----- [[     Textures     ]] -----
 	
 	["normTex"] = [[Interface\AddOns\Tukui\media\textures\normTex]],
@@ -45,13 +44,11 @@ TukuiCF["media"] = {
 	
 	["custom_texture_1"] = [[Interface\AddOns\Tukui\media\textures\empath]],
 	
-	
 	----- [[     Colors     ]] -----
 	
 	["bordercolor"] = { .1, .1, .1, 1 },
 	["backdropcolor"] = { 0, 0, 0, 1 },
-	["fadedbackdropcolor"] = { 0, 0, 0, .5 },	
-	
+	["fadedbackdropcolor"] = { 0, 0, 0, .70 },	
 	
 	----- [[     Sounds     ]] -----
 	["whisper"] = [[Interface\AddOns\Tukui\media\sounds\whisper.mp3]],

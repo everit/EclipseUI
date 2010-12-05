@@ -15,9 +15,9 @@ for i = 1, 12 do
 	
 	if i == 1 then
 		if db.vertical_rightbars == true then
-			b:SetPoint("TOPRIGHT", TukuiActionBarBackgroundRight, TukuiDB.Scale(-4), TukuiDB.Scale(-4))
+			b:SetPoint("TOPRIGHT", TukuiActionBarBackgroundRight, TukuiDB.Scale(-5), TukuiDB.Scale(-5))
 		else
-			b:SetPoint("BOTTOMLEFT", TukuiActionBarBackgroundRight, TukuiDB.Scale(4), TukuiDB.Scale(4))
+			b:SetPoint("BOTTOMLEFT", TukuiActionBarBackgroundRight, TukuiDB.Scale(5), TukuiDB.Scale(5))
 		end
 	else
 		if db.vertical_rightbars == true then

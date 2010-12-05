@@ -13,143 +13,117 @@ local db = TukuiCF["actionbar"]
 
 if not db.enable then return end
 
------ [[     Local Variables - Color / Text Values     ]] -----
-
-local ecUI = ecUI
-
-local barbg = TukuiActionBarBackground
-local rightbbg = TukuiActionBarBackgroundRight
-local splbg = TukuiLeftSplitBarBackground
-local sprbg = TukuiRightSplitBarBackground
-local petbg = TukuiPetActionBarBackground
-local crtabs = TukuiChatRightTabs
+local BarBG = TukuiActionBarBackground
+local RightBG = TukuiActionBarBackgroundRight
+local LeftSplitBG = TukuiLeftSplitBarBackground
+local RightSplitBG = TukuiRightSplitBarBackground
+local PetBG = TukuiPetActionBarBackground
+local RightTabs = TukuiChatRightTabs
 
 local Toggle = CreateFrame("Frame", "TukuiToggleActionbar", UIParent)
 
-
------ [[     Text Function     ]] -----
-
-local text_display = function(index, plus, neg)
-	local p, m = "+", "-"
+local ToggleText = function(index, text, plus, neg)
 	if plus then
-		Toggle[index].text:SetText(p)
-		ecUI.Color(Toggle[index].text, false, false, true)
+		Toggle[index].Text:SetText(text)
+		TukuiDB.Color(Toggle[index].Text, false, false, true)
 	elseif neg then
-		Toggle[index].text:SetText(m)
-		ecUI.Color(Toggle[index].text, true)
+		Toggle[index].Text:SetText(text)
+		TukuiDB.Color(Toggle[index].Text, true)
 	end
 end
 
-
------ [[     Action Bar Check + Change Functions     ]] -----
-
-local bb_check = function()
-	if ecSV.bottomrows == 1 then
-		barbg:SetHeight(db.buttonsize + (db.buttonspacing * 2))
-		splbg:SetHeight(db.buttonsize  + (db.buttonspacing * 2))
-		sprbg:SetHeight(db.buttonsize + (db.buttonspacing * 2))
+local MainBars = function()
+	if TukuiSaved.bottomrows == 1 then
+		BarBG:SetHeight((db.buttonsize + db.buttonspacing * 2) + 2)
+		LeftSplitBG:SetHeight((db.buttonsize  + db.buttonspacing * 2) + 2)
+		RightSplitBG:SetHeight((db.buttonsize + db.buttonspacing * 2) + 2)
 		
-		text_display(1, true)
+		ToggleText(1, "+", true)
 		
 		if TukuiBar2:IsShown() then
 			TukuiBar2:Hide()
 		end
 		
-		if ecSV.splitbars == true then
+		if TukuiSaved.splitbars == true then
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
 				b:SetAlpha(0)
 				b:SetScale(0.0001)		
 			end
 		end
-		Toggle[4]:SetHeight(db.buttonsize + (db.buttonspacing * 2))
-		Toggle[5]:SetHeight(db.buttonsize + (db.buttonspacing * 2))
-	elseif ecSV.bottomrows == 2 then
-		barbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
-		splbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
-		sprbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
-		
-		text_display(1, false, true)
+	elseif TukuiSaved.bottomrows == 2 then
+		BarBG:SetHeight((db.buttonsize * 2 + db.buttonspacing * 3) + 2)
+		LeftSplitBG:SetHeight((db.buttonsize * 2 + db.buttonspacing * 3) + 2)
+		RightSplitBG:SetHeight((db.buttonsize * 2 + db.buttonspacing * 3) + 2)
 
+		ToggleText(1, "-", false, true)
+		
 		TukuiBar2:Show()
 		
-		if ecSV.splitbars == true then
+		if TukuiSaved.splitbars == true then
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
 				b:SetAlpha(1)
 				b:SetScale(1)		
 			end
 		end
-		Toggle[4]:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
-		Toggle[5]:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
-	end
+	end	
+	Toggle[4]:SetHeight(LeftSplitBG:GetHeight())
+	Toggle[5]:SetHeight(RightSplitBG:GetHeight())
 end
 
-
-
-
-
-
-local rbb_check = function()
-	if ecSV.rightbars >= 1 then
-		petbg:ClearAllPoints()
+local RightBars = function()
+	if TukuiSaved.rightbars >= 1 then
+		PetBG:ClearAllPoints()
 		if db.vertical_rightbars == true then
-			petbg:SetPoint("BOTTOMRIGHT", rightbbg, "BOTTOMLEFT", -3, 0)
+			PetBG:SetPoint("BOTTOMRIGHT", RightBG, "BOTTOMLEFT", -3, 0)
 		else
-			petbg:SetPoint("BOTTOMRIGHT", rightbbg, "TOPRIGHT", 0, 3)
+			PetBG:SetPoint("BOTTOMRIGHT", RightBG, "TOPRIGHT", 0, 3)
 		end
 	else
-		petbg:ClearAllPoints()
-		petbg:SetPoint("BOTTOMRIGHT", crtabs, "TOPRIGHT", 0, 3)
+		PetBG:ClearAllPoints()
+		PetBG:SetPoint("BOTTOMRIGHT", RightTabs, "TOPRIGHT", 0, 3)
 	end
 	
-	if db.vertical_rightbars == true then
-		petbg:SetWidth(db.petbuttonsize + (db.buttonspacing * 2))
-		petbg:SetHeight((db.petbuttonsize * NUM_PET_ACTION_SLOTS) + (db.buttonspacing * 11))
-	else
-		petbg:SetWidth((db.petbuttonsize * NUM_PET_ACTION_SLOTS) + (db.buttonspacing * 11))
-		petbg:SetHeight(db.petbuttonsize + (db.buttonspacing * 2))
-	end
-	
-	if ecSV.rightbars == 1 then
-		rightbbg:Show()
+	if TukuiSaved.rightbars == 1 then
+		RightBG:Show()
 		if db.vertical_rightbars == true then
-			rightbbg:SetWidth(db.buttonsize + (db.buttonspacing * 2))
+			RightBG:SetWidth((db.buttonsize + db.buttonspacing * 2) + 2)
 		else
-			rightbbg:SetHeight(db.buttonsize + (db.buttonspacing * 2))
+			RightBG:SetHeight((db.buttonsize + db.buttonspacing * 2) + 2)
 		end
 		
-		if ecSV.splitbars ~= true and TukuiBar3:IsShown() then
+		if TukuiSaved.splitbars ~= true and TukuiBar3:IsShown() then
 			TukuiBar3:Hide()
 		end
 		if TukuiBar5:IsShown() then
 			TukuiBar5:Hide()
 		end
 		TukuiBar4:Show()
-	elseif ecSV.rightbars == 2 then
-		rightbbg:Show()
+	elseif TukuiSaved.rightbars == 2 then
+		RightBG:Show()
 		if db.vertical_rightbars == true then
-			rightbbg:SetWidth((db.buttonsize * 2) + (db.buttonspacing * 3))
+			RightBG:SetWidth((db.buttonsize * 2 + db.buttonspacing * 3) + 2)
 		else
-			rightbbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
+			RightBG:SetHeight((db.buttonsize * 2 + db.buttonspacing * 3) + 2)
 		end
 		
-		if ecSV.splitbars ~= true and TukuiBar3:IsShown() then
+		if TukuiSaved.splitbars ~= true and TukuiBar3:IsShown() then
 			TukuiBar3:Hide()
 		end
 		TukuiBar4:Show()
 		TukuiBar5:Show()
-	elseif ecSV.rightbars == 3 then
-		rightbbg:Show()
+	elseif TukuiSaved.rightbars == 3 then
+		RightBG:Show()
 		if db.vertical_rightbars == true then
-			rightbbg:SetWidth((db.buttonsize * 3) + (db.buttonspacing * 4))
+			RightBG:SetWidth((db.buttonsize * 3 + db.buttonspacing * 4) + 2)
 		else
-			rightbbg:SetHeight((db.buttonsize * 3) + (db.buttonspacing * 4))
+			RightBG:SetHeight((db.buttonsize * 3 + db.buttonspacing * 4) + 2)
 		end
 		
 		TukuiBar4:Show()
 		TukuiBar5:Show()
-		if ecSV.splitbars ~= true then
+		if TukuiSaved.splitbars ~= true then
 			TukuiBar3:Show()
 			for i = 1, 12 do
 				local b = _G["MultiBarLeftButton"..i]
@@ -158,9 +132,9 @@ local rbb_check = function()
 				b:ClearAllPoints()
 				
 				if i == 1 then
-					b:SetPoint("TOPLEFT", rightbbg, db.buttonspacing, -db.buttonspacing)
+					b:SetPoint("TOPLEFT", RightBG, 5, -5)
 				else
-					if not ecSV.splitbars and db.vertical_rightbars == true then
+					if not TukuiSaved.splitbars and db.vertical_rightbars == true then
 						b:SetPoint("TOP", b2, "BOTTOM", 0, -db.buttonspacing)
 					else
 						b:SetPoint("LEFT", b2, "RIGHT", db.buttonspacing, 0)
@@ -168,10 +142,10 @@ local rbb_check = function()
 				end
 			end
 		end
-	elseif ecSV.rightbars == 0 then
-		rightbbg:Hide()
+	elseif TukuiSaved.rightbars == 0 then
+		RightBG:Hide()
 
-		if ecSV.splitbars ~= true then
+		if TukuiSaved.splitbars ~= true then
 			TukuiBar3:Hide()
 		end
 		TukuiBar4:Hide()
@@ -179,17 +153,17 @@ local rbb_check = function()
 	end
 end
 
-local splbb_check = function()
-	if ecSV.splitbars == true then
+local SplitBars = function()
+	if TukuiSaved.splitbars == true then
 		for i = 1, 12 do
 			local b = _G["MultiBarLeftButton"..i]
 			local b2 = _G["MultiBarLeftButton"..i-1]
 			b:ClearAllPoints()
 			if i == 1 then
-				b:SetPoint("BOTTOMLEFT", splbg, db.buttonspacing, db.buttonspacing)
+				b:SetPoint("BOTTOMLEFT", LeftSplitBG, 5, 5)
 			else
 				if i == 4 then
-					b:SetPoint("BOTTOMLEFT", sprbg, db.buttonspacing, db.buttonspacing)
+					b:SetPoint("BOTTOMLEFT", RightSplitBG, 5, 5)
 				elseif i == 7 then
 					b:SetPoint("BOTTOMLEFT", _G["MultiBarLeftButton1"], "TOPLEFT", 0, db.buttonspacing)
 				elseif i == 10 then
@@ -200,47 +174,47 @@ local splbb_check = function()
 			end
 		end		
 
-		if ecSV.rightbars == 3 then
-			rightbbg:Show()
+		if TukuiSaved.rightbars == 3 then
+			RightBG:Show()
 			if db.vertical_rightbars == true then
-			rightbbg:SetWidth((db.buttonsize * 2) + (db.buttonspacing * 3))
-				else
-				rightbbg:SetHeight((db.buttonsize * 2) + (db.buttonspacing * 3))
+				RightBG:SetWidth((db.buttonsize * 2 + db.buttonspacing * 3) + 2)
+			else
+				RightBG:SetHeight((db.buttonsize * 2 + db.buttonspacing * 3) + 2)
 			end
 		end
 		
 		Toggle[4]:ClearAllPoints()
 		Toggle[5]:ClearAllPoints()
-		Toggle[4]:SetPoint("BOTTOMRIGHT", splbg, "BOTTOMLEFT", -3, 0)
-		Toggle[5]:SetPoint("BOTTOMLEFT", sprbg, "BOTTOMRIGHT", 3, 0)
+		Toggle[4]:SetPoint("BOTTOMRIGHT", LeftSplitBG, "BOTTOMLEFT", -3, 0)
+		Toggle[5]:SetPoint("BOTTOMLEFT", RightSplitBG, "BOTTOMRIGHT", 3, 0)
 	
-		text_display(4, false, true)
-		text_display(5, false, true)
+		ToggleText(4, ">", false, true)
+		ToggleText(5, "<", false, true)
 	
 		TukuiBar3:Show()
 		
-		if ecSV.bottomrows == 1 then
+		if TukuiSaved.bottomrows == 1 then
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
 				b:SetAlpha(0)
 				b:SetScale(0.0001)		
 			end
-		elseif ecSV.bottomrows == 2 then
+		elseif TukuiSaved.bottomrows == 2 then
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
 				b:SetAlpha(1)
 				b:SetScale(1)		
 			end
 		end
-		splbg:Show()
-		sprbg:Show()
-	elseif ecSV.splitbars == false then
+		LeftSplitBG:Show()
+		RightSplitBG:Show()
+	elseif TukuiSaved.splitbars == false then
 		for i = 1, 12 do
 			local b = _G["MultiBarLeftButton"..i]
 			local b2 = _G["MultiBarLeftButton"..i-1]
 			b:ClearAllPoints()
 			if i == 1 then
-				b:SetPoint("TOPLEFT", rightbbg, db.buttonspacing, -db.buttonspacing)
+				b:SetPoint("TOPLEFT", RightBG, db.buttonspacing, -db.buttonspacing)
 			else
 				b:SetPoint("LEFT", b2, "RIGHT", db.buttonspacing, 0)
 			end
@@ -248,13 +222,13 @@ local splbb_check = function()
 		
 		Toggle[4]:ClearAllPoints()
 		Toggle[5]:ClearAllPoints()
-		Toggle[4]:SetPoint("BOTTOMRIGHT", barbg, "BOTTOMLEFT", -3, 0)
-		Toggle[5]:SetPoint("BOTTOMLEFT", barbg, "BOTTOMRIGHT", 3, 0)
+		Toggle[4]:SetPoint("BOTTOMRIGHT", BarBG, "BOTTOMLEFT", -3, 0)
+		Toggle[5]:SetPoint("BOTTOMLEFT", BarBG, "BOTTOMRIGHT", 3, 0)
 
-		text_display(4, true)
-		text_display(5, true)
+		ToggleText(4, "<", true)
+		ToggleText(5, ">", true)
 	
-		rbb_check()
+		RightBars()
 
 		for i = 7, 12 do
 			local b = _G["MultiBarLeftButton"..i]
@@ -262,101 +236,108 @@ local splbb_check = function()
 			b:SetScale(1)		
 		end
 
-		splbg:Hide()
-		sprbg:Hide()
+		LeftSplitBG:Hide()
+		RightSplitBG:Hide()
 	end
 end
 
-
------ [[     Action Bar Toggle Buttons / Text     ]] -----
-
 for i = 1, 5 do
 	Toggle[i] = CreateFrame("Frame", "TukuiToggle"..i, Toggle)
-	-- Toggle[i]:EnableMouse(true)
+	Toggle[i]:EnableMouse(true)
 	Toggle[i]:SetAlpha(0)
 	
-	Toggle[i].text = Toggle[i]:CreateFontString(nil, "OVERLAY")
-	Toggle[i].text:SetFont(TukuiCF["media"].custom_font_1, 12, "MONOCHROMEOUTLINE")
-	Toggle[i].text:SetPoint("CENTER", 2, 1)
+	Toggle[i].Text = Toggle[i]:CreateFontString(nil, "OVERLAY")
+	Toggle[i].Text:SetFont(TukuiCF["media"].custom_font_1, 12, "MONOCHROMEOUTLINE")
+	Toggle[i].Text:SetPoint("CENTER", 2, 1)
 	
 	if i == 1 then
-		TukuiDB.CreatePanel(Toggle[i], ((db.buttonsize * 12) + (db.buttonspacing * 13)), db.buttonsize / 2, "BOTTOM", barbg, "TOP", 0, 3)
+		TukuiDB.CreateUltimate(Toggle[i], false, db.buttonsize * 12 + db.buttonspacing * 13, db.buttonsize / 2, "BOTTOM", BarBG, "TOP", 0, 3)
 		
 		Toggle[i]:SetScript("OnMouseDown", function()
-			ecSV.bottomrows = ecSV.bottomrows + 1
+			TukuiSaved.bottomrows = TukuiSaved.bottomrows + 1
 
-			if ecSV.bottomrows > 2 then
-				ecSV.bottomrows = 1
+			if TukuiSaved.bottomrows > 2 then
+				TukuiSaved.bottomrows = 1
 			end
-
-			bb_check()
-		end)
-		Toggle[i]:SetScript("OnEvent", bb_check)
-	elseif i == 2 then
-		TukuiDB.CreatePanel(Toggle[i], db.buttonsize, crtabs:GetHeight(), "TOPRIGHT", crtabs, "TOPRIGHT")
-		Toggle[i]:SetFrameLevel(crtabs:GetFrameLevel() + 1)
-		Toggle[i].shadow:Hide()
-		
-		text_display(i, true)
-		
-		Toggle[2]:SetScript("OnMouseDown", function()
-			ecSV.rightbars = ecSV.rightbars + 1
 			
-			if ecSV.splitbars == true and ecSV.rightbars > 2 then
-				ecSV.rightbars = 0
-			elseif ecSV.rightbars > 3 then
-				ecSV.rightbars = 0
-			end
-
-			rbb_check()
+			MainBars()
 		end)
-		Toggle[i]:SetScript("OnEvent", bb_check)
-	elseif i == 3 then
-		TukuiDB.CreatePanel(Toggle[i], db.buttonsize, crtabs:GetHeight(), "TOPRIGHT", Toggle[i-1], "TOPLEFT", -3, 0)
-		Toggle[i]:SetFrameLevel(crtabs:GetFrameLevel() + 1)
+		Toggle[i]:SetScript("OnEvent", MainBars)
+	elseif i == 2 then
+		TukuiDB.CreateUltimate(Toggle[i], false, db.buttonsize, RightTabs:GetHeight() - 6, "RIGHT", RightTabs, "RIGHT", -3, 0)
+		Toggle[i]:SetFrameLevel(RightTabs:GetFrameLevel() + 1)
 		Toggle[i].shadow:Hide()
-		
-		text_display(i, false, true)
+	
+		if db.vertical_rightbars then
+			ToggleText(i, ">", false, true)
+		else
+			ToggleText(i, "-", false, true)
+		end
 		
 		Toggle[i]:SetScript("OnMouseDown", function()
-			ecSV.rightbars = ecSV.rightbars - 1
+			TukuiSaved.rightbars = TukuiSaved.rightbars - 1
 
-			if ecSV.splitbars == true and ecSV.rightbars > 2 then
-				ecSV.rightbars = 1
-			elseif ecSV.rightbars < 0 then
-				if ecSV.splitbars == true then
-					ecSV.rightbars = 2
+			if TukuiSaved.splitbars == true and TukuiSaved.rightbars > 2 then
+				TukuiSaved.rightbars = 1
+			elseif TukuiSaved.rightbars < 0 then
+				if TukuiSaved.splitbars == true then
+					TukuiSaved.rightbars = 2
 				else
-					ecSV.rightbars = 3
+					TukuiSaved.rightbars = 3
 				end
 			end
-			rbb_check()
+			RightBars()
 		end)
-		Toggle[i]:SetScript("OnEvent", rbb_check)
+		Toggle[i]:SetScript("OnEvent", RightBars)	
+	elseif i == 3 then
+		TukuiDB.CreateUltimate(Toggle[i], false, db.buttonsize, RightTabs:GetHeight() - 6, "TOPRIGHT", Toggle[i-1], "TOPLEFT", -3, 0)
+		Toggle[i]:SetFrameLevel(RightTabs:GetFrameLevel() + 1)
+		Toggle[i].shadow:Hide()
+	
+	if db.vertical_rightbars then
+			ToggleText(i, "<", true)
+		else
+			ToggleText(i, "+", true)
+		end
+		
+		Toggle[i]:SetScript("OnMouseDown", function()
+			TukuiSaved.rightbars = TukuiSaved.rightbars + 1
+			
+			if TukuiSaved.splitbars == true and TukuiSaved.rightbars > 2 then
+				TukuiSaved.rightbars = 0
+			elseif TukuiSaved.rightbars > 3 then
+				TukuiSaved.rightbars = 0
+			end
+
+			RightBars()
+		end)
+		Toggle[i]:SetScript("OnEvent", RightBars)
 	elseif i == 4 then
-		TukuiDB.CreatePanel(Toggle[i], db.buttonsize / 2, ((db.buttonsize * 2) + (db.buttonspacing * 3)), "BOTTOMRIGHT", splbg, "BOTTOMLEFT", -3, 0)
+		TukuiDB.CreateUltimate(Toggle[i], false, db.buttonsize / 2, ((db.buttonsize * 2) + (db.buttonspacing * 3)), "BOTTOMRIGHT", LeftSplitBG, "BOTTOMLEFT", -3, 0)
 		
 		Toggle[i]:SetScript("OnMouseDown", function()
-			if ecSV.splitbars == false then
-				ecSV.splitbars = true
-			elseif ecSV.splitbars == true then
-				ecSV.splitbars = false
+			if TukuiSaved.splitbars == false then
+				TukuiSaved.splitbars = true
+			elseif TukuiSaved.splitbars == true then
+				TukuiSaved.splitbars = false
 			end
-			splbb_check()
+			SplitBars()
 		end)
-		Toggle[i]:SetScript("OnEvent", splbb_check)
+		Toggle[i]:SetScript("OnEvent", SplitBars)
+
 	elseif i == 5 then
-		TukuiDB.CreatePanel(Toggle[i], db.buttonsize / 2, ((db.buttonsize * 2) + (db.buttonspacing * 3)), "BOTTOMLEFT", sprbg, "BOTTOMRIGHT", 3, 0)
+		TukuiDB.CreateUltimate(Toggle[i], false, db.buttonsize / 2, ((db.buttonsize * 2) + (db.buttonspacing * 3)), "BOTTOMLEFT", RightSplitBG, "BOTTOMRIGHT", 3, 0)
 		
 		Toggle[i]:SetScript("OnMouseDown", function()
-			if ecSV.splitbars == false then
-				ecSV.splitbars = true
-			elseif ecSV.splitbars == true then
-				ecSV.splitbars = false
+			if TukuiSaved.splitbars == false then
+				TukuiSaved.splitbars = true
+			elseif TukuiSaved.splitbars == true then
+				TukuiSaved.splitbars = false
 			end
-			splbb_check()
+			SplitBars()
 		end)
-		Toggle[i]:SetScript("OnEvent", splbb_check)
+		Toggle[i]:SetScript("OnEvent", SplitBars)
+
 	end
 	Toggle[i]:RegisterEvent("PLAYER_ENTERING_WORLD")
 	Toggle[i]:RegisterEvent("PLAYER_REGEN_DISABLED")
@@ -364,20 +345,19 @@ for i = 1, 5 do
 
 	Toggle[i]:SetScript("OnEnter", function()
 		if InCombatLockdown() then return end
-		ecUI.FadeIn(Toggle[i])
+		TukuiDB.FadeIn(Toggle[i])
 	end)
 
 	Toggle[i]:SetScript("OnLeave", function()
-		ecUI.FadeOut(Toggle[i])
+		TukuiDB.FadeOut(Toggle[i])
 	end)
 
 	Toggle[i]:SetScript("OnUpdate", function() 
-		if ecSV.locked_actionbars == true then
+		if TukuiSaved.actionbars_lock == true then
 			Toggle[i]:EnableMouse(false)
-		elseif ecSV.locked_actionbars == false then
+		elseif TukuiSaved.actionbars_lock == false then
 			Toggle[i]:EnableMouse(true)
 		end
 	end)		
 end
-
 Toggle:RegisterEvent("PLAYER_ENTERING_WORLD")

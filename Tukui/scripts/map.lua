@@ -1,48 +1,36 @@
 if not TukuiCF["map"].enable == true then return end
 
-
------ [[     Local Variables     ]] -----
-
 local mapscale = WORLDMAP_WINDOWED_SIZE
-local font, font_size, font_style, font_shadow, font_position = TukuiCF["fonts"].map_font, TukuiCF["fonts"].map_font_size, TukuiCF["fonts"].map_font_style, TukuiCF["fonts"].map_font_shadow, TukuiCF["fonts"].map_button_xy_position
+local font = TukuiCF["fonts"].map_font
+local font_size = TukuiCF["fonts"].map_font_size
+local font_style = TukuiCF["fonts"].map_font_style
+local font_shadow = TukuiCF["fonts"].map_font_shadow
+local font_position = TukuiCF["fonts"].map_button_xy_position
 local infoheight = TukuiCF["panels"].tinfoheight
 
-local ecUI = ecUI
+local Map = CreateFrame("Frame", "TukuiMap", WorldMapDetailFrame)
+TukuiDB.SetTemplate(Map)
+TukuiDB.CreateShadow(Map)
 
------ [[     Map Background     ]] -----
+local MapTitle = CreateFrame ("Frame", "TukuiMapTitle", WorldMapDetailFrame)
+TukuiDB.CreateUltimate(MapTitle, true, 0, infoheight)
 
-local map = CreateFrame("Frame", "TukuiMap", WorldMapDetailFrame)
-ecUI.SkinPanel(map)
+local MapLock = CreateFrame ("Frame", "TukuiMapLock", WorldMapDetailFrame)
+TukuiDB.CreateUltimate(MapLock, false, 0, infoheight, "BOTTOMRIGHT", WorldMapDetailFrame, "TOPRIGHT", 2, 5)
+MapLock:SetScale(1 / mapscale)
+MapLock:SetFrameStrata("HIGH")
+MapLock:EnableMouse(true)
+MapLock:Hide()
 
+local LockText = MapLock:CreateFontString(nil, "OVERLAY")
+LockText:SetFont(font, font_size, font_style)
+LockText:SetPoint("CENTER", font_position[1], font_position[2])
+LockText:SetText(tukuilocal.map_move)
+MapLock:SetWidth(LockText:GetWidth() + 20)
+TukuiDB.Color(LockText)
 
------ [[     Map Title Frame     ]] -----
-
-local mapTitle = CreateFrame ("Frame", "TukuiMapTitle", WorldMapDetailFrame)
-ecUI.SkinFadedPanel(mapTitle)
-mapTitle:SetHeight(infoheight)
-
-
------ [[     Map Lock Button     ]] -----
-
-local mapLock = CreateFrame ("Frame", "TukuiMapLock", WorldMapDetailFrame)
-TukuiDB.CreatePanel(mapLock, 0, infoheight, "BOTTOMRIGHT", WorldMapDetailFrame, "TOPRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(5))
-mapLock:SetScale(1 / mapscale)
-mapLock:SetFrameStrata("HIGH")
-mapLock:EnableMouse(true)
-mapLock:Hide()
-
-local lockText = mapLock:CreateFontString(nil, "OVERLAY")
-lockText:SetFont(font, font_size, font_style)
-lockText:SetPoint("CENTER", font_position[1], font_position[2])
-lockText:SetText(tukuilocal.map_move)
-mapLock:SetWidth(lockText:GetWidth() + 20)
-ecUI.Color(lockText)
-
--- hi blizzard, i'm just going to steal this code to fix quest blobs, thanks
--- greetings from eclípsé
-mapLock:SetScript("OnMouseDown", function(self)
+MapLock:SetScript("OnMouseDown", function(self)
 	if WORLDMAP_SETTINGS.advanced ~= 1 then return end
-
 	if ( WORLDMAP_SETTINGS.selectedQuest ) then
 		WorldMapBlobFrame:DrawBlob(WORLDMAP_SETTINGS.selectedQuestId, false)
 	end
@@ -51,7 +39,7 @@ mapLock:SetScript("OnMouseDown", function(self)
 	WorldMapFrame:StartMoving()
 end)
 
-mapLock:SetScript("OnMouseUp", function(self)
+MapLock:SetScript("OnMouseUp", function(self)
 	if WORLDMAP_SETTINGS.advanced ~= 1 then return end
 	WorldMapFrame:StopMovingOrSizing()
 	WorldMapBlobFrame_CalculateHitTranslations()
@@ -63,56 +51,56 @@ mapLock:SetScript("OnMouseUp", function(self)
 	WorldMapScreenAnchor:StopMovingOrSizing()
 end)
 
-mapLock:SetScript("OnEnter", TukuiDB.SetModifiedBackdrop)
-mapLock:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
+MapLock:SetScript("OnEnter", TukuiDB.SetModifiedBackdrop)
+MapLock:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 
 
 ----- [[     Map Close Button     ]] -----
 
-local mapClose = CreateFrame ("Frame", "TukuiMapClose", WorldMapDetailFrame)
-TukuiDB.CreatePanel(mapClose, 0, infoheight, "BOTTOMLEFT", WorldMapDetailFrame, "TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(5))
-mapClose:SetScale(1 / mapscale)
-mapClose:EnableMouse(true)
-mapClose:SetFrameStrata("HIGH")
-mapClose:Hide()
+local MapClose = CreateFrame ("Frame", "TukuiMapClose", WorldMapDetailFrame)
+TukuiDB.CreateUltimate(MapClose, false, 0, infoheight, "BOTTOMLEFT", WorldMapDetailFrame, "TOPLEFT", -2, 5)
+MapClose:SetScale(1 / mapscale)
+MapClose:EnableMouse(true)
+MapClose:SetFrameStrata("HIGH")
+MapClose:Hide()
 
-local closeText = mapClose:CreateFontString(nil, "OVERLAY")
-closeText:SetFont(font, font_size, font_style)
-closeText:SetPoint("CENTER", font_position[1], font_position[2])
-closeText:SetText(tukuilocal.map_close)
-ecUI.Color(closeText)
+local CloseText = MapClose:CreateFontString(nil, "OVERLAY")
+CloseText:SetFont(font, font_size, font_style)
+CloseText:SetPoint("CENTER", font_position[1], font_position[2])
+CloseText:SetText(tukuilocal.map_close)
+TukuiDB.Color(CloseText)
 
-mapClose:SetWidth(closeText:GetWidth() + 20)
+MapClose:SetWidth(CloseText:GetWidth() + 20)
 
-mapClose:SetScript("OnMouseUp", function(self) ToggleFrame(WorldMapFrame) end)
+MapClose:SetScript("OnMouseUp", function(self) ToggleFrame(WorldMapFrame) end)
 
-mapClose:SetScript("OnEnter", TukuiDB.SetModifiedBackdrop)
-mapClose:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
+MapClose:SetScript("OnEnter", TukuiDB.SetModifiedBackdrop)
+MapClose:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 
 
 ----- [[     Map Expand Button     ]] -----
 
-local mapExpand = CreateFrame ("Frame", "TukuiMapExpand", WorldMapDetailFrame)
-TukuiDB.CreatePanel(mapExpand, 0, infoheight, "TOPRIGHT", mapLock, "TOPLEFT", TukuiDB.Scale(-3), 0)
-mapExpand:SetScale(1 / mapscale)
-mapExpand:EnableMouse(true)
-mapExpand:SetFrameStrata("HIGH")
-mapExpand:Hide()
+local MapExpand = CreateFrame ("Frame", "TukuiMapExpand", WorldMapDetailFrame)
+TukuiDB.CreateUltimate(MapExpand, false, 0, infoheight, "TOPRIGHT", MapLock, "TOPLEFT", -3, 0)
+MapExpand:SetScale(1 / mapscale)
+MapExpand:EnableMouse(true)
+MapExpand:SetFrameStrata("HIGH")
+MapExpand:Hide()
 
-local expandText = mapExpand:CreateFontString(nil, "OVERLAY", mapExpand)
+local expandText = MapExpand:CreateFontString(nil, "OVERLAY", MapExpand)
 expandText:SetFont(font, font_size, font_style)
 expandText:SetPoint("CENTER", font_position[1], font_position[2])
 expandText:SetText(tukuilocal.map_expand)
-ecUI.Color(expandText)
+TukuiDB.Color(expandText)
 
-mapExpand:SetWidth(expandText:GetWidth() + 20)
+MapExpand:SetWidth(expandText:GetWidth() + 20)
 
-mapExpand:SetScript("OnMouseUp", function(self) 
+MapExpand:SetScript("OnMouseUp", function(self) 
 	WorldMapFrame_ToggleWindowSize()
 end)
 
-mapExpand:SetScript("OnEnter", TukuiDB.SetModifiedBackdrop)
-mapExpand:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
+MapExpand:SetScript("OnEnter", TukuiDB.SetModifiedBackdrop)
+MapExpand:SetScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 
 
 ----- [[     Register This Shit     ]] -----
@@ -126,17 +114,18 @@ addon:RegisterEvent("PLAYER_REGEN_DISABLED")
 ----- [[     Reposition/Hide/Show Elements In Small Map Mode     ]] -----
 
 local SmallerMapSkin = function()
-	mapTitle:SetScale(1 / mapscale)
-	mapTitle:SetFrameStrata("MEDIUM")
-	mapTitle:SetFrameLevel(20)
-	mapTitle:SetPoint("TOPLEFT", mapClose, "TOPRIGHT", 3, 0)
-	mapTitle:SetPoint("TOPRIGHT", mapExpand, "TOPLEFT", -3, 0)
+	MapTitle:SetScale(1 / mapscale)
+	MapTitle:SetFrameStrata("MEDIUM")
+	MapTitle:SetFrameLevel(20)
+	MapTitle:ClearAllPoints()
+	MapTitle:SetPoint("TOPLEFT", MapClose, "TOPRIGHT", 3, 0)
+	MapTitle:SetPoint("TOPRIGHT", MapExpand, "TOPLEFT", -3, 0)
 	
-	map:SetScale(1 / mapscale)
-	map:SetPoint("TOPLEFT", WorldMapDetailFrame, TukuiDB.Scale(-2), TukuiDB.Scale(2))
-	map:SetPoint("BOTTOMRIGHT", WorldMapDetailFrame, TukuiDB.Scale(2), TukuiDB.Scale(-2))
-	map:SetFrameStrata("MEDIUM")
-	map:SetFrameLevel(20)
+	Map:SetScale(1 / mapscale)
+	Map:SetPoint("TOPLEFT", WorldMapDetailFrame, TukuiDB.Scale(-2), TukuiDB.Scale(2))
+	Map:SetPoint("BOTTOMRIGHT", WorldMapDetailFrame, TukuiDB.Scale(2), TukuiDB.Scale(-2))
+	Map:SetFrameStrata("MEDIUM")
+	Map:SetFrameLevel(20)
 	
 	-- move buttons / texts and hide default border
 	WorldMapButton:SetAllPoints(WorldMapDetailFrame)
@@ -147,10 +136,10 @@ local SmallerMapSkin = function()
 	WorldMapDetailFrame:SetFrameStrata("MEDIUM")
 	
 	WorldMapTitleButton:Show()	
-	mapLock:Show()
-	mapClose:Show()
-	mapExpand:Show()
-	mapTitle:Show()
+	MapLock:Show()
+	MapClose:Show()
+	MapExpand:Show()
+	MapTitle:Show()
 	
 	WorldMapFrameMiniBorderLeft:Hide()
 	WorldMapFrameMiniBorderRight:Hide()
@@ -174,7 +163,7 @@ local SmallerMapSkin = function()
 	WorldMapTrackQuestText:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 
 	WorldMapFrameTitle:ClearAllPoints()
-	WorldMapFrameTitle:SetParent(mapTitle)
+	WorldMapFrameTitle:SetParent(MapTitle)
 	WorldMapFrameTitle:SetPoint("CENTER", TukuiCF["fonts"].datatext_xy_position[1], TukuiCF["fonts"].datatext_xy_position[2])
 	WorldMapFrameTitle:SetJustifyH("CENTER")
 	WorldMapFrameTitle:SetJustifyV("MIDDLE")
@@ -202,10 +191,10 @@ local BiggerMapSkin = function()
 	WorldMapLevelDropDown:SetScale(1)
 	
 	WorldMapFrameCloseButton:Show()
-	mapLock:Hide()
-	mapClose:Hide()
-	mapExpand:Hide()
-	mapTitle:Hide()
+	MapLock:Hide()
+	MapClose:Hide()
+	MapExpand:Hide()
+	MapTitle:Hide()
 end
 hooksecurefunc("WorldMap_ToggleSizeUp", function() BiggerMapSkin() end)
 
@@ -223,14 +212,14 @@ local OnEvent = function(self, event)
 
 		WatchFrame_Update()
 		
-		mapLock:EnableMouse(false) -- even though we hide map on combat enter, this kills the button usage if the user tries to re-open and move
+		MapLock:EnableMouse(false) -- even though we hide map on combat enter, this kills the button usage if the user tries to re-open and move
 	elseif event == "PLAYER_REGEN_ENABLED" then
 		WorldMapBlobFrame.Show = WorldMapBlobFrame:Show()
 		WorldMapBlobFrame:Show()
 
 		WatchFrame_Update()
 		
-		mapLock:EnableMouse(true) -- re-enable when leaving combat
+		MapLock:EnableMouse(true) -- re-enable when leaving combat
 	end
 end
 addon:SetScript("OnEvent", OnEvent)

@@ -3,7 +3,6 @@
 local db = TukuiCF["tooltip"]
 if not db.enable then return end
 
-local ecUI = ecUI
 local font = TukuiCF["fonts"].tooltip_font
 local font_size = TukuiCF["fonts"].tooltip_font_size
 local font_style = TukuiCF["fonts"].tooltip_font_style
@@ -44,24 +43,29 @@ hooksecurefunc("GameTooltip_SetDefaultAnchor", function(self, parent)
 			if TukuiCF["bags"].enable == true and StuffingFrameBags:IsShown() then
 				self:ClearAllPoints()
 				self:SetPoint("BOTTOMRIGHT", StuffingFrameBags, "TOPRIGHT", 0, TukuiDB.Scale(3))
-			elseif HasPetUI() then
-				if db2.vertical_rightbars == true then
-					self:ClearAllPoints()
-					self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
-				else
-					self:ClearAllPoints()
-					self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "TOPRIGHT", 0, TukuiDB.Scale(3))
-				end
+			elseif db2.enable ~= true then
+				self:ClearAllPoints()
+				self:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, TukuiDB.Scale(3))
 			else
-				if db2.vertical_rightbars == true and ecSV.rightbars > 0 then
-					self:ClearAllPoints()
-					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
-				elseif not db2.vertical_rightbars == true and ecSV.rightbars > 0 then
-					self:ClearAllPoints()
-					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, TukuiDB.Scale(3))
+				if HasPetUI() then
+					if db2.vertical_rightbars == true then
+						self:ClearAllPoints()
+						self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
+					else
+						self:ClearAllPoints()
+						self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "TOPRIGHT", 0, TukuiDB.Scale(3))
+					end
 				else
-					self:ClearAllPoints()
-					self:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, TukuiDB.Scale(3))
+					if db2.vertical_rightbars == true and TukuiSaved.rightbars > 0 then
+						self:ClearAllPoints()
+						self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
+					elseif not db2.vertical_rightbars == true and TukuiSaved.rightbars > 0 then
+						self:ClearAllPoints()
+						self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, TukuiDB.Scale(3))
+					else
+						self:ClearAllPoints()
+						self:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, TukuiDB.Scale(3))
+					end
 				end
 			end
 		end
@@ -83,24 +87,29 @@ GameTooltip:HookScript("OnUpdate",function(self, ...)
 			if TukuiCF["bags"].enable == true and StuffingFrameBags:IsShown() then
 				self:ClearAllPoints()
 				self:SetPoint("BOTTOMRIGHT", StuffingFrameBags, "TOPRIGHT", 0, TukuiDB.Scale(3))
-			elseif HasPetUI() then
-				if db2.vertical_rightbars == true then
-					self:ClearAllPoints()
-					self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
-				else
-					self:ClearAllPoints()
-					self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "TOPRIGHT", 0, TukuiDB.Scale(3))
-				end
+			elseif db2.enable ~= true then
+				self:ClearAllPoints()
+				self:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, TukuiDB.Scale(3))
 			else
-				if db2.vertical_rightbars == true and ecSV.rightbars > 0 then
-					self:ClearAllPoints()
-					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
-				elseif not db2.vertical_rightbars == true and ecSV.rightbars > 0 then
-					self:ClearAllPoints()
-					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, TukuiDB.Scale(3))
+				if HasPetUI() then
+					if db2.vertical_rightbars == true then
+						self:ClearAllPoints()
+						self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
+					else
+						self:ClearAllPoints()
+						self:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground, "TOPRIGHT", 0, TukuiDB.Scale(3))
+					end
 				else
-					self:ClearAllPoints()
-					self:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, TukuiDB.Scale(3))
+					if db2.vertical_rightbars == true and TukuiSaved.rightbars > 0 then
+						self:ClearAllPoints()
+						self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "BOTTOMLEFT", TukuiDB.Scale(-3), 0)
+					elseif not db2.vertical_rightbars == true and TukuiSaved.rightbars > 0 then
+						self:ClearAllPoints()
+						self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0, TukuiDB.Scale(3))
+					else
+						self:ClearAllPoints()
+						self:SetPoint("BOTTOMRIGHT", TukuiChatRightTabs, "TOPRIGHT", 0, TukuiDB.Scale(3))
+					end
 				end
 			end
 		end
@@ -332,7 +341,9 @@ local BorderColor = function(self)
 end
 
 local SetStyle = function(self)
-	ecUI.SkinPanel(self)
+	TukuiDB.SetTemplate(self)
+	TukuiDB.CreateOverlay(self)
+	TukuiDB.CreateShadow(self)
 	BorderColor(self)
 end
 
@@ -343,6 +354,7 @@ TukuiTooltip:SetScript("OnEvent", function(self)
 	end
 	
 	TukuiDB.SetTemplate(FriendsTooltip)
+	TukuiDB.CreateOverlay(FriendsTooltip)
 	TukuiDB.CreateShadow(FriendsTooltip)
 
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")

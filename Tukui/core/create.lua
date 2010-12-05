@@ -1,16 +1,11 @@
------ [[     Textures     ]] -----
-
-local eciUI = ecUI
 local mult = TukuiDB.mult
 local scale = TukuiDB.Scale
 
 local db = TukuiCF["media"]
 local texture = TukuiCF["customise"].texture
 
------ [[     Textures     ]] -----
-
-local textures = {
-	normbg = {
+local Textures = {
+	Normal = {
 		bgFile = texture,
 		edgeFile = db.blank,
 		tile = false,
@@ -19,8 +14,19 @@ local textures = {
 		insets = { left = -mult, right = -mult, top = -mult, bottom = -mult }
 	},
 	
-	-- don't touch this texture
-	template_fadebg = {
+	Shadow = {
+		edgeFile = db.glowTex, 
+		edgeSize = 3,
+		insets = { left = mult, right = mult, top = mult, bottom = mult }
+	},
+	
+	Border = {
+		edgeFile = db.blank, 
+		edgeSize = mult, 
+		insets = { left = mult, right = mult, top = mult, bottom = mult }
+	},
+
+	Blank = {
 		bgFile = db.blank,
 		edgeFile = db.blank,
 		tile = false,
@@ -28,136 +34,110 @@ local textures = {
 		edgeSize = mult,
 		insets = { left = -mult, right = -mult, top = -mult, bottom = -mult }
 	},
-
-	shadowbg = {
-		edgeFile = db.glowTex, 
-		edgeSize = 3,
-		insets = { left = mult, right = mult, top = mult, bottom = mult }
-	},
-	
-	border = {
-		edgeFile = db.blank, 
-		edgeSize = mult, 
-		insets = { left = mult, right = mult, top = mult, bottom = mult }
-	},
-	
-	overlay = texture,		
 }
-
-
------ [[     Create Panel Styles     ]] -----
 
 function TukuiDB.CreateShadow(f)
 	if f.shadow then return end
-	f.shadow = CreateFrame("Frame",  "_shadow", f)
-	f.shadow:SetFrameLevel(0)
-	f.shadow:SetFrameStrata(f:GetFrameStrata())
-	f.shadow:SetPoint("TOPLEFT", scale(-3), scale(3))
-	f.shadow:SetPoint("BOTTOMRIGHT", scale(3), scale(-3))
-	f.shadow:SetBackdrop(textures.shadowbg)
-	f.shadow:SetBackdropColor(0, 0, 0, 0)
-	f.shadow:SetBackdropBorderColor(0, 0, 0, .75)
+	local shadow = CreateFrame("Frame", f:GetName() and f:GetName() .. "Shadow" or nil, f)
+	shadow:SetFrameLevel(0)
+	shadow:SetFrameStrata(f:GetFrameStrata())
+	shadow:SetPoint("TOPLEFT", scale(-3), scale(3))
+	shadow:SetPoint("BOTTOMRIGHT", scale(3), scale(-3))
+	shadow:SetBackdrop(Textures.Shadow)
+	shadow:SetBackdropColor(0, 0, 0, 0)
+	shadow:SetBackdropBorderColor(0, 0, 0, .75)
+	f.shadow = shadow
 end
 
-function ecUI.CreateOverlay(f)
-	if f.bg then return end
-	f.bg = f:CreateTexture(f:GetName() and f:GetName().."_overlay" or nil, "BORDER", f)
-	f.bg:ClearAllPoints()
-	f.bg:SetPoint("TOPLEFT", mult, -mult)
-	f.bg:SetPoint("BOTTOMRIGHT", -mult, mult)
-	f.bg:SetTexture(textures.overlay)
-	f.bg:SetVertexColor(.05, .05, .05, 1)
+function TukuiDB.CreateOverlay(f)
+	if f.overlay then return end
+	local overlay = f:CreateTexture(f:GetName() and f:GetName().."Overlay" or nil, "BORDER", f)
+	overlay:ClearAllPoints()
+	overlay:SetPoint("TOPLEFT", mult, -mult)
+	overlay:SetPoint("BOTTOMRIGHT", -mult, mult)
+	overlay:SetTexture(texture)
+	overlay:SetVertexColor(.05, .05, .05)
+	f.overlay = overlay
 end
 
-function ecUI.CreateInnerBorder(f)
-	if f.iborder then return end
-	f.iborder = CreateFrame("Frame", "_iborder", f)
-	f.iborder:SetPoint("TOPLEFT", mult, -mult)
-	f.iborder:SetPoint("BOTTOMRIGHT", -mult, mult)
-	f.iborder:SetBackdrop(textures.border)
-	f.iborder:SetBackdropBorderColor(unpack(db.backdropcolor))
-end
-
-function ecUI.CreateOuterBorder(f)
-	if f.oborder then return end
-	f.oborder = CreateFrame("Frame", "_oborder", f)
-	f.oborder:SetPoint("TOPLEFT", -mult, mult)
-	f.oborder:SetPoint("BOTTOMRIGHT", mult, -mult)
-	f.oborder:SetFrameLevel(f:GetFrameLevel() + 1)
-	f.oborder:SetBackdrop(textures.border)
-	f.oborder:SetBackdropBorderColor(unpack(db.backdropcolor))
-end
-
-
------ [[     Create Panel Skins     ]] -----
-
-function ecUI.SkinPanel(f)
-	f:SetBackdrop(textures.normbg)
-	f:SetBackdropColor(unpack(db.backdropcolor))
-	f:SetBackdropBorderColor(unpack(db.bordercolor))
+function TukuiDB.CreateBorder(f, inner, outer)
+	if inner then
+		if f.iborder then return end
+		local border = CreateFrame("Frame", f:GetName() and f:GetName() .. "InnerBorder" or nil, f)
+		border:SetPoint("TOPLEFT", mult, -mult)
+		border:SetPoint("BOTTOMRIGHT", -mult, mult)
+		border:SetBackdrop(Textures.Border)
+		border:SetBackdropBorderColor(unpack(db.backdropcolor))
+		f.iborder = border
+	end
 	
-	ecUI.CreateOverlay(f)
-	TukuiDB.CreateShadow(f)
-end
-
-function ecUI.SkinFadedPanel(f)
-	f:SetBackdrop(textures.template_fadebg)
-	f:SetBackdropColor(unpack(db.fadedbackdropcolor))
-	f:SetBackdropBorderColor(unpack(db.bordercolor))
-
-	ecUI.CreateInnerBorder(f)
-	ecUI.CreateOuterBorder(f)
-	TukuiDB.CreateShadow(f)
+	if outer then
+		if f.oborder then return end
+		local border = CreateFrame("Frame", f:GetName() and f:GetName() .. "OuterBorder" or nil, f)
+		border:SetPoint("TOPLEFT", -mult, mult)
+		border:SetPoint("BOTTOMRIGHT", mult, -mult)
+		border:SetFrameLevel(f:GetFrameLevel() + 1)
+		border:SetBackdrop(Textures.Border)
+		border:SetBackdropBorderColor(unpack(db.backdropcolor))
+		f.oborder = border
+	end
 end
 
 
 ----- [[     Create Panels     ]] -----
 
 function TukuiDB.CreatePanel(f, w, h, a1, p, a2, x, y)
-	sh = scale(h)
-	sw = scale(w)	
+	f:SetSize(scale(w), scale(h))
 	f:SetFrameLevel(1)
-	f:SetHeight(sh)
-	f:SetWidth(sw)
 	f:SetFrameStrata("BACKGROUND")
 	f:SetPoint(a1, p, a2, x, y)
 	
-	ecUI.SkinPanel(f)
-end
-
-function TukuiDB.CreateFadedPanel(f, w, h, a1, p, a2, x, y)
-	sh = scale(h)
-	sw = scale(w)	
-	f:SetFrameLevel(1)
-	f:SetHeight(sh)
-	f:SetWidth(sw)
-	f:SetFrameStrata("BACKGROUND")
-	f:SetPoint(a1, p, a2, x, y)
-	
-	ecUI.SkinFadedPanel(f)
-end
-
-function TukuiDB.SetTemplate(f)
-	f:SetBackdrop(textures.template_fadebg)
+	f:SetBackdrop(Textures.Normal)
 	f:SetBackdropColor(unpack(db.backdropcolor))
 	f:SetBackdropBorderColor(unpack(db.bordercolor))
 end
 
+function TukuiDB.CreateUltimate(f, fade, w, h, a1, p, a2, x, y)
+	f:SetSize(scale(w), scale(h))
+	f:SetFrameLevel(1)
+	f:SetFrameStrata("BACKGROUND")
+	
+	if a1 then
+		f:SetPoint(a1, p, a2, x, y)
+	end
+	
+	TukuiDB.CreateShadow(f)
+	
+	if fade then
+		TukuiDB.CreateBorder(f, true, true)
+		
+		f:SetBackdrop(Textures.Blank)
+		f:SetBackdropColor(unpack(db.fadedbackdropcolor))
+		f:SetBackdropBorderColor(unpack(db.bordercolor))
+	else
+		TukuiDB.CreateOverlay(f)
+		
+		f:SetBackdrop(Textures.Normal)
+		f:SetBackdropColor(unpack(db.backdropcolor))
+		f:SetBackdropBorderColor(unpack(db.bordercolor))
+	end
+end
 
------ [[     Fade In / Out Functions     ]] -----
+function TukuiDB.SetTemplate(f)
+	f:SetBackdrop(Textures.Blank)
+	f:SetBackdropColor(unpack(db.backdropcolor))
+	f:SetBackdropBorderColor(unpack(db.bordercolor))
+end
 
-function ecUI.FadeIn(f)
+function TukuiDB.FadeIn(f)
 	UIFrameFadeIn(f, .4, f:GetAlpha(), 1)
 end
 	
-function ecUI.FadeOut(f)
+function TukuiDB.FadeOut(f)
 	UIFrameFadeOut(f, .8, f:GetAlpha(), 0)
 end
 
-
------ [[     Setup Text Coloring     ]] -----
-
-function ecUI.Color(f, red, green, blue)
+function TukuiDB.Color(f, red, green, blue)
 	if red then
 		f:SetTextColor(.9, .3, .3)
 	elseif green then
@@ -180,9 +160,6 @@ function ecUI.Color(f, red, green, blue)
 end
 cEnd = "|r"
 
-
------ [[     Setup Button Border Coloring     ]] -----
-
 function TukuiDB.SetModifiedBackdrop(f)
 	if TukuiCF["datatext"].classcolor == true then
 		local color = RAID_CLASS_COLORS[TukuiDB.myclass]
@@ -195,4 +172,32 @@ end
 
 function TukuiDB.SetOriginalBackdrop(f)
 	f:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
+end
+
+function TukuiDB.StyleButton(b, checked) 
+    local name = b:GetName() 
+    local button          = _G[name]
+
+	local hover = b:CreateTexture("frame", nil, self)
+	hover:SetTexture(1, 1, 1, 0.3)
+	hover:SetSize(button:GetWidth(), button:GetHeight())
+	hover:SetPoint("TOPLEFT", button, 2, -2)
+	hover:SetPoint("BOTTOMRIGHT", button, -2, 2)
+	button:SetHighlightTexture(hover)
+
+	local pushed = b:CreateTexture("frame", nil, self)
+	pushed:SetTexture(0.9, 0.8, 0.1, 0.3)
+	pushed:SetSize(button:GetWidth(), button:GetHeight())
+	pushed:SetPoint("TOPLEFT", button, 2, -2)
+	pushed:SetPoint("BOTTOMRIGHT", button, -2, 2)
+	button:SetPushedTexture(pushed)
+ 
+	if checked then
+		local checked = b:CreateTexture("frame", nil, self)
+		checked:SetTexture(1, 1, 1, 0.3)
+		checked:SetSize(button:GetWidth(), button:GetHeight())
+		checked:SetPoint("TOPLEFT", button, 2, -2)
+		checked:SetPoint("BOTTOMRIGHT", button, -2, 2)
+		button:SetCheckedTexture(checked)
+	end
 end

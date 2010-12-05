@@ -48,12 +48,14 @@ local function Shared(self, unit)
 	hBg:SetTexture(unpack(db.health_bg_color))
 	self.Health.bg = hBg
 
-	local hBorder = CreateFrame("Frame", nil, health)
-	hBorder:SetFrameLevel(health:GetFrameLevel() - 1)
-	hBorder:SetAllPoints()
-	ecUI.CreateOuterBorder(hBorder)
-	self.Health.border = hBorder		
-
+	if not unit:find("partypet") then
+		local hBorder = CreateFrame("Frame", nil, health)
+		hBorder:SetFrameLevel(health:GetFrameLevel() - 1)
+		hBorder:SetAllPoints()
+		TukuiDB.CreateBorder(hBorder, false, true)
+		self.Health.border = hBorder		
+	end
+	
 	local power = CreateFrame("StatusBar", nil, self)
 	power:SetPoint("TOPLEFT", health, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
 	power:SetPoint("TOPRIGHT", health, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
@@ -74,19 +76,24 @@ local function Shared(self, unit)
 	local pBorder = CreateFrame("Frame", nil, power)
 	pBorder:SetFrameLevel(power:GetFrameLevel() - 1)
 	pBorder:SetAllPoints()
-	ecUI.CreateOuterBorder(pBorder)
+	TukuiDB.CreateBorder(pBorder, false, true)
 	self.Power.border = pBorder
 
 	local frame = CreateFrame("Frame", nil, health)
 	frame:SetFrameLevel(health:GetFrameLevel() - 1)
 	frame:SetPoint("TOPLEFT", health, TukuiDB.Scale(-2), TukuiDB.Scale(2))
-	frame:SetPoint("BOTTOMRIGHT", power, TukuiDB.Scale(2), TukuiDB.Scale(-2))
+	if unit:find("partypet") then
+		frame:SetPoint("BOTTOMRIGHT", health, TukuiDB.Scale(2), TukuiDB.Scale(-2))
+		TukuiDB.CreateBorder(frame, true, true)
+	else
+		frame:SetPoint("BOTTOMRIGHT", power, TukuiDB.Scale(2), TukuiDB.Scale(-2))
+		TukuiDB.CreateBorder(frame, false, true)
+	end
 	frame:SetBackdrop({
 		bgFile = texture,
 		insets = { left = -TukuiDB.mult, right = -TukuiDB.mult, top = -TukuiDB.mult, bottom = -TukuiDB.mult }
 	})
 	frame:SetBackdropColor(unpack(TukuiCF["media"].bordercolor))
-	ecUI.CreateOuterBorder(frame)
 	TukuiDB.CreateShadow(frame)
 	self.frame = frame			
 	
@@ -135,21 +142,12 @@ local function Shared(self, unit)
 	Name:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	Name.frequentUpdates = 0.2
 	if db.classcolor == true then
-		self:Tag(Name, "[Tukui:name_short][Tukui:dead][Tukui:afk]")
+		self:Tag(Name, "[Tukui:leader]Tukui:name_short][Tukui:masterlooter][[Tukui:dead][Tukui:afk]")
 	else
-		self:Tag(Name, "[Tukui:getnamecolor][Tukui:name_short][Tukui:dead][Tukui:afk]")
+		self:Tag(Name, "[Tukui:leader][Tukui:getnamecolor][Tukui:name_short][Tukui:masterlooter][Tukui:dead][Tukui:afk]")
 	end
 	self.Name = Name
-	
-	
-	----- [[     Leader Icon     ]] -----
-	
-    local leader = health:CreateTexture(nil, "OVERLAY")
-    leader:SetHeight(TukuiDB.Scale(12))
-    leader:SetWidth(TukuiDB.Scale(12))
-    leader:SetPoint("TOPLEFT", 0, 6)
-	self.Leader = leader
-	
+
 	
 	----- [[     LFD Role Icon     ]] -----
 	
@@ -159,16 +157,6 @@ local function Shared(self, unit)
 	LFDRole:SetPoint("TOPRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(-2))
 	LFDRole:SetTexture("Interface\\AddOns\\Tukui\\media\\textures\\lfdicons.blp")
 	self.LFDRole = LFDRole
-	
-	
-	----- [[     Masterlooter Icon     ]] -----
-	
-    local MasterLooter = health:CreateTexture(nil, "OVERLAY")
-    MasterLooter:SetHeight(TukuiDB.Scale(12))
-    MasterLooter:SetWidth(TukuiDB.Scale(12))
-	self.MasterLooter = MasterLooter
-    self:RegisterEvent("PARTY_LEADER_CHANGED", TukuiDB.MLAnchorUpdate)
-    self:RegisterEvent("PARTY_MEMBERS_CHANGED", TukuiDB.MLAnchorUpdate)
 	
 	
 	----- [[     Aggro     ]] -----
@@ -322,7 +310,7 @@ oUF:Factory(function(self)
 		self:SetWidth(header:GetAttribute('initial-width'))
 		self:SetHeight(header:GetAttribute('initial-height'))
 	]],
-	"initial-width", 70,
+	"initial-width", 75,
 	"initial-height", 41,	
 	"showParty", true, 
 	-- "showSolo", true, 
@@ -336,12 +324,13 @@ oUF:Factory(function(self)
 	party:SetPoint("TOP", UIParent, "BOTTOM", 0, TukuiDB.Scale(230))
 	
 	local pets = {}
+	local members = GetNumPartyMembers() + 1
 	for i = 1, 5 do 
 		pets[i] = oUF:Spawn('partypet'..i, 'oUF_TukuiPartyPet'..i) 
-		pets[i]:SetSize((TukuiCF["panels"].tinfowidth / 5) - 4.3, 21)
+		pets[i]:SetSize((party:GetWidth() / members) - 2, 21)
 		if i == 1 then
 			if db.showplayerinparty == true then
-				pets[i]:SetPoint('BOTTOMLEFT', party, 'TOPLEFT', (TukuiCF["panels"].tinfowidth / 5) - 4.3 + 5, 6)
+				pets[i]:SetPoint('BOTTOMLEFT', party, 'TOPLEFT', ((party:GetWidth() / members) + 2), 6)
 			else
 				pets[i]:SetPoint('BOTTOMLEFT', party, 'TOPLEFT', 0, 6)
 			end
@@ -349,7 +338,7 @@ oUF:Factory(function(self)
 			pets[i]:SetPoint('TOPLEFT', pets[i-1], 'TOPRIGHT', 3, 0)
 		end
 	end
-	
+
 	local PetsFuckOffSeriously = CreateFrame("Frame")
 	PetsFuckOffSeriously:RegisterEvent("PLAYER_ENTERING_WORLD")
 	PetsFuckOffSeriously:RegisterEvent("RAID_ROSTER_UPDATE")

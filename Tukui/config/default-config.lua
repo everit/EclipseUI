@@ -30,7 +30,7 @@ TukuiCF["unitframes"] = {
 	["totdebuffs"] = false,                -- enable tot debuffs (high reso only)
 	["focusdebuffs"] = false,              -- enable focus debuffs 
 	["showfocustarget"] = false,           -- show focus target
-	["showtotalhpmp"] = false,             -- change the display of info text on player and target with XXXX/Total.
+	-- ["showtotalhpmp"] = false,             -- change the display of info text on player and target with XXXX/Total.
 	["showsmooth"] = true,                 -- enable smooth bar
 	["showthreat"] = true,                 -- enable the threat bar anchored to info left panel.
 	["charportrait"] = false,              -- do i really need to explain this?
@@ -51,12 +51,11 @@ TukuiCF["unitframes"] = {
 	
 	["showboss"] = true,                   -- enable boss unit frames for PVELOL encounters.
 
-	["ws_show_player"] = true,             -- show weakened soul bar on player unit
-	["ws_show_target"] = true,             -- show weakened soul bar on target unit
+	-- ["ws_show_player"] = true,             -- show weakened soul bar on player unit
+	-- ["ws_show_target"] = true,             -- show weakened soul bar on target unit
 	
 	["runebar"] = false,                    -- enable tukui runebar plugin
 	["totemtimer"] = false,                 -- enable tukui totem timer plugin
-	
 	
 	["classcolor"] = false,
 	["health_color"] = { .15, .15, .15 },
@@ -80,7 +79,7 @@ TukuiCF["actionbar"] = {
 
 	["hideshapeshift"] = false,            -- hide shapeshift or totembar because it was a lot requested.
 	
-	["vertical_rightbars"] = false,
+	["vertical_rightbars"] = true,
 	["vertical_shapeshift"] = false,
 
 	["buttonsize"] = 27,
@@ -108,7 +107,7 @@ TukuiCF["datatext"] = {
 	["wintergrasp"] = 4,
 	["dur"] = 1,
 	
-	["battleground"] = true,               -- enable 3 stats in battleground only that replace stat1,stat2,stat3.
+	-- ["battleground"] = true,               -- enable 3 stats in battleground only that replace stat1,stat2,stat3.
 	
 	["classcolor"] = false,
 		["color"] = { 0, .6, 1 },
@@ -178,4 +177,40 @@ TukuiCF["tooltip"] = {
 	["hidebuttons"] = false,               -- always hide action bar buttons tooltip.
 	["hideuf"] = false,                    -- hide tooltip on unitframes
 	["cursor"] = false,                    -- tooltip via cursor only
+}
+
+----- [[     Merchant Settings     ]] -----
+
+TukuiCF["merchant"] = {
+	["sellgrays"] = true,                  -- automaticly sell grays?
+	["autorepair"] = true,                 -- automaticly repair?
+}
+
+----- [[     Error Settings     ]] -----
+
+TukuiCF["error"] = {
+	["enable"] = false,                     -- true to enable this mod, false to disable
+	filter = {                             -- what messages to not hide
+		["Inventory is full."] = true,     -- inventory is full will not be hidden by default
+	},
+}
+
+----- [[     Invite Settings     ]] -----
+
+TukuiCF["invite"] = { 
+	["autoaccept"] = true,                 -- auto-accept invite from guildmate and friends.
+}
+
+----- [[     Buff Reminder Settings     ]] -----
+
+TukuiCF["buffreminder"] = {
+	["enable"] = true,                     -- this is now the new innerfire warning script for all armor/aspect class.
+	["sound"] = false,                      -- enable warning sound notification for reminder.
+}
+
+----- [[     Other Settings     ]] -----
+
+TukuiCF["others"] = {
+	["pvpautorelease"] = true,             -- enable auto-release in bg or wintergrasp. (not working for shaman, sorry)
+	["move_watchframe"] = true,
 }

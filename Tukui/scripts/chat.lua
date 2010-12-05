@@ -4,7 +4,6 @@ if TukuiCF["chat"].enable ~= true then return end
 -- SETUP TUKUI CHATS
 -----------------------------------------------------------------------
 
-local ecUI = ecUI
 local TukuiChat = CreateFrame("Frame")
 local tabalpha = 1
 local tabnoalpha = 1
@@ -138,7 +137,7 @@ local function SetChatStyle(frame)
 	EditBoxBackground:SetFrameStrata("LOW")
 	EditBoxBackground:SetFrameLevel(1)
 	TukuiDB.SetTemplate(EditBoxBackground)
-	ecUI.CreateOverlay(EditBoxBackground)
+	TukuiDB.CreateOverlay(EditBoxBackground)
 	
 	local function colorize(r,g,b)
 		EditBoxBackground:SetBackdropBorderColor(r, g, b)
@@ -165,7 +164,7 @@ local function SetChatStyle(frame)
 	end
 
 	hooksecurefunc("FCFTab_UpdateColors", function(chatTab, isSelected) 
-		ecUI.Color(chatTab:GetFontString())
+		TukuiDB.Color(chatTab:GetFontString())
 		if isSelected then 
 			FCFTab_UpdateColors(chatTab, false) 
 		end 

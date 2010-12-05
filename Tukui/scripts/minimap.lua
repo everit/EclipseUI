@@ -4,8 +4,7 @@ local ecUI = ecUI
 
 local TukuiMinimap = CreateFrame("Frame", "TukuiMinimap", Minimap)
 TukuiMinimap:RegisterEvent("ADDON_LOADED")
-TukuiDB.CreatePanel(TukuiMinimap, 136, 136, "CENTER", Minimap, "CENTER", -0, 0)
-TukuiMinimap:ClearAllPoints()
+TukuiDB.CreateUltimate(TukuiMinimap, false, 136, 136, "CENTER")
 TukuiMinimap:SetPoint("TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
 TukuiMinimap:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
 
@@ -13,106 +12,86 @@ Minimap:ClearAllPoints()
 Minimap:SetPoint("TOPLEFT", UIParent, "TOPLEFT", TukuiDB.Scale(10), TukuiDB.Scale(-10))
 Minimap:SetSize(TukuiMinimap:GetWidth(), TukuiMinimap:GetHeight())
 
-
------ [[     Toggle Button / Text     ]] -----
-
 local Toggle = CreateFrame("Frame", "TukuiToggleMinimap", UIParent)
 Toggle:EnableMouse(true)
-ecUI.SkinPanel(Toggle)
 
-local Toggle_Text = Toggle:CreateFontString(nil, "OVERLAY")
-Toggle_Text:SetFont(TukuiCF["media"].custom_font_1, 12, "MONOCHROMEOUTLINE")
-Toggle_Text:SetPoint("CENTER", TukuiDB.Scale(2), TukuiDB.Scale(1))
-ecUI.Color(Toggle_Text)
-
-
------ [[     Mouse-over Functions     ]] -----
+local ToggleText = Toggle:CreateFontString(nil, "OVERLAY")
+ToggleText:SetFont(TukuiCF["media"].custom_font_1, 12, "MONOCHROMEOUTLINE")
+ToggleText:SetPoint("CENTER", TukuiDB.Scale(2), TukuiDB.Scale(1))
+TukuiDB.Color(ToggleText)
 
 Toggle:SetScript("OnEnter", function()
 	if InCombatLockdown() then return end
 	if MinimapCluster:IsShown() then
-		ecUI.FadeIn(Toggle)
+		TukuiDB.FadeIn(Toggle)
 	end
 	TukuiDB.SetModifiedBackdrop(Toggle)
 end)
 
 Toggle:SetScript("OnLeave", function() 
 	if MinimapCluster:IsShown() then
-		ecUI.FadeOut(Toggle)
+		TukuiDB.FadeOut(Toggle)
 	end
 	TukuiDB.SetOriginalBackdrop(Toggle)
 end)
 
-
------ [[     Make Sure Toggle Button Fades On Combat     ]] -----
-
-Toggle:RegisterEvent("PLAYER_REGEN_DISABLED")
-Toggle:SetScript("OnEvent", function(self, event)
-	if (event == "PLAYER_REGEN_DISABLED") then
-		if Toggle:GetAlpha() > 0 then
-			ecUI.FadeOut(Toggle)
-		end
-	end
-end)
-
-
------ [[     Toggle / Minimap Set Up / Check Function     ]] -----
-
-local minimap_check = function()
-	if ecSV.minimap_shown == true then
+local MinimapCheck = function()
+	if TukuiSaved.minimap_shown == true then
 		Toggle:ClearAllPoints()
-		Toggle:SetPoint("BOTTOM", TukuiMinimap, "BOTTOM", 0, TukuiDB.Scale(4))
-
-		Toggle:SetSize(TukuiDB.Scale(80), TukuiDB.Scale(15))
-
+		TukuiDB.CreateUltimate(Toggle, false, 80, 15, "BOTTOM", TukuiMinimap, "BOTTOM", 0, 4)
+		Toggle:SetFrameLevel(Minimap:GetFrameLevel() + 3)
+		
 		Toggle:SetAlpha(0)
 
-		Toggle_Text:SetText("Collapse")
+		ToggleText:SetText("Collapse")
 		
 		if not MinimapCluster:IsShown() then
 			MinimapCluster:Show()
 		end
 		
-		MiniMenu:ClearAllPoints()
-		MiniMenu:SetPoint("TOPLEFT", TukuiMinimap, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
-	elseif ecSV.minimap_shown == false then		
-		local point, relativeTo, relativePoint, xOfs, yOfs = Minimap:GetPoint()
-		Toggle:ClearAllPoints()
-		Toggle:SetPoint(point, relativeTo, relativePoint, xOfs - 2, yOfs + 2)
-
-		Toggle:SetSize(TukuiMinimap:GetWidth() + 4, TukuiCF["panels"].tinfoheight)
+		TukuiMinimenu:ClearAllPoints()
+		TukuiMinimenu:SetPoint("TOPLEFT", TukuiMinimap, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
+	elseif TukuiSaved.minimap_shown == false then		
+		local point, relativeTo, relativePoint, xOfs, yOfs = Minimap:GetPoint()	
+		Toggle:ClearAllPoints()		
+		TukuiDB.CreateUltimate(Toggle, false, TukuiMinimap:GetWidth() + 4, TukuiCF["panels"].tinfoheight, point, relativeTo, relativePoint, xOfs - 2, yOfs + 2)
 
 		Toggle:SetAlpha(1)
 
-		Toggle_Text:SetText("Expand")
+		ToggleText:SetText("Expand")
 		
 		if MinimapCluster:IsShown() then
 			MinimapCluster:Hide()
 		end
 		
-		MiniMenu:ClearAllPoints()
-		MiniMenu:SetPoint("TOPLEFT", Toggle, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
+		TukuiMinimenu:ClearAllPoints()
+		TukuiMinimenu:SetPoint("TOPLEFT", Toggle, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
 	end
 end
 
-
------ [[     Mouse-click Function     ]] -----
-
 Toggle:SetScript("OnMouseDown", function()
-	if not InCombatLockdown() then
-		if ecSV.minimap_shown == true then
-			ecSV.minimap_shown = false
-		elseif ecSV.minimap_shown == false then
-			ecSV.minimap_shown = true
-		end
-		minimap_check()
-	else
-		print(ERR_NOT_IN_COMBAT)
+	if TukuiSaved.minimap_shown == true then
+		TukuiSaved.minimap_shown = false
+	elseif TukuiSaved.minimap_shown == false then
+		TukuiSaved.minimap_shown = true
 	end
+	MinimapCheck()
 end)
-Toggle:RegisterEvent("PLAYER_ENTERING_WORLD")
-Toggle:SetScript("OnEvent", minimap_check)
 
+Toggle:RegisterEvent("PLAYER_ENTERING_WORLD")
+Toggle:RegisterEvent("PLAYER_REGEN_ENABLED")
+Toggle:RegisterEvent("PLAYER_REGEN_DISABLED")
+Toggle:SetScript("OnEvent", function(self, event)
+	if (event == "PLAYER_REGEN_DISABLED") then
+		if Toggle:GetAlpha() > 0 and TukuiSaved.minimap_shown == true then
+			TukuiDB.FadeOut(Toggle)
+		end
+		Toggle:EnableMouse(false)
+	elseif (event == "PLAYER_REGEN_ENABLED") then
+		Toggle:EnableMouse(true)
+	end
+	MinimapCheck()
+end)
 
 -- Hide Mail Button
 MiniMapMailFrame:ClearAllPoints()

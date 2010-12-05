@@ -214,4 +214,10 @@ if TukuiDB.client == "deDE" then
 
 	tukuilocal.bags_close = "Close"
 	tukuilocal.bags_keyring = "Keyring"
+
+	tukuilocal.minimap_lockon = "Minimap |cffCC0000locked|r"
+	tukuilocal.minimap_lockoff = "Minimap |cff00cb39unlocked|r"
+
+	tukuilocal.actionbars_lockon = "Actionbars |cffCC0000locked|r"
+	tukuilocal.actionbars_lockoff = "Actionbars |cff00cb39unlocked|r"
 end

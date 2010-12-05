@@ -1,14 +1,12 @@
 -- just some random skin, not everything is skinned atm.
 
-local ecUI = ecUI
-
 local function SkinButton(f)
 	f:SetNormalTexture("")
 	f:SetHighlightTexture("")
 	f:SetPushedTexture("")
 	f:SetDisabledTexture("")
-	ecUI.SkinPanel(f)
-	f.shadow:Hide()
+	TukuiDB.SetTemplate(f)
+	TukuiDB.CreateOverlay(f)
 	f:HookScript("OnEnter", TukuiDB.SetModifiedBackdrop)
 	f:HookScript("OnLeave", TukuiDB.SetOriginalBackdrop)
 end
@@ -73,16 +71,29 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 		end
 		
 		for i = 1, getn(bgskins) do
-			ecUI.SkinFadedPanel(_G[bgskins[i]])
+			_G[bgskins[i]]:SetBackdrop({
+				bgFile = TukuiCF["media"].blank,
+				edgeFile = TukuiCF["media"].blank,
+				tile = false,
+				tileSize = 0,
+				edgeSize = TukuiDB.mult,
+				insets = { left = -TukuiDB.mult, right = -TukuiDB.mult, top = -TukuiDB.mult, bottom = -TukuiDB.mult }
+			})
+			_G[bgskins[i]]:SetBackdropColor(unpack(TukuiCF["media"].fadedbackdropcolor))
+			_G[bgskins[i]]:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor))
+			TukuiDB.CreateShadow(_G[bgskins[i]])
+			TukuiDB.CreateBorder(_G[bgskins[i]], true, true)
 		end
 		
 		for i = 1, getn(insetskins) do
-			ecUI.SkinPanel(_G[insetskins[i]])
+			TukuiDB.SetTemplate(_G[insetskins[i]])
+			TukuiDB.CreateShadow(_G[insetskins[i]])
+			TukuiDB.CreateOverlay(_G[insetskins[i]])
 		end
 		
 		for i = 1, getn(nonshadowskins) do
-			ecUI.SkinPanel(_G[nonshadowskins[i]])
-			_G[nonshadowskins[i]].shadow:Hide()
+			TukuiDB.SetTemplate(_G[nonshadowskins[i]])
+			TukuiDB.CreateOverlay(_G[nonshadowskins[i]])
 		end
 		
 		local ChatMenus = {
