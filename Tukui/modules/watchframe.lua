@@ -18,7 +18,7 @@ TukuiWatchFrame:SetScript("OnEvent", function(self, event, addon)
 		wf:SetClampedToScreen(false)
 		wf:ClearAllPoints()
 		wf:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", TukuiDB.Scale(-8), TukuiDB.Scale(-230))
-		wf:SetHeight(200)
+		wf:SetHeight(600)
 		wf:SetUserPlaced(true)
 		wf.SetPoint = TukuiDB.dummy
 		wf.ClearAllPoints = TukuiDB.dummy
