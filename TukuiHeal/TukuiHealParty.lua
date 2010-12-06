@@ -142,7 +142,7 @@ local function Shared(self, unit)
 	Name:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	Name.frequentUpdates = 0.2
 	if db.classcolor == true then
-		self:Tag(Name, "[Tukui:leader][Tukui:name_short][Tukui:masterlooter][Tukui:dead][Tukui:afk]")
+		self:Tag(Name, "[Tukui:leader]Tukui:name_short][Tukui:masterlooter][Tukui:dead][Tukui:afk]")
 	else
 		self:Tag(Name, "[Tukui:leader][Tukui:getnamecolor][Tukui:name_short][Tukui:masterlooter][Tukui:dead][Tukui:afk]")
 	end
@@ -310,7 +310,7 @@ oUF:Factory(function(self)
 		self:SetWidth(header:GetAttribute('initial-width'))
 		self:SetHeight(header:GetAttribute('initial-height'))
 	]],
-	"initial-width", 75,
+	"initial-width", 70,
 	"initial-height", 41,	
 	"showParty", true, 
 	-- "showSolo", true, 
@@ -327,15 +327,15 @@ oUF:Factory(function(self)
 	local members = GetNumPartyMembers() + 1
 	for i = 1, 5 do 
 		pets[i] = oUF:Spawn('partypet'..i, 'oUF_TukuiPartyPet'..i) 
-		pets[i]:SetSize((party:GetWidth() / members) - 2, 21)
+		pets[i]:SetSize(70, 21)
 		if i == 1 then
 			if db.showplayerinparty == true then
-				pets[i]:SetPoint('BOTTOMLEFT', party, 'TOPLEFT', ((party:GetWidth() / members) + 2), 6)
+				pets[i]:SetPoint('BOTTOMLEFT', party, 'TOPLEFT', ((party:GetWidth() / members) + 1), 6)
 			else
 				pets[i]:SetPoint('BOTTOMLEFT', party, 'TOPLEFT', 0, 6)
 			end
 		else
-			pets[i]:SetPoint('TOPLEFT', pets[i-1], 'TOPRIGHT', 3, 0)
+			pets[i]:SetPoint('TOPLEFT', pets[i-1], 'TOPRIGHT', 5, 0)
 		end
 	end
 
