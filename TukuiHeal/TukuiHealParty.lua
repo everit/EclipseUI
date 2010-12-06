@@ -324,13 +324,12 @@ oUF:Factory(function(self)
 	party:SetPoint("TOP", UIParent, "BOTTOM", 0, TukuiDB.Scale(230))
 	
 	local pets = {}
-	local members = GetNumPartyMembers() + 1
 	for i = 1, 5 do 
 		pets[i] = oUF:Spawn('partypet'..i, 'oUF_TukuiPartyPet'..i) 
-		pets[i]:SetSize(70, 21)
+		pets[i]:SetSize(party:GetAttribute('initial-width'), 21)
 		if i == 1 then
 			if db.showplayerinparty == true then
-				pets[i]:SetPoint('BOTTOMLEFT', party, 'TOPLEFT', ((party:GetWidth() / members) + 1), 6)
+				pets[i]:SetPoint('BOTTOMLEFT', party, 'TOPLEFT', (pets[i]:GetWidth() + 5), 6)
 			else
 				pets[i]:SetPoint('BOTTOMLEFT', party, 'TOPLEFT', 0, 6)
 			end
