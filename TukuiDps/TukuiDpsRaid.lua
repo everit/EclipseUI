@@ -78,7 +78,7 @@ local function Shared(self, unit)
 	Name:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 	Name.frequentUpdates = 0.2
 	if db.classcolor == true then
-		self:Tag(Name, "[Tukui:leader]Tukui:name_short][Tukui:masterlooter][[Tukui:dead][Tukui:afk]")
+		self:Tag(Name, "[Tukui:leader][Tukui:name_short][Tukui:masterlooter][Tukui:dead][Tukui:afk]")
 	else
 		self:Tag(Name, "[Tukui:leader][Tukui:getnamecolor][Tukui:name_short][Tukui:masterlooter][Tukui:dead][Tukui:afk]")
 	end
