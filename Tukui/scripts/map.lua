@@ -162,6 +162,16 @@ local SmallerMapSkin = function()
 	WorldMapTrackQuestText:SetFont(font, font_size, font_style)
 	WorldMapTrackQuestText:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 
+	WorldMapShowDigSites:ClearAllPoints()
+	WorldMapShowDigSites:SetPoint("BOTTOM", WorldMapButton, "BOTTOM", 0, TukuiDB.Scale(-1))
+	WorldMapShowDigSites:SetFrameStrata("HIGH")
+	
+	WorldMapShowDigSitesText:SetFont(font, font_size, font_style)
+	WorldMapShowDigSitesText:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
+
+	-- WorldMapArchaeologyDigSitesText:SetFont(font, font_size, font_style)
+	-- WorldMapArchaeologyDigSitesText:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
+
 	WorldMapFrameTitle:ClearAllPoints()
 	WorldMapFrameTitle:SetParent(MapTitle)
 	WorldMapFrameTitle:SetPoint("CENTER", TukuiCF["fonts"].datatext_xy_position[1], TukuiCF["fonts"].datatext_xy_position[2])
