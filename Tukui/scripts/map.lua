@@ -163,7 +163,7 @@ local SmallerMapSkin = function()
 	WorldMapTrackQuestText:SetShadowOffset(font_shadow and 1 or 0, font_shadow and -1 or 0)
 
 	WorldMapShowDigSites:ClearAllPoints()
-	WorldMapShowDigSites:SetPoint("BOTTOM", WorldMapButton, "BOTTOM", 0, TukuiDB.Scale(-1))
+	WorldMapShowDigSites:SetPoint("TOPLEFT", WorldMapButton, "TOPLEFT", TukuiDB.Scale(1), TukuiDB.Scale(-1))
 	WorldMapShowDigSites:SetFrameStrata("HIGH")
 	
 	WorldMapShowDigSitesText:SetFont(font, font_size, font_style)
