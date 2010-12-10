@@ -173,9 +173,14 @@ local function Shared(self, unit)
 
 	----- [[     Debuff Highlight     ]] -----
 	
+	local debuffHighlight = self.frame:CreateTexture(nil, "OVERLAY")
+	debuffHighlight:SetAllPoints()
+	debuffHighlight:SetTexture(texture)
+	debuffHighlight:SetBlendMode("DISABLE")
+	debuffHighlight:SetVertexColor(0, 0, 0, 0)
+	self.DebuffHighlight = debuffHighlight
 	self.DebuffHighlightAlpha = 1
-	self.DebuffHighlightBackdrop = true
-	self.DebuffHighlightFilter = true
+	self.DebuffHighlightFilter = false
 	
 	--local picon = self.Health:CreateTexture(nil, 'OVERLAY')
 	--picon:SetPoint('CENTER', self.Health)
