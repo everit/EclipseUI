@@ -188,6 +188,10 @@ for i = 1, 3 do
 		DataBar[i].bar:SetFrameLevel(DataBar[i-1].bar:GetFrameLevel() - 1)
 
 		DataBar[i]:SetScript("OnMouseDown", function()
+			if UnitIsGhost("player") and TukuiSaved.location_shown == true then
+				PortGraveyard()
+			end
+
 			TukuiSaved.experience_shown = false
 			TukuiSaved.location_shown = true
 			TukuiSaved.reputation_shown = false
@@ -196,6 +200,10 @@ for i = 1, 3 do
 		end)
 	elseif i == 3 then
 		DataBar[i]:SetScript("OnMouseDown", function()
+			if TukuiSaved.reputation_shown == true then
+				ToggleCharacter("ReputationFrame")
+			end
+
 			TukuiSaved.experience_shown = false
 			TukuiSaved.location_shown = false
 			TukuiSaved.reputation_shown = true
