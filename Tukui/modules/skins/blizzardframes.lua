@@ -62,6 +62,7 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 			"VideoOptionsFrame",
 			"AudioOptionsFrame",
 			"ReadyCheckFrame",
+			"StackSplitFrame",
 		}
 		
 		local insetskins = {
@@ -76,7 +77,6 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 			"AutoCompleteBox", -- this is the /w *nickname* box, press tab
 			"GhostFrameContentsFrame",
 			"ColorPickerFrame",
-			"StackSplitFrame",
 		}
 
 		-- reskin popup buttons
