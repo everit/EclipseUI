@@ -219,15 +219,6 @@ local function SetupChatPosAndFont(self)
 				FCF_SavePositionAndDimensions(chat)
 			end
 		end
-	
-		--Check if chat exists in the bottomright corner
-		if C.chat.background == true and point == "BOTTOMRIGHT" and chat:IsShown() then
-			TukuiChatBackgroundRight:Show()
-			TukuiTabsRightBackground:Show()
-			TukuiLineToABRightAlt:ClearAllPoints()
-			TukuiLineToABRightAlt:Point("LEFT", TukuiBar1, "RIGHT", 0, 16)
-			TukuiLineToABRightAlt:Point("BOTTOMRIGHT", TukuiChatBackgroundRight, "BOTTOMLEFT", 0, 16)			
-		end
 	end
 
 	-- reposition battle.net popup over chat #1

@@ -146,7 +146,6 @@ C["datatext"] = {
 C["chat"] = {
 	["enable"] = true,                                  -- blah
 	["whispersound"] = true,                            -- play a sound when receiving whisper
-	["background"] = false,
 }
 
 C["nameplate"] = {
