@@ -34,7 +34,7 @@ local MainBars = function()
 		TukuiBar2:Hide()
 			
 		if TukuiSaved.splitbars == true then
-			MultiBarLeft:SetParent(TukuiBar3)
+			MultiBarLeft:SetParent(TukuiSplitBarLeft)
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
 				b:SetAlpha(0)
