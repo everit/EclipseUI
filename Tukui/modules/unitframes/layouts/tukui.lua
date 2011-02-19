@@ -840,7 +840,7 @@ local function Shared(self, unit)
 				debuffs["growth-x"] = "RIGHT"
 				debuffs["growth-y"] = "DOWN"
 			else
-				debuffs:SetHeight(TukuiTarget.Buffs.size)
+				debuffs:SetHeight(26)
 				debuffs:SetWidth(T.Focus)
 				debuffs.size = debuffs:GetHeight()
 				debuffs.num = 4
@@ -869,7 +869,7 @@ local function Shared(self, unit)
 			buffs["growth-x"] = "LEFT"
 			buffs["growth-y"] = "DOWN"
 		else
-			buffs:SetHeight(TukuiTarget.Buffs.size)
+			buffs:SetHeight(26)
 			buffs:SetWidth(T.Focus)
 			buffs.size = buffs:GetHeight()
 			buffs.spacing = 3
