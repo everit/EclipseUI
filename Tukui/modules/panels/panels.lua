@@ -30,53 +30,55 @@ TukuiInfoRight:Point("BOTTOMRIGHT", TukuiChatRight, "BOTTOMRIGHT", -5, 5)
 TukuiInfoRight:SetFrameLevel(TukuiChatRight:GetFrameLevel() + 1)
 
 -- Action Bars
-local TukuiBar1 = CreateFrame("Frame", "TukuiBar1", UIParent, "SecureHandlerStateTemplate")
-TukuiBar1:CreatePanel("Transparent", (T.buttonsize * 12) + (T.buttonspacing * 13) + 2, (T.buttonsize * 2) + (T.buttonspacing * 3) + 2, "BOTTOM", UIParent, "BOTTOM", 0, 8)
+if C["actionbar"].enable then
+	local TukuiBar1 = CreateFrame("Frame", "TukuiBar1", UIParent, "SecureHandlerStateTemplate")
+	TukuiBar1:CreatePanel("Transparent", (T.buttonsize * 12) + (T.buttonspacing * 13) + 2, (T.buttonsize * 2) + (T.buttonspacing * 3) + 2, "BOTTOM", UIParent, "BOTTOM", 0, 8)
 
-local TukuiBar2 = CreateFrame("Frame", "TukuiBar2", UIParent)
-local TukuiBar3 = CreateFrame("Frame", "TukuiBar3", UIParent)
-local TukuiBar4 = CreateFrame("Frame", "TukuiBar4", UIParent)
+	local TukuiBar2 = CreateFrame("Frame", "TukuiBar2", UIParent)
+	local TukuiBar3 = CreateFrame("Frame", "TukuiBar3", UIParent)
+	local TukuiBar4 = CreateFrame("Frame", "TukuiBar4", UIParent)
 
-local TukuiSplitBarLeft = CreateFrame("Frame", "TukuiSplitBarLeft", UIParent)
-TukuiSplitBarLeft:CreatePanel("Transparent", (T.buttonsize * 3) + (T.buttonspacing * 4) + 2, TukuiBar1:GetHeight(), "BOTTOMRIGHT", TukuiBar1, "BOTTOMLEFT", -6, 0)
+	local TukuiSplitBarLeft = CreateFrame("Frame", "TukuiSplitBarLeft", UIParent)
+	TukuiSplitBarLeft:CreatePanel("Transparent", (T.buttonsize * 3) + (T.buttonspacing * 4) + 2, TukuiBar1:GetHeight(), "BOTTOMRIGHT", TukuiBar1, "BOTTOMLEFT", -6, 0)
 
-local TukuiSplitBarRight = CreateFrame("Frame", "TukuiSplitBarRight", UIParent)
-TukuiSplitBarRight:CreatePanel("Transparent", (T.buttonsize * 3) + (T.buttonspacing * 4) + 2, TukuiBar1:GetHeight(), "BOTTOMLEFT", TukuiBar1, "BOTTOMRIGHT", 6, 0)
+	local TukuiSplitBarRight = CreateFrame("Frame", "TukuiSplitBarRight", UIParent)
+	TukuiSplitBarRight:CreatePanel("Transparent", (T.buttonsize * 3) + (T.buttonspacing * 4) + 2, TukuiBar1:GetHeight(), "BOTTOMLEFT", TukuiBar1, "BOTTOMRIGHT", 6, 0)
 
-local TukuiRightBar = CreateFrame("Frame", "TukuiRightBar", UIParent)
-TukuiRightBar:CreatePanel("Transparent", (T.buttonsize * 12 + T.buttonspacing * 13) + 2,  (T.buttonsize * 12 + T.buttonspacing * 13) + 2, "BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, 3)
+	local TukuiRightBar = CreateFrame("Frame", "TukuiRightBar", UIParent)
+	TukuiRightBar:CreatePanel("Transparent", (T.buttonsize * 12 + T.buttonspacing * 13) + 2,  (T.buttonsize * 12 + T.buttonspacing * 13) + 2, "BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, 3)
 
-local TukuiPetBar = CreateFrame("Frame", "TukuiPetBar", UIParent)
-TukuiPetBar:CreatePanel("Transparent", 1, 1, "BOTTOMRIGHT", TukuiRightBar, "TOPRIGHT", 0, 3)
-if C["actionbar"].vertical_rightbars == true then
-	TukuiPetBar:Width((T.petbuttonsize + T.buttonspacing * 2) + 2)
-	TukuiPetBar:Height((T.petbuttonsize * NUM_PET_ACTION_SLOTS + T.buttonspacing * 11) + 2)
-else
-	TukuiPetBar:Width((T.petbuttonsize * NUM_PET_ACTION_SLOTS + T.buttonspacing * 11) + 2)
-	TukuiPetBar:Height((T.petbuttonsize + T.buttonspacing * 2) + 2)
-end
+	local TukuiPetBar = CreateFrame("Frame", "TukuiPetBar", UIParent)
+	TukuiPetBar:CreatePanel("Transparent", 1, 1, "BOTTOMRIGHT", TukuiRightBar, "TOPRIGHT", 0, 3)
+	if C["actionbar"].vertical_rightbars == true then
+		TukuiPetBar:Width((T.petbuttonsize + T.buttonspacing * 2) + 2)
+		TukuiPetBar:Height((T.petbuttonsize * NUM_PET_ACTION_SLOTS + T.buttonspacing * 11) + 2)
+	else
+		TukuiPetBar:Width((T.petbuttonsize * NUM_PET_ACTION_SLOTS + T.buttonspacing * 11) + 2)
+		TukuiPetBar:Height((T.petbuttonsize + T.buttonspacing * 2) + 2)
+	end
 
-if not C["actionbar"].hideshapeshift then
-	local TukuiShiftBarBG = CreateFrame("Frame", "TukuiShiftBarBG", UIParent)
-	TukuiShiftBarBG:RegisterEvent("PLAYER_LOGIN")
-	TukuiShiftBarBG:RegisterEvent("PLAYER_ENTERING_WORLD")
-	TukuiShiftBarBG:RegisterEvent("UPDATE_SHAPESHIFT_FORMS")
-	TukuiShiftBarBG:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
-	TukuiShiftBarBG:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
-	TukuiShiftBarBG:SetScript("OnEvent", function(self, event, ...)
-		local forms = GetNumShapeshiftForms()
-		if forms > 0 then
-			-- if db.vertical_shapeshift == true then
-				-- TukuiDB.CreateSpecial(ShiftBG, true, true, false, db.stancebuttonsize + 10, (db.stancebuttonsize * forms) + (db.buttonspacing * forms + 1) + 5, "TOPLEFT", _G["ShapeshiftButton1"], "TOPLEFT", -5, 5)
-				-- ShiftBG:Show()
-			-- else
-				TukuiShiftBarBG:CreatePanel("Transparent", (T.stancebuttonsize * forms) + (T.buttonspacing * forms + 1) + 5, T.stancebuttonsize + 10, "TOPLEFT",  _G["ShapeshiftButton1"], "TOPLEFT", -5, 5)
-				TukuiShiftBarBG:Show()
-			-- end
-				TukuiShiftBarBG:SetFrameLevel(10)
+	if not C["actionbar"].hideshapeshift then
+		local TukuiShiftBarBG = CreateFrame("Frame", "TukuiShiftBarBG", UIParent)
+		TukuiShiftBarBG:RegisterEvent("PLAYER_LOGIN")
+		TukuiShiftBarBG:RegisterEvent("PLAYER_ENTERING_WORLD")
+		TukuiShiftBarBG:RegisterEvent("UPDATE_SHAPESHIFT_FORMS")
+		TukuiShiftBarBG:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
+		TukuiShiftBarBG:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+		TukuiShiftBarBG:SetScript("OnEvent", function(self, event, ...)
+			local forms = GetNumShapeshiftForms()
+			if forms > 0 then
+				-- if db.vertical_shapeshift == true then
+					-- TukuiDB.CreateSpecial(ShiftBG, true, true, false, db.stancebuttonsize + 10, (db.stancebuttonsize * forms) + (db.buttonspacing * forms + 1) + 5, "TOPLEFT", _G["ShapeshiftButton1"], "TOPLEFT", -5, 5)
+					-- ShiftBG:Show()
+				-- else
+					TukuiShiftBarBG:CreatePanel("Transparent", (T.stancebuttonsize * forms) + (T.buttonspacing * forms + 1) + 5, T.stancebuttonsize + 10, "TOPLEFT",  _G["ShapeshiftButton1"], "TOPLEFT", -5, 5)
+					TukuiShiftBarBG:Show()
+				-- end
+					TukuiShiftBarBG:SetFrameLevel(10)
 
-		else
-			TukuiShiftBarBG:Hide()
-		end
-	end)
+			else
+				TukuiShiftBarBG:Hide()
+			end
+		end)
+	end
 end

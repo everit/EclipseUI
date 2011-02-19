@@ -16,13 +16,15 @@ TukuiShift:SetClampedToScreen(true)
 
 -- shapeshift command to move totem or shapeshift in-game
 local ssmover = CreateFrame("Frame", "TukuiShapeShiftHolder", UIParent)
-ssmover:SetAllPoints(TukuiShiftBarBG)
-ssmover:SetTemplate("Default")
-ssmover:SetBackdropBorderColor(1,0,0)
-ssmover:SetAlpha(0)
-ssmover.text = T.SetFontString(ssmover, C.media.pixel_font, 12, "MONOCHROMEOUTLINE")
-ssmover.text:SetPoint("CENTER")
-ssmover.text:SetText(L.move_shapeshift)
+if not C["actionbar"].hideshapeshift then
+	ssmover:SetAllPoints(TukuiShiftBarBG)
+	ssmover:SetTemplate("Default")
+	ssmover:SetBackdropBorderColor(1,0,0)
+	ssmover:SetAlpha(0)
+	ssmover.text = T.SetFontString(ssmover, C.media.pixel_font, 12, "MONOCHROMEOUTLINE")
+	ssmover.text:SetPoint("CENTER")
+	ssmover.text:SetText(L.move_shapeshift)
+end
 
 -- hide it if not needed and stop executing code
 if C["actionbar"].hideshapeshift then TukuiShift:Hide() return end
