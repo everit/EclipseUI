@@ -31,7 +31,6 @@ local MainBars = function()
 		_G["MultiBarBottomLeft"]:Hide()
 		
 		if TukuiSaved.splitbars == true then
-			-- _G["MultiBarLeftButton"]:Hide()
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
 				b:SetAlpha(0)
@@ -339,3 +338,16 @@ for i = 1, 5 do
 		Toggle[i]:FadeOut()
 	end)
 end
+
+local function ggg()
+	if TukuiSaved.bottomrows == 1 then
+		_G["MultiBarBottomLeft"]:Hide()
+	else
+		_G["MultiBarBottomLeft"]:Show()
+	end
+	
+	if TukuiSaved.splitbars ~= true and TukuiSaved.rightbars < 3 then
+		_G["MultiBarLeft"]:Hide()
+	end			
+end
+TukuiBar1:SetScript("OnUpdate", ggg)
