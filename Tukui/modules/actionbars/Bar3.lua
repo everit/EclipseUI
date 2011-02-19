@@ -6,9 +6,6 @@ if not C["actionbar"].enable == true then return end
 -- setup MultiBarLeft as bar #3 
 ---------------------------------------------------------------------------
 
-local bar = TukuiBar1
-MultiBarLeft:SetParent(bar)
-
 for i= 1, 12 do
 	local b = _G["MultiBarLeftButton"..i]
 	local b2 = _G["MultiBarLeftButton"..i-1]

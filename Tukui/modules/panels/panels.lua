@@ -29,19 +29,13 @@ TukuiInfoRight:CreatePanel("Default", 1, 23, "BOTTOMLEFT", TukuiChatRight, "BOTT
 TukuiInfoRight:Point("BOTTOMRIGHT", TukuiChatRight, "BOTTOMRIGHT", -5, 5)
 TukuiInfoRight:SetFrameLevel(TukuiChatRight:GetFrameLevel() + 1)
 
--- local TukuiInfoTop = CreateFrame("Frame", "TukuiInfoTop", UIParent)
--- TukuiInfoTop:CreatePanel("Default", 50, 25, "TOP", UIParent, "TOP", 0, -8)
--- TukuiInfoTop:SetFrameLevel(3)
--- TukuiInfoTop:SetFrameStrata("LOW")
--- TukuiInfoTopShadow:SetFrameStrata("BACKGROUND")
-
--- local TukuiInfoTop2 = CreateFrame("Frame", "TukuiInfoTop2", UIParent)
--- TukuiInfoTop2:CreatePanel("Default", 120, 19, "CENTER", TukuiInfoTop, "CENTER", 0, 0)
--- TukuiInfoTop2:SetFrameStrata("LOW")
-
 -- Action Bars
 local TukuiBar1 = CreateFrame("Frame", "TukuiBar1", UIParent, "SecureHandlerStateTemplate")
 TukuiBar1:CreatePanel("Transparent", (T.buttonsize * 12) + (T.buttonspacing * 13) + 2, (T.buttonsize * 2) + (T.buttonspacing * 3) + 2, "BOTTOM", UIParent, "BOTTOM", 0, 8)
+
+local TukuiBar2 = CreateFrame("Frame", "TukuiBar2", UIParent)
+local TukuiBar3 = CreateFrame("Frame", "TukuiBar3", UIParent)
+local TukuiBar4 = CreateFrame("Frame", "TukuiBar4", UIParent)
 
 local TukuiSplitBarLeft = CreateFrame("Frame", "TukuiSplitBarLeft", UIParent)
 TukuiSplitBarLeft:CreatePanel("Transparent", (T.buttonsize * 3) + (T.buttonspacing * 4) + 2, TukuiBar1:GetHeight(), "BOTTOMRIGHT", TukuiBar1, "BOTTOMLEFT", -6, 0)

@@ -3,6 +3,9 @@ local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, vari
 if not C["actionbar"].enable then return end
 
 local TukuiBar1 = TukuiBar1
+local TukuiBar2 = TukuiBar2
+local TukuiBar3 = TukuiBar3
+local TukuiBar4 = TukuiBar4
 local TukuiSplitBarLeft = TukuiSplitBarLeft
 local TukuiSplitBarRight = TukuiSplitBarRight
 local TukuiTukuiRightBar = TukuiTukuiRightBar
@@ -27,15 +30,18 @@ local MainBars = function()
 		TukuiSplitBarRight:Height(TukuiBar1:GetHeight())
 		
 		ToggleText(1, "+", true)
-
-		_G["MultiBarBottomLeft"]:Hide()
 		
+		TukuiBar2:Hide()
+			
 		if TukuiSaved.splitbars == true then
+			MultiBarLeft:SetParent(TukuiBar3)
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
 				b:SetAlpha(0)
 				b:SetScale(0.000001)
 			end
+		else
+			MultiBarLeft:SetParent(TukuiBar3)
 		end
 
 	elseif TukuiSaved.bottomrows == 2 then
@@ -45,14 +51,17 @@ local MainBars = function()
 	
 		ToggleText(1, "-", false, true)
 
-		_G["MultiBarBottomLeft"]:Show()
+		TukuiBar2:Show()
 		
 		if TukuiSaved.splitbars == true then
+			MultiBarLeft:SetParent(TukuiSplitBarLeft)
 			for i = 7, 12 do
 				local b = _G["MultiBarLeftButton"..i]
 				b:SetAlpha(1)
 				b:SetScale(1)
 			end
+		else
+			MultiBarLeft:SetParent(TukuiBar3)
 		end
 
 	end	
@@ -75,45 +84,45 @@ local RightBars = function()
 
 	if TukuiSaved.rightbars == 1 then
 		TukuiRightBar:Show()
+		TukuiBar4:Hide()
+
 		if C["actionbar"].vertical_rightbars == true then
 			TukuiRightBar:Width((T.buttonsize + T.buttonspacing * 2) + 2)
 		else
 			TukuiRightBar:Height((T.buttonsize + T.buttonspacing * 2) + 2)
 		end
 		
-		if TukuiSaved.splitbars ~= true and _G["MultiBarLeft"]:IsShown() then
-			_G["MultiBarLeft"]:Hide()
+		if TukuiSaved.splitbars ~= true and TukuiBar3:IsShown() then
+			MultiBarLeft:SetParent(TukuiBar3)
+			TukuiBar3:Hide()
 		end
-
-		_G["MultiBarBottomRight"]:Hide()
-		_G["MultiBarRight"]:Show()
 	elseif TukuiSaved.rightbars == 2 then
 		TukuiRightBar:Show()
+		TukuiBar4:Show()
+
 		if C["actionbar"].vertical_rightbars == true then
 			TukuiRightBar:Width((T.buttonsize * 2 + T.buttonspacing * 3) + 2)
 		else
 			TukuiRightBar:Height((T.buttonsize * 2 + T.buttonspacing * 3) + 2)
 		end
 		
-		if TukuiSaved.splitbars ~= true and _G["MultiBarLeft"]:IsShown() then
-			_G["MultiBarLeft"]:Hide()
+		if TukuiSaved.splitbars ~= true and TukuiBar3:IsShown() then
+			MultiBarLeft:SetParent(TukuiBar3)
+			TukuiBar3:Hide()
 		end
-
-		_G["MultiBarBottomRight"]:Show()
-		_G["MultiBarRight"]:Show()
 	elseif TukuiSaved.rightbars == 3 then
 		TukuiRightBar:Show()
+		TukuiBar4:Show()
+
 		if C["actionbar"].vertical_rightbars == true then
 			TukuiRightBar:Width((T.buttonsize * 3 + T.buttonspacing * 4) + 2)
 		else
 			TukuiRightBar:Height((T.buttonsize * 3 + T.buttonspacing * 4) + 2)
 		end
 		
-		_G["MultiBarBottomRight"]:Show()
-		_G["MultiBarRight"]:Show()
-		
 		if TukuiSaved.splitbars ~= true then
-			_G["MultiBarLeft"]:Show()
+			MultiBarLeft:SetParent(TukuiBar3)
+			TukuiBar3:Show()
 			for i = 1, 12 do
 				local b = _G["MultiBarLeftButton"..i]
 				local b2 = _G["MultiBarLeftButton"..i-1]
@@ -134,19 +143,18 @@ local RightBars = function()
 
 	elseif TukuiSaved.rightbars == 0 then
 		TukuiRightBar:Hide()
-		
+		TukuiBar4:Hide()
+
 		if TukuiSaved.splitbars ~= true then
-			_G["MultiBarLeft"]:Hide()
+			MultiBarLeft:SetParent(TukuiBar3)
+			TukuiBar3:Hide()
 		end			
-	
-		_G["MultiBarBottomRight"]:Hide()
-		_G["MultiBarRight"]:Hide()
 	end
 end
 
 local SplitBars = function()
 	if TukuiSaved.splitbars == true then
-		_G["MultiBarLeft"]:Show()
+		MultiBarLeft:SetParent(TukuiSplitBarLeft)
 		for i = 1, 12 do
 			local b = _G["MultiBarLeftButton"..i]
 			local b2 = _G["MultiBarLeftButton"..i-1]
@@ -197,6 +205,8 @@ local SplitBars = function()
 		ToggleText(5, "<", false, true)
 
 	elseif TukuiSaved.splitbars == false then
+		MultiBarLeft:SetParent(TukuiBar3)
+
 		for i = 1, 12 do
 			local b = _G["MultiBarLeftButton"..i]
 			local b2 = _G["MultiBarLeftButton"..i-1]
@@ -256,7 +266,6 @@ for i = 1, 5 do
 	elseif i == 2 then
 		Toggle[i]:CreatePanel("Eclipse", T.buttonsize, TukuiTabsRight:GetHeight() - 6, "RIGHT", TukuiTabsRight, "RIGHT", -3, 0)
 		Toggle[i]:SetFrameLevel(TukuiTabsRight:GetFrameLevel() + 1)
-		-- Toggle[i].shadow:Hide()
 		
 		if C["actionbar"].vertical_rightbars then
 			ToggleText(i, ">", false, true)
@@ -284,7 +293,6 @@ for i = 1, 5 do
 	elseif i == 3 then
 		Toggle[i]:CreatePanel("Eclipse", Toggle[i-1]:GetWidth(), Toggle[i-1]:GetHeight(), "TOPRIGHT", Toggle[i-1], "TOPLEFT", -3, 0)
 		Toggle[i]:SetFrameLevel(Toggle[i-1]:GetFrameLevel())
-		-- Toggle[i].shadow:Hide()
 		
 		if C["actionbar"].vertical_rightbars then
 			ToggleText(i, "<", true, false)
@@ -339,15 +347,16 @@ for i = 1, 5 do
 	end)
 end
 
-local function ggg()
-	if TukuiSaved.bottomrows == 1 then
-		_G["MultiBarBottomLeft"]:Hide()
-	else
-		_G["MultiBarBottomLeft"]:Show()
-	end
+-- local function ggg()
+	-- if InCombatLockdown() then return end
+	-- if TukuiSaved.bottomrows == 1 then
+		-- _G["MultiBarBottomLeft"]:Hide()
+	-- else
+		-- _G["MultiBarBottomLeft"]:Show()
+	-- end
 	
-	if TukuiSaved.splitbars ~= true and TukuiSaved.rightbars < 3 then
-		_G["MultiBarLeft"]:Hide()
-	end			
-end
-TukuiBar1:SetScript("OnUpdate", ggg)
+	-- if TukuiSaved.splitbars ~= true and TukuiSaved.rightbars < 3 then
+		-- _G["MultiBarLeft"]:Hide()
+	-- end			
+-- end
+-- TukuiBar1:SetScript("OnUpdate", ggg)
