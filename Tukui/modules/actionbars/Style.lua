@@ -29,8 +29,8 @@ local function style(self)
 	Border = T.dummy
  
 	Count:ClearAllPoints()
-	Count:Point("BOTTOMRIGHT", -1, 1)
-	Count:SetFont(C["media"].pixel_font, 12, "MONOCHROMEOUTLINE")
+	Count:Point(unpack(T.Fonts.aCount.setoffsets))
+	Count:SetFont(unpack(T.Fonts.aCount.setfont))
  
 	Btname:SetText("")
 	Btname:Kill()
@@ -54,8 +54,8 @@ local function style(self)
 	end
 
 	HotKey:ClearAllPoints()
-	HotKey:Point("TOPRIGHT", 0, -1)
-	HotKey:SetFont(C["media"].pixel_font, 12, "MONOCHROMEOUTLINE")
+	HotKey:Point(unpack(T.Fonts.aHotkey.setoffsets))
+	HotKey:SetFont(unpack(T.Fonts.aHotkey.setfont))
 	HotKey.ClearAllPoints = T.dummy
 	HotKey.SetPoint = T.dummy
  

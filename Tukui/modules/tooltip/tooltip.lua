@@ -207,7 +207,7 @@ GameTooltipStatusBar:SetScript("OnValueChanged", function(self, value)
 			self.text:Point("CENTER", GameTooltipStatusBar, 0, 6)
 		end
 		
-		self.text:SetFont(C["media"].caith, 11, "OUTLINE")
+		self.text:SetFont(unpack(T.Fonts.tGeneral.setfont))
 		self.text:Show()
 		if unit then
 			min, max = UnitHealth(unit), UnitHealthMax(unit)

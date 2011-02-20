@@ -13,7 +13,6 @@ if not C["bags"].enable == true then return end
 
 local bags_BACKPACK = {0, 1, 2, 3, 4}
 local bags_BANK = {-1, 5, 6, 7, 8, 9, 10, 11}
-local BAGSFONT = C["media"].pixel_font
 local ST_NORMAL = 1
 local ST_FISHBAG = 2
 local ST_SPECIAL = 3
@@ -188,8 +187,8 @@ function Stuffing:SlotUpdate(b)
 	SetItemButtonDesaturated(b.frame, locked, 0.5, 0.5, 0.5)
 	
 	local scount = _G[b.frame:GetName() .. "Count"]
-	scount:SetFont(BAGSFONT, 12, "MONOCHROMEOUTLINE")
-	scount:Point("BOTTOMRIGHT", -1, 1)
+	scount:SetFont(unpack(T.Fonts.baCount.setfont))
+	scount:Point(unpack(T.Fonts.baCount.setoffsets))
 	b.scount = scount
 
 	b.frame:Show()
@@ -625,9 +624,9 @@ function Stuffing:Layout(lb)
 		f = self.frame
 
 		f.gold:SetText(GetMoneyString(GetMoney(), 12))
-		f.editbox:SetFont(BAGSFONT, 12, "MONOCHROMEOUTLINE")
-		f.detail:SetFont(BAGSFONT, 12, "MONOCHROMEOUTLINE")
-		f.gold:SetFont(BAGSFONT, 12, "MONOCHROMEOUTLINE")
+		f.editbox:SetFont(unpack(T.Fonts.baGeneral.setfont))
+		f.detail:SetFont(unpack(T.Fonts.baGeneral.setfont))
+		f.gold:SetFont(unpack(T.Fonts.baGeneral.setfont))
 
 		f.detail:ClearAllPoints()
 		f.detail:Point("TOPLEFT", f, 12, -10)

@@ -47,9 +47,9 @@ local function Shared(self, unit)
 	if C["unitframes"].unicolor == true then
 		health.colorDisconnected = false
 		health.colorClass = false
-		health:SetStatusBarColor(.15, .15, .15)
+		health:SetStatusBarColor(unpack(C["unitframes"].healthColor))
 		healthBG:SetTexture(1, 1, 1)
-		healthBG:SetVertexColor(.05, .05, .05)	
+		healthBG:SetVertexColor(unpack(C["unitframes"].healthBgColor))
 	else
 		healthBG:SetTexture(.1, .1, .1)
 		health.colorDisconnected = true	
@@ -152,7 +152,7 @@ oUF:RegisterStyle("TukuiDpsPR10", Shared)
 oUF:Factory(function(self)
 	oUF:SetActiveStyle("TukuiDpsPR10")
 
-	local raid = self:SpawnHeader("oUF_TukuiDpsPR10", nil, "custom [@raid11,exists] hide;show", 
+	local raid = self:SpawnHeader("oUF_TukuiDpsPR10", nil, "custom [@raid16,exists] hide;show", 
 		'oUF-initialConfigFunction', [[
 			local header = self:GetParent()
 			self:SetWidth(header:GetAttribute('initial-width'))

@@ -95,7 +95,7 @@ local createSlot = function(id)
 	count:ClearAllPoints()
 	count:SetJustifyH"RIGHT"
 	count:Point("BOTTOMRIGHT", iconFrame, -1, 2)
-	count:SetFont(C["media"].caith, 11, "OUTLINE")
+	count:SetFont(unpack(T.Fonts.lGeneral.setfont))
 	count:SetText(1)
 	frame.count = count
 
@@ -105,7 +105,7 @@ local createSlot = function(id)
 	name:SetPoint("LEFT", frame)
 	name:SetPoint("RIGHT", icon, "LEFT")
 	name:SetNonSpaceWrap(true)
-	name:SetFont(C["media"].caith, 11, "OUTLINE")
+	name:SetFont(unpack(T.Fonts.lGeneral.setfont))
 	frame.name = name
 
 	local drop = frame:CreateTexture(nil, "ARTWORK")
@@ -137,7 +137,7 @@ local anchorSlots = function(self)
 	self:Height(math.max(shownSlots * iconsize + 16, 20))
 end
 
-title:SetFont(C["media"].caith, 11, "OUTLINE")
+title:SetFont(unpack(T.Fonts.lGeneral.setfont))
 title:Point("BOTTOMLEFT", addon, "TOPLEFT", 4, 4)
 
 addon:SetScript("OnMouseDown", function(self) if(IsAltKeyDown()) then self:StartMoving() end end)

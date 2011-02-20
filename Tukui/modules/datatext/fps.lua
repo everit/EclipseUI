@@ -10,7 +10,7 @@ if C["datatext"].fps_ms and C["datatext"].fps_ms > 0 then
 	Stat:EnableMouse(true)
 	
 	local Text  = TukuiInfoLeft:CreateFontString(nil, "OVERLAY")
-	Text:SetFont(C["media"].pixel_font, C["datatext"].fontsize, C["datatext"].style)
+	Text:SetFont(unpack(T.Fonts.dFont.setfont))
 	T.PP(C["datatext"].fps_ms, Text)
 
 	local int = 1

@@ -73,9 +73,9 @@ local function Shared(self, unit)
 	if C["unitframes"].unicolor == true then
 		health.colorDisconnected = false
 		health.colorClass = false
-		health:SetStatusBarColor(.15, .15, .15)
+		health:SetStatusBarColor(unpack(C["unitframes"].healthColor))
 		healthBG:SetTexture(1, 1, 1)
-		healthBG:SetVertexColor(.05, .05, .05)
+		healthBG:SetVertexColor(unpack(C["unitframes"].healthBgColor))
 		
 		power.colorClass = true
 	else

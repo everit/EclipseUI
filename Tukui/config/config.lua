@@ -14,20 +14,26 @@ C["unitframes"] = {
 	-- Colors
 	["enemyhcolor"] = false,                            -- enemy target (players) color by hostility, very useful for healer.
 	["unicolor"] = true,                               -- enable unicolor theme
-
+		-- if unicolor == true then it uses these colors
+		["healthColor"] = { .15, .15, .15 },
+		["healthBgColor"] = { .05, .05, .05 },
+	
 	-- Castbar
 	["unitcastbar"] = true,                             -- enable tukui castbar
 	["cblatency"] = false,                              -- enable castbar latency
 	["cbicons"] = true,                                 -- enable icons on castbar
-	["cbclasscolor"] = true,
-	
+	["cbclasscolor"] = false,
+		-- if cbclasscolor == false then it uses this color
+		["cbcustomcolor"] = { .15, .15, .15 },
+		
 	-- Auras
 	["auratimer"] = true,                               -- enable timers on buffs/debuffs
 	["auratextscale"] = 11,                             -- the font size of buffs/debuffs timers on unitframes
 	["playerauras"] = false,                            -- enable auras
-	["targetauras"] = true,                             -- enable auras on target unit frame
+	["targetauras"] = false,                             -- enable auras on target unit frame
 	["totdebuffs"] = false,                             -- enable tot debuffs (high reso only)
-	["focusdebuffs"] = true,                             -- enable tot debuffs (high reso only)
+	["focusdebuffs"] = true,                             -- enable focus debuffs
+	["focusbuffs"] = true,                             -- enable focus buffs
 	["onlyselfdebuffs"] = false,                        -- display only our own debuffs applied on target
 	["onlyselfbuffs"] = true,                        -- display only our own buffs applied on target
 	["buffrows"] = 2,                       
@@ -84,13 +90,13 @@ C["auras"] = {
 C["actionbar"] = {
 	["enable"] = true,                                  -- enable tukui action bars
 	["hotkey"] = true,                                 -- enable hotkey display because it was a lot requested
-	["hideshapeshift"] = false,                         -- hide shapeshift or totembar because it was a lot requested.
+	["hideshapeshift"] = true,                         -- hide shapeshift or totembar because it was a lot requested.
 	["showgrid"] = true,                                -- show grid on empty button
 	["buttonsize"] = 27,                                -- normal buttons size
 	["petbuttonsize"] = 27,                             -- pet & stance buttons size
 	["stancebuttonsize"] = 27,                             -- pet & stance buttons size
 	["buttonspacing"] = 4,                              -- buttons spacing
-	["vertical_rightbars"] = true,
+	["vertical_rightbars"] = false,
 }
 
 C["bags"] = {

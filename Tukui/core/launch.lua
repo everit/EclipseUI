@@ -269,7 +269,7 @@ TukuiOnLogon:SetScript("OnEvent", function(self, event)
 		end
 	end
 	
-	if (IsAddOnLoaded("Tukui_Raid") and IsAddOnLoaded("Tukui_Raid_Healing")) then
+	if (IsAddOnLoaded("Tukui_Dps_Layout") and IsAddOnLoaded("Tukui_Heal_Layout")) then
 		StaticPopup_Show("TUKUIDISABLE_RAID")
 	end
 	

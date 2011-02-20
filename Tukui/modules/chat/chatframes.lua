@@ -168,12 +168,12 @@ local function SetupChat(self)
 		local frame = _G[format("ChatFrame%s", i)]
 		SetChatStyle(frame)
 		FCFTab_UpdateColors(_G["ChatFrame"..i.."Tab"], false)
-		_G["ChatFrame"..i.."TabText"]:SetFont(C["media"].pixel_font, 12, "MONOCHROMEOUTLINE")
+		_G["ChatFrame"..i.."TabText"]:SetFont(unpack(T.Fonts.cTab.setfont))
 		_G["ChatFrame"..i.."TabText"]:SetShadowOffset(0, 0)
-		_G["ChatFrame"..i]:SetFont(C["media"].caith, 11)
-		
 		_G["ChatFrame"..i.."TabText"]:ClearAllPoints()
 		_G["ChatFrame"..i.."TabText"]:Point("CENTER", _G["ChatFrame"..i.."Tab"], "CENTER", 0, -3)
+		
+		_G["ChatFrame"..i]:SetFont(unpack(T.Fonts.cGeneral.setfont))
 	end
 
 	-- Remember last channel

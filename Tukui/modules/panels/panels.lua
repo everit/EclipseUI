@@ -35,13 +35,13 @@ if C["actionbar"].enable then
 	TukuiBar1:CreatePanel("Transparent", (T.buttonsize * 12) + (T.buttonspacing * 13) + 2, (T.buttonsize * 2) + (T.buttonspacing * 3) + 2, "BOTTOM", UIParent, "BOTTOM", 0, 8)
 
 	local TukuiBar2 = CreateFrame("Frame", "TukuiBar2", UIParent)
-	TukuiBar2:Point("BOTTOM")
+	TukuiBar2:SetAllPoints(TukuiBar1)--("BOTTOM")
 	
 	local TukuiBar3 = CreateFrame("Frame", "TukuiBar3", UIParent)
-	TukuiBar3:Point("BOTTOM")
+	TukuiBar3:SetAllPoints(TukuiBar1)--Point("BOTTOM")
 
 	local TukuiBar4 = CreateFrame("Frame", "TukuiBar4", UIParent)
-	TukuiBar2:Point("BOTTOM")
+	TukuiBar2:SetAllPoints(TukuiBar1)--Point("BOTTOM")
 
 	local TukuiSplitBarLeft = CreateFrame("Frame", "TukuiSplitBarLeft", UIParent)
 	TukuiSplitBarLeft:CreatePanel("Transparent", (T.buttonsize * 3) + (T.buttonspacing * 4) + 2, TukuiBar1:GetHeight(), "BOTTOMRIGHT", TukuiBar1, "BOTTOMLEFT", -6, 0)

@@ -86,7 +86,7 @@ do
 		border:SetFrameLevel(0)
 
 		local text = frame:CreateFontString(nil, 'OVERLAY')
-		text:SetFont(C["media"].pixel_font, 12, "MONOCHROMEOUTLINE")
+		text:SetFont(unpack(T.Fonts.miGeneral.setfont))
 
 		text:SetJustifyH'CENTER'
 		text:SetTextColor(1, 1, 1)

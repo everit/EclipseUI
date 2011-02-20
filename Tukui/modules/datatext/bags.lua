@@ -10,7 +10,7 @@ if C["datatext"].bags and C["datatext"].bags > 0 then
 	Stat:SetFrameLevel(3)
 
 	local Text  = TukuiInfoLeft:CreateFontString(nil, "OVERLAY")
-	Text:SetFont(C["media"].pixel_font, C["datatext"].fontsize, C["datatext"].style)
+	Text:SetFont(unpack(T.Fonts.dFont.setfont))
 	T.PP(C["datatext"].bags, Text)
 
 	local function OnEvent(self, event, ...)

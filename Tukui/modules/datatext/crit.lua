@@ -9,7 +9,7 @@ if C["datatext"].crit and C["datatext"].crit > 0 then
 	Stat:SetFrameLevel(3)
 
 	local Text  = TukuiInfoLeft:CreateFontString(nil, "OVERLAY")
-	Text:SetFont(C["media"].pixel_font, C["datatext"].fontsize, C["datatext"].style)
+	Text:SetFont(unpack(T.Fonts.dFont.setfont))
 	T.PP(C["datatext"].crit, Text)
 
 	local int = 1

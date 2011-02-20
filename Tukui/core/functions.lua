@@ -611,7 +611,7 @@ local CheckInterrupt = function(self, unit)
 		if C["unitframes"].cbclasscolor == true then
 			self:SetStatusBarColor(unpack(oUF.colors.class[select(2, UnitClass(unit))]))
 		else
-			self:SetStatusBarColor(.31, .45, .63, .4)		
+			self:SetStatusBarColor(unpack(C["unitframes"].cbcustomcolor))		
 		end
 	end
 end

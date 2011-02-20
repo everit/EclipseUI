@@ -87,7 +87,7 @@ local function CreateRollButton(parent, ntex, ptex, htex, rolltype, tiptext, ...
 	f:SetScript("OnClick", ClickRoll)
 	f:SetMotionScriptsWhileDisabled(true)
 	local txt = f:CreateFontString(nil, nil)
-	txt:SetFont(C["media"].pixel_font, 12, "MONOCHROMEOUTLINE")
+	txt:SetFont(unpack(T.Fonts.lootRollFrame.setfont))
 	txt:SetPoint("CENTER", 0, rolltype == 2 and 1 or rolltype == 0 and -1.2 or 0)
 	return f, txt
 end
@@ -168,11 +168,11 @@ local function CreateRollFrame()
 
 	local bind = frame:CreateFontString()
 	bind:Point("LEFT", pass, "RIGHT", 3, 1)
-	bind:SetFont(C["media"].pixel_font, 12, "MONOCHROMEOUTLINE")
+	bind:SetFont(unpack(T.Fonts.lootRollFrame.setfont))
 	frame.fsbind = bind
 
 	local loot = frame:CreateFontString(nil, "ARTWORK")
-	loot:SetFont(C["media"].pixel_font, 12, "MONOCHROMEOUTLINE")
+	loot:SetFont(unpack(T.Fonts.lootRollFrame.setfont))
 	loot:Point("LEFT", bind, "RIGHT", 0, 0)
 	loot:Point("RIGHT", frame, "RIGHT", -5, 0)
 	loot:Height(10)
@@ -192,7 +192,7 @@ anchor:Height(22)
 anchor:SetBackdrop(backdrop)
 anchor:SetBackdropColor(0.25, 0.25, 0.25, 1)
 local label = anchor:CreateFontString(nil, "ARTWORK")
-label:SetFont(C["media"].pixel_font, 12, "MONOCHROMEOUTLINE")
+label:SetFont(unpack(T.Fonts.lootRollFrame.setfont))
 label:SetAllPoints(anchor)
 label:SetText(L.move_roll)
 anchor:SetMovable(true)

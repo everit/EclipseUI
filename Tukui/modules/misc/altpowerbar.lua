@@ -19,13 +19,13 @@ local AltPowerBarStatus = CreateFrame("StatusBar", "TukuiAltPowerBarStatus", Alt
 AltPowerBarStatus:SetFrameLevel(AltPowerBar:GetFrameLevel() + 1)
 AltPowerBarStatus:SetStatusBarTexture(C["media"].normTex)
 AltPowerBarStatus:SetMinMaxValues(0, 100)
-AltPowerBarStatus:Point("TOPLEFT", TukuiInfoLeft, "TOPLEFT", 2, -2)
-AltPowerBarStatus:Point("BOTTOMRIGHT", TukuiInfoLeft, "BOTTOMRIGHT", -2, 2)
+AltPowerBarStatus:Point("TOPLEFT", AltPowerBar, "TOPLEFT", 2, -2)
+AltPowerBarStatus:Point("BOTTOMRIGHT", AltPowerBar, "BOTTOMRIGHT", -2, 2)
 AltPowerBarStatus:SetStatusBarColor(75/255,  175/255, 76/255)
 
 local AltPowerText = AltPowerBarStatus:CreateFontString(nil, "OVERLAY")
-AltPowerText:SetFont(C["media"].pixel_font, 12, "MONOCHROMEOUTLINE")
-AltPowerText:Point("CENTER", AltPowerBar, "CENTER", 0, 1)
+AltPowerText:SetFont(unpack(T.Fonts.altPowerBar.setfont))
+AltPowerText:Point(unpack(T.Fonts.altPowerBar.setoffsets))
 
 --Event handling
 AltPowerBar:RegisterEvent("UNIT_POWER")

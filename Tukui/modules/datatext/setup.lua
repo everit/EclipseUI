@@ -21,7 +21,7 @@ T.PP = function(p, obj)
 	elseif p == 2 then
 		obj:SetParent(TukuiInfoLeft)
 		obj:Height(TukuiInfoLeft:GetHeight())
-		obj:Point('CENTER', TukuiInfoLeft, 0, 1)
+		obj:Point("CENTER", TukuiInfoLeft, 0, 1)
 	elseif p == 3 then
 		obj:SetParent(TukuiInfoLeft)
 		obj:Height(TukuiInfoLeft:GetHeight())
@@ -33,7 +33,7 @@ T.PP = function(p, obj)
 	elseif p == 5 then
 		obj:SetParent(TukuiInfoRight)
 		obj:Height(TukuiInfoRight:GetHeight())
-		obj:Point('CENTER', TukuiInfoRight, 0, 1)
+		obj:Point("CENTER", TukuiInfoRight, 0, 1)
 	elseif p == 6 then
 		obj:SetParent(TukuiInfoRight)
 		obj:Height(TukuiInfoRight:GetHeight())

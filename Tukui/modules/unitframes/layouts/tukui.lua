@@ -19,11 +19,8 @@ end
 --	local variables
 ------------------------------------------------------------------------
 
-local font1 = C["media"].pixel_font
-local font2 = C["media"].font
 local normTex = C["media"].normTex
 local glowTex = C["media"].glowTex
-local bubbleTex = C["media"].bubbleTex
 
 ------------------------------------------------------------------------
 --	Layout
@@ -103,9 +100,9 @@ local function Shared(self, unit)
 			health.colorTapping = false
 			health.colorDisconnected = false
 			health.colorClass = false
-			health:SetStatusBarColor(.15, .15, .15)
+			health:SetStatusBarColor(unpack(C["unitframes"].healthColor))
 			healthBG:SetTexture(1, 1, 1)
-			healthBG:SetVertexColor(.05, .05, .05)	
+			healthBG:SetVertexColor(unpack(C["unitframes"].healthBgColor))	
 			
 			power.colorTapping = true
 			power.colorDisconnected = true
@@ -167,10 +164,10 @@ local function Shared(self, unit)
 	castbar.PostCastStart = T.CheckCast
 	castbar.PostChannelStart = T.CheckChannel
 
-	castbar.time = T.SetFontString(castbar, font1, 12, "MONOCHROMEOUTLINE")
+	castbar.time = T.SetFontString(castbar, unpack(T.Fonts.uGeneral.setfont))
 	castbar.time:SetTextColor(1, 1, 1)
 
-	castbar.Text = T.SetFontString(castbar, font1, 12, "MONOCHROMEOUTLINE")
+	castbar.Text = T.SetFontString(castbar, unpack(T.Fonts.uGeneral.setfont))
 	castbar.Text:SetTextColor(1, 1, 1)
 
 	if C["unitframes"].cbicons == true then
@@ -203,11 +200,11 @@ local function Shared(self, unit)
 		power:Height(5)
 
 	
-		health.value = T.SetFontString(panel, font1, 12, "MONOCHROMEOUTLINE")
+		health.value = T.SetFontString(panel, unpack(T.Fonts.uHealth.setfont))
 		health.value:Point("RIGHT", panel, "RIGHT", -4, 1)
 		health.PostUpdate = T.PostUpdateHealth
 
-		power.value = T.SetFontString(panel, font1, 12, "MONOCHROMEOUTLINE")
+		power.value = T.SetFontString(panel, unpack(T.Fonts.uPower.setfont))
 		power.value:Point("LEFT", panel, "LEFT", 7, 1)
 		power.PreUpdate = T.PreUpdatePower
 		power.PostUpdate = T.PostUpdatePower
@@ -280,12 +277,12 @@ local function Shared(self, unit)
 			FlashInfo:SetScript("OnUpdate", T.UpdateManaLevel)
 			FlashInfo.parent = self
 			FlashInfo:SetAllPoints(panel)
-			FlashInfo.ManaLevel = T.SetFontString(FlashInfo, font1, 12, "MONOCHROMEOUTLINE")
+			FlashInfo.ManaLevel = T.SetFontString(FlashInfo, unpack(T.Fonts.uGeneral.setfont))
 			FlashInfo.ManaLevel:SetPoint("CENTER", panel, "CENTER", 0, 1)
 			self.FlashInfo = FlashInfo
 			
 			-- pvp status text
-			local status = T.SetFontString(panel, font1, 12, "MONOCHROMEOUTLINE")
+			local status = T.SetFontString(panel, unpack(T.Fonts.uGeneral.setfont))
 			status:SetPoint("CENTER", panel, "CENTER", 0, 1)
 			status:SetTextColor(0.69, 0.31, 0.31)
 			status:Hide()
@@ -295,7 +292,7 @@ local function Shared(self, unit)
 			-- show druid mana when shapeshifted in bear, cat or whatever
 			if T.myclass == "DRUID" then
 				CreateFrame("Frame"):SetScript("OnUpdate", function() T.UpdateDruidMana(self) end)
-				local DruidMana = T.SetFontString(health, font1, 12, "MONOCHROMEOUTLINE")
+				local DruidMana = T.SetFontString(health, unpack(T.Fonts.uPower.setfont))
 				DruidMana:SetTextColor(1, 0.49, 0.04)
 				self.DruidMana = DruidMana
 			end
@@ -340,7 +337,7 @@ local function Shared(self, unit)
 					local eclipseBarText = eclipseBar:CreateFontString(nil, 'OVERLAY')
 					eclipseBarText:SetPoint('TOP', panel)
 					eclipseBarText:SetPoint('BOTTOM', panel)
-					eclipseBarText:SetFont(font1, 12)
+					eclipseBarText:SetFont(unpack(T.Fonts.uGeneral.setfont))
 					eclipseBar.PostUpdatePower = T.EclipseDirection
 					
 					-- hide "low mana" text on load if eclipseBar is show
@@ -500,7 +497,7 @@ local function Shared(self, unit)
 			local Name = health:CreateFontString(nil, "OVERLAY")
 			Name:Point("LEFT", panel, "LEFT", 4, 1)
 			Name:SetJustifyH("LEFT")
-			Name:SetFont(font1, 12, "MONOCHROMEOUTLINE")
+			Name:SetFont(unpack(T.Fonts.uName.setfont))
 
 			self:Tag(Name, '[Tukui:getnamecolor][Tukui:namelong] [Tukui:diffcolor][level] [shortclassification]')
 			self.Name = Name
@@ -647,11 +644,7 @@ local function Shared(self, unit)
 		-- add combat feedback support
 		if C["unitframes"].combatfeedback == true then
 			local CombatFeedbackText 
-			if T.lowversion then
-				CombatFeedbackText = T.SetFontString(health, C["media"].caith, 12)
-			else
-				CombatFeedbackText = T.SetFontString(health, C["media"].caith, 14)
-			end
+			CombatFeedbackText = T.SetFontString(health, unpack(T.Fonts.uCombat.setfont))
 			CombatFeedbackText:SetShadowColor(0, 0, 0)
 			CombatFeedbackText:SetShadowOffset(1.25, -1.25)
 			CombatFeedbackText:SetPoint("CENTER", 0, 1)
@@ -729,10 +722,10 @@ local function Shared(self, unit)
 		local Name = health:CreateFontString(nil, "OVERLAY")
 		if T.lowversion then
 			Name:SetPoint("CENTER", health, "CENTER", 0, 0)
-			Name:SetFont(font1, 12, "MONOCHROMEOUTLINE")
+			Name:SetFont(unpack(T.Fonts.uName.setfont))
 		else
 			Name:SetPoint("CENTER", panel, "CENTER", 0, 1)
-			Name:SetFont(font1, 12, "MONOCHROMEOUTLINE")
+			Name:SetFont(unpack(T.Fonts.uName.setfont))
 		end
 		Name:SetJustifyH("CENTER")
 
@@ -778,10 +771,10 @@ local function Shared(self, unit)
 		local Name = health:CreateFontString(nil, "OVERLAY")
 		if T.lowversion then
 			Name:SetPoint("CENTER", health, "CENTER", 0, 0)
-			Name:SetFont(font1, 12, "MONOCHROMEOUTLINE")
+			Name:SetFont(unpack(T.Fonts.uName.setfont))
 		else
 			Name:SetPoint("CENTER", panel, "CENTER", 0, 1)
-			Name:SetFont(font1, 12, "MONOCHROMEOUTLINE")
+			Name:SetFont(unpack(T.Fonts.uName.setfont))
 		end
 		Name:SetJustifyH("CENTER")
 
@@ -821,7 +814,7 @@ local function Shared(self, unit)
 		local Name = health:CreateFontString(nil, "OVERLAY")
 		Name:SetPoint("CENTER", health, "CENTER", 0, 1)
 		Name:SetJustifyH("CENTER")
-		Name:SetFont(font1, 12, "MONOCHROMEOUTLINE")
+		Name:SetFont(unpack(T.Fonts.uName.setfont))
 		
 		self:Tag(Name, '[Tukui:getnamecolor][Tukui:namelong]')
 		self.Name = Name
@@ -856,34 +849,36 @@ local function Shared(self, unit)
 			self.Debuffs = debuffs
 		end
 		
-		local buffs = CreateFrame("Frame", nil, self)
-		if T.lowversion then
-			buffs:SetHeight(health:GetHeight() + power:GetHeight() + 7)
-			buffs:SetWidth(T.Focus)
-			buffs.size = buffs:GetHeight()
-			buffs.spacing = 3
-			buffs.num = 3
+		if C["unitframes"].focusbuffs then
+			local buffs = CreateFrame("Frame", nil, self)
+			if T.lowversion then
+				buffs:SetHeight(health:GetHeight() + power:GetHeight() + 7)
+				buffs:SetWidth(T.Focus)
+				buffs.size = buffs:GetHeight()
+				buffs.spacing = 3
+				buffs.num = 3
 
-			buffs:SetPoint("TOPRIGHT", ufbg, "TOPLEFT", -3, 0)
-			buffs.initialAnchor = "RIGHT"
-			buffs["growth-x"] = "LEFT"
-			buffs["growth-y"] = "DOWN"
-		else
-			buffs:SetHeight(26)
-			buffs:SetWidth(T.Focus)
-			buffs.size = buffs:GetHeight()
-			buffs.spacing = 3
-			buffs.num = 4
+				buffs:SetPoint("TOPRIGHT", ufbg, "TOPLEFT", -3, 0)
+				buffs.initialAnchor = "RIGHT"
+				buffs["growth-x"] = "LEFT"
+				buffs["growth-y"] = "DOWN"
+			else
+				buffs:SetHeight(26)
+				buffs:SetWidth(T.Focus)
+				buffs.size = buffs:GetHeight()
+				buffs.spacing = 3
+				buffs.num = 4
 
-			buffs:SetPoint("TOPLEFT", ufbg, "BOTTOMLEFT", 2, -3)
-			buffs.initialAnchor = "LEFT"
-			buffs["growth-x"] = "RIGHT"
-			buffs["growth-y"] = "DOWN"
+				buffs:SetPoint("TOPLEFT", ufbg, "BOTTOMLEFT", 2, -3)
+				buffs.initialAnchor = "LEFT"
+				buffs["growth-x"] = "RIGHT"
+				buffs["growth-y"] = "DOWN"
+			end
+			buffs.PostCreateIcon = TukuiDB.PostCreateAura
+			buffs.PostUpdateIcon = TukuiDB.PostUpdateAura
+			self.Buffs = buffs
 		end
-		buffs.PostCreateIcon = TukuiDB.PostCreateAura
-		buffs.PostUpdateIcon = TukuiDB.PostUpdateAura
-		self.Buffs = buffs
-
+		
 		if C["unitframes"].unitcastbar then
 			castbar:SetHeight(TukuiDB.Scale(25))
 			castbar:SetWidth(TukuiDB.Scale(240))
@@ -926,7 +921,7 @@ local function Shared(self, unit)
 		end
 		power:SetHeight(4)
 
-		health.value = T.SetFontString(health, font1,12, "MONOCHROMEOUTLINE")
+		health.value = T.SetFontString(health, unpack(T.Fonts.uHealth.setfont))
 		health.value:Point("LEFT", health, "LEFT", 7, 1)
 		health.PostUpdate = T.PostUpdateHealth
 
@@ -934,7 +929,7 @@ local function Shared(self, unit)
 		local Name = health:CreateFontString(nil, "OVERLAY")
 		Name:SetPoint("RIGHT", health, "RIGHT", -4, 0)
 		Name:SetJustifyH("CENTER")
-		Name:SetFont(font1, 12, "MONOCHROMEOUTLINE")
+		Name:SetFont(unpack(T.Fonts.uName.setfont))
 		Name.frequentUpdates = 0.2
 		
 		self:Tag(Name, '[Tukui:getnamecolor][Tukui:namelong]')

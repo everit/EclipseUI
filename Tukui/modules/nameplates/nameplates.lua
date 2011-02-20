@@ -4,9 +4,6 @@
 if not C["nameplate"].enable == true then return end
 
 local TEXTURE = C["media"].normTex
-local FONT = C["media"].pixel_font
-local FONTSIZE = 12
-local FONTFLAG = "MONOCHROMEOUTLINE"
 local hpHeight = 12
 local hpWidth = 110
 local iconSize = 25		--Size of all Icons, RaidIcon/ClassIcon/Castbar Icon
@@ -416,7 +413,7 @@ local function SkinObjects(frame)
 
 	--Create Level
 	hp.level = hp:CreateFontString(nil, "OVERLAY")
-	hp.level:SetFont(FONT, FONTSIZE, FONTFLAG)
+	hp.level:SetFont(unpack(T.Fonts.nGeneral.setfont))
 	hp.level:SetTextColor(1, 1, 1)
 
 	--Needed for level text
@@ -427,7 +424,7 @@ local function SkinObjects(frame)
 	--Create Health Text
 	if C["nameplate"].showhealth == true then
 		hp.value = hp:CreateFontString(nil, "OVERLAY")
-		hp.value:SetFont(FONT, FONTSIZE, FONTFLAG)
+		hp.value:SetFont(unpack(T.Fonts.nGeneral.setfont))
 		hp.value:SetPoint("CENTER", hp)
 		hp.value:SetTextColor(1,1,1)
 	end
@@ -491,13 +488,13 @@ local function SkinObjects(frame)
 	--Create Cast Time Text
 	cb.time = cb:CreateFontString(nil, "ARTWORK")
 	cb.time:SetPoint("RIGHT", cb, "LEFT", -1, 0)
-	cb.time:SetFont(FONT, FONTSIZE, FONTFLAG)
+	cb.time:SetFont(unpack(T.Fonts.nGeneral.setfont))
 	cb.time:SetTextColor(1, 1, 1)
 
 	--Create Cast Name Text
 	cb.name = cb:CreateFontString(nil, "ARTWORK")
 	cb.name:SetPoint("TOP", cb, "BOTTOM", 0, -3)
-	cb.name:SetFont(FONT, FONTSIZE, FONTFLAG)
+	cb.name:SetFont(unpack(T.Fonts.nGeneral.setfont))
 	cb.name:SetTextColor(1, 1, 1)
 
 	--We need the castbar shield to determine if it can be interrupted or not
@@ -512,7 +509,7 @@ local function SkinObjects(frame)
 	local name = hp:CreateFontString(nil, 'OVERLAY')
 	name:SetPoint('BOTTOMLEFT', hp, 'TOPLEFT', -10, 3)
 	name:SetPoint('BOTTOMRIGHT', hp, 'TOPRIGHT', 10, 3)
-	name:SetFont(FONT, FONTSIZE, FONTFLAG)
+	name:SetFont(unpack(T.Fonts.nGeneral.setfont))
 	frame.oldname = oldname
 	frame.name = name
 
