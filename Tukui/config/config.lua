@@ -30,7 +30,7 @@ C["unitframes"] = {
 	["auratimer"] = true,                               -- enable timers on buffs/debuffs
 	["auratextscale"] = 11,                             -- the font size of buffs/debuffs timers on unitframes
 	["playerauras"] = false,                            -- enable auras
-	["targetauras"] = false,                             -- enable auras on target unit frame
+	["targetauras"] = true,                             -- enable auras on target unit frame
 	["totdebuffs"] = false,                             -- enable tot debuffs (high reso only)
 	["focusdebuffs"] = true,                             -- enable focus debuffs
 	["focusbuffs"] = true,                             -- enable focus buffs
@@ -90,7 +90,7 @@ C["auras"] = {
 C["actionbar"] = {
 	["enable"] = true,                                  -- enable tukui action bars
 	["hotkey"] = true,                                 -- enable hotkey display because it was a lot requested
-	["hideshapeshift"] = true,                         -- hide shapeshift or totembar because it was a lot requested.
+	["hideshapeshift"] = false,                         -- hide shapeshift or totembar because it was a lot requested.
 	["showgrid"] = true,                                -- show grid on empty button
 	["buttonsize"] = 27,                                -- normal buttons size
 	["petbuttonsize"] = 27,                             -- pet & stance buttons size
@@ -152,6 +152,7 @@ C["datatext"] = {
 C["chat"] = {
 	["enable"] = true,                                  -- blah
 	["whispersound"] = true,                            -- play a sound when receiving whisper
+	["height"] = 160,									-- adjust the chatframe height
 }
 
 C["nameplate"] = {
