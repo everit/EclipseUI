@@ -109,11 +109,13 @@ local function exec(self, enable)
 			for i = 1, GetNumShapeshiftForms() do
 				_G["ShapeshiftButton"..i]:Hide()
 			end
+			MultiCastActionBarFrame:Hide()
 		else
 			TukuiShapeShiftHolder:SetAlpha(0)
 			for i = 1, GetNumShapeshiftForms() do
 				_G["ShapeshiftButton"..i]:Show()
 			end
+			MultiCastActionBarFrame:Show()
 		end
 	end
 end

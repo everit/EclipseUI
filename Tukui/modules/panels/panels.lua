@@ -61,29 +61,4 @@ if C["actionbar"].enable then
 		TukuiPetBar:Width((T.petbuttonsize * NUM_PET_ACTION_SLOTS + T.buttonspacing * 11) + 2)
 		TukuiPetBar:Height((T.petbuttonsize + T.buttonspacing * 2) + 2)
 	end
-
-	if not C["actionbar"].hideshapeshift then
-		local TukuiShiftBarBG = CreateFrame("Frame", "TukuiShiftBarBG", UIParent)
-		TukuiShiftBarBG:RegisterEvent("PLAYER_LOGIN")
-		TukuiShiftBarBG:RegisterEvent("PLAYER_ENTERING_WORLD")
-		TukuiShiftBarBG:RegisterEvent("UPDATE_SHAPESHIFT_FORMS")
-		TukuiShiftBarBG:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
-		TukuiShiftBarBG:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
-		TukuiShiftBarBG:SetScript("OnEvent", function(self, event, ...)
-			local forms = GetNumShapeshiftForms()
-			if forms > 0 then
-				-- if db.vertical_shapeshift == true then
-					-- TukuiDB.CreateSpecial(ShiftBG, true, true, false, db.stancebuttonsize + 10, (db.stancebuttonsize * forms) + (db.buttonspacing * forms + 1) + 5, "TOPLEFT", _G["ShapeshiftButton1"], "TOPLEFT", -5, 5)
-					-- ShiftBG:Show()
-				-- else
-					TukuiShiftBarBG:CreatePanel("Transparent", (T.stancebuttonsize * forms) + (T.buttonspacing * forms + 1) + 5, T.stancebuttonsize + 10, "TOPLEFT",  _G["ShapeshiftButton1"], "TOPLEFT", -5, 5)
-					TukuiShiftBarBG:Show()
-				-- end
-					TukuiShiftBarBG:SetFrameLevel(10)
-
-			else
-				TukuiShiftBarBG:Hide()
-			end
-		end)
-	end
 end

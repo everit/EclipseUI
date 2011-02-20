@@ -429,7 +429,7 @@ local function StyleTotemFlyout(flyout)
 		icon:Point("TOPLEFT",button,"TOPLEFT",2,-2)
 		icon:Point("BOTTOMRIGHT",button,"BOTTOMRIGHT",-2,2)			
 		if not InCombatLockdown() then
-			button:Size(30,30)
+			button:Size(T.stancebuttonsize)
 			button:ClearAllPoints()
 			button:Point("BOTTOM",last,"TOP",0,4)
 		end			
@@ -501,8 +501,9 @@ local function StyleTotemSlotButton(button, index)
 	button.background:ClearAllPoints()
 	button.background:SetPoint("TOPLEFT",button,"TOPLEFT",T.Scale(2),T.Scale(-2))
 	button.background:SetPoint("BOTTOMRIGHT",button,"BOTTOMRIGHT",T.Scale(-2),T.Scale(2))
-	if not InCombatLockdown() then button:Size(30) end
+	if not InCombatLockdown() then button:Size(T.stancebuttonsize) end
 	button:SetBackdropBorderColor(unpack(bordercolors[((index-1) % 4) + 1]))
+	button:CreateShadow("Default")
 	button:StyleButton()
 end
 hooksecurefunc("MultiCastSlotButton_Update",function(self, slot) StyleTotemSlotButton(self,tonumber( string.match(self:GetName(),"MultiCastSlotButton(%d)"))) end)
@@ -538,9 +539,10 @@ local function StyleTotemSpellButton(button, index)
 	icon:Point("BOTTOMRIGHT",button,"BOTTOMRIGHT",-2,2)
 	button:SetTemplate("Default")
 	button:GetNormalTexture():SetTexture(nil)
-	if not InCombatLockdown() then button:Size(30, 30) end
+	if not InCombatLockdown() then button:Size(T.stancebuttonsize) end
 	_G[button:GetName().."Highlight"]:SetTexture(nil)
 	_G[button:GetName().."NormalTexture"]:SetTexture(nil)
+	button:CreateShadow("Default")
 	button:StyleButton()
 end
 hooksecurefunc("MultiCastSummonSpellButton_Update", function(self) StyleTotemSpellButton(self,0) end)
