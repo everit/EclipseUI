@@ -199,19 +199,15 @@ local function SetupChatPosAndFont(self)
 		-- also set original width and height of chatframes 1 and 4 if first time we run tukui.
 		-- doing resize of chat also here for users that hit "cancel" when default installation is show.
 		if i == 1 then
-				chat:ClearAllPoints()
-				chat:Point("TOPLEFT", TukuiTabsLeft, "BOTTOMLEFT", 0, -4)
-				chat:Point("TOPRIGHT", TukuiTabsLeft, "BOTTOMRIGHT", 0, -4)
-				chat:Point("BOTTOMRIGHT", TukuiInfoLeft, "TOPRIGHT", 0, 4)
-				chat:Point("BOTTOMLEFT", TukuiInfoLeft, "TOPLEFT", 0, 4)
+			chat:ClearAllPoints()
+			chat:Point("TOPLEFT", TukuiTabsLeft, "BOTTOMLEFT", 0, -4)
+			chat:Point("BOTTOMRIGHT", TukuiInfoLeft, "TOPRIGHT", 0, 4)
 			FCF_SavePositionAndDimensions(chat)
-		elseif i == 4 and name == LOOT then
+		elseif i == 4 then
 			if not chat.isDocked then
 				chat:ClearAllPoints()
 				chat:Point("TOPLEFT", TukuiTabsRight, "BOTTOMLEFT", 0, -4)
-				chat:Point("TOPRIGHT", TukuiTabsRight, "BOTTOMRIGHT", 0, -4)
 				chat:Point("BOTTOMRIGHT", TukuiInfoRight, "TOPRIGHT", 0, 4)
-				chat:Point("BOTTOMLEFT", TukuiInfoRight, "TOPLEFT", 0, 4)
 				
 				-- if C["chat"].justifyright == true then
 					-- chat:SetJustifyH("RIGHT") 

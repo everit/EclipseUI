@@ -152,7 +152,7 @@ C["datatext"] = {
 C["chat"] = {
 	["enable"] = true,                                  -- blah
 	["whispersound"] = true,                            -- play a sound when receiving whisper
-	["height"] = 160,									-- adjust the chatframe height
+	["height"] = 165,									-- adjust the chatframe height
 }
 
 C["nameplate"] = {
