@@ -1,23 +1,25 @@
 ﻿local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, variables; C - config; L - locales
 
+local font, caith, pixel = C["media"].font, C["media"].caith, C["media"].pixel_font
+
 -- font template used for fallback values if incorrect or no values are entered
 -- don't change this, unless you know what you're doing
 local fontTemplate = {
 	family = C["media"].font,
 	size = 12,
-	style = "NONE", -- "THINOUTLINE" / "OUTLINE" / "MONOCHROMEOUTLINE"
+	outline = "NONE", -- "THINOUTLINE" / "OUTLINE" / "MONOCHROMEOUTLINE"
 	point = "CENTER",
 	xOff = 0,
 	yOff = 0
 }
 
 -- fallback font function
-local function Font(family, size, style, point, xOff, yOff)
+local function Font(family, size, outline, point, xOff, yOff)
 	local result = {
 		setfont = {
 			family or fontTemplate.family,
 			size or fontTemplate.size,
-			style or fontTemplate.style
+			outline or fontTemplate.outline
 		},
 		setoffsets = {
 			point or fontTemplate.point,
@@ -32,59 +34,69 @@ end
 T.Fonts = {
 	--[[ how to use:
 		 
-		 1. you only need to change the values you need to change, other values can be left as "nil"
-		 for example if you only needed to change the font size and style on the aHotkey table;
+		1. You only need to change the values you want to change, other values can be left as "nil".
+		Font function syntax:
+		
+		Font(font, size, outline, anchorpoint, x-offset, y-offset)
+		
+		
+		For example if you only needed to change the font size and outline on the aHotkey table...
 		 
-		 aHotkey = Font(nil, 14, "THINOUTLINE", nil, nil, nil)
+		aHotkey = Font(nil, 14, "THINOUTLINE", nil, nil, nil)
 		 
-		 that's how you would write it; because you are using default values from the fallback table
+		...that's how you would write it; because you are using default values from the fallback table.
+		 
+		Included font alternatives:
+		- font
+		- pixel
+		- caith
 	]]--
 	
 	-- actionbars
-	aHotkey = Font(C["media"].pixel_font, nil, "MONOCHROMEOUTLINE", "TOPRIGHT", nil, -1), -- hotkey
-	aCount = Font(C["media"].pixel_font, nil, "MONOCHROMEOUTLINE", "BOTTOMRIGHT", -1, 1), -- count
+	aHotkey = Font(pixel, nil, "MONOCHROMEOUTLINE", "TOPRIGHT", nil, -1), -- hotkey
+	aCount = Font(pixel, nil, "MONOCHROMEOUTLINE", "BOTTOMRIGHT", -1, 1), -- count
 	
 	-- bags
-	baCount = Font(C["media"].pixel_font, nil, "MONOCHROMEOUTLINE", "BOTTOMRIGHT", -1, 1), -- count
-	baGeneral = Font(C["media"].pixel_font, nil, "MONOCHROMEOUTLINE", nil, nil, nil),
+	baCount = Font(pixel, nil, "MONOCHROMEOUTLINE", "BOTTOMRIGHT", -1, 1), -- count
+	baGeneral = Font(pixel, nil, "MONOCHROMEOUTLINE", nil, nil, nil),
 	
 	-- mirror bar
-	miGeneral = Font(C["media"].pixel_font, nil, "MONOCHROMEOUTLINE", nil, nil, nil),
+	miGeneral = Font(pixel, nil, "MONOCHROMEOUTLINE", nil, nil, nil),
 	
 	-- buffs
-	bDuration = Font(C["media"].pixel_font, nil, "MONOCHROMEOUTLINE", "BOTTOM", 1, -14), -- duration
-	bCount = Font(C["media"].pixel_font, nil, "MONOCHROMEOUTLINE", "TOPLEFT", 3, 1), -- count
+	bDuration = Font(pixel, nil, "MONOCHROMEOUTLINE", "BOTTOM", 1, -14), -- duration
+	bCount = Font(pixel, nil, "MONOCHROMEOUTLINE", "TOPLEFT", 3, 1), -- count
 	
 	-- chat
-	cTab = Font(C["media"].pixel_font, nil, "MONOCHROMEOUTLINE", nil, nil, nil), -- chat tab
-	cGeneral = Font(C["media"].caith, 11, nil, nil, nil, nil), -- chat window
+	cTab = Font(pixel, nil, "MONOCHROMEOUTLINE", nil, nil, nil), -- chat tab
+	cGeneral = Font(caith, 11, nil, nil, nil, nil), -- chat window
 	
 	-- datatext
-	dFont = Font(C["media"].pixel_font, nil, "MONOCHROMEOUTLINE", nil, nil, nil),
+	dFont = Font(pixel, nil, "MONOCHROMEOUTLINE", nil, nil, nil),
 	
 	-- loot
-	lGeneral = Font(C["media"].caith, 11, "OUTLINE", nil, nil, nil),
+	lGeneral = Font(caith, 11, "OUTLINE", nil, nil, nil),
 	
 	-- map
-	mTitle = Font(C["media"].caith, 22, "OUTLINE", nil, nil, nil), -- region name
-	mGeneral = Font(C["media"].caith, 22, "OUTLINE", nil, nil, nil), -- show quest/digsite
-	mArea = Font(C["media"].caith, 22*3, "OUTLINE", nil, nil, nil), -- hover over
+	mTitle = Font(caith, 22, "OUTLINE", nil, nil, nil), -- region name
+	mGeneral = Font(caith, 22, "OUTLINE", nil, nil, nil), -- show quest/digsite
+	mArea = Font(caith, 22*3, "OUTLINE", nil, nil, nil), -- hover over
 	
 	-- nameplates
-	nGeneral = Font(C["media"].pixel_font, 12, "MONOCHROMEOUTLINE", nil, nil, nil),
+	nGeneral = Font(pixel, 12, "MONOCHROMEOUTLINE", nil, nil, nil),
 	
 	-- tooltip
-	tGeneral = Font(C["media"].caith, 11, "OUTLINE", nil, nil, nil),
+	tGeneral = Font(caith, 11, "OUTLINE", nil, nil, nil),
 	
 	-- unitframes - don't try and anchor these yet
-	uHealth = Font(C["media"].pixel_font, nil, "MONOCHROMEOUTLINE", nil, nil, nil), -- unit health
-	uPower = Font(C["media"].pixel_font, nil, "MONOCHROMEOUTLINE", nil, nil, nil), -- unit power
-	uName = Font(C["media"].pixel_font, nil, "MONOCHROMEOUTLINE", nil, nil, nil), -- unit name
+	uHealth = Font(pixel, nil, "MONOCHROMEOUTLINE", nil, nil, nil), -- unit health
+	uPower = Font(pixel, nil, "MONOCHROMEOUTLINE", nil, nil, nil), -- unit power
+	uName = Font(pixel, nil, "MONOCHROMEOUTLINE", nil, nil, nil), -- unit name
 	
-	uGeneral = Font(C["media"].pixel_font, nil, "MONOCHROMEOUTLINE", nil, nil, nil), -- castbar, pvp, etc
-	uCombat = Font(C["media"].caith, 14, nil, nil, nil, nil), -- combat feedback
+	uGeneral = Font(pixel, nil, "MONOCHROMEOUTLINE", nil, nil, nil), -- castbar, pvp, etc
+	uCombat = Font(caith, 14, nil, nil, nil, nil), -- combat feedback
 
 	-- miscellaneous
-	altPowerBar = Font(C["media"].pixel_font, nil, "MONOCHROMEOUTLINE", nil, 0, 1),
-	lootRollFrame = Font(C["media"].pixel_font, nil, "MONOCHROMEOUTLINE", nil, nil, nil),
+	altPowerBar = Font(pixel, nil, "MONOCHROMEOUTLINE", nil, 0, 1),
+	lootRollFrame = Font(pixel, nil, "MONOCHROMEOUTLINE", nil, nil, nil),
 }
