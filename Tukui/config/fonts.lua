@@ -83,7 +83,7 @@ T.Fonts = {
 	mArea = Font(caith, 22*3, "OUTLINE", nil, nil, nil), -- hover over
 	
 	-- nameplates
-	nGeneral = Font(pixel, 12, "MONOCHROMEOUTLINE", nil, nil, nil),
+	nGeneral = Font(pixel, 10, "MONOCHROMEOUTLINE", nil, nil, nil),
 	
 	-- tooltip
 	tGeneral = Font(caith, 11, "OUTLINE", nil, nil, nil),
