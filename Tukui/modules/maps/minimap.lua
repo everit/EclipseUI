@@ -10,7 +10,7 @@ TukuiMinimap:Point("TOPLEFT", UIParent, "TOPLEFT", 8, -8)
 TukuiMinimap:Size(144, 144)
 TukuiMinimap:SetClampedToScreen(true)
 TukuiMinimap:SetMovable(true)
-TukuiMinimap.text = T.SetFontString(TukuiMinimap, C.media.pixel_font, 12, "MONOCHROMEOUTLINE")
+TukuiMinimap.text = T.SetFontString(TukuiMinimap, unpack(T.Fonts.movers.setfont))
 TukuiMinimap.text:SetPoint("CENTER")
 TukuiMinimap.text:SetText(L.move_minimap)
 

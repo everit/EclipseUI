@@ -5,7 +5,7 @@ local font, caith, pixel = C["media"].font, C["media"].caith, C["media"].pixel_f
 -- font template used for fallback values if incorrect or no values are entered
 -- don't change this, unless you know what you're doing
 local fontTemplate = {
-	family = C["media"].font,
+	family = font,
 	size = 12,
 	outline = "NONE", -- "THINOUTLINE" / "OUTLINE" / "MONOCHROMEOUTLINE"
 	point = "CENTER",
@@ -95,8 +95,11 @@ T.Fonts = {
 	
 	uGeneral = Font(pixel, nil, "MONOCHROMEOUTLINE", nil, nil, nil), -- castbar, pvp, etc
 	uCombat = Font(caith, 14, nil, nil, nil, nil), -- combat feedback
-
+	uAuras = Font(pixel, nil, "MONOCHROMEOUTLINE", nil, nil, nil),
+	
 	-- miscellaneous
 	altPowerBar = Font(pixel, nil, "MONOCHROMEOUTLINE", nil, 0, 1),
 	lootRollFrame = Font(pixel, nil, "MONOCHROMEOUTLINE", nil, nil, nil),
+	cooldown = Font(pixel, nil, "MONOCHROMEOUTLINE", nil, nil, nil), -- actionbar / bag / etc.
+	movers = Font(pixel, nil, "MONOCHROMEOUTLINE", nil, nil, nil), -- /moveui text + vehicle
 }

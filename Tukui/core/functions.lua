@@ -526,7 +526,7 @@ T.PostCreateAura = function(element, button)
 	T.SetTemplate(button)
 	button:CreateShadow("Default")
 	
-	button.remaining = T.SetFontString(button, C["media"].pixel_font, 12, "MONOCHROMEOUTLINE")
+	button.remaining = T.SetFontString(button, unpack(T.Fonts.uAuras.setfont))
 	button.remaining:Point("CENTER", 1, 4)
 	
 	button.cd.noOCC = true		 	-- hide OmniCC CDs
@@ -540,7 +540,7 @@ T.PostCreateAura = function(element, button)
 	
 	button.count:Point("BOTTOMRIGHT", -1, 1)
 	button.count:SetJustifyH("RIGHT")
-	button.count:SetFont(C["media"].pixel_font, 12, "MONOCHROMEOUTLINE")
+	button.count:SetFont(unpack(T.Fonts.uAuras.setfont))
 	button.count:SetTextColor(0.84, 0.75, 0.65)
 	
 	button.overlayFrame = CreateFrame("frame", nil, button, nil)
@@ -552,14 +552,6 @@ T.PostCreateAura = function(element, button)
 	button.overlay:SetParent(button.overlayFrame)
 	button.count:SetParent(button.overlayFrame)
 	button.remaining:SetParent(button.overlayFrame)
-
-	-- button.Glow = CreateFrame("Frame", nil, button)
-	-- button.Glow:Point("TOPLEFT", button, "TOPLEFT", -3, 3)
-	-- button.Glow:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", 3, -3)
-	-- button.Glow:SetFrameStrata("BACKGROUND")	
-	-- button.Glow:SetBackdrop{edgeFile = C["media"].glowTex, edgeSize = 3, insets = {left = 0, right = 0, top = 0, bottom = 0}}
-	-- button.Glow:SetBackdropColor(0, 0, 0, 0)
-	-- button.Glow:SetBackdropBorderColor(0, 0, 0)
 end
 
 T.PostUpdateAura = function(icons, unit, icon, index, offset, filter, isDebuff, duration, timeLeft)

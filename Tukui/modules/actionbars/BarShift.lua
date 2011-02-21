@@ -46,7 +46,7 @@ ssmover:SetAllPoints(TukuiShift)
 ssmover:SetTemplate("Default")
 ssmover:SetBackdropBorderColor(1,0,0)
 ssmover:SetAlpha(0)
-ssmover.text = T.SetFontString(ssmover, C.media.pixel_font, 12, "MONOCHROMEOUTLINE")
+ssmover.text = T.SetFontString(ssmover, unpack(T.Fonts.movers.setfont))
 ssmover.text:SetPoint("CENTER")
 ssmover.text:SetText(L.move_shapeshift)
 

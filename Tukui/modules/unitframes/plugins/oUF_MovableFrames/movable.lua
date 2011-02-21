@@ -356,7 +356,7 @@ do
 		local name = backdrop:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 		name:SetPoint"CENTER"
 		name:SetJustifyH"CENTER"
-		name:SetFont(C.media.pixel_font, 12, "MONOCHROMEOUTLINE")
+		name:SetFont(unpack(T.Fonts.movers.setfont))
 		name:SetTextColor(1, 1, 1)
 
 		backdrop.name = name

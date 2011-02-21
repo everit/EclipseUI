@@ -176,7 +176,7 @@ local function CreateAuraHeader(filter, ...)
 	header:SetBackdropBorderColor(0,0,0,0)
 	header:Show()
 	
-	header.text = T.SetFontString(header, C.media.pixel_font, 12, "MONOCHROMEOUTLINE")
+	header.text = T.SetFontString(header, unpack(T.Fonts.movers.setfont))
 	header.text:SetPoint("CENTER")
 	if filter == "HELPFUL" then
 		header.text:SetText(L.move_buffs)

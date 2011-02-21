@@ -46,7 +46,7 @@ local vehicle = CreateFrame("Button", "TukuiExitVehicleButton", UIParent, "Secur
 vehicle:CreatePanel("Default", T.buttonsize * 2, T.buttonsize + 1, "BOTTOMRIGHT", TukuiChatRight, "BOTTOMLEFT", -3, 0)
 vehicle:RegisterForClicks("AnyUp")
 vehicle:SetScript("OnClick", function() VehicleExit() end)
-vehicle.text = T.SetFontString(vehicle, C["media"].pixel_font, 12, "MONOCHROMEOUTLINE")
+vehicle.text = T.SetFontString(vehicle, unpack(T.Fonts.movers.setfont))
 vehicle.text:Point("CENTER", 1, 1)
 vehicle.text:SetText(T.cStart .. "Exit")
 RegisterStateDriver(vehicle, "visibility", "[target=vehicle,exists] show;hide")
