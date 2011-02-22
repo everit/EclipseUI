@@ -25,8 +25,10 @@ TukuiShift:SetScript("OnEvent", function(self, event, ...)
 		local forms = GetNumShapeshiftForms()
 		if forms > 0 then
 			TukuiShift:Width((T.stancebuttonsize * forms) + (T.buttonspacing * forms + 1) + 5)
+			if InCombatLockdown() then return end
 			TukuiShift:Show()
 		else
+			if InCombatLockdown() then return end
 			TukuiShift:Hide()
 		end
 	end
