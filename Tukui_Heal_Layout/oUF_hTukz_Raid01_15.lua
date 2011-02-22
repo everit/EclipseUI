@@ -164,7 +164,7 @@ local function Shared(self, unit)
 	debuffHighlight:SetVertexColor(0, 0, 0, 0)
 	self.DebuffHighlight = debuffHighlight
 	self.DebuffHighlightAlpha = 1
-	self.DebuffHighlightFilter = false
+	self.DebuffHighlightFilter = C["unitframes"].debuffHighlightFilter
 	
 	--local picon = self.Health:CreateTexture(nil, 'OVERLAY')
 	--picon:SetPoint('CENTER', self.Health)
