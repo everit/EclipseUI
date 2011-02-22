@@ -57,7 +57,7 @@ C["unitframes"] = {
 		["aggro"] = true,                                   -- show aggro on all raids layouts
 		["raidunitdebuffwatch"] = true,                     -- track important spell to watch in pve for grid mode.
 		["healcomm"] = true,                               -- enable healprediction support.
-		["debuffHighlightFilter" = false,					-- filter debuff border coloring for healer layout
+		["debuffHighlightFilter"] = false,					-- filter debuff border coloring for healer layout
 		
 		-- Heal
 		["healthvertical"] = true,
