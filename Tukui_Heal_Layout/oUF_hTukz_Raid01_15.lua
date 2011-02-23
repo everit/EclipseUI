@@ -120,7 +120,7 @@ local function Shared(self, unit)
 	else
 		name:SetPoint("CENTER", health, "CENTER", 0, 6)
 	end
-	name:SetFont(font1, 12, "MONOCHROMETHINOUTLINE")
+	name:SetFont(unpack(T.Fonts.uName.setfont))
 	if C["unitframes"].unicolor then
 		self:Tag(name, "[Tukui:getnamecolor][Tukui:nameshort]")
 	else
