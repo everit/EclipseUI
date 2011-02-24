@@ -198,7 +198,6 @@ local function Shared(self, unit)
 			health:Height(29)
 		end
 		power:Height(5)
-
 	
 		health.value = T.SetFontString(panel, unpack(T.Fonts.uHealth.setfont))
 		health.value:Point("RIGHT", panel, "RIGHT", -4, 1)
@@ -208,7 +207,6 @@ local function Shared(self, unit)
 		power.value:Point("LEFT", panel, "LEFT", 7, 1)
 		power.PreUpdate = T.PreUpdatePower
 		power.PostUpdate = T.PostUpdatePower
-
 	
 		-- portraits
 		if (C["unitframes"].charportrait == true) then
@@ -700,6 +698,18 @@ local function Shared(self, unit)
 			self:RegisterEvent('PLAYER_TARGET_CHANGED', T.UpdateThreat)
 			self:RegisterEvent('UNIT_THREAT_LIST_UPDATE', T.UpdateThreat)
 			self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', T.UpdateThreat)
+		end
+		
+		-- player/target debuff hightlight
+		if C["unitframes"].playerHighlight then
+			local debuffHighlight = ufbg:CreateTexture(nil, "OVERLAY")
+			debuffHighlight:SetAllPoints()
+			debuffHighlight:SetTexture(TukuiCF["media"].blank)
+			debuffHighlight:SetBlendMode("DISABLE")
+			debuffHighlight:SetVertexColor(0, 0, 0, 0)
+			self.DebuffHighlight = debuffHighlight
+			self.DebuffHighlightAlpha = 1
+			self.DebuffHighlightFilter = C["unitframes"].debuffHighlightFilter
 		end
 	end
 	
