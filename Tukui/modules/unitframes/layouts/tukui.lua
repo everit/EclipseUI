@@ -585,14 +585,19 @@ local function Shared(self, unit)
 		-- cast bar for player and target
 		if (C["unitframes"].unitcastbar) then			
 			if unit == "player" then
-				castbar:Height(T.buttonsize - 4)
-				if C["unitframes"].cbicons then
-					castbar:SetPoint("BOTTOMLEFT", TukuiBar1, "TOPLEFT", T.buttonsize + 5, 5)
+				if C["actionbar"].enable then
+					castbar:Height(T.buttonsize - 4)
+					if C["unitframes"].cbicons then
+						castbar:SetPoint("BOTTOMLEFT", TukuiBar1, "TOPLEFT", T.buttonsize + 5, 5)
+					else
+						castbar:SetPoint("BOTTOMLEFT", TukuiBar1, "TOPLEFT", 2, 5)
+					end
+					castbar:SetPoint("BOTTOMRIGHT", TukuiBar1, "TOPRIGHT", -2, 5)
 				else
-					castbar:SetPoint("BOTTOMLEFT", TukuiBar1, "TOPLEFT", 2, 5)
+					castbar:Height(T.buttonsize - 4)
+					castbar:Width(350)
+					castbar:Point("BOTTOM", UIParent, "BOTTOM", 0, 80)
 				end
-				castbar:SetPoint("BOTTOMRIGHT", TukuiBar1, "TOPRIGHT", -2, 5)
-				
 			else
 				castbar:Height(21)
 				castbar:Width(T.Target)
