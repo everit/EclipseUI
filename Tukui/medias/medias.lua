@@ -38,18 +38,21 @@ C["media"] = {
 	["striped"] = [[Interface\AddOns\Tukui\medias\textures\Striped]], -- unitframes combo points
 	["copyicon"] = [[Interface\AddOns\Tukui\medias\textures\copy]], -- copy icon
 	["blank"] = [[Interface\AddOns\Tukui\medias\textures\blank]], -- the main texture for all borders/panels
+	["buttonhover"] = [[Interface\AddOns\Tukui\medias\textures\button_hover]],
+
+	-- custom textures
+	["empath"] = [[Interface\AddOns\Tukui\medias\textures\empath]],
+	
+	-- colors
 	["bordercolor"] = { .1, .1, .1, 1 }, -- border color of tukui panels
 	["backdropcolor"] = { 0, 0, 0, 1 }, -- background color of tukui panels
 	["altbordercolor"] = { .4,.4,.4 }, -- alternative border color, mainly for unitframes text panels.
-	["buttonhover"] = [[Interface\AddOns\Tukui\medias\textures\button_hover]],
 	
 	-- sound
 	["whisper"] = [[Interface\AddOns\Tukui\medias\sounds\whisper.mp3]],
 	["warning"] = [[Interface\AddOns\Tukui\medias\sounds\warning.mp3]],
 	
-	
-	
-	
+	-- custom fonts
 	["pixel_font"] = [[Interface\Addons\Tukui\medias\fonts\visitor2.ttf]],
 	["caith"] = [[Interface\Addons\Tukui\medias\fonts\caith.ttf]],
 }
