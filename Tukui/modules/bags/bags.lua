@@ -683,6 +683,8 @@ function Stuffing:Layout(lb)
 			b.iconTex = iconTex
 
 			b.frame:SetTemplate("Default")
+			b.frame.overlay:Kill()
+			b.frame:SetBackdropColor(.05, .05, .05)
 			b.frame:StyleButton()
 
 			idx = idx + 1
