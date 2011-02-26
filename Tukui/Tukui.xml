@@ -28,6 +28,7 @@
 	<Script file="modules\unitframes\plugins\oUF_RaidDebuffs\oUF_RaidDebuffs.lua"/>	
 	<Script file="modules\unitframes\plugins\oUF_WeakenedSoul\oUF_WeakenedSoul.lua"/>	
 	<Script file="modules\unitframes\templates\colors.lua"/>
+	<Include file="modules\addonskins\load_addonskins.xml"/>
 	<Script file="core\uiscale.lua"/>
 	<Script file="core\deprecated.lua"/>
 	<Script file="core\api.lua"/>
