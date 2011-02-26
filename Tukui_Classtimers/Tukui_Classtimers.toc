@@ -1,0 +1,6 @@
+﻿## Interface: 40000
+## Author: Kryso
+## Title: Tukui Classtimers
+## RequiredDeps: Tukui
+
+Tukui_Classtimers.lua
