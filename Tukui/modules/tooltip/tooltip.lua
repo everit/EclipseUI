@@ -109,7 +109,7 @@ local function UpdateTooltip(self)
 							self:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, x)
 						else
 							self:ClearAllPoints()
-							self:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, x)
+							self:SetPoint("BOTTOMRIGHT", TukuiRightBar, "TOPRIGHT", 0, x)
 						end
 					else
 						if C["actionbar"].vertical_rightbars and TukuiSaved.rightbars > 0 then
@@ -117,7 +117,7 @@ local function UpdateTooltip(self)
 							self:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, x)
 						elseif not C["actionbar"].vertical_rightbars and TukuiSaved.rightbars > 0 then
 							self:ClearAllPoints()
-							self:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, x)
+							self:SetPoint("BOTTOMRIGHT", TukuiRightBar, "TOPRIGHT", 0, x)
 						else
 							self:ClearAllPoints()
 							self:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, x)

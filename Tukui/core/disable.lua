@@ -41,3 +41,7 @@ end
 if (IsAddOnLoaded("SatrinaBuffFrame") or IsAddOnLoaded("ElkBuffBars")) then
 	C["auras"].player = false
 end
+
+if IsAddOnLoaded("Skada") then
+    Skada:SetActive(false)
+end

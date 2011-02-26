@@ -13,7 +13,7 @@ C["skin"] = {	--Skin addons by Darth Android
 	["omen"] = true,
 	["kle"] = true,
 	["hookkleright"] = true,			-- force KLE's top bar anchor to be hooked onto the right chat window
-	["embedright"] = "Skada",				-- Addon to embed to the right frame ("Omen", "Recount", "Skada")
+	["embedright"] = "SKADA",				-- Addon to embed to the right frame ("Omen", "Recount", "Skada")
 }
 
 C["unitframes"] = {

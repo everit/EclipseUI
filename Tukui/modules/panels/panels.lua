@@ -53,8 +53,12 @@ if C["actionbar"].enable then
 	TukuiSplitBarRight:CreatePanel("Transparent", (T.buttonsize * 3) + (T.buttonspacing * 4) + 2, TukuiBar1:GetHeight(), "BOTTOMLEFT", TukuiBar1, "BOTTOMRIGHT", 6, 0)
 
 	local TukuiRightBar = CreateFrame("Frame", "TukuiRightBar", UIParent)
+	if C["actionbar"].vertical_rightbars == true then
 	TukuiRightBar:CreatePanel("Transparent", (T.buttonsize * 12 + T.buttonspacing * 13) + 2,  (T.buttonsize * 12 + T.buttonspacing * 13) + 2, "BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, 150)
-
+	else
+	TukuiRightBar:CreatePanel("Transparent", (T.buttonsize * 12 + T.buttonspacing * 13) + 2,  (T.buttonsize * 12 + T.buttonspacing * 13) + 2, "BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, 0)
+	end
+	
 	local TukuiPetBar = CreateFrame("Frame", "TukuiPetBar", UIParent)
 	TukuiPetBar:CreatePanel("Transparent", 1, 1, "BOTTOMRIGHT", TukuiBar1, "TOPRIGHT", 0, 0)
 	if C["actionbar"].vertical_rightbars == true then
