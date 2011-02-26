@@ -7,12 +7,21 @@ C["general"] = {
 	["multisampleprotect"] = true,                      -- i don't recommend this because of shitty border but, voila!
 }
 
+C["skin"] = {	--Skin addons by Darth Android
+	["recount"] = true,
+	["skada"] = true,
+	["omen"] = true,
+	["kle"] = true,
+	["hookkleright"] = true,			-- force KLE's top bar anchor to be hooked onto the right chat window
+	["embedright"] = "Skada",				-- Addon to embed to the right frame ("Omen", "Recount", "Skada")
+}
+
 C["unitframes"] = {
 	-- Gen.
 	["enable"] = true,                                  -- do i really need to explain this?
 	
 	-- Colors
-	["enemyhcolor"] = false,                            -- enemy target (players) color by hostility, very useful for healer.
+	["enemyhcolor"] = true,                            -- enemy target (players) color by hostility, very useful for healer.
 	["unicolor"] = true,                               -- enable unicolor theme
 		-- if unicolor == true then it uses these colors
 		["healthColor"] = { .15, .15, .15 },
@@ -20,7 +29,7 @@ C["unitframes"] = {
 	
 	-- Castbar
 	["unitcastbar"] = true,                             -- enable tukui castbar
-	["cblatency"] = false,                              -- enable castbar latency
+	["cblatency"] = true,                              -- enable castbar latency
 	["cbicons"] = true,                                 -- enable icons on castbar
 	["cbclasscolor"] = false,
 		-- if cbclasscolor == false then it uses this color
@@ -31,21 +40,21 @@ C["unitframes"] = {
 	["auratextscale"] = 11,                             -- the font size of buffs/debuffs timers on unitframes
 	["playerauras"] = false,                            -- enable auras
 	["targetauras"] = true,                             -- enable auras on target unit frame
-	["totdebuffs"] = false,                             -- enable tot debuffs (high reso only)
+	["totdebuffs"] = true,                             -- enable tot debuffs (high reso only)
 	["focusdebuffs"] = true,                             -- enable focus debuffs
 	["focusbuffs"] = true,                             -- enable focus buffs
 	["onlyselfdebuffs"] = false,                        -- display only our own debuffs applied on target
-	["onlyselfbuffs"] = true,                        -- display only our own buffs applied on target
+	["onlyselfbuffs"] = false,                        -- display only our own buffs applied on target
 	["buffrows"] = 2,                       
-	["debuffrows"] = 2,                        
+	["debuffrows"] = 3,                        
 	
 	-- Misc.
 	["charportrait"] = false,                           -- do i really need to explain this?
 	["showtotalhpmp"] = false,                          -- change the display of info text on player and target with XXXX/Total.
-	["targetpowerpvponly"] = true,                      -- enable power text on pvp target only
+	["targetpowerpvponly"] = false,                      -- enable power text on pvp target only
 	["showsmooth"] = true,                              -- enable smooth bar
 	["lowThreshold"] = 20,                              -- global low threshold, for low mana warning.
-	["combatfeedback"] = false,                          -- enable combattext on player and target.
+	["combatfeedback"] = true,                          -- enable combattext on player and target.
 	["playeraggro"] = true,                             -- color player border to red if you have aggro on current target.
 
 	-- Party / Raid
@@ -57,21 +66,18 @@ C["unitframes"] = {
 		["aggro"] = true,                                   -- show aggro on all raids layouts
 		["raidunitdebuffwatch"] = true,                     -- track important spell to watch in pve for grid mode.
 		["healcomm"] = true,                               -- enable healprediction support.
-		["debuffHighlightFilter"] = false,					-- filter debuff border coloring
-			-- enable player / target debuff highlight
-			["playerHighlight"] = true,
-		
+
 		-- Heal
 		["healthvertical"] = true,
-		["healthdeficit"] = false,	
+		["healthdeficit"] = true,	
 		
 		-- Dps
 		["hidepower"] = false,
 	
 
 	-- Extra Frames
-	["maintank"] = false,                               -- enable maintank
-	["mainassist"] = false,                             -- enable mainassist
+	["maintank"] = true,                               -- enable maintank
+	["mainassist"] = true,                             -- enable mainassist
 	["showboss"] = true,                                -- enable boss unit frames for PVELOL encounters.
 	-- ["showfocustarget"] = false,					-- show focus target
 	
@@ -99,7 +105,7 @@ C["actionbar"] = {
 	["petbuttonsize"] = 27,                             -- pet & stance buttons size
 	["stancebuttonsize"] = 27,                             -- pet & stance buttons size
 	["buttonspacing"] = 4,                              -- buttons spacing
-	["vertical_rightbars"] = false,
+	["vertical_rightbars"] = true,
 }
 
 C["bags"] = {
@@ -133,12 +139,12 @@ C["datatext"] = {
 	["friends"] = 3,                                    -- show number of friends connected.
 	["gold"] = 0,                                       -- show your current gold on panels
 	["guild"] = 2,                                      -- show number on guildmate connected on panels
-	["haste"] = 0,                                      -- show your haste rating on panels.
+	["haste"] = 7,                                      -- show your haste rating on panels.
 	["hit"] = 0,
 	["hps_text"] = 0,                                   -- show a heal meter on panels
 	["mastery"] = 0,
 	["micromenu"] = 0,
-	["power"] = 0,                                      -- show your attackpower/spellpower/healpower/rangedattackpower whatever stat is higher gets displayed
+	["power"] = 8,                                      -- show your attackpower/spellpower/healpower/rangedattackpower whatever stat is higher gets displayed
 	["system"] = 5,                                      -- show total memory and others systems infos on panels
 	["wowtime"] = 1,                                    -- show time on panels
 
@@ -160,8 +166,8 @@ C["chat"] = {
 
 C["nameplate"] = {
 	["enable"] = true,                                  -- enable nice skinned nameplates that fit into tukui
-	["showhealth"] = false,				                -- show health text on nameplate
-	["enhancethreat"] = false,			                -- threat features based on if your a tank or not
+	["showhealth"] = true,				                -- show health text on nameplate
+	["enhancethreat"] = true,			                -- threat features based on if your a tank or not
 	["overlap"] = false,				                -- allow nameplates to overlap
 	["combat"] = false,					                -- only show enemy nameplates in-combat.
 	["goodcolor"] = {75/255,  175/255, 76/255},	        -- good threat color (tank shows this with threat, everyone else without)
@@ -179,7 +185,7 @@ C["tooltip"] = {
 
 C["merchant"] = {
 	["sellgrays"] = true,                               -- automaticly sell grays?
-	["autorepair"] = true,                              -- automaticly repair?
+	["autorepair"] = false,                              -- automaticly repair?
 	["sellmisc"] = true,                                -- sell defined items automatically
 }
 

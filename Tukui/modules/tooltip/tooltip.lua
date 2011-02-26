@@ -100,24 +100,24 @@ local function UpdateTooltip(self)
 				self:SetPoint("BOTTOMRIGHT", TukuiBags, "TOPRIGHT", 0, x)			
 			else
 				if not C["actionbar"].enable then
-					self:ClearAllPoints()
-					self:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, x)
+							self:ClearAllPoints()
+							self:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, x)
 				else
 					if HasPetUI() then
 						if C["actionbar"].vertical_rightbars then
 							self:ClearAllPoints()
-							self:SetPoint("BOTTOMRIGHT", TukuiPetBar, "BOTTOMLEFT", -x, 0)
+							self:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, x)
 						else
 							self:ClearAllPoints()
-							self:SetPoint("BOTTOMRIGHT", TukuiPetBar, "TOPRIGHT", 0, x)
+							self:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, x)
 						end
 					else
 						if C["actionbar"].vertical_rightbars and TukuiSaved.rightbars > 0 then
 							self:ClearAllPoints()
-							self:SetPoint("BOTTOMRIGHT", TukuiRightBar, "BOTTOMLEFT", -x, 0)
+							self:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, x)
 						elseif not C["actionbar"].vertical_rightbars and TukuiSaved.rightbars > 0 then
 							self:ClearAllPoints()
-							self:SetPoint("BOTTOMRIGHT", TukuiRightBar, "TOPRIGHT", 0, x)
+							self:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, x)
 						else
 							self:ClearAllPoints()
 							self:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, x)

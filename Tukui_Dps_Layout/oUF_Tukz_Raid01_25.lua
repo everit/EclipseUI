@@ -95,7 +95,7 @@ local function Shared(self, unit)
 	end
 	
 	local name = health:CreateFontString(nil, 'OVERLAY')
-	name:SetFont(unpack(T.Fonts.uName.setfont))
+	name:SetFont(font1, 12, "MONOCHROMEOUTLINE")
 	name:Point("LEFT", t, "RIGHT", 4, 1)
 	self:Tag(name, '[Tukui:getnamecolor][Tukui:namemedium] [Tukui:dead][Tukui:afk]')
 	self.Name = name
@@ -152,7 +152,7 @@ oUF:RegisterStyle("TukuiDpsPR10", Shared)
 oUF:Factory(function(self)
 	oUF:SetActiveStyle("TukuiDpsPR10")
 
-	local raid = self:SpawnHeader("oUF_TukuiDpsPR10", nil, "custom [@raid16,exists] hide;show", 
+	local raid = self:SpawnHeader("oUF_TukuiDpsPR10", nil, "custom [@raid30,exists] hide;show", 
 		'oUF-initialConfigFunction', [[
 			local header = self:GetParent()
 			self:SetWidth(header:GetAttribute('initial-width'))

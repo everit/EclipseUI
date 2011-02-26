@@ -73,13 +73,13 @@ local RightBars = function()
 	if TukuiSaved.rightbars >= 1 then
 		TukuiPetBar:ClearAllPoints()
 		if C["actionbar"].vertical_rightbars == true then
-			TukuiPetBar:Point("BOTTOMRIGHT", TukuiRightBar, "BOTTOMLEFT", -3, 0)
+			TukuiPetBar:Point("BOTTOM", TukuiBar1, "TOP", 0, 3)
 		else
-			TukuiPetBar:Point("BOTTOMRIGHT", TukuiRightBar, "TOPRIGHT", 0, 3)
+			TukuiPetBar:Point("BOTTOM", TukuiBar1, "TOP", 0, 3)
 		end
 	else
 		TukuiPetBar:ClearAllPoints()
-		TukuiPetBar:Point("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, 3)
+		TukuiPetBar:Point("BOTTOM", TukuiBar1, "TOP", 0, 3)
 	end
 
 	if TukuiSaved.rightbars == 1 then
@@ -262,6 +262,20 @@ for i = 1, 5 do
 			
 			MainBars()
 		end)
+--		elseif (event == "UNIT_PET") then
+--		Toggle[i]:CreatePanel("Eclipse", TukuiPetBar:GetWidth(), T.buttonsize / 2, "BOTTOM", TukuiPetBar, "TOP", 0, 3)
+--
+--		Toggle[i]:SetScript("OnMouseDown", function()
+--			if InCombatLockdown() then return end
+
+--			TukuiSaved.bottomrows = TukuiSaved.bottomrows + 1
+
+--			if TukuiSaved.bottomrows > 2 then
+--				TukuiSaved.bottomrows = 1
+--			end
+			
+--			MainBars()
+--		end)
 		Toggle[i]:SetScript("OnEvent", MainBars)
 	elseif i == 2 then
 		Toggle[i]:CreatePanel("Eclipse", T.buttonsize, TukuiTabsRight:GetHeight() - 6, "RIGHT", TukuiTabsRight, "RIGHT", -3, 0)

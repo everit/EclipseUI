@@ -60,7 +60,7 @@ local function Shared(self, unit)
 	end
 	
 	local name = health:CreateFontString(nil, 'OVERLAY')
-	name:SetFont(unpack(T.Fonts.uName.setfont))
+	name:SetFont(font1, 12, "MONOCHROMEOUTLINE")
 	name:Point("CENTER", health, "CENTER", 0, 1)
 	name:SetWidth(40)
 	if C["unitframes"].unicolor then

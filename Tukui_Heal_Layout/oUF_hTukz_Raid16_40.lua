@@ -116,7 +116,7 @@ local function Shared(self, unit)
 	else
 		name:SetPoint("CENTER", health, "CENTER", 0, 6)
 	end
-	name:SetFont(unpack(T.Fonts.uName.setfont))
+	name:SetFont(font1, 12, "MONOCHROMETHINOUTLINE")
 	if C["unitframes"].unicolor then
 		self:Tag(name, "[Tukui:getnamecolor][Tukui:nameshort]")
 	else
@@ -160,7 +160,7 @@ local function Shared(self, unit)
 	debuffHighlight:SetVertexColor(0, 0, 0, 0)
 	self.DebuffHighlight = debuffHighlight
 	self.DebuffHighlightAlpha = 1
-	self.DebuffHighlightFilter = C["unitframes"].debuffHighlightFilter
+	self.DebuffHighlightFilter = false
 	
 	--local picon = self.Health:CreateTexture(nil, 'OVERLAY')
 	--picon:SetPoint('CENTER', self.Health)

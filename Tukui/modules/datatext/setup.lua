@@ -13,6 +13,8 @@ T.cEnd = "|r"
 T.PP = function(p, obj)
 	local TukuiInfoLeft = TukuiInfoLeft
 	local TukuiInfoRight = TukuiInfoRight
+	local statsleft = statsleft
+	local statsright = statsright
 	
 	if p == 1 then
 		obj:SetParent(TukuiInfoLeft)
@@ -38,5 +40,13 @@ T.PP = function(p, obj)
 		obj:SetParent(TukuiInfoRight)
 		obj:Height(TukuiInfoRight:GetHeight())
 		obj:Point("RIGHT", TukuiInfoRight, -20, 1)
+	elseif p == 7 then
+		obj:SetParent(statsleft)
+		obj:Height(statsleft:GetHeight())
+		obj:Point("CENTER", statsleft, 0, 0)
+	elseif p == 8 then
+		obj:SetParent(statsright)
+		obj:Height(statsright:GetHeight())
+		obj:Point("CENTER", statsright, 0, 0)		
 	end
 end

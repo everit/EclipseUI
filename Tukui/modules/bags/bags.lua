@@ -425,7 +425,7 @@ function Stuffing:CreateBagFrame(w)
 					if C["actionbar"].vertical_rightbars then
 						f:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, 3)
 					else
-						f:SetPoint("BOTTOMRIGHT", TukuiPetBar, "TOPRIGHT", 0, 3)
+						f:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, 3)
 					end
 				elseif UnitHasVehicleUI("player") then
 					f:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, 3)
@@ -434,7 +434,7 @@ function Stuffing:CreateBagFrame(w)
 						f:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, 3)
 					else
 						if TukuiSaved.rightbars >= 1 then
-							f:SetPoint("BOTTOMRIGHT", TukuiRightBar, "TOPRIGHT", 0, 3)
+							f:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, 3)
 						else
 							f:SetPoint("BOTTOMRIGHT", TukuiChatRight, "TOPRIGHT", 0, 3)
 						end
@@ -683,8 +683,6 @@ function Stuffing:Layout(lb)
 			b.iconTex = iconTex
 
 			b.frame:SetTemplate("Default")
-			b.frame.overlay:Kill()
-			b.frame:SetBackdropColor(.05, .05, .05)
 			b.frame:StyleButton()
 
 			idx = idx + 1

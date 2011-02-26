@@ -51,15 +51,13 @@ local function install()
 			if i == 1 then
 				frame:ClearAllPoints()
 				frame:Point("TOPLEFT", TukuiTabsLeft, "BOTTOMLEFT", 0, -4)
-				frame:Point("TOPRIGHT", TukuiTabsLeft, "BOTTOMRIGHT", 0, -4)
 				frame:Point("BOTTOMRIGHT", TukuiInfoLeft, "TOPRIGHT", 0, 4)
-				frame:Point("BOTTOMLEFT", TukuiInfoLeft, "TOPLEFT", 0, 4)
+				FCF_RestorePositionAndDimensions(frame)
 			elseif i == 4 and chatName == LOOT then
 				frame:ClearAllPoints()
 				frame:Point("TOPLEFT", TukuiTabsRight, "BOTTOMLEFT", 0, -4)
-				frame:Point("TOPRIGHT", TukuiTabsRight, "BOTTOMRIGHT", 0, -4)
 				frame:Point("BOTTOMRIGHT", TukuiInfoRight, "TOPRIGHT", 0, 4)
-				frame:Point("BOTTOMLEFT", TukuiInfoRight, "TOPLEFT", 0, 4)
+				FCF_RestorePositionAndDimensions(frame)
 			end
 
 			-- save new default position and dimension

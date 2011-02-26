@@ -198,6 +198,7 @@ local function Shared(self, unit)
 			health:Height(29)
 		end
 		power:Height(5)
+
 	
 		health.value = T.SetFontString(panel, unpack(T.Fonts.uHealth.setfont))
 		health.value:Point("RIGHT", panel, "RIGHT", -4, 1)
@@ -207,6 +208,7 @@ local function Shared(self, unit)
 		power.value:Point("LEFT", panel, "LEFT", 7, 1)
 		power.PreUpdate = T.PreUpdatePower
 		power.PostUpdate = T.PostUpdatePower
+
 	
 		-- portraits
 		if (C["unitframes"].charportrait == true) then
@@ -585,19 +587,14 @@ local function Shared(self, unit)
 		-- cast bar for player and target
 		if (C["unitframes"].unitcastbar) then			
 			if unit == "player" then
-				if C["actionbar"].enable then
-					castbar:Height(T.buttonsize - 4)
-					if C["unitframes"].cbicons then
-						castbar:SetPoint("BOTTOMLEFT", TukuiBar1, "TOPLEFT", T.buttonsize + 5, 5)
-					else
-						castbar:SetPoint("BOTTOMLEFT", TukuiBar1, "TOPLEFT", 2, 5)
-					end
-					castbar:SetPoint("BOTTOMRIGHT", TukuiBar1, "TOPRIGHT", -2, 5)
+				castbar:Height(T.buttonsize - 4)
+				if C["unitframes"].cbicons then
+					castbar:SetPoint("BOTTOMLEFT", TukuiBar1, "TOPLEFT", T.buttonsize + 5, 5)
 				else
-					castbar:Height(T.buttonsize - 4)
-					castbar:Width(350)
-					castbar:Point("BOTTOM", UIParent, "BOTTOM", 0, 80)
+					castbar:SetPoint("BOTTOMLEFT", TukuiBar1, "TOPLEFT", 2, 5)
 				end
+				castbar:SetPoint("BOTTOMRIGHT", TukuiBar1, "TOPRIGHT", -2, 5)
+				
 			else
 				castbar:Height(21)
 				castbar:Width(T.Target)
@@ -606,7 +603,7 @@ local function Shared(self, unit)
 					if T.lowversion then
 						castbar:SetPoint("BOTTOM", self.Debuffs, "TOP", 0, 1)
 					else
-						castbar:SetPoint("BOTTOM", self.Debuffs, "TOP", -5, 5)
+						castbar:SetPoint("CENTER", UIParent, "CENTER", 0, -100)
 					end
 				else
 					castbar:SetPoint("BOTTOMLEFT", self.ufbg, "TOPLEFT", 2, 5)
@@ -703,18 +700,6 @@ local function Shared(self, unit)
 			self:RegisterEvent('PLAYER_TARGET_CHANGED', T.UpdateThreat)
 			self:RegisterEvent('UNIT_THREAT_LIST_UPDATE', T.UpdateThreat)
 			self:RegisterEvent('UNIT_THREAT_SITUATION_UPDATE', T.UpdateThreat)
-		end
-		
-		-- player/target debuff hightlight
-		if C["unitframes"].playerHighlight then
-			local debuffHighlight = ufbg:CreateTexture(nil, "OVERLAY")
-			debuffHighlight:SetAllPoints()
-			debuffHighlight:SetTexture(TukuiCF["media"].blank)
-			debuffHighlight:SetBlendMode("DISABLE")
-			debuffHighlight:SetVertexColor(0, 0, 0, 0)
-			self.DebuffHighlight = debuffHighlight
-			self.DebuffHighlightAlpha = 1
-			self.DebuffHighlightFilter = C["unitframes"].debuffHighlightFilter
 		end
 	end
 	
@@ -1087,12 +1072,12 @@ f:SetScript("OnEvent", function(self, event, addon)
 
 			focus:SetPoint("TOP", UIParent, "BOTTOM", 0, 133)
 		else
-			player:SetPoint("TOP", UIParent, "BOTTOM", -179 , 230)
-			target:SetPoint("TOP", UIParent, "BOTTOM", 179, 230)
+			player:SetPoint("TOP", UIParent, "BOTTOM", -240 , 250)
+			target:SetPoint("TOP", UIParent, "BOTTOM", 240, 250)
 			tot:SetPoint("TOPRIGHT", TukuiTarget, "BOTTOMRIGHT", 0, -7)
 			pet:SetPoint("TOPLEFT", TukuiPlayer, "BOTTOMLEFT", 0, -7)
 
-			focus:SetPoint("TOP", UIParent, "BOTTOM", 0, 230)
+			focus:SetPoint("TOP", UIParent, "BOTTOM", -450, 230)
 		end
 	elseif addon == "Tukui_Heal_Layout" then
 		--[ HEAL ]--

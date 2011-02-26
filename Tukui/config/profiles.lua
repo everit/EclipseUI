@@ -8,6 +8,10 @@ if T.myclass == "PRIEST" then
 	-- do some config!
 end
 
+if T.myclass == "DEATHKNIGHT" then
+	C.unitframes.classbar = false
+end
+
 ----------------------------------------------------------------------------
 -- Per Character Name Config (overwrite general and class)
 -- Name need to be case sensitive

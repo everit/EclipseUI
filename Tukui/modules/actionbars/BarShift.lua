@@ -12,8 +12,6 @@ TukuiShift:SetFrameStrata("LOW")
 TukuiShift:SetMovable(true)
 TukuiShift:SetClampedToScreen(true)
 TukuiShift:SetScript("OnEvent", function(self, event, ...)
-	if C["actionbar"].hideshapeshift then TukuiShift:Hide() return end
-
 	if T.myclass == "SHAMAN" then
 		TukuiShift:Width(210)
 
@@ -26,11 +24,9 @@ TukuiShift:SetScript("OnEvent", function(self, event, ...)
 
 		local forms = GetNumShapeshiftForms()
 		if forms > 0 then
-			if InCombatLockdown() then return end
 			TukuiShift:Width((T.stancebuttonsize * forms) + (T.buttonspacing * forms + 1) + 5)
 			TukuiShift:Show()
 		else
-			if InCombatLockdown() then return end
 			TukuiShift:Hide()
 		end
 	end
@@ -53,6 +49,9 @@ ssmover:SetAlpha(0)
 ssmover.text = T.SetFontString(ssmover, unpack(T.Fonts.movers.setfont))
 ssmover.text:SetPoint("CENTER")
 ssmover.text:SetText(L.move_shapeshift)
+
+-- hide it if not needed and stop executing code
+if C["actionbar"].hideshapeshift then TukuiShift:Hide() return end
 
 -- create the shapeshift bar if we enabled it
 local bar = CreateFrame("Frame", "TukuiShapeShift", TukuiShift, "SecureHandlerStateTemplate")

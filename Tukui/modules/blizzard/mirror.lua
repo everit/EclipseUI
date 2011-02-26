@@ -12,9 +12,9 @@ local _DEFAULTS = {
 	texture = C["media"].blank,
 
 	position = {
-		["BREATH"] = 'TOP#UIParent#TOP#0#-160';
-		["EXHAUSTION"] = 'TOP#UIParent#TOP#0#-160';
-		["FEIGNDEATH"] = 'TOP#UIParent#TOP#0#-160';
+		["BREATH"] = 'TOP#UIParent#TOP#0#-96';
+		["EXHAUSTION"] = 'TOP#UIParent#TOP#0#-119';
+		["FEIGNDEATH"] = 'TOP#UIParent#TOP#0#-142';
 	};
 
 	colors = {
